@@ -1,0 +1,2046 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeuroSense - Home</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #6a11cb;
+      --secondary-color: #2575fc;
+      --accent-color: #4a00e0;
+      --text-color: #333;
+      --light-text: #fff;
+      --card-bg: #fff;
+      --header-bg: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      --footer-bg: #e3e6ea;
+      --section-bg: #f4f6f9;
+      --featured-card-bg: linear-gradient(135deg, #6a11cb, #2575fc);
+      --button-bg: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      --button-hover: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+      --ai-card-bg-1: linear-gradient(135deg, #00b4db, #0083b0);
+      --ai-card-bg-2: linear-gradient(135deg, #f46b45, #eea849);
+      --chat-card-bg: linear-gradient(135deg, #0020b083, #1d38719b);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: var(--section-bg);
+      color: var(--text-color);
+      overflow-x: hidden;
+    }
+    
+    body[dir="rtl"] {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, 'Arial', sans-serif;
+    }
+    
+    header {
+      background: var(--header-bg);
+      color: var(--light-text);
+      padding: 15px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    
+    .logo i {
+      margin-right: 10px;
+      font-size: 1.8rem;
+    }
+    
+    body[dir="rtl"] .logo i {
+      margin-right: 0;
+      margin-left: 10px;
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    
+    body[dir="rtl"] nav ul {
+      flex-direction: row-reverse;
+    }
+    
+    nav ul li {
+      margin-left: 20px;
+    }
+    
+    body[dir="rtl"] nav ul li {
+      margin-left: 0;
+      margin-right: 20px;
+    }
+    
+    nav ul li a {
+      color: var(--light-text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+    }
+    
+    nav ul li a:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+    
+    nav ul li a i {
+      margin-right: 5px;
+    }
+    
+    body[dir="rtl"] nav ul li a i {
+      margin-right: 0;
+      margin-left: 5px;
+    }
+    
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .language-switcher {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 5px;
+      cursor: pointer;
+    }
+    
+    .language-option {
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      transition: all 0.3s;
+    }
+    
+    .language-option.active {
+      background: white;
+      color: var(--primary-color);
+    }
+    
+    .user-profile {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .user-profile img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    body[dir="rtl"] .user-profile img {
+      margin-right: 0;
+      margin-left: 10px;
+    }
+    
+    .dropdown-menu {
+      position: absolute;
+      top: 50px;
+      right: 0;
+      background: var(--card-bg);
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      width: 200px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      z-index: 100;
+    }
+    
+    body[dir="rtl"] .dropdown-menu {
+      right: auto;
+      left: 0;
+    }
+    
+    .dropdown-menu.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(5px);
+    }
+    
+    .dropdown-menu a {
+      display: block;
+      padding: 10px 15px;
+      color: var(--text-color);
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    
+    .dropdown-menu a:hover {
+      background: #f5f5f5;
+      color: var(--primary-color);
+    }
+    
+    .dropdown-menu a i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+    
+    body[dir="rtl"] .dropdown-menu a i {
+      margin-right: 0;
+      margin-left: 10px;
+    }
+    
+    .intro {
+      text-align: center;
+      padding: 50px 5%;
+      background: var(--card-bg);
+      margin: 20px 5%;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .intro h2 {
+      font-size: 2.2rem;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+    }
+    
+    .intro p {
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto 25px;
+      line-height: 1.6;
+    }
+    
+    .cta-button {
+      display: inline-block;
+      padding: 12px 30px;
+      background: var(--button-bg);
+      color: var(--light-text);
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cta-button:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+    
+    .cta-button:hover:before {
+      left: 100%;
+    }
+    
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      background: var(--button-hover);
+    }
+    
+    .featured-card {
+      grid-column: 1 / -1;
+      background: var(--featured-card-bg);
+      color: white;
+      padding: 40px;
+      border-radius: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    
+    .featured-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+      z-index: -1;
+      animation: rotate 15s linear infinite;
+    }
+    
+    @keyframes rotate {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    
+    .featured-card i {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      color: white;
+    }
+    
+    .featured-card h3 {
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+    
+    .featured-card p {
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+    
+    .featured-button {
+      display: inline-block;
+      padding: 12px 30px;
+      background: white;
+      color: var(--primary-color);
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .featured-button:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(106, 17, 203, 0.1), transparent);
+      transition: 0.5s;
+    }
+    
+    .featured-button:hover:before {
+      left: 100%;
+    }
+    
+    .featured-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .sections {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      padding: 20px 5%;
+      margin-bottom: 40px;
+    }
+    
+    .cards-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+    }
+    
+    .card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      transition: all 0.3s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    .card:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: var(--button-bg);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+    
+    body[dir="rtl"] .card:before {
+      transform-origin: right;
+    }
+    
+    .card:hover:before {
+      transform: scaleX(1);
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+    
+    .card i {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+      transition: all 0.3s;
+    }
+    
+    .card:hover i {
+      transform: scale(1.1);
+      color: var(--secondary-color);
+    }
+    
+    .card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 10px;
+      color: var(--primary-color);
+    }
+    
+    .card p {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #666;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+    
+    .card-button {
+      display: inline-block;
+      padding: 10px 20px;
+      background: var(--button-bg);
+      color: white;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+      position: relative;
+      overflow: hidden;
+      align-self: center;
+      margin-top: auto;
+      text-align: center;
+    }
+    
+    .card-button:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+    
+    .card-button:hover:before {
+      left: 100%;
+    }
+    
+    .card-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+      background: var(--button-hover);
+    }
+    
+    /* New AI Cards Container */
+    .ai-cards-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+      margin-top: 30px;
+      margin-bottom: 40px;
+    }
+    
+    .ai-card {
+      background: var(--card-bg);
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      transition: all 0.3s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+    
+    .ai-card:nth-child(1) {
+      background: var(--ai-card-bg-1);
+      color: white;
+    }
+    
+    .ai-card:nth-child(2) {
+      background: var(--ai-card-bg-2);
+      color: white;
+    }
+    
+    .ai-card::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--primary-color));
+      z-index: -1;
+      border-radius: 17px;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    
+    .ai-card:hover::before {
+      opacity: 1;
+    }
+    
+    .ai-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+    
+    .ai-card i {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      color: white;
+      transition: all 0.3s;
+    }
+    
+    .ai-card:hover i {
+      transform: rotate(10deg) scale(1.2);
+    }
+    
+    .ai-card h3 {
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+      color: white;
+    }
+    
+    .ai-card p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 25px;
+      flex-grow: 1;
+      color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .ai-buttons-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: auto;
+    }
+    
+    .ai-button {
+      display: block;
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--text-color);
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border: 2px solid transparent;
+      text-align: center;
+    }
+    
+    .ai-card:nth-child(1) .ai-button {
+      background: white;
+      color: #0083b0;
+    }
+    
+    .ai-card:nth-child(2) .ai-button {
+      background: white;
+      color: #eea849;
+    }
+    
+    .ai-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      background: white;
+    }
+    
+    .ai-button:first-child {
+      margin-bottom: 5px;
+    }
+    
+    /* New Chat Card Styles */
+    .chat-card {
+      background: var(--chat-card-bg);
+      color: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      transition: all 0.3s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+      margin-top: 25px;
+    }
+    
+    .chat-card::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #0c00b091, #423dc9, #0017b060);
+      z-index: -1;
+      border-radius: 17px;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    
+    .chat-card:hover::before {
+      opacity: 1;
+    }
+    
+    .chat-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+    
+    .chat-card i {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      color: white;
+      transition: all 0.3s;
+    }
+    
+    .chat-card:hover i {
+      transform: rotate(10deg) scale(1.2);
+    }
+    
+    .chat-card h3 {
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+      color: white;
+    }
+    
+    .chat-card p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 25px;
+      flex-grow: 1;
+      color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .chat-buttons-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: auto;
+    }
+    
+    .chat-button {
+      display: block;
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #0041b0b8;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border: 2px solid transparent;
+      text-align: center;
+    }
+    
+    .chat-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      background: white;
+      color: #0006b060;
+    }
+    
+    /* New Tests Card Styles */
+    .tests-card {
+      background: linear-gradient(135deg, #8e2de2, #4a00e0);
+      color: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      transition: all 0.3s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+      margin-top: 30px;
+    }
+    
+    .tests-card::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #8e2de2, #4a00e0, #8e2de2);
+      z-index: -1;
+      border-radius: 17px;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    
+    .tests-card:hover::before {
+      opacity: 1;
+    }
+    
+    .tests-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+    
+    .tests-card i {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      color: white;
+      transition: all 0.3s;
+    }
+    
+    .tests-card:hover i {
+      transform: rotate(10deg) scale(1.2);
+    }
+    
+    .tests-card h3 {
+      font-size: 1.6rem;
+      margin-bottom: 15px;
+      color: white;
+    }
+    
+    .tests-card p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 25px;
+      flex-grow: 1;
+      color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .tests-buttons-container {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: auto;
+    }
+    
+    .tests-button {
+      display: block;
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #4a00e0;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border: 2px solid transparent;
+      text-align: center;
+    }
+    
+    .tests-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      background: white;
+      color: #4a00e0;
+    }
+    
+    /* About Us Section Styles */
+    .about-us {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 70px 5%;
+      margin: 50px 5%;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .about-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    
+    .about-header h2 {
+      font-size: 2.8rem;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .about-header h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: var(--button-bg);
+      border-radius: 2px;
+    }
+    
+    .about-header p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto;
+      color: #666;
+      line-height: 1.6;
+    }
+    
+    .about-content {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+    
+    .about-section {
+      margin-bottom: 40px;
+    }
+    
+    .about-section h3 {
+      font-size: 1.8rem;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .about-section h3 i {
+      margin-right: 10px;
+      font-size: 1.5rem;
+    }
+    
+    body[dir="rtl"] .about-section h3 i {
+      margin-right: 0;
+      margin-left: 10px;
+    }
+    
+    .about-section p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 20px;
+      color: #555;
+    }
+    
+    .highlight-box {
+      background: var(--section-bg);
+      padding: 25px;
+      border-radius: 10px;
+      border-left: 5px solid var(--primary-color);
+      margin: 30px 0;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    body[dir="rtl"] .highlight-box {
+      border-left: none;
+      border-right: 5px solid var(--primary-color);
+    }
+    
+    .highlight-box p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--primary-color);
+      margin-bottom: 0;
+    }
+    
+    .mission-vision {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+    
+    .mission-card, .vision-card {
+      background: var(--section-bg);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .mission-card::before, .vision-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: var(--button-bg);
+    }
+    
+    .mission-card i, .vision-card i {
+      font-size: 2.5rem;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+    
+    .mission-card h3, .vision-card h3 {
+      font-size: 1.6rem;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+    
+    .mission-card p, .vision-card p {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #555;
+    }
+    
+    /* Animation for cards */
+    .card {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s forwards;
+    }
+    
+    .card:nth-child(1) { animation-delay: 0.2s; }
+    .card:nth-child(2) { animation-delay: 0.4s; }
+    .card:nth-child(3) { animation-delay: 0.6s; }
+    .card:nth-child(4) { animation-delay: 0.8s; }
+    .card:nth-child(5) { animation-delay: 1s; }
+    .card:nth-child(6) { animation-delay: 1.2s; }
+    
+    /* AI Cards Animation */
+    .ai-card {
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s forwards;
+    }
+    
+    .ai-card:nth-child(1) { animation-delay: 1.4s; }
+    .ai-card:nth-child(2) { animation-delay: 1.6s; }
+    
+    /* Tests Card Animation */
+    .tests-card { 
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s forwards;
+      animation-delay: 1.8s; 
+    }
+    
+    /* Chat Card Animation */
+    .chat-card { 
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.8s forwards;
+      animation-delay: 2s; 
+    }
+    
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* Settings Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .modal-content {
+      background: white;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      padding: 30px;
+      box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+    
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #777;
+    }
+    
+    body[dir="rtl"] .close-modal {
+      right: auto;
+      left: 15px;
+    }
+    
+    .close-modal:hover {
+      color: var(--primary-color);
+    }
+    
+    .modal h3 {
+      margin-bottom: 20px;
+      color: var(--primary-color);
+      font-size: 1.5rem;
+    }
+    
+    .settings-form .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .settings-form label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    
+    .settings-form input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    
+    .settings-form button {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    
+    .settings-form button:hover {
+      background: var(--accent-color);
+    }
+    
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: var(--footer-bg);
+      margin-top: 50px;
+    }
+    
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+    
+    .footer-links a {
+      color: var(--text-color);
+      margin: 0 15px;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    
+    .footer-links a:hover {
+      color: var(--primary-color);
+    }
+    
+    .social-icons {
+      margin-bottom: 15px;
+    }
+    
+    .social-icons a {
+      color: var(--text-color);
+      margin: 0 10px;
+      font-size: 1.2rem;
+      transition: all 0.3s;
+    }
+    
+    .social-icons a:hover {
+      color: var(--primary-color);
+      transform: translateY(-3px);
+    }
+    
+    .copyright {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    /* زر الشات بوت الأزرق الصغير فقط */
+    .chatbase-chatbot {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 9999;
+    }
+    
+    body[dir="rtl"] .chatbase-chatbot {
+      right: auto;
+      left: 20px;
+    }
+    
+    .chatbase-toggle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--button-bg);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+      border: none;
+      z-index: 10000;
+    }
+    
+    .chatbase-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      background: var(--button-hover);
+    }
+    
+    .chatbase-toggle.pulse {
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(106, 17, 203, 0.7);
+      }
+      70% {
+        box-shadow: 0 0 0 10px rgba(106, 17, 203, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(106, 17, 203, 0);
+      }
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 1024px) {
+      .cards-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .ai-cards-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .tests-card, .chat-card {
+        margin-top: 0;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        padding: 15px;
+      }
+      
+      .logo {
+        margin-bottom: 15px;
+      }
+      
+      nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      nav ul li {
+        margin: 5px 10px;
+      }
+      
+      .header-controls {
+        margin-top: 15px;
+      }
+      
+      .intro h2 {
+        font-size: 1.8rem;
+      }
+      
+      .intro p {
+        font-size: 1rem;
+      }
+      
+      .featured-card {
+        padding: 30px 20px;
+      }
+      
+      .featured-card h3 {
+        font-size: 1.5rem;
+      }
+      
+      .cards-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .ai-cards-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .ai-card {
+        padding: 25px 20px;
+      }
+      
+      .chat-card, .tests-card {
+        padding: 25px 20px;
+      }
+      
+      .about-header h2 {
+        font-size: 2.2rem;
+      }
+      
+      .about-section h3 {
+        font-size: 1.5rem;
+      }
+      
+      .chatbase-toggle {
+        width: 55px;
+        height: 55px;
+        font-size: 22px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .intro {
+        padding: 30px 15px;
+      }
+      
+      .intro h2 {
+        font-size: 1.5rem;
+      }
+      
+      .featured-card i {
+        font-size: 3rem;
+      }
+      
+      .ai-card h3 {
+        font-size: 1.4rem;
+      }
+      
+      .ai-card p {
+        font-size: 0.95rem;
+      }
+      
+      .chat-card h3, .tests-card h3 {
+        font-size: 1.4rem;
+      }
+      
+      .chat-card p, .tests-card p {
+        font-size: 0.95rem;
+      }
+      
+      .ai-button, .chat-button, .tests-button {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+      }
+      
+      .about-header h2 {
+        font-size: 1.8rem;
+      }
+      
+      .chatbase-toggle {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body dir="ltr">
+  <header>
+    <div class="logo">
+      <i class="fas fa-brain"></i>
+      <span id="logo-text">NeuroSense</span>
+    </div>
+    
+    <nav>
+      <ul>
+        <li><a href="home.html"><i class="fas fa-home"></i> <span id="nav-home">Home</span></a></li>
+        <li><a href="dashboard.html"><i class="fas fa-chart-line"></i> <span id="nav-dashboard">Dashboard</span></a></li>
+        <li><a href="citation.html"><i class="fas fa-book"></i> <span id="nav-resources">Resources</span></a></li>
+        <li><a href="appiont.html"><i class="fas fa-calendar-alt"></i> <span id="nav-appointments">Appointments</span></a></li>
+        <li><a href="https://messagingsite.alchost.eu.org/"><i class="fas fa-comments"></i> <span id="nav-chat">Chat Support</span></a></li>
+      </ul>
+    </nav>
+    
+    <div class="header-controls">
+      <div class="language-switcher" id="languageSwitcher">
+        <div class="language-option active" data-lang="en">EN</div>
+        <div class="language-option" data-lang="ar">AR</div>
+      </div>
+      
+      <div class="user-profile" id="userProfile">
+        <img src="" alt="User Profile" id="profileImage">
+        <span id="profileName">User</span>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="#" id="profileBtn"><i class="fas fa-user"></i> <span id="menu-profile">Profile</span></a>
+          <a href="#" id="settingsBtn"><i class="fas fa-cog"></i> <span id="menu-settings">Settings</span></a>
+          <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> <span id="menu-logout">Logout</span></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="intro">
+    <h2 id="welcome-title">Welcome Back, <span id="welcomeName">User</span>!</h2>
+    <p id="welcome-text">How are you feeling today? Let NeuroSense help you monitor and improve your mental wellbeing.</p>
+    <a href="bel.html" class="cta-button" id="cta-button">Start Mental Health Check</a>
+  </section>
+
+  <section class="sections">
+    <div class="featured-card">
+      <i class="fas fa-brain"></i>
+      <h3 id="featured-title">Mental Health Assessment</h3>
+      <p id="featured-text">Take our comprehensive assessment to get personalized insights about your mental health status and recommendations.</p>
+      <a href="bot.html" class="featured-button" id="featured-button">Begin Assessment</a>
+    </div>
+    
+    <div class="ai-cards-container">
+      <div class="ai-card">
+        <i class="fas fa-robot"></i>
+        <h3 id="ai1-title">Advanced AI Diagnosis</h3>
+        <p id="ai1-text">Get precise mental health analysis using cutting-edge artificial intelligence algorithms specifically trained for psychological assessment.</p>
+        <div class="ai-buttons-container">
+          <a href="https://4a35fc5f98d5184aba.gradio.live/" class="ai-button" target="_blank" id="ai1-button1">AI Specific Diagnosis</a>
+          <a href="http://www.chatbase.co/A6m58OXocseurLhkA1Ahe/help" class="ai-button" target="_blank" id="ai1-button2">Connect with AI Therapy</a>
+        </div>
+      </div>
+      
+      <div class="ai-card">
+        <i class="fas fa-headset"></i>
+        <h3 id="ai2-title">AI Support Assistant</h3>
+        <p id="ai2-text">24/7 AI-powered mental health support with natural conversation capabilities and evidence-based therapeutic techniques.</p>
+        <div class="ai-buttons-container">
+          <a href="https://www.chatbase.co/2w1DldfFXSF9GqgPRI2T4/help" class="ai-button" target="_blank" id="ai2-button1">Connect with AI Assistant</a>
+          <a href="prof.html" class="ai-button" id="ai2-button2">Professional Consultation</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="tests-card">
+      <i class="fas fa-clipboard-check"></i>
+      <h3 id="tests-title">Psychological Assessments</h3>
+      <p id="tests-text">Comprehensive collection of internationally validated psychological tests for accurate mental health evaluation. These standardized assessments help identify symptoms of depression, anxiety, PTSD, ADHD, OCD, bipolar disorder, and other mental health conditions with scientific precision.</p>
+      <div class="tests-buttons-container">
+        <a href="test.html" class="tests-button" id="tests-button">Explore All Tests</a>
+      </div>
+    </div>
+    
+    <div class="cards-container">
+      <div class="card">
+        <i class="fas fa-book-open"></i>
+        <h3 id="card1-title">Mental Health Library</h3>
+        <p id="card1-text">Comprehensive articles and videos about mental health disorders and wellness strategies.</p>
+        <a href="mental.html" class="card-button" id="card1-button">Explore Library</a>
+      </div>
+      
+      <div class="card">
+        <i class="fas fa-heartbeat"></i>
+        <h3 id="card2-title">Therapy Exercises</h3>
+        <p id="card2-text">CBT practices, meditation guides, and mood improvement activities tailored for you.</p>
+        <a href="ex.ther.html" class="card-button" id="card2-button">Start Exercises</a>
+      </div>
+      
+      <div class="card">
+        <i class="fas fa-chart-line"></i>
+        <h3 id="card3-title">Progress Tracking</h3>
+        <p id="card3-text">Visual charts and detailed reports to track your mental health journey over time.</p>
+        <a href="progress.html" class="card-button" id="card3-button">View Progress</a>
+      </div>
+      
+      <div class="card">
+        <i class="fas fa-user-md"></i>
+        <h3 id="card4-title">Professional Support</h3>
+        <p id="card4-text">Connect with licensed therapists and mental health specialists when you need them.</p>
+        <a href="prof.html" class="card-button" id="card4-button">Find Support</a>
+      </div>
+      
+      <div class="card">
+        <i class="fas fa-child"></i>
+        <h3 id="card5-title">Kids & Teens Section</h3>
+        <p id="card5-text">Fun activities and expert tips to help younger users manage stress and anxiety.</p>
+        <a href="games.html" class="card-button" id="card5-button">Explore</a>
+      </div>
+      
+      <div class="card">
+        <i class="fas fa-search"></i>
+        <h3 id="card6-title">Mental Health Research</h3>
+        <p id="card6-text">In-depth research and information about depression, PTSD, anxiety, schizophrenia, social phobia, ADHD, autism, bipolar disorder, and OCD.</p>
+        <a href="research.html" class="card-button" id="card6-button">Explore Research</a>
+      </div>
+    </div>
+    
+    <!-- New Chat Card Section -->
+    <div class="chat-card">
+      <i class="fas fa-comments"></i>
+      <h3 id="chat-title">Support Chat</h3>
+      <p id="chat-text">Connect instantly with our AI assistant or browse through community discussions. Get immediate support, share experiences, and find comfort in knowing you're not alone.</p>
+      <div class="chat-buttons-container">
+        <a href="https://messagingsite.alchost.eu.org/" class="chat-button" id="chat-button1">Start Private Chat</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Us Section -->
+  <section class="about-us" id="about-us">
+    <div class="about-header">
+      <h2 id="about-title">About NeuroSense</h2>
+      <p id="about-subtitle">Where technology meets compassion to transform mental healthcare</p>
+    </div>
+    
+    <div class="about-content">
+      <div class="about-section">
+        <h3><i class="fas fa-heart"></i> <span id="mission-title">Our Mission</span></h3>
+        <p id="mission-text1">We are a team who believes that mental health is a fundamental right for everyone. We created a platform that combines science, technology, and human compassion to provide a safe space that listens to you and truly understands you.</p>
+        
+        <p id="mission-text2">Our application uses advanced artificial intelligence that learns from the principles of real psychological therapy, communicating with you in a natural, empathetic way — like a human being who understands and cares, not just a program that responds.</p>
+        
+        <div class="highlight-box">
+          <p id="mission-highlight">Our goal is for you to find support whenever you need it, without judgment, without fear, and at any time. We are here to help you understand yourself better and regain your calm, step by step. 💙</p>
+        </div>
+      </div>
+      
+      <div class="about-section">
+        <h3><i class="fas fa-stethoscope"></i> <span id="approach-title">Our Approach</span></h3>
+        <p id="approach-text1">We are developing a website and mobile application aimed at early detection of mental health disorders and providing simple initial support to users. The idea is based on the fact that mental health is an increasing challenge in modern societies, where many individuals suffer from conditions such as depression, anxiety disorders, post-traumatic stress disorder, personality disorders, and attention-deficit hyperactivity disorder (ADHD) in children. Yet, a large percentage of them do not receive early diagnosis or timely support.</p>
+        
+        <p id="approach-text2">The platform relies on interactive diagnostic tests, starting with a comprehensive assessment that includes multiple types of questions such as yes/no, multiple-choice, and open-ended responses, allowing the system to collect diverse data about the user. Based on the results, the user is then directed to more specialized assessments related to the potential disorder. What makes the platform unique is the integration of AI and data analysis, using machine learning algorithms and natural language processing to analyze users' written responses.</p>
+      </div>
+      
+      <div class="about-section">
+        <h3><i class="fas fa-chart-line"></i> <span id="beyond-title">Beyond Diagnosis</span></h3>
+        <p id="beyond-text">The project goes beyond preliminary diagnosis; it provides the user with a simplified report that explains the results and suggests initial steps that may help, such as relaxation techniques or improving sleep habits, while emphasizing the importance of consulting a mental health professional if there are serious indicators or high-risk scores. The platform is designed to be easily accessible and affordable, making it especially useful in environments with low awareness of mental health or limited access to specialized medical care.</p>
+      </div>
+      
+      <div class="about-section">
+        <h3><i class="fas fa-watch"></i> <span id="tech-title">Innovative Technology</span></h3>
+        <p id="tech-text1">One of the innovative aspects of the project is the development of a smart wearable device connected to the platform, which continuously tracks physiological and behavioral indicators such as heart rate, physical activity, sleep quality, and stress levels. This data is analyzed through advanced AI algorithms to generate more accurate probability assessments of the user's mental state. Thus, the diagnosis is supported not only by interactive test responses but also by objective biometric measurements.</p>
+        
+        <p id="tech-text2">Additionally, the wearable can provide early alerts if indicators suggest a worsening condition and can suggest real-time breathing or relaxation exercises. This combination of wearable technology and intelligent data analysis enhances early detection accuracy and makes the project a comprehensive tool that supports not only diagnosis but also daily monitoring and ongoing treatment.</p>
+      </div>
+      
+      <div class="about-section">
+        <h3><i class="fas fa-hands-helping"></i> <span id="impact-title">Our Impact</span></h3>
+        <p id="impact-text">In this way, the project represents a scientific and social contribution by leveraging technology and AI for early detection of mental health disorders, raising awareness, reducing the gap caused by delayed diagnosis, and creating the potential for future development to include long-term condition tracking and expansion to cover additional disorders.</p>
+      </div>
+    </div>
+    
+    <div class="mission-vision">
+      <div class="mission-card">
+        <i class="fas fa-bullseye"></i>
+        <h3 id="mission-card-title">Our Mission</h3>
+        <p id="mission-card-text">To make mental health support accessible, affordable, and stigma-free through innovative technology that understands and cares.</p>
+      </div>
+      
+      <div class="vision-card">
+        <i class="fas fa-eye"></i>
+        <h3 id="vision-card-title">Our Vision</h3>
+        <p id="vision-card-text">A world where everyone has the tools and support they need to thrive mentally, emotionally, and psychologically.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Settings Modal -->
+  <div class="modal" id="settingsModal">
+    <div class="modal-content">
+      <span class="close-modal" id="closeModal">&times;</span>
+      <h3><i class="fas fa-cog"></i> <span id="settings-title">Account Settings</span></h3>
+      
+      <form class="settings-form" id="settingsForm">
+        <div class="form-group">
+          <label for="userName" id="label-name">Full Name</label>
+          <input type="text" id="userName" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="userEmail" id="label-email">Email</label>
+          <input type="email" id="userEmail" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="userPhone" id="label-phone">Phone Number</label>
+          <input type="tel" id="userPhone">
+        </div>
+        
+        <div class="form-group">
+          <label for="userBirthdate" id="label-birthdate">Date of Birth</label>
+          <input type="date" id="userBirthdate">
+        </div>
+        
+        <div class="form-group">
+          <label for="currentPassword" id="label-current-password">Current Password</label>
+          <input type="password" id="currentPassword">
+        </div>
+        
+        <div class="form-group">
+          <label for="newPassword" id="label-new-password">New Password</label>
+          <input type="password" id="newPassword">
+        </div>
+        
+        <div class="form-group">
+          <label for="confirmPassword" id="label-confirm-password">Confirm New Password</label>
+          <input type="password" id="confirmPassword">
+        </div>
+        
+        <button type="submit" id="save-button">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-links">
+      <a href="#about-us" id="footer-about">About Us</a>
+      <a href="#" id="footer-contact">Contact</a>
+    </div>
+    
+    <p class="copyright" id="copyright">© 2025 NeuroSense. All rights reserved.</p>
+  </footer>
+
+  <!-- زر الشات بوت الأزرق الصغير فقط -->
+  <div class="chatbase-chatbot">
+    <button class="chatbase-toggle pulse" id="chatbaseToggle" aria-label="Open Chatbot">
+      <i class="fas fa-robot"></i>
+    </button>
+  </div>
+
+  <script>
+    // Language content
+    const languageContent = {
+      en: {
+        // Navigation
+        "nav-home": "Home",
+        "nav-dashboard": "Dashboard",
+        "nav-resources": "Resources",
+        "nav-appointments": "Appointments",
+        "nav-chat": "Chat Support",
+        
+        // User menu
+        "menu-profile": "Profile",
+        "menu-settings": "Settings",
+        "menu-logout": "Logout",
+        
+        // Welcome section
+        "welcome-title": "Welcome Back, ",
+        "welcome-text": "How are you feeling today? Let NeuroSense help you monitor and improve your mental wellbeing.",
+        "cta-button": "Start Mental Health Check",
+        
+        // Featured card
+        "featured-title": "Mental Health Assessment",
+        "featured-text": "Take our comprehensive assessment to get personalized insights about your mental health status and recommendations.",
+        "featured-button": "Begin Assessment",
+        
+        // New AI Cards
+        "ai1-title": "Advanced AI Diagnosis",
+        "ai1-text": "Get precise mental health analysis using cutting-edge artificial intelligence algorithms specifically trained for psychological assessment.",
+        "ai1-button1": "AI Specific Diagnosis",
+        "ai1-button2": "Connect with AI Therapy",
+        
+        "ai2-title": "AI Support Assistant",
+        "ai2-text": "AI-powered mental health support with natural conversation capabilities and evidence-based therapeutic techniques.",
+        "ai2-button1": "Connect with AI Assistant",
+        "ai2-button2": "Professional Consultation",
+        
+        "tests-title": "Psychological Assessments",
+        "tests-text": "Comprehensive collection of internationally validated psychological tests for accurate mental health evaluation. These standardized assessments help identify symptoms of depression, anxiety, PTSD, ADHD, OCD, bipolar disorder, and other mental health conditions with scientific precision.",
+        "tests-button": "Explore All Tests",
+        
+        // Chat Card
+        "chat-title": " Support Chat",
+        "chat-text": "Connect instantly with our AI assistant or browse through community discussions. Get immediate support, share experiences, and find comfort in knowing you're not alone.",
+        "chat-button1": "Start Private Chat",
+        "chat-button2": "Join Community",
+        
+        // Cards
+        "card1-title": "Mental Health Library",
+        "card1-text": "Comprehensive articles and videos about mental health disorders and wellness strategies.",
+        "card1-button": "Explore Library",
+        
+        "card2-title": "Therapy Exercises",
+        "card2-text": "CBT practices, meditation guides, and mood improvement activities tailored for you.",
+        "card2-button": "Start Exercises",
+        
+        "card3-title": "Progress Tracking",
+        "card3-text": "Visual charts and detailed reports to track your mental health journey over time.",
+        "card3-button": "View Progress",
+        
+        "card4-title": "Professional Support",
+        "card4-text": "Connect with licensed therapists and mental health specialists when you need them.",
+        "card4-button": "Find Support",
+        
+        "card5-title": "Kids & Teens Section",
+        "card5-text": "Fun activities and expert tips to help younger users manage stress and anxiety.",
+        "card5-button": "Explore",
+        
+        "card6-title": "Mental Health Research",
+        "card6-text": "In-depth research and information about depression, PTSD, anxiety, schizophrenia, social phobia, ADHD, autism, bipolar disorder, and OCD.",
+        "card6-button": "Explore Research",
+        
+        // About section
+        "about-title": "About NeuroSense",
+        "about-subtitle": "Where technology meets compassion to transform mental healthcare",
+        
+        "mission-title": "Our Mission",
+        "mission-text1": "We are a team who believes that mental health is a fundamental right for everyone. We created a platform that combines science, technology, and human compassion to provide a safe space that listens to you and truly understands you.",
+        "mission-text2": "Our application uses advanced artificial intelligence that learns from the principles of real psychological therapy, communicating with you in a natural, empathetic way — like a human being who understands and cares, not just a program that responds.",
+        "mission-highlight": "Our goal is for you to find support whenever you need it, without judgment, without fear, and at any time. We are here to help you understand yourself better and regain your calm, step by step. 💙",
+        
+        "approach-title": "Our Approach",
+        "approach-text1": "We are developing a website and mobile application aimed at early detection of mental health disorders and providing simple initial support to users. The idea is based on the fact that mental health is an increasing challenge in modern societies, where many individuals suffer from conditions such as depression, anxiety disorders, post-traumatic stress disorder, personality disorders, and attention-deficit hyperactivity disorder (ADHD) in children. Yet, a large percentage of them do not receive early diagnosis or timely support.",
+        "approach-text2": "The platform relies on interactive diagnostic tests, starting with a comprehensive assessment that includes multiple types of questions such as yes/no, multiple-choice, and open-ended responses, allowing the system to collect diverse data about the user. Based on the results, the user is then directed to more specialized assessments related to the potential disorder. What makes the platform unique is the integration of AI and data analysis, using machine learning algorithms and natural language processing to analyze users' written responses.",
+        
+        "beyond-title": "Beyond Diagnosis",
+        "beyond-text": "The project goes beyond preliminary diagnosis; it provides the user with a simplified report that explains the results and suggests initial steps that may help, such as relaxation techniques or improving sleep habits, while emphasizing the importance of consulting a mental health professional if there are serious indicators or high-risk scores. The platform is designed to be easily accessible and affordable, making it especially useful in environments with low awareness of mental health or limited access to specialized medical care.",
+        
+        "tech-title": "Innovative Technology",
+        "tech-text1": "One of the innovative aspects of the project is the development of a smart wearable device connected to the platform, which continuously tracks physiological and behavioral indicators such as heart rate, physical activity, sleep quality, and stress levels. This data is analyzed through advanced AI algorithms to generate more accurate probability assessments of the user's mental state. Thus, the diagnosis is supported not only by interactive test responses but also by objective biometric measurements.",
+        "tech-text2": "Additionally, the wearable can provide early alerts if indicators suggest a worsening condition and can suggest real-time breathing or relaxation exercises. This combination of wearable technology and intelligent data analysis enhances early detection accuracy and makes the project a comprehensive tool that supports not only diagnosis but also daily monitoring and ongoing treatment.",
+        
+        "impact-title": "Our Impact",
+        "impact-text": "In this way, the project represents a scientific and social contribution by leveraging technology and AI for early detection of mental health disorders, raising awareness, reducing the gap caused by delayed diagnosis, and creating the potential for future development to include long-term condition tracking and expansion to cover additional disorders.",
+        
+        "mission-card-title": "Our Mission",
+        "mission-card-text": "To make mental health support accessible, affordable, and stigma-free through innovative technology that understands and cares.",
+        
+        "vision-card-title": "Our Vision",
+        "vision-card-text": "A world where everyone has the tools and support they need to thrive mentally, emotionally, and psychologically.",
+        
+        // Settings
+        "settings-title": "Account Settings",
+        "label-name": "Full Name",
+        "label-email": "Email",
+        "label-phone": "Phone Number",
+        "label-birthdate": "Date of Birth",
+        "label-current-password": "Current Password",
+        "label-new-password": "New Password",
+        "label-confirm-password": "Confirm New Password",
+        "save-button": "Save Changes",
+        
+        // Footer
+        "footer-about": "About Us",
+        "footer-contact": "Contact",
+        "copyright": "© 2025 NeuroSense. All rights reserved."
+      },
+      ar: {
+        // Navigation
+        "nav-home": "الرئيسية",
+        "nav-dashboard": "لوحة التحكم",
+        "nav-resources": "المصادر",
+        "nav-appointments": "المواعيد",
+        "nav-chat": "الدعم بالشات",
+        
+        // User menu
+        "menu-profile": "الملف الشخصي",
+        "menu-settings": "الإعدادات",
+        "menu-logout": "تسجيل الخروج",
+        
+        // Welcome section
+        "welcome-title": "مرحباً بعودتك، ",
+        "welcome-text": "كيف تشعر اليوم؟ دع NeuroSense يساعدك في مراقبة وتحسين صحتك النفسية.",
+        "cta-button": "ابدأ فحص الصحة النفسية",
+        
+        // Featured card
+        "featured-title": "تقييم الصحة النفسية",
+        "featured-text": "قم بتقييم شامل للحصول على رؤى مخصصة حول حالتك النفسية والتوصيات المناسبة.",
+        "featured-button": "ابدأ التقييم",
+        
+        // New AI Cards
+        "ai1-title": "تشخيص متقدم بالذكاء الاصطناعي",
+        "ai1-text": "احصل على تحليل دقيق للصحة النفسية باستخدام خوارزميات الذكاء الاصطناعي المتطورة المدربة خصيصًا للتقييم النفسي.",
+        "ai1-button1": "تشخيص محدد بالذكاء الاصطناعي",
+        "ai1-button2": "التواصل مع علاج الذكاء الاصطناعي",
+        
+        "ai2-title": "مساعد الدعم بالذكاء الاصطناعي",
+        "ai2-text": "دعم الصحة النفسية المدعوم بالذكاء الاصطناعي على مدار الساعة مع قدرات محادثة طبيعية وتقنيات علاجية قائمة على الأدلة.",
+        "ai2-button1": "التواصل مع مساعد الذكاء الاصطناعي",
+        "ai2-button2": "استشارة مهنية",
+        
+        "tests-title": "الاختبارات النفسية",
+        "tests-text": "مجموعة شاملة من الاختبارات النفسية المعتمدة دولياً لتقييم دقيق للصحة النفسية. تساعد هذه التقييمات الموحدة في تحديد أعراض الاكتئاب، القلق، اضطراب ما بعد الصدمة، اضطراب فرط الحركة ونقص الانتباه، الوسواس القهري، الاضطراب ثنائي القطب، وحالات الصحة النفسية الأخرى بدقة علمية.",
+        "tests-button": "استكشف جميع الاختبارات",
+        
+        // Chat Card
+        "chat-title": "دعم بالشات على مدار الساعة",
+        "chat-text": "تواصل فوراً مع مساعدنا بالذكاء الاصطناعي أو تصفح مناقشات المجتمع. احصل على دعم فوري، شارك التجارب، وابحث عن الراحة في معرفة أنك لست وحدك.",
+        "chat-button1": "ابدأ محادثة خاصة",
+        "chat-button2": "انضم إلى المجتمع",
+        
+        // Cards
+        "card1-title": "مكتبة الصحة النفسية",
+        "card1-text": "مقالات وفيديوهات شاملة حول اضطرابات الصحة النفسية واستراتيجيات العافية.",
+        "card1-button": "استكشف المكتبة",
+        
+        "card2-title": "تمارين العلاج",
+        "card2-text": "ممارسات العلاج المعرفي السلوكي، أدلة التأمل، وأنشطة تحسين المزاج المخصصة لك.",
+        "card2-button": "ابدأ التمارين",
+        
+        "card3-title": "تتبع التقدم",
+        "card3-text": "مخططات مرئية وتقارير مفصلة لتتبع رحلتك في الصحة النفسية مع مرور الوقت.",
+        "card3-button": "عرض التقدم",
+        
+        "card4-title": "الدعم المهني",
+        "card4-text": "تواصل مع معالجين مرخصين وأخصائيي الصحة النفسية عندما تحتاجهم.",
+        "card4-button": "ابحث عن دعم",
+        
+        "card5-title": "قسم الأطفال والمراهقين",
+        "card5-text": "أنشطة ممتعة ونصائح خبيرة لمساعدة المستخدمين الأصغر سناً في إدارة التوتر والقلق.",
+        "card5-button": "استكشف",
+        
+        "card6-title": "أبحاث الصحة النفسية",
+        "card6-text": "أبحاث ومعلومات متعمقة حول الاكتئاب، اضطراب ما بعد الصدمة، القلق، الفصام، الرهاب الاجتماعي، اضطراب فرط الحركة ونقص الانتباه، التوحد، الاضطراب ثنائي القطب، والوسواس القهري.",
+        "card6-button": "استكشف الأبحاث",
+        
+        // About section
+        "about-title": "عن NeuroSense",
+        "about-subtitle": "حيث تلتقي التكنولوجيا بالتعاطف لتحويل الرعاية الصحية النفسية",
+        
+        "mission-title": "مهمتنا",
+        "mission-text1": "نحن فريق يؤمن بأن الصحة النفسية حق أساسي للجميع. أنشأنا منصة تجمع بين العلم والتكنولوجيا والتعاطف الإنساني لتوفر مساحة آمنة تستمع إليك وتفهمك حقاً.",
+        "mission-text2": "تستخدم تطبيقنا الذكاء الاصطناعي المتقدم الذي يتعلم من مبادئ العلاج النفسي الحقيقي، ويتواصل معك بطريقة طبيعية وتعاطفية - مثل إنسان يفهم ويهتم، وليس مجرد برنامج يرد.",
+        "mission-highlight": "هدفنا هو أن تجد الدعم متى احتجت إليه، دون حكم، دون خوف، وفي أي وقت. نحن هنا لمساعدتك على فهم نفسك بشكل أفضل واستعادة هدوئك، خطوة بخطوة. 💙",
+        
+        "approach-title": "نهجنا",
+        "approach-text1": "نطور موقعاً إلكترونياً وتطبيقاً للهواتف يهدف إلى الكشف المبكر عن اضطرابات الصحة النفسية وتقديم الدعم الأولي البسيط للمستخدمين. تستند الفكرة إلى حقيقة أن الصحة النفسية تمثل تحدياً متزايداً في المجتمعات الحديثة، حيث يعاني العديد من الأفراد من حالات مثل الاكتئاب، اضطرابات القلق، اضطراب ما بعد الصدمة، اضطرابات الشخصية، واضطراب فرط الحركة ونقص الانتباه (ADHD) لدى الأطفال. ومع ذلك، فإن نسبة كبيرة منهم لا تحصل على التشخيص المبكر أو الدعم في الوقت المناسب.",
+        "approach-text2": "تعتمد المنصة على اختبارات تشخيصية تفاعلية، تبدأ بتقييم شامل يتضمن أنواعاً متعددة من الأسئلة مثل نعم/لا، الاختيار من متعدد، والإجابات المفتوحة، مما يسمح للنظام بجمع بيانات متنوعة عن المستخدم. بناءً على النتائج، يتم توجيه المستخدم بعد ذلك إلى تقييمات أكثر تخصصاً تتعلق بالاضطراب المحتمل. ما يجعل المنصة فريدة هو تكامل الذكاء الاصطناعي وتحليل البيانات، باستخدام خوارزميات التعلم الآلي ومعالجة اللغة الطبيعية لتحليل ردود المستخدمين المكتوبة.",
+        
+        "beyond-title": "ما وراء التشخيص",
+        "beyond-text": "يتجاوز المشروع التشخيص الأولي؛ فهو يزود المستخدم بتقرير مبسط يشرح النتائج ويقترح خطوات أولية قد تساعد، مثل تقنيات الاسترخاء أو تحسين عادات النوم، مع التأكيد على أهمية استشارة أخصائي الصحة النفسية إذا كانت هناك مؤشرات خطيرة أو درجات عالية الخطورة. تم تصميم المنصة لتكون سهلة الوصول وبأسعار معقولة، مما يجعلها مفيدة بشكل خاص في البيئات ذات الوعي المنخفض بالصحة النفسية أو الوصول المحدود إلى الرعاية الطبية المتخصصة.",
+        
+        "tech-title": "التكنولوجيا المبتكرة",
+        "tech-text1": "أحد الجوانب المبتكرة للمشروع هو تطوير جهاز قابل للارتداء متصل بالمنصة، يتتبع باستمرار المؤشرات الفسيولوجية والسلوكية مثل معدل ضربات القلب، النشاط البدني، جودة النوم، ومستويات التوتر. يتم تحليل هذه البيانات من خلال خوارزميات الذكاء الاصطناعي المتقدمة لتوليد تقييمات احتمالية أكثر دقة للحالة النفسية للمستخدم. وبالتالي، يتم دعم التشخيص ليس فقط من خلال استجابات الاختبار التفاعلي ولكن أيضاً من خلال القياسات الحيوية الموضوعية.",
+        "tech-text2": "بالإضافة إلى ذلك، يمكن للجهاز القابل للارتداء تقديم تنبيهات مبكرة إذا أشارت المؤشرات إلى تدهور الحالة ويمكنه اقتراح تمارين التنفس أو الاسترخاء في الوقت الفعلي. هذا المزيج من تكنولوجيا الأجهزة القابلة للارتداء وتحليل البيانات الذكي يعزز دقة الكشف المبكر ويجعل المشروع أداة شاملة تدعم ليس فقط التشخيص ولكن أيضاً المراقبة اليومية والعلاج المستمر.",
+        
+        "impact-title": "تأثيرنا",
+        "impact-text": "بهذه الطريقة، يمثل المشروع مساهمة علمية واجتماعية من خلال الاستفادة من التكنولوجيا والذكاء الاصطناعي للكشف المبكر عن اضطرابات الصحة النفسية، وزيادة الوعي، وتقليل الفجوة الناجمة عن التشخيص المتأخر، وخلق إمكانية التطوير المستقبلي لتشمل تتبع الحالة على المدى الطويل والتوسع لتغطية اضطرابات إضافية.",
+        
+        "mission-card-title": "مهمتنا",
+        "mission-card-text": "جعل الدعم النفسي في متناول اليد، وبأسعار معقولة، وخالٍ من الوصمة من خلال التكنولوجيا المبتكرة التي تفهم وتهتم.",
+        
+        "vision-card-title": "رؤيتنا",
+        "vision-card-text": "عالم حيث يمتلك الجميع الأدوات والدعم الذي يحتاجونه للازدهار نفسياً وعاطفياً ونفسياً.",
+        
+        // Settings
+        "settings-title": "إعدادات الحساب",
+        "label-name": "الاسم الكامل",
+        "label-email": "البريد الإلكتروني",
+        "label-phone": "رقم الهاتف",
+        "label-birthdate": "تاريخ الميلاد",
+        "label-current-password": "كلمة المرور الحالية",
+        "label-new-password": "كلمة المرور الجديدة",
+        "label-confirm-password": "تأكيد كلمة المرور الجديدة",
+        "save-button": "حفظ التغييرات",
+        
+        // Footer
+        "footer-about": "من نحن",
+        "footer-contact": "اتصل بنا",
+        "copyright": "© 2025 NeuroSense. جميع الحقوق محفوظة."
+      }
+    };
+
+    // Function to update page content based on selected language
+    function updateLanguage(lang) {
+      // Update HTML direction
+      document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      document.documentElement.lang = lang;
+      
+      // Update all text elements
+      Object.keys(languageContent[lang]).forEach(key => {
+        const element = document.getElementById(key);
+        if (element) {
+          element.textContent = languageContent[lang][key];
+        }
+      });
+      
+      // Update language switcher
+      document.querySelectorAll('.language-option').forEach(option => {
+        option.classList.remove('active');
+        if (option.dataset.lang === lang) {
+          option.classList.add('active');
+        }
+      });
+      
+      // Save language preference
+      localStorage.setItem('language', lang);
+      
+      // Update current language variable
+      currentLanguage = lang;
+    }
+
+    // ========== MAIN CODE START ==========
+    
+    // Check if user is logged in
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    const userData = localStorage.getItem('user');
+    
+    if (!isLoggedIn || !userData) {
+      window.location.href = 'index.html';
+      throw new Error('User not logged in');
+    }
+    
+    // Parse user data
+    const user = JSON.parse(userData);
+    
+    // Load user data from localStorage
+    const savedUserData = JSON.parse(localStorage.getItem('userData')) || {
+      name: user.name || "User",
+      email: user.email || "user@example.com",
+      phone: "+20 123 456 7890",
+      birthdate: "1995-01-01",
+      password: "password123"
+    };
+    
+    // Language management
+    let currentLanguage = localStorage.getItem('language') || 'en';
+    
+    // Initialize language
+    updateLanguage(currentLanguage);
+    
+    // Set user information dynamically
+    document.getElementById('profileName').textContent = user.name || savedUserData.name;
+    document.getElementById('welcomeName').textContent = user.name || savedUserData.name;
+    
+    // Set profile image based on user name
+    const userNameForAvatar = user.name || savedUserData.name;
+    document.getElementById('profileImage').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userNameForAvatar)}&background=random`;
+    
+    // Fill settings form with user data
+    document.getElementById('userName').value = user.name || savedUserData.name;
+    document.getElementById('userEmail').value = user.email || savedUserData.email;
+    document.getElementById('userPhone').value = savedUserData.phone;
+    document.getElementById('userBirthdate').value = savedUserData.birthdate;
+    
+    // Language switcher functionality
+    document.querySelectorAll('.language-option').forEach(option => {
+      option.addEventListener('click', () => {
+        const selectedLang = option.dataset.lang;
+        updateLanguage(selectedLang);
+      });
+    });
+    
+    // User profile dropdown
+    const userProfile = document.getElementById('userProfile');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    
+    userProfile.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('active');
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!userProfile.contains(e.target)) {
+        dropdownMenu.classList.remove('active');
+      }
+    });
+    
+    // Settings modal
+    const settingsModal = document.getElementById('settingsModal');
+    const settingsBtn = document.getElementById('settingsBtn');
+    const closeModal = document.getElementById('closeModal');
+    
+    settingsBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      settingsModal.style.display = 'flex';
+      dropdownMenu.classList.remove('active');
+    });
+    
+    closeModal.addEventListener('click', () => {
+      settingsModal.style.display = 'none';
+    });
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', (e) => {
+      if (e.target === settingsModal) {
+        settingsModal.style.display = 'none';
+      }
+    });
+    
+    // Save settings
+    document.getElementById('settingsForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const userName = document.getElementById('userName').value;
+      const userEmail = document.getElementById('userEmail').value;
+      const userPhone = document.getElementById('userPhone').value;
+      const userBirthdate = document.getElementById('userBirthdate').value;
+      const currentPassword = document.getElementById('currentPassword').value;
+      const newPassword = document.getElementById('newPassword').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      // Validate password changes if any field is filled
+      if (currentPassword || newPassword || confirmPassword) {
+        if (!currentPassword) {
+          alert(currentLanguage === 'ar' ? 'الرجاء إدخال كلمة المرور الحالية لإجراء التغييرات' : 'Please enter your current password to make changes');
+          return;
+        }
+        
+        if (currentPassword !== savedUserData.password) {
+          alert(currentLanguage === 'ar' ? 'كلمة المرور الحالية غير صحيحة' : 'Current password is incorrect');
+          return;
+        }
+        
+        if (newPassword !== confirmPassword) {
+          alert(currentLanguage === 'ar' ? 'كلمات المرور الجديدة غير متطابقة' : 'New passwords do not match');
+          return;
+        }
+        
+        if (newPassword.length < 6) {
+          alert(currentLanguage === 'ar' ? 'يجب أن تكون كلمة المرور الجديدة 6 أحرف على الأقل' : 'New password must be at least 6 characters');
+          return;
+        }
+        
+        // Update password
+        savedUserData.password = newPassword;
+      }
+      
+      // Update user data
+      savedUserData.name = userName;
+      savedUserData.email = userEmail;
+      savedUserData.phone = userPhone;
+      savedUserData.birthdate = userBirthdate;
+      
+      // Update localStorage user data
+      localStorage.setItem('userData', JSON.stringify(savedUserData));
+      
+      // Update the main user object from login
+      user.name = userName;
+      user.email = userEmail;
+      localStorage.setItem('user', JSON.stringify(user));
+      
+      // Update UI
+      document.getElementById('profileName').textContent = userName.split(' ').slice(0, 2).join(' ');
+      document.getElementById('welcomeName').textContent = userName.split(' ').slice(0, 2).join(' ');
+      document.getElementById('profileImage').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=random`;
+      
+      // Close modal
+      settingsModal.style.display = 'none';
+      
+      // Clear password fields
+      document.getElementById('currentPassword').value = '';
+      document.getElementById('newPassword').value = '';
+      document.getElementById('confirmPassword').value = '';
+      
+      // Show success message
+      alert(currentLanguage === 'ar' ? 'تم حفظ الإعدادات بنجاح!' : 'Settings saved successfully!');
+    });
+    
+    // Logout functionality
+    document.getElementById('logoutBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      // Clear all user-related data
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+      // Keep userData for next login if desired, or remove it
+      // localStorage.removeItem('userData');
+      
+      // Redirect to login page
+      window.location.href = 'index.html';
+    });
+
+    // Chatbase toggle button
+    const chatbaseToggle = document.getElementById('chatbaseToggle');
+    
+    // Remove pulse animation after first interaction
+    chatbaseToggle.addEventListener('click', function() {
+      this.classList.remove('pulse');
+    });
+
+    // Chatbase Configuration
+    window.chatbaseConfig = {
+      chatbotId: 'OZEp7Bx0k4YqFR8LsheQ_'
+    };
+
+    // Chatbase script loading
+    (function() {
+      var d = document;
+      var s = d.createElement('script');
+      s.src = 'https://www.chatbase.co/embed.min.js';
+      s.id = window.chatbaseConfig.chatbotId;
+      s.defer = true;
+      s.onload = function() {
+        window.chatbase('onLoad');
+      };
+      d.getElementsByTagName('head')[0].appendChild(s);
+    })();
+
+    // Initialize chatbot
+    document.addEventListener('DOMContentLoaded', function() {
+      // Hide default black bubble
+      const hideDefaultBubble = setInterval(function() {
+        const defaultBubble = document.getElementById('chatbase-bubble');
+        if (defaultBubble) {
+          defaultBubble.style.display = 'none';
+          clearInterval(hideDefaultBubble);
+        }
+      }, 100);
+      
+      // Open chatbot when clicking blue button
+      chatbaseToggle.addEventListener('click', function() {
+        // Try to open chatbot
+        if (window.chatbase && typeof window.chatbase === 'function') {
+          window.chatbase('openChat');
+        } else {
+          // If chatbot not loaded properly, reload
+          console.log('Chatbase not loaded properly, reloading...');
+          location.reload();
+        }
+      });
+      
+      // Check if chatbot appears after page load
+      setTimeout(function() {
+        if (window.chatbase && typeof window.chatbase === 'function') {
+          console.log('Chatbase loaded successfully');
+        } else {
+          console.log('Chatbase failed to load');
+        }
+      }, 2000);
+    });
+  </script>
+</body>
+</html>

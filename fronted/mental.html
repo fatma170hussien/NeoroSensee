@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindCare - Mental Health Library</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        :root {
+            --primary: #2a6bc9;
+            --primary-light: #e0eeff;
+            --secondary: #1e4a7b;
+            --accent: #4caf50;
+            --accent-pink: #e91e63;
+            --accent-purple: #9c27b0;
+            --accent-orange: #ff9800;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Mobile Navigation */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 6px;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 70%;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            z-index: 1001;
+            padding: 2rem;
+            transition: var(--transition);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav ul {
+            list-style: none;
+            margin-top: 3rem;
+        }
+
+        .mobile-nav li {
+            margin-bottom: 1.5rem;
+        }
+
+        .mobile-nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            display: block;
+            padding: 0.5rem 0;
+            transition: var(--transition);
+        }
+
+        .mobile-nav a:hover {
+            padding-left: 10px;
+        }
+
+        .close-nav {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        .hero {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            animation: fadeIn 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--secondary);
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            text-align: center;
+            padding: 2rem 1.5rem;
+            cursor: pointer;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: var(--primary);
+            font-size: 2rem;
+        }
+
+        .category-card h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .category-card p {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            background: var(--primary);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .resources {
+            margin-bottom: 4rem;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .resource-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .resource-img {
+            height: 180px;
+            background: linear-gradient(45deg, #64b3f4, #2a6bc9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .resource-content {
+            padding: 1.5rem;
+        }
+
+        .resource-content h3 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .resource-content p {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .read-more {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+
+        .read-more:hover {
+            color: var(--secondary);
+            gap: 10px;
+        }
+
+        .success-stories {
+            margin-bottom: 4rem;
+        }
+
+        .stories-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .story-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .story-img {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .story-img:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+        }
+
+        .story-content {
+            padding: 1.5rem;
+        }
+
+        .story-content h3 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .story-content p {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .story-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .features {
+            background: linear-gradient(135deg, var(--primary-light) 0%, #d0e5ff 100%);
+            padding: 4rem 0;
+            margin: 4rem 0;
+            border-radius: 20px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .testimonials {
+            margin-bottom: 4rem;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .testimonial-card:before {
+            content: '"';
+            font-size: 5rem;
+            color: var(--primary-light);
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            line-height: 1;
+        }
+
+        .testimonial-text {
+            margin-bottom: 1.5rem;
+            color: var(--gray);
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .author-details h4 {
+            color: var(--secondary);
+        }
+
+        .author-details p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .inspirational-people {
+            margin-bottom: 4rem;
+        }
+
+        .people-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .person-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .person-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .person-img {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .person-img:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+        }
+
+        .person-content {
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .person-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: var(--accent);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .person-content h3 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .person-content p {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .person-stats {
+            display: flex;
+            justify-content: space-between;
+            color: var(--gray);
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .stat.liked {
+            color: var(--accent-pink);
+        }
+
+        .stat:hover {
+            color: var(--accent-pink);
+        }
+
+        footer {
+            background: linear-gradient(135deg, var(--secondary) 0%, #153a61 100%);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .footer-column p {
+            margin-bottom: 1rem;
+            opacity: 0.8;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.3); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.3); }
+            60% { transform: scale(1); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+                position: absolute;
+                right: 2rem;
+                top: 1.5rem;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .categories {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 999;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 2rem;
+            position: relative;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            color: var(--secondary);
+        }
+
+        .person-detail {
+            display: none;
+        }
+
+        .person-header {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            .person-header {
+                flex-direction: row;
+            }
+        }
+
+        .person-detail-img {
+            flex: 1;
+            border-radius: 15px;
+            overflow: hidden;
+            height: 300px;
+        }
+
+        .person-detail-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .person-detail-info {
+            flex: 2;
+        }
+
+        .person-detail-info h2 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .person-timeline {
+            margin-top: 2rem;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .person-timeline:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 2px;
+            height: 100%;
+            background: var(--primary);
+        }
+
+        .timeline-item {
+            margin-bottom: 2rem;
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: -6px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+
+        .timeline-year {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* تحسينات إضافية */
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hover-lift {
+            transition: var(--transition);
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+        }
+        
+        .pulse-once {
+            animation: pulse 2s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-content">
+            <div class="logo" onclick="scrollToTop()">
+                <i class="fas fa-brain floating-element"></i>
+                <h1>MindCare</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="#assessment">Assessment</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                    <li><a href="#stories">Success Stories</a></li>
+                    <li><a href="#about">About Us</a></li>
+                </ul>
+            </nav>
+            <div class="hamburger" id="hamburger">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <span class="close-nav" id="closeNav">&times;</span>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="#assessment" onclick="closeMobileNav()">Assessment</a></li>
+            <li><a href="#resources" onclick="closeMobileNav()">Resources</a></li>
+            <li><a href="#stories" onclick="closeMobileNav()">Success Stories</a></li>
+            <li><a href="#about" onclick="closeMobileNav()">About Us</a></li>
+        </ul>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h2>Mental Health Library</h2>
+        <p>Your safe space to learn, understand, and find resources for mental well-being. Explore our comprehensive library of articles, guides, and tools designed to support your mental health journey.</p>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="container">
+        <h2 class="section-title">Explore by Category</h2>
+        <div class="categories">
+            <div class="category-card hover-lift" onclick="filterResources('depression')">
+                <div class="category-icon">
+                    <i class="fas fa-sad-tear"></i>
+                </div>
+                <h3>Depression</h3>
+                <p>Understand symptoms, causes, and evidence-based treatments for depression.</p>
+                <a href="dep.html" class="btn">Explore</a>
+            </div>
+            
+            <div class="category-card hover-lift" onclick="filterResources('anxiety')">
+                <div class="category-icon">
+                    <i class="fas fa-tired"></i>
+                </div>
+                <h3>Social Anxiety disorder</h3>
+                <p>Learn about different anxiety disorders and effective coping strategies.</p>
+                <a href="Social Anx.html" class="btn">Explore</a>
+            </div>
+            
+            <div class="category-card hover-lift" onclick="filterResources('ptsd')">
+                <div class="category-icon">
+                    <i class="fas fa-trauma"></i>
+                </div>
+                <h3>PTSD</h3>
+                <p>Resources for understanding and recovering from traumatic experiences.</p>
+                <a href="PTSD.html" class="btn">Explore</a>
+            </div>
+            
+            <div class="category-card hover-lift" onclick="filterResources('bpd')">
+                <div class="category-icon">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <h3>Dipolar Disorder</h3>
+                <p>Bipolar Disorder is a mental health condition characterized by extreme mood swings that include emotional highs (mania or hypomania) and lows (depression).</p>
+                <a href="Dipolar Disorder.html" class="btn">Explore</a>
+            </div>
+            
+            <div class="category-card hover-lift" onclick="filterResources('adhd')">
+                <div class="category-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3>ADHD</h3>
+                <p>Resources for understanding ADHD across different age groups.</p>
+                <a href="ADHD.html" class="btn">Explore</a>
+            </div>
+            
+            <div class="category-card hover-lift" onclick="filterResources('self-care')">
+                <div class="category-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <h3>Obsessive-Compulsive Disorder (OCD)</h3>
+                <p>Resources for understanding and managing Obsessive-Compulsive Disorder.</p>
+                <a href="OCD.HTML" class="btn">Explore</a>
+            </div>
+            <div class="category-card hover-lift" onclick="filterResources('self-care')">
+                <div class="category-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <h3>Anxiety Disorder</h3>
+                <p>anxiety disorders are a group of mental health conditions characterized by excessive fear, worry, or nervousness.</p>
+                <a href="Anxiety dis.html" class="btn">Explore</a>
+            </div>
+
+            <!-- Two new categories -->
+            <div class="category-card hover-lift" onclick="filterResources('bipolar')">
+                <div class="category-icon">
+                    <i class="fas fa-cloud-sun"></i>
+                </div>
+                <h3>Schizophrenia</h3>
+                <p>Schizophrenia is a chronic mental health disorder that affects thinking, perception, emotions, and behavior.</p>
+                <a href="Schizo.html" class="btn">Explore</a>
+            </div>
+
+            <div class="category-card hover-lift" onclick="filterResources('ocd')">
+                <div class="category-icon">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+                <h3>Autism Spectrum Disorder (ASD)</h3>
+                <p>Autism Spectrum Disorder (ASD) is a neurodevelopmental disorder that affects communication, social interaction, and behavior.</p>
+                <a href="Autism.html" class="btn">Explore</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inspirational People Section -->
+    <section class="container inspirational-people">
+        <h2 class="section-title">Inspiring People Who Overcame Challenges</h2>
+        <div class="people-grid">
+            <div class="person-card hover-lift" onclick="openPersonModal('person1')">
+                <div class="person-img" style="background-image: url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="person-content">
+                    <div class="person-badge">Success Story</div>
+                    <h3>Sarah Johnson</h3>
+                    <p>Overcame severe depression after years of struggle, now a therapist helping others.</p>
+                    <div class="person-stats">
+                        <div class="stat"><i class="far fa-clock"></i> 5 years</div>
+                        <div class="stat" onclick="toggleLike(event, 'person1')">
+                            <i class="far fa-heart" id="heart-person1"></i> <span id="likes-person1">356</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="person-card hover-lift" onclick="openPersonModal('person2')">
+                <div class="person-img" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="person-content">
+                    <div class="person-badge">Success Story</div>
+                    <h3>Michael Thompson</h3>
+                    <p>Battled social anxiety for years, now a motivational speaker and author.</p>
+                    <div class="person-stats">
+                        <div class="stat"><i class="far fa-clock"></i> 7 years</div>
+                        <div class="stat" onclick="toggleLike(event, 'person2')">
+                            <i class="far fa-heart" id="heart-person2"></i> <span id="likes-person2">421</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="person-card hover-lift" onclick="openPersonModal('person3')">
+                <div class="person-img" style="background-image: url('https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="person-content">
+                    <div class="person-badge">Success Story</div>
+                    <h3>Emily Rodriguez</h3>
+                    <p>Recovered from eating disorder, now advocates for mental health awareness.</p>
+                    <div class="person-stats">
+                        <div class="stat"><i class="far fa-clock"></i> 4 years</div>
+                        <div class="stat" onclick="toggleLike(event, 'person3')">
+                            <i class="far fa-heart" id="heart-person3"></i> <span id="likes-person3">289</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="person-card hover-lift" onclick="openPersonModal('person4')">
+                <div class="person-img" style="background-image: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="person-content">
+                    <div class="person-badge">Success Story</div>
+                    <h3>David Wilson</h3>
+                    <p>Overcame addiction and PTSD, now runs a support group for veterans.</p>
+                    <div class="person-stats">
+                        <div class="stat"><i class="far fa-clock"></i> 8 years</div>
+                        <div class="stat" onclick="toggleLike(event, 'person4')">
+                            <i class="far fa-heart" id="heart-person4"></i> <span id="likes-person4">512</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="person-card hover-lift" onclick="openPersonModal('person5')">
+                <div class="person-img" style="background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="person-content">
+                    <div class="person-badge" style="background: var(--accent-purple)">Success Story</div>
+                    <h3>Lisa Chen</h3>
+                    <p>Overcame bipolar disorder and now helps others through peer counseling.</p>
+                    <div class="person-stats">
+                        <div class="stat"><i class="far fa-clock"></i> 6 years</div>
+                        <div class="stat" onclick="toggleLike(event, 'person5')">
+                            <i class="far fa-heart" id="heart-person5"></i> <span id="likes-person5">328</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="person-card hover-lift" onclick="openPersonModal('person6')">
+                <div class="person-img" style="background-image: url('https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80');"></div>
+                <div class="person-content">
+                    <div class="person-badge" style="background: var(--accent-orange)">Success Story</div>
+                    <h3>Marcus Brown</h3>
+                    <p>Recovered from severe OCD and now works as a mental health advocate.</p>
+                    <div class="person-stats">
+                        <div class="stat"><i class="far fa-clock"></i> 9 years</div>
+                        <div class="stat" onclick="toggleLike(event, 'person6')">
+                            <i class="far fa-heart" id="heart-person6"></i> <span id="likes-person6">445</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Resources -->
+    <section class="container resources" id="resources">
+        <h2 class="section-title">Featured Resources</h2>
+        <div class="resource-grid">
+            <div class="resource-card hover-lift">
+                <div class="resource-img">
+                    <i class="fas fa-video"></i>
+                </div>
+                <div class="resource-content">
+                    <h3>Understanding Depression</h3>
+                    <p>A comprehensive guide to recognizing symptoms, causes, and evidence-based treatments for depression.</p>
+                    <a href="https://youtu.be/d7NPnvKFs2Y?si=ct0z6Cb964a9q8E_" class="read-more">Watch Now <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="resource-card hover-lift">
+                <div class="resource-img">
+                    <i class="fas fa-video"></i>
+                </div>
+                <div class="resource-content">
+                    <h3>Mindfulness Techniques</h3>
+                    <p>Learn practical mindfulness exercises to reduce stress and improve your mental well-being.</p>
+                    <a href="https://youtu.be/qEw_TsEHqU8?si=z-4QiyFIK_lfwL-2" class="read-more">Watch Now <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+            
+            <div class="resource-card hover-lift">
+                <div class="resource-img">
+                    <i class="fas fa-video"></i>
+                </div>
+                <div class="resource-content">
+                    <h3>How to Manage Anxiety </h3>
+                    <p> A calm and curious person seeking self-improvement and knowledge. </p>
+                    <a href="https://youtu.be/FpiWSFcL3-c?si=hx0ssL1S01xsnhc1" class="read-more"> Watch Now <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="resource-card hover-lift">
+                <div class="resource-img">
+                    <i class="fas fa-video"></i>
+                </div>
+                <div class="resource-content">
+                    <h3>Self-Care Strategies</h3>
+                    <p>Discover effective self-care practices that can improve your mental health and overall well-being.</p>
+                    <a href="https://youtu.be/cohKoXx4jgg?si=MQdgrAobkFHMaH1x" class="read-more">Watch Now <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="resource-card hover-lift">
+                <div class="resource-img">
+                    <i class="fas fa-video"></i>
+                </div>
+                <div class="resource-content">
+                    <h3>Building Support Systems</h3>
+                    <p>Learn how to create and maintain healthy support systems for long-term mental wellness.</p>
+                    <a href="https://youtu.be/AbKGeH5g1rI?si=xRPRjhhZ21SaSCI0" class="read-more">Watch Now <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="resource-card hover-lift">
+                <div class="resource-img">
+                    <i class="fas fa-video"></i>
+                </div>
+                <div class="resource-content">
+                    <h3>Sleep & Mental Health</h3>
+                    <p>Understand the crucial connection between quality sleep and mental health stability.</p>
+                    <a href="https://youtu.be/jRlYeyEp0ds?si=3-jJ41_W6PzS_LQv" class="read-more">Watch Now <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories Section -->
+    <section class="container success-stories" id="stories">
+        <h2 class="section-title">Success Stories</h2>
+        <div class="stories-container">
+            <div class="story-card hover-lift">
+                <div class="story-img" style="background-image: url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80');">
+                </div>
+                <div class="story-content">
+                    <h3>From Darkness to Light</h3>
+                    <p>Sarah's journey through severe depression and how she found hope and recovery through therapy and support.</p>
+                    <div class="story-meta">
+                        <span><i class="far fa-clock"></i> 5 min read</span>
+                        <span><i class="far fa-heart"></i> 743 likes</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-card hover-lift">
+                <div class="story-img" style="background-image: url('https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80');">
+                </div>
+                <div class="story-content">
+                    <h3>Overcoming Anxiety</h3>
+                    <p>How Michael learned to manage his anxiety disorders and reclaim his life through mindfulness and CBT.</p>
+                    <div class="story-meta">
+                        <span><i class="far fa-clock"></i> 7 min read</span>
+                        <span><i class="far fa-heart"></i> 687 likes</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-card hover-lift">
+                <div class="story-img" style="background-image: url('https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80');">
+                </div>
+                <div class="story-content">
+                    <h3>Finding Peace After Trauma</h3>
+                    <p>Emma's powerful story of healing from PTSD and discovering new strength through therapy and community support.</p>
+                    <div class="story-meta">
+                        <span><i class="far fa-clock"></i> 10 min read</span>
+                        <span><i class="far fa-heart"></i> 356 likes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="assessment">
+        <div class="container">
+            <h2 class="section-title">How Our Platform Helps</h2>
+            <div class="features-grid">
+                <div class="feature-card hover-lift">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>AI-Powered Assessment</h3>
+                    <p>Advanced AI tools for early detection and personalized mental health assessment.</p>
+                </div>
+                
+                <div class="feature-card hover-lift">
+                    <div class="feature-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Wearable Integration</h3>
+                    <p>Connect your smartwatch for continuous monitoring and real-time support.</p>
+                </div>
+                
+                <div class="feature-card hover-lift">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Progress Tracking</h3>
+                    <p>Monitor your mental health journey with detailed insights and analytics.</p>
+                </div>
+                
+                <div class="feature-card hover-lift">
+                    <div class="feature-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Personalized Support</h3>
+                    <p>Receive customized coping strategies and therapy reminders based on your needs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="container testimonials">
+        <h2 class="section-title">What Users Say</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial-card hover-lift">
+                <p class="testimonial-text">This platform helped me understand my anxiety better and provided practical tools to manage it. The wearable integration is amazing!</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">S</div>
+                    <div class="author-details">
+                        <h4>Sarah M.</h4>
+                        <p>User for 2 years</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card hover-lift">
+                <p class="testimonial-text">The AI assessment accurately identified my depression when I didn't understand what I was experiencing. It guided me to seek help.</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">J</div>
+                    <div class="author-details">
+                        <h4>James T.</h4>
+                        <p>User for 1 year</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card hover-lift">
+                <p class="testimonial-text">As someone with ADHD, the reminders and tracking features have been life-changing. I feel more in control of my mental health.</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">E</div>
+                    <div class="author-details">
+                        <h4>Emma L.</h4>
+                        <p>User for 6 months</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="about">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>About MindCare</h3>
+                <p>An innovative platform combining AI technology and wearable devices to provide comprehensive mental health support.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Assessment Tool</a></li>
+                    <li><a href="#">Mental Health Library</a></li>
+                    <li><a href="#">Community Forum</a></li>
+                    <li><a href="#">Professional Help</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Depression Resources</a></li>
+                    <li><a href="#">Anxiety Management</a></li>
+                    <li><a href="#">PTSD Support</a></li>
+                    <li><a href="#">ADHD Tools</a></li>
+                    <li><a href="#">Self-Care Techniques</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-envelope"></i> support@mindcare.com</p>
+                <p><i class="fas fa-phone"></i> +1 (800) 123-4567</p>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Wellness St, Mental Health City</p>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2023 MindCare. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Person Detail Modals -->
+    <div class="modal" id="personModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div id="personDetail">
+                <!-- Content will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script>
+        // Mobile navigation functionality
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobileNav');
+        const overlay = document.getElementById('overlay');
+        const closeNav = document.getElementById('closeNav');
+
+        function openMobileNav() {
+            mobileNav.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileNav() {
+            mobileNav.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        hamburger.addEventListener('click', openMobileNav);
+        closeNav.addEventListener('click', closeMobileNav);
+        overlay.addEventListener('click', closeMobileNav);
+
+        // Simple animation for elements when they come into view
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeIn 1s ease forwards';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            document.querySelectorAll('.category-card, .resource-card, .feature-card, .testimonial-card, .story-card, .person-card').forEach(card => {
+                card.style.opacity = '0';
+                observer.observe(card);
+            });
+
+            // Back to top button
+            const backToTopButton = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+
+            backToTopButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+
+            // تحميل الإعجابات المحفوظة
+            loadLikes();
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        function filterResources(category) {
+            alert(`Filtering resources for: ${category}`);
+            // In a real implementation, this would filter the displayed resources
+        }
+
+        // دالة تبديل الإعجاب
+        function toggleLike(event, personId) {
+            event.stopPropagation(); // منع فتح المودال عند النقر على الزر
+            
+            const heartIcon = document.getElementById(`heart-${personId}`);
+            const likesElement = document.getElementById(`likes-${personId}`);
+            let currentLikes = parseInt(likesElement.textContent);
+            const isLiked = heartIcon.classList.contains('fas');
+            
+            if (isLiked) {
+                // إزالة الإعجاب
+                heartIcon.classList.remove('fas', 'liked');
+                heartIcon.classList.add('far');
+                currentLikes--;
+            } else {
+                // إضافة الإعجاب
+                heartIcon.classList.remove('far');
+                heartIcon.classList.add('fas', 'liked');
+                currentLikes++;
+            }
+            
+            likesElement.textContent = currentLikes;
+            
+            // تأثير النبض
+            heartIcon.style.animation = 'heartBeat 0.6s';
+            setTimeout(() => {
+                heartIcon.style.animation = '';
+            }, 600);
+            
+            // حفظ حالة الإعجاب في localStorage
+            saveLikeState(personId, !isLiked, currentLikes);
+        }
+
+        // حفظ حالة الإعجاب
+        function saveLikeState(personId, isLiked, likes) {
+            localStorage.setItem(`mindCare_${personId}_liked`, isLiked);
+            localStorage.setItem(`mindCare_${personId}_likes`, likes);
+        }
+
+        // تحميل الإعجابات المحفوظة
+        function loadLikes() {
+            for (let i = 1; i <= 6; i++) {
+                const personId = `person${i}`;
+                const savedLikes = localStorage.getItem(`mindCare_${personId}_likes`);
+                const isLiked = localStorage.getItem(`mindCare_${personId}_liked`) === 'true';
+                
+                if (savedLikes) {
+                    document.getElementById(`likes-${personId}`).textContent = savedLikes;
+                }
+                
+                if (isLiked) {
+                    const heartIcon = document.getElementById(`heart-${personId}`);
+                    heartIcon.classList.remove('far');
+                    heartIcon.classList.add('fas', 'liked');
+                }
+            }
+        }
+
+        function openPersonModal(personId) {
+            const modal = document.getElementById('personModal');
+            const personDetail = document.getElementById('personDetail');
+            
+            // Sample content for different people
+            const people = {
+                person1: {
+                    name: "Sarah Johnson",
+                    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
+                    story: "Sarah battled severe depression for over a decade before finding the right combination of therapy and medication. Her journey through darkness to recovery has inspired many.",
+                    timeline: [
+                        { year: "2010", event: "First diagnosed with clinical depression" },
+                        { year: "2012", event: "Started cognitive behavioral therapy" },
+                        { year: "2015", event: "Began medication and saw significant improvement" },
+                        { year: "2018", event: "Started mental health advocacy work" },
+                        { year: "2020", event: "Became a certified therapist to help others" }
+                    ],
+                    quote: "Healing is not linear, but every small step forward is a victory."
+                },
+                person2: {
+                    name: "Michael Thompson",
+                    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
+                    story: "Michael struggled with social anxiety throughout his teens and early adulthood. Through exposure therapy and mindfulness practices, he gradually overcame his fears.",
+                    timeline: [
+                        { year: "2008", event: "Diagnosed with social anxiety disorder" },
+                        { year: "2011", event: "Started exposure therapy" },
+                        { year: "2014", event: "Began practicing daily meditation" },
+                        { year: "2017", event: "Started public speaking about mental health" },
+                        { year: "2021", event: "Published a book on overcoming social anxiety" }
+                    ],
+                    quote: "Your anxiety doesn't define you. It's just a chapter in your story, not the whole book."
+                },
+                person3: {
+                    name: "Emily Rodriguez",
+                    image: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
+                    story: "Emily fought a long battle with anorexia during her college years. With the support of her family and specialized treatment, she recovered and now helps others.",
+                    timeline: [
+                        { year: "2013", event: "Developed eating disorder in college" },
+                        { year: "2015", event: "Entered specialized treatment program" },
+                        { year: "2017", event: "Achieved weight restoration and mental recovery" },
+                        { year: "2019", event: "Started volunteering at eating disorder clinics" },
+                        { year: "2022", event: "Became a certified nutritionist specializing in ED recovery" }
+                    ],
+                    quote: "Recovery taught me that my worth isn't measured by a scale but by the strength of my spirit."
+                },
+                person4: {
+                    name: "David Wilson",
+                    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
+                    story: "David, a military veteran, struggled with PTSD and substance abuse after returning from deployment. Through therapy and peer support, he found a new purpose.",
+                    timeline: [
+                        { year: "2010", event: "Returned from deployment with PTSD symptoms" },
+                        { year: "2012", event: "Began substance abuse treatment" },
+                        { year: "2014", event: "Started trauma-focused therapy" },
+                        { year: "2016", event: "Founded a support group for veterans" },
+                        { year: "2020", event: "Became a certified peer support specialist" }
+                    ],
+                    quote: "The bravest thing I ever did was asking for help when I needed it the most."
+                },
+                person5: {
+                    name: "Lisa Chen",
+                    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
+                    story: "Lisa was diagnosed with bipolar disorder in her early twenties. After years of finding the right treatment plan, she now helps others as a peer counselor.",
+                    timeline: [
+                        { year: "2012", event: "Diagnosed with bipolar disorder" },
+                        { year: "2014", event: "Found effective medication combination" },
+                        { year: "2016", event: "Started peer counseling training" },
+                        { year: "2018", event: "Began volunteering at mental health hotline" },
+                        { year: "2021", event: "Became a certified peer support specialist" }
+                    ],
+                    quote: "My diagnosis is part of my story, but it doesn't define my ending."
+                },
+                person6: {
+                    name: "Marcus Brown",
+                    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
+                    story: "Marcus struggled with severe OCD for most of his life. Through specialized therapy and support groups, he learned to manage his symptoms effectively.",
+                    timeline: [
+                        { year: "2009", event: "Diagnosed with severe OCD" },
+                        { year: "2011", event: "Started exposure and response prevention therapy" },
+                        { year: "2014", event: "Began leading local OCD support group" },
+                        { year: "2017", event: "Started mental health advocacy blog" },
+                        { year: "2022", event: "Published memoir about living with OCD" }
+                    ],
+                    quote: "Recovery is about progress, not perfection. Every small victory counts."
+                }
+            };
+
+            const person = people[personId];
+            
+            personDetail.innerHTML = `
+                <div class="person-header">
+                    <div class="person-detail-img">
+                        <img src="${person.image}" alt="${person.name}">
+                    </div>
+                    <div class="person-detail-info">
+                        <h2>${person.name}</h2>
+                        <p>${person.story}</p>
+                        <blockquote style="font-style: italic; margin: 1rem 0; padding: 1rem; border-left: 4px solid var(--primary); background: var(--primary-light);">
+                            "${person.quote}"
+                        </blockquote>
+                    </div>
+                </div>
+                <h3>Recovery Journey</h3>
+                <div class="person-timeline">
+                    ${person.timeline.map(item => `
+                        <div class="timeline-item">
+                            <div class="timeline-year">${item.year}</div>
+                            <div>${item.event}</div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById('personModal').style.display = "none";
+        }
+
+        // Close modal when clicking outside of it
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('personModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+        // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+    </script>
+</body>
+</html>

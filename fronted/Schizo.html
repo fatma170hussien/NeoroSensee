@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Schizophrenia - A Comprehensive Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #7a6b8c;
+            --secondary: #9b8aac;
+            --accent: #a87ac9;
+            --light: #f9f7fa;
+            --dark: #5b4a6b;
+            --text: #333333;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(122, 107, 140, 0.8), rgba(155, 138, 172, 0.8)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%237a6b8c"/><path d="M0 50 L100 50 M50 0 L50 100" stroke="%239b8aac" stroke-width="2"/></svg>');
+            background-size: cover;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInDown 1s ease;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            animation: fadeIn 1s ease 0.6s both;
+        }
+        
+        .btn:hover {
+            background-color: #9567b4;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Sections */
+        section {
+            padding: 5rem 0;
+        }
+        
+        section:nth-child(even) {
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+        
+        /* Cards */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .card.animate {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .card-body ul {
+            list-style-type: none;
+            padding-left: 1rem;
+        }
+        
+        .card-body ul li {
+            margin-bottom: 0.8rem;
+            position: relative;
+        }
+        
+        .card-body ul li::before {
+            content: '•';
+            color: var(--accent);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        
+        /* Comparison Table */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2rem;
+            box-shadow: var(--shadow);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .comparison-table th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .comparison-table tr:hover {
+            background-color: #f0f5ff;
+        }
+        
+        /* Treatment Options */
+        .treatment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .treatment-card {
+            background: linear-gradient(135deg, #f5f7fa, #e4e8f0);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .treatment-card.animate {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .treatment-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+        
+        .treatment-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        /* Emergency Section */
+        .emergency {
+            background: linear-gradient(135deg, var(--accent), #c29cf0);
+            color: white;
+            text-align: center;
+            padding: 4rem 0;
+        }
+        
+        .emergency h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .emergency p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hotline {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 1.5rem 0;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                Understanding Schizophrenia
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#what-is">What is Schizophrenia?</a></li>
+                    <li><a href="#symptoms">Symptoms</a></li>
+                    <li><a href="#causes">Causes</a></li>
+                    <li><a href="#treatment">Treatment</a></li>
+                    <li><a href="#help">Help</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Understanding Schizophrenia: A Path to Hope and Recovery</h1>
+            <p>Discover comprehensive information about Schizophrenia, its symptoms, causes, and treatment options. Recovery is possible with proper support and treatment.</p>
+            <a href="#what-is" class="btn">Start the Journey</a>
+        </div>
+    </section>
+
+    <!-- What is Schizophrenia Section -->
+    <section id="what-is">
+        <div class="container">
+            <div class="section-title">
+                <h2>What is Schizophrenia?</h2>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3>Schizophrenia</h3>
+                </div>
+                <div class="card-body">
+                    <p>Schizophrenia is a chronic mental health disorder that affects thinking, perception, emotions, and behavior. It goes beyond normal unusual experiences, causing persistent symptoms that significantly impair daily life, work, school, and relationships. Symptoms often begin in late adolescence or early adulthood.</p>
+                    
+                    <h4 style="margin-top: 1.5rem; color: var(--primary);">Difference Between Normal Unusual Experiences and Schizophrenia</h4>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Criterion</th>
+                                <th>Normal Unusual Experiences</th>
+                                <th>Schizophrenia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Trigger</td>
+                                <td>Occasional and linked to stress or fatigue</td>
+                                <td>Symptoms occur persistently without clear triggers and are disproportionate</td>
+                            </tr>
+                            <tr>
+                                <td>Duration</td>
+                                <td>Temporary, resolve naturally</td>
+                                <td>Persistent months to years, requires treatment</td>
+                            </tr>
+                            <tr>
+                                <td>Severity & Impact</td>
+                                <td>Mild, little impact on daily life</td>
+                                <td>Severe impairment in social, occupational, or academic areas</td>
+                            </tr>
+                            <tr>
+                                <td>Physical & Cognitive Signs</td>
+                                <td>Minor disturbances</td>
+                                <td>Hallucinations, delusions, disorganized thinking, poor attention, memory problems</td>
+                            </tr>
+                            <tr>
+                                <td>Response to Support</td>
+                                <td>Improve naturally or with reassurance</td>
+                                <td>Requires long-term treatment, often medication plus therapy</td>
+                            </tr>
+                            <tr>
+                                <td>Nature of Thoughts</td>
+                                <td>Unusual thoughts rarely persistent</td>
+                                <td>Persistent false beliefs, hallucinations, disorganized speech, social withdrawal</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Symptoms Section -->
+    <section id="symptoms" style="background-color: #f8f9fa;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Symptoms of Schizophrenia</h2>
+            </div>
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Positive Symptoms</h3>
+                        <p>(Excess of normal functions)</p>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Hallucinations (hearing or seeing things not present)</li>
+                            <li>Delusions (false beliefs, e.g., persecution, grandeur)</li>
+                            <li>Disorganized speech or behavior</li>
+                            <li>Agitated body movements</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Negative Symptoms</h3>
+                        <p>(Loss of normal functions)</p>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Flattened affect (reduced emotional expression)</li>
+                            <li>Social withdrawal or isolation</li>
+                            <li>Lack of motivation, interest, or pleasure</li>
+                            <li>Difficulty starting and sustaining activities</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Cognitive Symptoms</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Difficulty concentrating or making decisions</li>
+                            <li>Poor memory or planning skills</li>
+                            <li>Trouble focusing or paying attention</li>
+                            <li>Problems with executive functioning</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Causes & Risk Factors Section -->
+    <section id="causes">
+        <div class="container">
+            <div class="section-title">
+                <h2>Causes & Risk Factors</h2>
+            </div>
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Biological Factors</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Genetics (family history increases risk)</li>
+                            <li>Brain chemistry and structure differences</li>
+                            <li>Dopamine imbalance, enlarged ventricles</li>
+                            <li>Neurodevelopmental factors</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Psychological Factors</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Early life stress or trauma</li>
+                            <li>Maladaptive coping strategies</li>
+                            <li>Personality traits and vulnerabilities</li>
+                            <li>Poor stress management skills</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Environmental Factors</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Prenatal exposure to infection or malnutrition</li>
+                            <li>Childhood adversity or social stress</li>
+                            <li>Substance abuse (especially cannabis)</li>
+                            <li>Urban upbringing or social isolation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Treatment Options Section -->
+    <section id="treatment" style="background-color: #f8f9fa;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Treatment Options</h2>
+            </div>
+            <div class="treatment-options">
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <h3>Medications</h3>
+                    <p>Antipsychotics (risperidone, olanzapine, aripiprazole), Long-acting injectable antipsychotics</p>
+                </div>
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Psychotherapy</h3>
+                    <p>Cognitive Behavioral Therapy for psychosis (CBTp), Social skills training, Family education and support</p>
+                </div>
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Psychosocial Support</h3>
+                    <p>Supported employment, Housing assistance, Peer support, Rehabilitation programs</p>
+                </div>
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Lifestyle Management</h3>
+                    <p>Regular routines, Stress management, Healthy diet, Exercise, Sleep hygiene</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Self-Help & When to Seek Help Section -->
+    <section id="help">
+        <div class="container">
+            <div class="section-title">
+                <h2>Self-Help & When to Seek Help</h2>
+            </div>
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Self-Help & Coping</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Maintaining daily routine</li>
+                            <li>Avoiding alcohol and drugs</li>
+                            <li>Tracking symptoms and triggers</li>
+                            <li>Seeking social support</li>
+                            <li>Practicing relaxation techniques</li>
+                            <li>Setting realistic goals</li>
+                            <li>Learning about the condition</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>When to Seek Help</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>If persistent hallucinations, delusions, or disorganized behavior occur</li>
+                            <li>If daily functioning at work, school, or home is impaired</li>
+                            <li>If self-harm or aggression occurs</li>
+                            <li>Early intervention is crucial for better outcomes</li>
+                            <li>If experiencing social withdrawal or emotional flatness</li>
+                            <li>If cognitive difficulties interfere with daily life</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Section -->
+    <section class="emergency">
+        <div class="container">
+            <h2>If you or someone you know is experiencing a mental health crisis, please seek help now</h2>
+            <p>Don't hesitate to contact mental health support services or go to the nearest hospital</p>
+            <div class="hotline">
+                <i class="fas fa-phone-alt"></i> 988 - Suicide & Crisis Lifeline
+            </div>
+            <p>Available 24 hours a day, 7 days a week</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Understanding Schizophrenia</h3>
+                    <p>A website aimed at providing accurate and comprehensive information about Schizophrenia to increase awareness, reduce stigma, and encourage seeking help.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#what-is">What is Schizophrenia?</a></li>
+                        <li><a href="#symptoms">Symptoms</a></li>
+                        <li><a href="#causes">Causes</a></li>
+                        <li><a href="#treatment">Treatment</a></li>
+                        <li><a href="#help">Self-Help</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Mental Health Organizations</a></li>
+                        <li><a href="#">Therapist Directory</a></li>
+                        <li><a href="#">Support Groups</a></li>
+                        <li><a href="#">Crisis Hotlines</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Understanding Schizophrenia. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card, .treatment-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+        // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+    </script>
+</body>
+</html>

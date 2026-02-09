@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Social Anxiety Disorder - A Comprehensive Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #5a8d7a;
+            --secondary: #7aa895;
+            --accent: #e6a872;
+            --light: #f8fbf9;
+            --dark: #2d4a3e;
+            --text: #333333;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        /* Mobile Navigation */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Enhanced Image System */
+        .image-container {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            margin: 20px auto;
+        }
+
+        .image-container.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .image-container:hover {
+            transform: scale(1.02) translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .image-container:hover img {
+            transform: scale(1.05);
+        }
+        
+        .image-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .image-container:hover .image-caption {
+            transform: translateY(0);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(90, 141, 122, 0.8), rgba(122, 168, 149, 0.8)), url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h1 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            animation: fadeInDown 1s ease;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            animation: fadeIn 1s ease 0.6s both;
+        }
+        
+        .btn:hover {
+            background-color: #d99765;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Sections */
+        section {
+            padding: 3rem 0;
+        }
+        
+        section:nth-child(even) {
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--primary);
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+        
+        /* Cards */
+        .cards-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .card.animate {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.2rem;
+            text-align: center;
+        }
+        
+        .card-body {
+            padding: 1.2rem;
+        }
+        
+        .card-body ul {
+            list-style-type: none;
+            padding-left: 1rem;
+        }
+        
+        .card-body ul li {
+            margin-bottom: 0.8rem;
+            position: relative;
+        }
+        
+        .card-body ul li::before {
+            content: '•';
+            color: var(--accent);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        
+        /* Comparison Table */
+        .table-container {
+            overflow-x: auto;
+            margin-top: 1.5rem;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: var(--shadow);
+            border-radius: 10px;
+            overflow: hidden;
+            min-width: 600px;
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .comparison-table th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .comparison-table tr:hover {
+            background-color: #f0f5ff;
+        }
+        
+        /* Treatment Options */
+        .treatment-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+        
+        .treatment-card {
+            background: linear-gradient(135deg, #f5f7fa, #e4e8f0);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .treatment-card.animate {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .treatment-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+        
+        .treatment-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: transparent;
+            z-index: 1001;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary);
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+            box-shadow: var(--shadow);
+        }
+        
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background-color: var(--secondary);
+            transform: translateY(-5px);
+        }
+        
+        /* Statistics Section */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-text {
+            color: var(--text);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        /* FAQ Section */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .faq-question {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        .faq-question:hover {
+            background-color: var(--secondary);
+        }
+        
+        .faq-answer {
+            background-color: white;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-answer.active {
+            padding: 1.2rem;
+            max-height: 500px;
+        }
+        
+        /* Emergency Section */
+        .emergency {
+            background: linear-gradient(135deg, var(--accent), #f0c29c);
+            color: white;
+            text-align: center;
+            padding: 3rem 0;
+        }
+        
+        .emergency h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .emergency p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hotline {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 1.5rem 0;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.2rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+        }
+        
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            .hero {
+                padding: 5rem 0;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.5rem;
+            }
+            
+            .cards-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .treatment-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .stats-container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        @media (max-width: 767px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            nav {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 80%;
+                height: 100vh;
+                background: var(--primary);
+                transition: var(--transition);
+                z-index: 1002;
+                padding: 2rem;
+                box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            nav.active {
+                left: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                margin-top: 2rem;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 0;
+            }
+            
+            nav ul li a {
+                display: block;
+                padding: 1rem;
+                font-size: 1.1rem;
+            }
+            
+            .close-menu {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                background: none;
+                border: none;
+                color: white;
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+            
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 1001;
+                display: none;
+            }
+            
+            .overlay.active {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-users"></i>
+                Understanding Social Anxiety
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <button class="close-menu" id="closeMenu">
+                    <i class="fas fa-times"></i>
+                </button>
+                <ul>
+                    <li><a href="#what-is">What is SAD?</a></li>
+                    <li><a href="#symptoms">Symptoms</a></li>
+                    <li><a href="#causes">Causes</a></li>
+                    <li><a href="#treatment">Treatment</a></li>
+                    <li><a href="#help">Help</a></li>
+                </ul>
+            </nav>
+            <div class="overlay" id="overlay"></div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Understanding Social Anxiety Disorder: A Step Towards Recovery</h1>
+            <p>Discover comprehensive information about Social Anxiety Disorder, its symptoms, causes, and treatment options. Don't hesitate to seek help.</p>
+            <a href="#what-is" class="btn">Start the Journey</a>
+        </div>
+    </section>
+
+    <!-- What is Social Anxiety Disorder Section -->
+    <section id="what-is">
+        <div class="container">
+            <div class="section-title">
+                <h2>What is Social Anxiety Disorder?</h2>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3>Social Anxiety Disorder (SAD)</h3>
+                </div>
+                <div class="card-body">
+                    <p>Social Anxiety Disorder, also known as Social Phobia, is a chronic mental health condition characterized by an intense fear of social or performance situations where the person is exposed to possible scrutiny by others. The fear goes beyond normal shyness; it is persistent, excessive, and interferes with daily life.</p>
+                    
+                    <!-- Image with enhanced system -->
+                    <div class="image-container">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Person feeling anxious in social situation">
+                        <div class="image-caption">Social anxiety can make everyday interactions feel overwhelming</div>
+                    </div>
+                    
+                    <h4 style="margin-top: 1.5rem; color: var(--primary);">Difference Between Normal Shyness and Social Anxiety Disorder</h4>
+                    <div class="table-container">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Criterion</th>
+                                    <th>Normal Shyness</th>
+                                    <th>Social Anxiety Disorder</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Trigger</td>
+                                    <td>Mild nervousness before new situations</td>
+                                    <td>Severe anxiety even in routine interactions (e.g., talking to coworkers)</td>
+                                </tr>
+                                <tr>
+                                    <td>Duration</td>
+                                    <td>Occasional, situation-specific</td>
+                                    <td>Symptoms persist for 6 months or more</td>
+                                </tr>
+                                <tr>
+                                    <td>Severity & Impact</td>
+                                    <td>Manageable, doesn't stop daily activities</td>
+                                    <td>Leads to avoidance, isolation, poor performance at school/work</td>
+                                </tr>
+                                <tr>
+                                    <td>Physical & Cognitive Signs</td>
+                                    <td>Mild blushing, butterflies in stomach</td>
+                                    <td>Intense blushing, trembling, sweating, panic-like symptoms, racing thoughts</td>
+                                </tr>
+                                <tr>
+                                    <td>Response to Support</td>
+                                    <td>Improves with encouragement or practice</td>
+                                    <td>Limited improvement without therapy/medication</td>
+                                </tr>
+                                <tr>
+                                    <td>Nature of Thoughts</td>
+                                    <td>Worry about making a good impression</td>
+                                    <td>Intense fear of judgment, embarrassment, or humiliation</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Statistics Section -->
+            <div class="section-title" style="margin-top: 3rem;">
+                <h2>Social Anxiety by the Numbers</h2>
+            </div>
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-number">7.1%</div>
+                    <div class="stat-text">of U.S. adults experience social anxiety disorder each year</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">12.1%</div>
+                    <div class="stat-text">of U.S. adults experience social anxiety disorder at some point in their lives</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">80%</div>
+                    <div class="stat-text">of people with social anxiety don't receive treatment</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-text">years is the average delay between onset and seeking help</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Symptoms Section -->
+    <section id="symptoms" style="background-color: #f8f9fa;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Symptoms of Social Anxiety Disorder</h2>
+            </div>
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Psychological Symptoms</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Intense fear of being judged, embarrassed, or humiliated</li>
+                            <li>Excessive worry about upcoming social events</li>
+                            <li>Low self-esteem and fear of negative evaluation</li>
+                            <li>Racing thoughts in social situations</li>
+                            <li>Panic attacks in social settings (in severe cases)</li>
+                            <li>Difficulty concentrating in social situations</li>
+                            <li>Mind going blank during conversations</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Physical Symptoms</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Rapid heartbeat, sweating, shaking, blushing</li>
+                            <li>Difficulty speaking, stammering, or freezing in conversations</li>
+                            <li>Nausea or stomach discomfort</li>
+                            <li>Shortness of breath or dizziness</li>
+                            <li>Muscle tension</li>
+                            <li>Dry mouth</li>
+                            <li>Hot flashes or chills</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Behavioral Symptoms</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Avoiding social situations (meetings, parties, presentations)</li>
+                            <li>Escaping social situations early</li>
+                            <li>Staying in the background to avoid attention</li>
+                            <li>Difficulty making eye contact</li>
+                            <li>Declining opportunities due to social fears</li>
+                            <li>Overpreparing for social interactions</li>
+                            <li>Using substances to cope with social situations</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Image showing symptoms -->
+            <div class="image-container" style="max-width: 800px;">
+                <img src="https://images.unsplash.com/photo-1573497019940-1c28c8b4a944?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Person showing signs of anxiety">
+                <div class="image-caption">Physical symptoms of anxiety can be distressing and debilitating</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Causes & Risk Factors Section -->
+    <section id="causes">
+        <div class="container">
+            <div class="section-title">
+                <h2>Causes & Risk Factors</h2>
+            </div>
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Biological Factors</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Genetic predisposition - tends to run in families</li>
+                            <li>Overactivity of the amygdala (fear center in brain)</li>
+                            <li>Neurochemical imbalance (serotonin, dopamine)</li>
+                            <li>Family history of anxiety disorders</li>
+                            <li>Abnormalities in brain structure and function</li>
+                            <li>Heightened sensitivity to disapproval or rejection</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Psychological Factors</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Negative past experiences (bullying, humiliation)</li>
+                            <li>Overprotective or critical parenting</li>
+                            <li>Learned avoidance behavior</li>
+                            <li>Perfectionistic tendencies</li>
+                            <li>Difficult childhood experiences</li>
+                            <li>Low self-esteem or negative self-image</li>
+                            <li>History of trauma or abuse</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Social Factors</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Lack of supportive relationships</li>
+                            <li>Stressful life events</li>
+                            <li>Cultural/social pressures and expectations</li>
+                            <li>Isolation or limited social exposure in childhood</li>
+                            <li>Work or academic pressure</li>
+                            <li>Societal emphasis on extroversion</li>
+                            <li>Moving to a new environment or culture</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Treatment Options Section -->
+    <section id="treatment" style="background-color: #f8f9fa;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Treatment Options</h2>
+            </div>
+            <div class="treatment-options">
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Psychotherapy</h3>
+                    <p>Cognitive Behavioral Therapy (CBT), Exposure therapy, Social skills training, Group therapy, Acceptance and Commitment Therapy (ACT)</p>
+                </div>
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <h3>Medications</h3>
+                    <p>SSRIs (e.g., sertraline, paroxetine), SNRIs (venlafaxine), Beta-blockers (for performance anxiety), Benzodiazepines (short-term use), MAOIs (for treatment-resistant cases)</p>
+                </div>
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Lifestyle Changes</h3>
+                    <p>Stress management techniques (yoga, meditation), Sleep hygiene, Regular exercise, Avoid caffeine/nicotine, Balanced nutrition, Mindfulness practice</p>
+                </div>
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Support & Self-Help</h3>
+                    <p>Support groups, Self-help books, Online resources, Gradual exposure practice, Journaling, Building social skills, Assertiveness training</p>
+                </div>
+            </div>
+            
+            <!-- Image showing treatment -->
+            <div class="image-container" style="max-width: 800px; margin-top: 2rem;">
+                <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Therapy session">
+                <div class="image-caption">Therapy can provide effective tools for managing social anxiety</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Self-Help & When to Seek Help Section -->
+    <section id="help">
+        <div class="container">
+            <div class="section-title">
+                <h2>Self-Help & When to Seek Help</h2>
+            </div>
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Self-Help & Coping Strategies</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Practice gradual exposure to feared situations</li>
+                            <li>Deep breathing and relaxation techniques</li>
+                            <li>Journaling to track triggers and progress</li>
+                            <li>Positive self-talk and affirmations</li>
+                            <li>Building supportive friendships</li>
+                            <li>Joining support groups</li>
+                            <li>Setting small, achievable social goals</li>
+                            <li>Mindfulness and meditation practices</li>
+                            <li>Physical exercise to reduce anxiety</li>
+                            <li>Limiting caffeine and alcohol intake</li>
+                            <li>Learning and practicing social skills</li>
+                            <li>Challenging negative thoughts</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>When to Seek Professional Help</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>If fear lasts ≥6 months and prevents daily functioning</li>
+                            <li>If you avoid important opportunities (school, work, social)</li>
+                            <li>If physical panic-like symptoms are severe</li>
+                            <li>If isolation or depression develops</li>
+                            <li>If you're using substances to cope with anxiety</li>
+                            <li>If symptoms are getting worse over time</li>
+                            <li>If relationships are significantly affected</li>
+                            <li>If you experience suicidal thoughts</li>
+                            <li>If self-help strategies aren't providing relief</li>
+                            <li>If anxiety affects your ability to work or study</li>
+                            <li>If you feel constantly overwhelmed by social situations</li>
+                            <li>If your quality of life is significantly impacted</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section style="background-color: #f8f9fa;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is social anxiety the same as shyness?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No, social anxiety disorder is more severe than shyness. While shyness is a personality trait, social anxiety is a mental health condition that causes significant distress and impairment in daily functioning. People with social anxiety experience intense fear and avoidance that goes beyond normal nervousness.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can social anxiety be cured?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>While there's no definitive "cure," social anxiety disorder is highly treatable. With appropriate therapy, medication, and self-help strategies, most people can significantly reduce their symptoms and improve their quality of life. Many people learn to manage their anxiety effectively and participate in social situations they previously avoided.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What's the difference between social anxiety and agoraphobia?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Social anxiety involves fear of social situations where one might be judged or embarrassed. Agoraphobia involves fear of situations where escape might be difficult or help unavailable if panic-like symptoms occur. While there can be overlap, the core fear is different: social evaluation vs. being trapped.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can children have social anxiety disorder?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, social anxiety can begin in childhood, typically around age 13, but it can develop earlier. In children, it might appear as extreme shyness, clinging to parents, refusal to speak in certain situations, or tantrums when faced with social expectations.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How long does treatment take to work?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Improvement can often be seen within several weeks to a few months of consistent treatment. Medication might provide some relief within 4-6 weeks, while therapy typically shows results after 12-16 sessions. However, everyone responds differently, and long-term management strategies are often beneficial.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Section -->
+    <section class="emergency">
+        <div class="container">
+            <h2>If social anxiety is severely impacting your life, please seek help now</h2>
+            <p>Don't hesitate to contact mental health support services or talk to a healthcare provider. Early intervention leads to better outcomes.</p>
+            <div class="hotline">
+                <i class="fas fa-phone-alt"></i> 988 - Suicide & Crisis Lifeline
+            </div>
+            <p>Available 24 hours a day, 7 days a week - Calls are confidential and free</p>
+            <div style="margin-top: 2rem;">
+                <a href="#what-is" class="btn" style="background-color: white; color: var(--accent);">Learn More About Treatment</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Understanding Social Anxiety</h3>
+                    <p>A comprehensive resource providing accurate information about Social Anxiety Disorder to increase awareness, reduce stigma, and encourage seeking help.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#what-is">What is SAD?</a></li>
+                        <li><a href="#symptoms">Symptoms</a></li>
+                        <li><a href="#causes">Causes</a></li>
+                        <li><a href="#treatment">Treatment</a></li>
+                        <li><a href="#help">Self-Help</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Mental Health Organizations</a></li>
+                        <li><a href="#">Therapist Directory</a></li>
+                        <li><a href="#">Support Groups</a></li>
+                        <li><a href="#">Crisis Hotlines</a></li>
+                        <li><a href="#">Self-Help Workbooks</a></li>
+                        <li><a href="#">Recommended Reading</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Information</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> Crisis Hotline: 988</li>
+                        <li><i class="fas fa-envelope"></i> info@understandingsocialanxiety.org</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Mental Health Awareness Center</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Understanding Social Anxiety. All rights reserved. | This site is for informational purposes only and is not a substitute for professional medical advice.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card, .treatment-card, .image-container, .stat-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate', 'visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                    
+                    // Close mobile menu if open
+                    if (window.innerWidth <= 767) {
+                        document.getElementById('mainNav').classList.remove('active');
+                        document.getElementById('overlay').classList.remove('active');
+                    }
+                });
+            });
+            
+            // Progress bar
+            window.onscroll = function() {
+                updateProgressBar();
+                toggleBackToTop();
+            };
+            
+            function updateProgressBar() {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById("progressBar").style.width = scrolled + "%";
+            }
+            
+            function toggleBackToTop() {
+                const backToTop = document.getElementById('backToTop');
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    backToTop.classList.add('active');
+                } else {
+                    backToTop.classList.remove('active');
+                }
+            }
+            
+            // Back to top functionality
+            document.getElementById('backToTop').addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // FAQ functionality
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const answer = question.nextElementSibling;
+                    const isActive = answer.classList.contains('active');
+                    
+                    // Close all answers
+                    document.querySelectorAll('.faq-answer').forEach(ans => {
+                        ans.classList.remove('active');
+                    });
+                    
+                    // Reset all icons
+                    document.querySelectorAll('.faq-question i').forEach(icon => {
+                        icon.className = 'fas fa-chevron-down';
+                    });
+                    
+                    // If this answer wasn't active, open it
+                    if (!isActive) {
+                        answer.classList.add('active');
+                        question.querySelector('i').className = 'fas fa-chevron-up';
+                    }
+                });
+            });
+            
+            // Mobile menu functionality
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const closeMenuBtn = document.getElementById('closeMenu');
+            const mainNav = document.getElementById('mainNav');
+            const overlay = document.getElementById('overlay');
+            
+            mobileMenuBtn.addEventListener('click', () => {
+                mainNav.classList.add('active');
+                overlay.classList.add('active');
+            });
+            
+            closeMenuBtn.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+            
+            overlay.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+        });
+        // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+    </script>
+</body>
+</html>

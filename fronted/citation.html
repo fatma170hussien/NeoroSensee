@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic References - Interactive Collection</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #6a11cb;
+            --secondary-color: #2575fc;
+            --accent-color: #4a00e0;
+            --text-color: #333;
+            --light-text: #fff;
+            --card-bg: #fff;
+            --header-bg: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            --footer-bg: #e3e6ea;
+            --section-bg: #f4f6f9;
+            --featured-card-bg: linear-gradient(135deg, #6a11cb, #2575fc);
+            --button-bg: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            --button-hover: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--section-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: var(--header-bg);
+            color: var(--light-text);
+            padding: 3rem 0;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            transform: rotate(30deg);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            position: relative;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 50px;
+            border: none;
+            box-shadow: var(--shadow);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        #searchInput:focus {
+            outline: none;
+            box-shadow: 0 10px 30px rgba(106, 17, 203, 0.2);
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 1.5rem 0;
+        }
+
+        .filter-btn {
+            background: var(--card-bg);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            font-weight: 500;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--button-bg);
+            color: white;
+        }
+
+        .main-content {
+            display: flex;
+            gap: 30px;
+            padding: 2rem 0;
+        }
+
+        .references-container {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .reference-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.8rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .reference-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .reference-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--featured-card-bg);
+        }
+
+        .reference-id {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--button-bg);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .reference-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary-color);
+            line-height: 1.4;
+        }
+
+        .reference-authors {
+            font-style: italic;
+            margin-bottom: 0.8rem;
+            color: #555;
+        }
+
+        .reference-journal {
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .reference-year {
+            display: inline-block;
+            background: rgba(106, 17, 203, 0.1);
+            color: var(--primary-color);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .reference-details {
+            flex: 0 0 400px;
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 2rem;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .details-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .details-header h2 {
+            color: var(--primary-color);
+        }
+
+        .close-details {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #777;
+            transition: var(--transition);
+        }
+
+        .close-details:hover {
+            color: var(--primary-color);
+        }
+
+        .reference-full {
+            line-height: 1.7;
+        }
+
+        .reference-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 1.5rem;
+        }
+
+        .tag {
+            background: rgba(37, 117, 252, 0.1);
+            color: var(--secondary-color);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem;
+            color: #777;
+        }
+
+        footer {
+            background-color: var(--footer-bg);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 1100px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .reference-details {
+                flex: 1;
+                position: static;
+                max-height: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .references-container {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-book-open"></i> Academic References</h1>
+            <p>A curated collection of research papers in mental health and psychiatry</p>
+            
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search references by title, author, or keyword...">
+            </div>
+            
+            <div class="filter-container">
+                <button class="filter-btn active" data-filter="all">All References</button>
+                <button class="filter-btn" data-filter="anxiety">Anxiety Disorders</button>
+                <button class="filter-btn" data-filter="depression">Depression</button>
+                <button class="filter-btn" data-filter="ocd">OCD</button>
+                <button class="filter-btn" data-filter="ai">AI & Machine Learning</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="references-container" id="referencesContainer">
+                <!-- References will be loaded here by JavaScript -->
+            </div>
+            
+            <div class="reference-details" id="referenceDetails" style="display: none;">
+                <div class="details-header">
+                    <h2>Reference Details</h2>
+                    <button class="close-details" id="closeDetails"><i class="fas fa-times"></i></button>
+                </div>
+                <div class="reference-full" id="referenceFull">
+                    <!-- Full reference will be displayed here -->
+                </div>
+                <div class="reference-tags" id="referenceTags">
+                    <!-- Tags will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>Academic References Collection &copy; 2024</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // References data with tags
+        const references = [
+              {
+                id: 1,
+                full: "Alomari, N. A., Bedaiwi, S. K., Ghasib, A. M., Kabbarah, A. J., Alnefaie, S. A., Hariri, N., ... & Altowairqi, F. (2022). Social anxiety disorder: Associated conditions and therapeutic approaches. Cureus, 14(12).",
+                title: "Social anxiety disorder: Associated conditions and therapeutic approaches",
+                authors: "Alomari, N. A., Bedaiwi, S. K., Ghasib, A. M., et al.",
+                journal: "Cureus",
+                year: "2022",
+                tags: ["anxiety", "social anxiety", "therapy"]
+            },
+            {
+                id: 2,
+                full: "Bey, K., Campos-Martin, R., Klawohn, J., Reuter, B., Grützmann, R., Riesel, A., ... & Kathmann, N. (2022). Hypermethylation of the oxytocin receptor gene (OXTR) in obsessive-compulsive disorder: Further evidence for a biomarker of disease and treatment response. Epigenetics, 17(6), 642-652.",
+                title: "Hypermethylation of the oxytocin receptor gene (OXTR) in obsessive-compulsive disorder",
+                authors: "Bey, K., Campos-Martin, R., Klawohn, J., et al.",
+                journal: "Epigenetics",
+                year: "2022",
+                tags: ["ocd", "biomarker", "epigenetics"]
+            },
+            {
+                id: 3,
+                full: "Campos-Ugaz, W. A., Garay, J. P. P., Rivera-Lozada, O., Diaz, M. A. A., Fuster-Guillén, D., & Arana, A. A. T. (2023). An overview of bipolar disorder diagnosis using machine learning approaches: clinical opportunities and challenges. Iranian Journal of Psychiatry, 18(2), 237.",
+                title: "An overview of bipolar disorder diagnosis using machine learning approaches",
+                authors: "Campos-Ugaz, W. A., Garay, J. P. P., Rivera-Lozada, O., et al.",
+                journal: "Iranian Journal of Psychiatry",
+                year: "2023",
+                tags: ["bipolar", "ai", "machine learning", "diagnosis"]
+            },
+            {
+                id: 4,
+                full: "Cortes-Briones, J. A., Tapia-Rivas, N. I., D'Souza, D. C., & Estevez, P. A. (2022). Going deep into schizophrenia with artificial intelligence. Schizophrenia research, 245, 122-140.",
+                title: "Going deep into schizophrenia with artificial intelligence",
+                authors: "Cortes-Briones, J. A., Tapia-Rivas, N. I., D'Souza, D. C., & Estevez, P. A.",
+                journal: "Schizophrenia research",
+                year: "2022",
+                tags: ["schizophrenia", "ai", "artificial intelligence"]
+            },
+            {
+                id: 5,
+                full: "Dong, Z., Shen, X., Hao, Y., Li, J., Li, H., Xu, H., ... & Kuang, W. (2021). Gut microbiome: a potential indicator for differential diagnosis of major depressive disorder and general anxiety disorder. Frontiers in Psychiatry, 12, 651536.",
+                title: "Gut microbiome: a potential indicator for differential diagnosis of major depressive disorder and general anxiety disorder",
+                authors: "Dong, Z., Shen, X., Hao, Y., et al.",
+                journal: "Frontiers in Psychiatry",
+                year: "2021",
+                tags: ["depression", "anxiety", "gut microbiome", "diagnosis"]
+            },
+            {
+                id: 6,
+                full: "Elsaid, S., Rubin-Kahana, D. S., Kloiber, S., Kennedy, S. H., Chavez, S., & Le Foll, B. (2022). Neurochemical alterations in social anxiety disorder (SAD): a systematic review of proton magnetic resonance spectroscopic studies. International Journal of Molecular Sciences, 23(9), 4754.",
+                title: "Neurochemical alterations in social anxiety disorder (SAD)",
+                authors: "Elsaid, S., Rubin-Kahana, D. S., Kloiber, S., et al.",
+                journal: "International Journal of Molecular Sciences",
+                year: "2022",
+                tags: ["anxiety", "social anxiety", "neurochemistry"]
+            },
+            {
+                id: 7,
+                full: "Espinola, C. W., Gomes, J. C., Mônica Silva Pereira, J., & dos Santos, W. P. (2022). Detection of major depressive disorder, bipolar disorder, schizophrenia and generalized anxiety disorder using vocal acoustic analysis and machine learning: an exploratory study. Research on Biomedical Engineering, 38(3), 813-829.",
+                title: "Detection of mental disorders using vocal acoustic analysis and machine learning",
+                authors: "Espinola, C. W., Gomes, J. C., Mônica Silva Pereira, J., & dos Santos, W. P.",
+                journal: "Research on Biomedical Engineering",
+                year: "2022",
+                tags: ["depression", "bipolar", "schizophrenia", "anxiety", "ai", "machine learning"]
+            },
+            {
+                id: 8,
+                full: "Eslami, T., Almuqhim, F., Raiker, J. S., & Saeed, F. (2021). Machine learning methods for diagnosing autism spectrum disorder and attention-deficit/hyperactivity disorder using functional and structural MRI: a survey. Frontiers in neuroinformatics, 14, 575999.",
+                title: "Machine learning methods for diagnosing autism spectrum disorder and ADHD using MRI",
+                authors: "Eslami, T., Almuqhim, F., Raiker, J. S., & Saeed, F.",
+                journal: "Frontiers in neuroinformatics",
+                year: "2021",
+                tags: ["autism", "adhd", "ai", "machine learning", "mri"]
+            },
+            {
+                id: 9,
+                full: "Goodman, W. K., Storch, E. A., & Sheth, S. A. (2021). Harmonizing the neurobiology and treatment of obsessive-compulsive disorder. American Journal of Psychiatry, 178(1), 17-29.",
+                title: "Harmonizing the neurobiology and treatment of obsessive-compulsive disorder",
+                authors: "Goodman, W. K., Storch, E. A., & Sheth, S. A.",
+                journal: "American Journal of Psychiatry",
+                year: "2021",
+                tags: ["ocd", "neurobiology", "treatment"]
+            },
+            {
+                id: 10,
+                full: "Jelinek, L., Serve, A., Pampuch, S., Scheunemann, J., Schultz, J., Miegel, F., ... & Yassari, A. H. (2024). Exploring the peaks and potholes: understanding positive and negative effects of concentrated exposure treatment for obsessive-compulsive disorder. Journal of Obsessive-Compulsive and Related Disorders, 43, 100913.",
+                title: "Understanding effects of concentrated exposure treatment for OCD",
+                authors: "Jelinek, L., Serve, A., Pampuch, S., et al.",
+                journal: "Journal of Obsessive-Compulsive and Related Disorders",
+                year: "2024",
+                tags: ["ocd", "treatment", "exposure therapy"]
+            },
+            
+                           {
+                id: 11,
+                full: "Klefsjö, U., Kantzer, A. K., Gillberg, C., & Billstedt, E. (2021). The road to diagnosis and treatment in girls and boys with ADHD–gender differences in the diagnostic process. Nordic journal of psychiatry, 75(4), 301-305.",
+                title: "The road to diagnosis and treatment in girls and boys with ADHD–gender differences in the diagnostic process",
+                authors: "Klefsjö, U., Kantzer, A. K., Gillberg, C., & Billstedt, E.",
+                journal: "Nordic journal of psychiatry",
+                year: "2021",
+                tags: ["adhd", "diagnosis", "gender differences"]
+            },
+            {
+                id: 12,
+                full: "Koyuncu, A., Ayan, T., İnce Guliyev, E., Erbilgin, S., & Deveci, E. (2022). ADHD and anxiety disorder comorbidity in children and adults: Diagnostic and therapeutic challenges. Current Psychiatry Reports, 24(2), 129-140.",
+                title: "ADHD and anxiety disorder comorbidity in children and adults: Diagnostic and therapeutic challenges",
+                authors: "Koyuncu, A., Ayan, T., İnce Guliyev, E., Erbilgin, S., & Deveci, E.",
+                journal: "Current Psychiatry Reports",
+                year: "2022",
+                tags: ["adhd", "anxiety", "comorbidity", "diagnosis", "treatment"]
+            },
+            {
+                id: 13,
+                full: "Liu, P., Liu, Z., Wang, J., Wang, J., Gao, M., Zhang, Y., ... & Zhang, K. (2024). Immunoregulatory role of the gut microbiota in inflammatory depression. Nature Communications, 15(1), 3003.",
+                title: "Immunoregulatory role of the gut microbiota in inflammatory depression",
+                authors: "Liu, P., Liu, Z., Wang, J., et al.",
+                journal: "Nature Communications",
+                year: "2024",
+                tags: ["depression", "gut microbiome", "inflammation", "immunology"]
+            },
+            {
+                id: 14,
+                full: "Lynch, C. J., Elbau, I. G., Ng, T., Ayaz, A., Zhu, S., Wolk, D., ... & Liston, C. (2024). Frontostriatal salience network expansion in individuals in depression. Nature, 633(8030), 624-633.",
+                title: "Frontostriatal salience network expansion in individuals in depression",
+                authors: "Lynch, C. J., Elbau, I. G., Ng, T., et al.",
+                journal: "Nature",
+                year: "2024",
+                tags: ["depression", "neuroimaging", "brain networks", "neuroscience"]
+            },
+            {
+                id: 15,
+                full: "Maercker, A., Cloitre, M., Bachem, R., Schlumpf, Y. R., Khoury, B., Hitchcock, C., & Bohus, M. (2022). Complex post-traumatic stress disorder. The Lancet, 400(10345), 60-72.",
+                title: "Complex post-traumatic stress disorder",
+                authors: "Maercker, A., Cloitre, M., Bachem, R., et al.",
+                journal: "The Lancet",
+                year: "2022",
+                tags: ["ptsd", "trauma", "complex ptsd"]
+            },
+            {
+                id: 16,
+                full: "Moridian, P., Ghassemi, N., Jafari, M., Salloum-Asfar, S., Sadeghi, D., Khodatars, M., ... & Acharya, U. R. (2022). Automatic autism spectrum disorder detection using artificial intelligence methods with MRI neuroimaging: A review. Frontiers in Molecular Neuroscience, 15, 999605.",
+                title: "Automatic autism spectrum disorder detection using artificial intelligence methods with MRI neuroimaging: A review",
+                authors: "Moridian, P., Ghassemi, N., Jafari, M., et al.",
+                journal: "Frontiers in Molecular Neuroscience",
+                year: "2022",
+                tags: ["autism", "ai", "mri", "machine learning", "diagnosis"]
+            },
+            {
+                id: 17,
+                full: "Mureșanu, I. A., Grad, D. A., Mureșanu, D. F., Dobran, S. A., Hapca, E., Strilciuc, Ș., ... & Cherecheș, R. M. (2022). Evaluation of post-traumatic stress disorder (PTSD) and related comorbidities in clinical studies. Journal of medicine and life, 15(4), 436.",
+                title: "Evaluation of post-traumatic stress disorder (PTSD) and related comorbidities in clinical studies",
+                authors: "Mureșanu, I. A., Grad, D. A., Mureșanu, D. F., et al.",
+                journal: "Journal of medicine and life",
+                year: "2022",
+                tags: ["ptsd", "comorbidity", "clinical studies"]
+            },
+            {
+                id: 18,
+                full: "Oliva, V., Fico, G., De Prisco, M., Gonda, X., Rosa, A. R., & Vieta, E. (2025). Bipolar disorders: an update on critical aspects. The Lancet Regional Health–Europe, 48.",
+                title: "Bipolar disorders: an update on critical aspects",
+                authors: "Oliva, V., Fico, G., De Prisco, M., Gonda, X., Rosa, A. R., & Vieta, E.",
+                journal: "The Lancet Regional Health–Europe",
+                year: "2025",
+                tags: ["bipolar", "update", "critical aspects"]
+            },
+            {
+                id: 19,
+                full: "Schielen, S. J., Pilmeyer, J., Aldenkamp, A. P., & Zinger, S. (2024). The diagnosis of ASD with MRI: a systematic review and meta-analysis. Translational psychiatry, 14(1), 318.",
+                title: "The diagnosis of ASD with MRI: a systematic review and meta-analysis",
+                authors: "Schielen, S. J., Pilmeyer, J., Aldenkamp, A. P., & Zinger, S.",
+                journal: "Translational psychiatry",
+                year: "2024",
+                tags: ["autism", "mri", "diagnosis", "systematic review", "meta-analysis"]
+            },
+            {
+                id: 20,
+                full: "Thapar, A., Eyre, O., Patel, V., & Brent, D. (2022). Depression in young people. The Lancet, 400(10352), 617-631.",
+                title: "Depression in young people",
+                authors: "Thapar, A., Eyre, O., Patel, V., & Brent, D.",
+                journal: "The Lancet",
+                year: "2022",
+                tags: ["depression", "youth", "adolescents", "young adults"]
+            },
+            {
+                id: 21,
+                full: "Zheng, J., Wei, X., Wang, J., Lin, H., Pan, H., & Shi, Y. (2021). Diagnosis of schizophrenia based on deep learning using fMRI. Computational and Mathematical Methods in Medicine, 2021(1), 8437260.",
+                title: "Diagnosis of schizophrenia based on deep learning using fMRI",
+                authors: "Zheng, J., Wei, X., Wang, J., Lin, H., Pan, H., & Shi, Y.",
+                journal: "Computational and Mathematical Methods in Medicine",
+                year: "2021",
+                tags: ["schizophrenia", "ai", "deep learning", "fmri", "diagnosis"]
+            }
+        ];
+
+        // DOM Elements
+        const referencesContainer = document.getElementById('referencesContainer');
+        const referenceDetails = document.getElementById('referenceDetails');
+        const referenceFull = document.getElementById('referenceFull');
+        const referenceTags = document.getElementById('referenceTags');
+        const closeDetails = document.getElementById('closeDetails');
+        const searchInput = document.getElementById('searchInput');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+
+        // Render references
+        function renderReferences(refs = references) {
+            referencesContainer.innerHTML = '';
+            
+            if (refs.length === 0) {
+                referencesContainer.innerHTML = '<div class="no-results"><i class="fas fa-search fa-2x"></i><h3>No references found</h3><p>Try adjusting your search or filter</p></div>';
+                return;
+            }
+            
+            refs.forEach(ref => {
+                const card = document.createElement('div');
+                card.className = 'reference-card';
+                card.dataset.id = ref.id;
+                card.dataset.tags = ref.tags.join(' ');
+                
+                card.innerHTML = `
+                    <div class="reference-id">${ref.id}</div>
+                    <div class="reference-title">${ref.title}</div>
+                    <div class="reference-authors">${ref.authors}</div>
+                    <div class="reference-journal">${ref.journal}</div>
+                    <div class="reference-year">${ref.year}</div>
+                `;
+                
+                card.addEventListener('click', () => showReferenceDetails(ref));
+                referencesContainer.appendChild(card);
+            });
+        }
+
+        // Show reference details
+        function showReferenceDetails(ref) {
+            referenceFull.textContent = ref.full;
+            
+            // Clear and add tags
+            referenceTags.innerHTML = '';
+            ref.tags.forEach(tag => {
+                const tagElement = document.createElement('span');
+                tagElement.className = 'tag';
+                tagElement.textContent = tag;
+                referenceTags.appendChild(tagElement);
+            });
+            
+            referenceDetails.style.display = 'block';
+            
+            // Scroll to details on mobile
+            if (window.innerWidth <= 1100) {
+                referenceDetails.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Close details panel
+        closeDetails.addEventListener('click', () => {
+            referenceDetails.style.display = 'none';
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+            
+            filterReferences(searchTerm, activeFilter);
+        });
+
+        // Filter functionality
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active button
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                const filter = button.dataset.filter;
+                const searchTerm = searchInput.value.toLowerCase();
+                
+                filterReferences(searchTerm, filter);
+            });
+        });
+
+        // Filter references based on search and filter
+        function filterReferences(searchTerm, filter) {
+            let filteredRefs = references;
+            
+            // Apply search filter
+            if (searchTerm) {
+                filteredRefs = filteredRefs.filter(ref => 
+                    ref.title.toLowerCase().includes(searchTerm) ||
+                    ref.authors.toLowerCase().includes(searchTerm) ||
+                    ref.journal.toLowerCase().includes(searchTerm) ||
+                    ref.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+                );
+            }
+            
+            // Apply category filter
+            if (filter !== 'all') {
+                filteredRefs = filteredRefs.filter(ref => 
+                    ref.tags.includes(filter)
+                );
+            }
+            
+            renderReferences(filteredRefs);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderReferences();
+        });
+        // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+    </script>
+</body>
+</html>

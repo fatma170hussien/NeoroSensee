@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liebowitz Social Anxiety Scale (LSAS-SR)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary-blue: #4A6FA5;
+      --secondary-blue: #2C4A7D;
+      --light-blue: #E8EFF7;
+      --accent-orange: #FF9800;
+      --accent-green: #4CAF50;
+      --accent-red: #F44336;
+      --anxiety-color: #2196F3;
+      --avoidance-color: #FF9800;
+      --performance-color: #9C27B0;
+      --social-color: #4CAF50;
+      --text-dark: #333333;
+      --text-light: #666666;
+      --border-color: #E0E0E0;
+      --card-bg: #FFFFFF;
+      --section-bg: #F5F7FA;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: var(--section-bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .container {
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    
+    /* Header Styles */
+    .header {
+      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      color: white;
+      padding: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.3);
+    }
+    
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .header-info {
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    .header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    
+    .header .subtitle {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-bottom: 15px;
+    }
+    
+    .citation {
+      font-size: 0.85rem;
+      margin-top: 15px;
+      opacity: 0.8;
+      font-style: italic;
+    }
+    
+    /* Subject Information */
+    .subject-info {
+      padding: 25px;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--light-blue);
+    }
+    
+    .info-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 15px;
+    }
+    
+    .info-field {
+      flex: 1;
+      min-width: 250px;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .info-field label {
+      font-weight: 600;
+      color: var(--secondary-blue);
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .info-field input {
+      padding: 12px;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    
+    .info-field input:focus {
+      outline: none;
+      border-color: var(--primary-blue);
+    }
+    
+    /* Instructions */
+    .instructions {
+      padding: 25px;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .instructions h3 {
+      color: var(--secondary-blue);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .instructions-content {
+      background: #FFF8E1;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      border-left: 4px solid var(--accent-orange);
+    }
+    
+    /* Rating Scales */
+    .rating-scales {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+    
+    .scale-card {
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+    
+    .scale-card.anxiety {
+      background: #E3F2FD;
+      border: 2px solid var(--anxiety-color);
+    }
+    
+    .scale-card.avoidance {
+      background: #FFF3E0;
+      border: 2px solid var(--avoidance-color);
+    }
+    
+    .scale-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: inherit;
+    }
+    
+    .scale-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    .scale-item {
+      padding: 10px;
+      border-radius: 6px;
+      background: white;
+      border: 1px solid var(--border-color);
+    }
+    
+    .scale-value {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .scale-label {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+    
+    /* Items Grid */
+    .items-section {
+      padding: 25px;
+    }
+    
+    .items-header {
+      display: grid;
+      grid-template-columns: 300px repeat(2, 150px);
+      gap: 15px;
+      margin-bottom: 15px;
+      padding: 15px;
+      background: var(--section-bg);
+      border-radius: 8px;
+      font-weight: 600;
+      color: var(--secondary-blue);
+    }
+    
+    .items-container {
+      max-height: 600px;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+    
+    .item-row {
+      display: grid;
+      grid-template-columns: 300px repeat(2, 150px);
+      gap: 15px;
+      margin-bottom: 15px;
+      padding: 15px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      background: white;
+      transition: all 0.2s;
+    }
+    
+    .item-row:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+    
+    .item-description {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .item-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      background: var(--light-blue);
+      color: var(--primary-blue);
+      border-radius: 50%;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+    
+    .item-text {
+      flex: 1;
+    }
+    
+    .item-category {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      margin-top: 5px;
+      font-style: italic;
+    }
+    
+    /* Rating Columns */
+    .rating-column {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    .rating-buttons {
+      display: flex;
+      gap: 5px;
+    }
+    
+    .rating-btn {
+      flex: 1;
+      padding: 8px 0;
+      border: 2px solid var(--border-color);
+      border-radius: 6px;
+      background: white;
+      color: var(--text-dark);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    
+    .rating-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .rating-btn.selected {
+      border-color: transparent;
+      color: white;
+    }
+    
+    .rating-btn.anxiety.selected[data-value="0"] { background: #BBDEFB; color: #0D47A1; }
+    .rating-btn.anxiety.selected[data-value="1"] { background: #64B5F6; color: white; }
+    .rating-btn.anxiety.selected[data-value="2"] { background: #1976D2; color: white; }
+    .rating-btn.anxiety.selected[data-value="3"] { background: #0D47A1; color: white; }
+    
+    .rating-btn.avoidance.selected[data-value="0"] { background: #FFE0B2; color: #E65100; }
+    .rating-btn.avoidance.selected[data-value="1"] { background: #FFB74D; color: white; }
+    .rating-btn.avoidance.selected[data-value="2"] { background: #FF9800; color: white; }
+    .rating-btn.avoidance.selected[data-value="3"] { background: #EF6C00; color: white; }
+    
+    .rating-label {
+      font-size: 0.8rem;
+      color: var(--text-light);
+      text-align: center;
+      margin-top: 5px;
+    }
+    
+    /* Score Display */
+    .score-display {
+      position: sticky;
+      top: 10px;
+      background: white;
+      padding: 20px;
+      margin: 0 25px 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border: 2px solid var(--primary-blue);
+      z-index: 100;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    
+    .score-card {
+      text-align: center;
+      padding: 15px;
+      border-radius: 8px;
+      border: 2px solid;
+    }
+    
+    .score-card.total { border-color: var(--primary-blue); background: var(--light-blue); }
+    .score-card.performance { border-color: var(--performance-color); background: #F3E5F5; }
+    .score-card.social { border-color: var(--social-color); background: #E8F5E9; }
+    .score-card.anxiety { border-color: var(--anxiety-color); background: #E3F2FD; }
+    .score-card.avoidance { border-color: var(--avoidance-color); background: #FFF3E0; }
+    
+    .score-label {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 5px;
+    }
+    
+    .score-value {
+      font-size: 2.2rem;
+      font-weight: bold;
+      line-height: 1;
+      margin: 10px 0;
+    }
+    
+    .score-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.8rem;
+      margin-top: 5px;
+      padding: 3px 10px;
+      border-radius: 12px;
+    }
+    
+    /* Results Section */
+    .results-section {
+      padding: 30px;
+      display: none;
+    }
+    
+    .results-section.active {
+      display: block;
+    }
+    
+    .results-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .results-header h2 {
+      color: var(--primary-blue);
+      margin-bottom: 10px;
+    }
+    
+    .diagnostic-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    
+    .summary-card {
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      border: 2px solid;
+    }
+    
+    .summary-card.total { border-color: var(--primary-blue); background: var(--light-blue); }
+    .summary-card.performance { border-color: var(--performance-color); background: #F3E5F5; }
+    .summary-card.social { border-color: var(--social-color); background: #E8F5E9; }
+    
+    .summary-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+    
+    .summary-score {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+    
+    .summary-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    
+    .interpretation-box {
+      background: white;
+      border-radius: 10px;
+      padding: 25px;
+      margin: 30px 0;
+      border: 2px solid var(--primary-blue);
+    }
+    
+    .cutoff-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    .cutoff-card {
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    
+    .cutoff-card.low { background: #E8F5E9; border: 2px solid #4CAF50; }
+    .cutoff-card.moderate { background: #FFF3E0; border: 2px solid #FF9800; }
+    .cutoff-card.high { background: #FFEBEE; border: 2px solid #F44336; }
+    
+    .cutoff-range {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    
+    /* Research Section */
+    .research-section {
+      background: #F5F7FA;
+      padding: 25px;
+      border-radius: 10px;
+      margin-top: 30px;
+      border-left: 4px solid var(--primary-blue);
+    }
+    
+    .research-section h3 {
+      color: var(--secondary-blue);
+      margin-bottom: 15px;
+    }
+    
+    .research-citation {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      margin: 15px 0;
+      border-left: 3px solid var(--accent-orange);
+    }
+    
+    /* Controls */
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      padding: 25px;
+      border-top: 1px solid var(--border-color);
+      background: var(--section-bg);
+    }
+    
+    .control-btn {
+      padding: 14px 28px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+    }
+    
+    .reset-btn {
+      background: var(--light-blue);
+      color: var(--primary-blue);
+    }
+    
+    .reset-btn:hover {
+      background: #BBDEFB;
+    }
+    
+    .save-btn {
+      background: linear-gradient(135deg, var(--accent-green), #45a049);
+      color: white;
+    }
+    
+    .save-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(76, 175, 80, 0.3);
+    }
+    
+    .calculate-btn {
+      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      color: white;
+    }
+    
+    .calculate-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(74, 111, 165, 0.3);
+    }
+    
+    .print-btn {
+      background: linear-gradient(135deg, #FF9800, #F57C00);
+      color: white;
+    }
+    
+    .print-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(255, 152, 0, 0.3);
+    }
+    
+    /* Footer */
+    .footer {
+      background: var(--light-blue);
+      padding: 25px 30px;
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border-color);
+    }
+    
+    .copyright {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.8rem;
+      color: #999;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header-top {
+        flex-direction: column;
+      }
+      
+      .score-display {
+        grid-template-columns: 1fr;
+        margin: 0 15px 20px;
+      }
+      
+      .controls {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .control-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .items-header,
+      .item-row {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      
+      .rating-scales {
+        grid-template-columns: 1fr;
+      }
+      
+      .rating-buttons {
+        justify-content: center;
+      }
+      
+      .rating-btn {
+        min-width: 60px;
+      }
+    }
+    
+    @media print {
+      .controls,
+      .footer {
+        display: none;
+      }
+      
+      .results-section {
+        display: block !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-top">
+        <div class="header-info">
+          <h1>Liebowitz Social Anxiety Scale (LSAS-SR)</h1>
+          <div class="subtitle">Self-Report Version - Measures Fear/Anxiety and Avoidance in Social Situations</div>
+          <div class="citation">
+            Liebowitz, M. R. (1987). "Social phobia" Modern Problems in Pharmacopsychiatry
+          </div>
+        </div>
+      </div>
+      
+      <div class="instructions-content">
+        <p><strong>Instructions:</strong> This measure assesses the way that social phobia plays a role in your life across a variety of situations. Read each situation carefully and answer two questions about it; the first question asks how anxious or fearful you feel in the situation; the second question asks how often you avoid it.</p>
+        <p style="margin-top: 10px;">If you come across a situation that you ordinarily do not experience, imagine "what if you were faced with that situation", and then rate the degree to which you would fear this hypothetical situation and how often you would tend to avoid it. Please base your ratings on the way that situations have affected you in the last week.</p>
+      </div>
+    </div>
+    
+    <!-- Subject Information -->
+    <div class="subject-info">
+      <div class="info-row">
+        <div class="info-field">
+          <label for="subjectName"><i class="fas fa-user"></i> Name</label>
+          <input type="text" id="subjectName" placeholder="Enter your name">
+        </div>
+        
+        <div class="info-field">
+          <label for="assessmentDate"><i class="fas fa-calendar-alt"></i> Date of Assessment</label>
+          <input type="date" id="assessmentDate">
+        </div>
+        
+        <div class="info-field">
+          <label for="timePeriod"><i class="fas fa-clock"></i> Time Period Assessed</label>
+          <input type="text" id="timePeriod" value="Past week" placeholder="e.g., Past week">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Rating Scales -->
+    <div class="instructions">
+      <h3><i class="fas fa-ruler"></i> Rating Scales</h3>
+      <div class="rating-scales">
+        <div class="scale-card anxiety">
+          <div class="scale-title" style="color: var(--anxiety-color);">
+            <i class="fas fa-heartbeat"></i> Fear or Anxiety
+          </div>
+          <div class="scale-grid">
+            <div class="scale-item">
+              <div class="scale-value">0</div>
+              <div class="scale-label">None</div>
+            </div>
+            <div class="scale-item">
+              <div class="scale-value">1</div>
+              <div class="scale-label">Mild</div>
+            </div>
+            <div class="scale-item">
+              <div class="scale-value">2</div>
+              <div class="scale-label">Moderate</div>
+            </div>
+            <div class="scale-item">
+              <div class="scale-value">3</div>
+              <div class="scale-label">Severe</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="scale-card avoidance">
+          <div class="scale-title" style="color: var(--avoidance-color);">
+            <i class="fas fa-ban"></i> Avoidance
+          </div>
+          <div class="scale-grid">
+            <div class="scale-item">
+              <div class="scale-value">0</div>
+              <div class="scale-label">Never (0%)</div>
+            </div>
+            <div class="scale-item">
+              <div class="scale-value">1</div>
+              <div class="scale-label">Occasionally (1-33%)</div>
+            </div>
+            <div class="scale-item">
+              <div class="scale-value">2</div>
+              <div class="scale-label">Often (33-67%)</div>
+            </div>
+            <div class="scale-item">
+              <div class="scale-value">3</div>
+              <div class="scale-label">Usually (67-100%)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Score Display -->
+    <div class="score-display" id="scoreDisplay">
+      <div class="score-card total">
+        <div class="score-label">Total Score</div>
+        <div class="score-value" id="totalScore">0</div>
+        <div class="score-status" id="totalStatus" style="background: #E8F5E9; color: #388E3C;">
+          <i class="fas fa-circle" style="font-size: 0.6rem;"></i>
+          <span>No significant social anxiety</span>
+        </div>
+      </div>
+      
+      <div class="score-card anxiety">
+        <div class="score-label">Fear/Anxiety Total</div>
+        <div class="score-value" id="anxietyScore">0</div>
+        <div class="score-status" id="anxietyStatus" style="background: #E8F5E9; color: #388E3C;">
+          <i class="fas fa-circle" style="font-size: 0.6rem;"></i>
+          <span>Calculating...</span>
+        </div>
+      </div>
+      
+      <div class="score-card avoidance">
+        <div class="score-label">Avoidance Total</div>
+        <div class="score-value" id="avoidanceScore">0</div>
+        <div class="score-status" id="avoidanceStatus" style="background: #E8F5E9; color: #388E3C;">
+          <i class="fas fa-circle" style="font-size: 0.6rem;"></i>
+          <span>Calculating...</span>
+        </div>
+      </div>
+      
+      <div class="score-card performance">
+        <div class="score-label">Performance Situations</div>
+        <div class="score-value" id="performanceScore">0</div>
+        <div class="score-status" id="performanceStatus" style="background: #E8F5E9; color: #388E3C;">
+          <i class="fas fa-circle" style="font-size: 0.6rem;"></i>
+          <span>Calculating...</span>
+        </div>
+      </div>
+      
+      <div class="score-card social">
+        <div class="score-label">Social Interaction Situations</div>
+        <div class="score-value" id="socialScore">0</div>
+        <div class="score-status" id="socialStatus" style="background: #E8F5E9; color: #388E3C;">
+          <i class="fas fa-circle" style="font-size: 0.6rem;"></i>
+          <span>Calculating...</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Items Section -->
+    <div class="items-section">
+      <h3><i class="fas fa-tasks"></i> Rate Each Situation for Fear/Anxiety and Avoidance</h3>
+      
+      <div class="items-header">
+        <div>Situation</div>
+        <div>Fear/Anxiety (0-3)</div>
+        <div>Avoidance (0-3)</div>
+      </div>
+      
+      <div class="items-container" id="itemsContainer">
+        <!-- Items will be inserted here dynamically -->
+      </div>
+    </div>
+    
+    <!-- Results Section -->
+    <div class="results-section" id="resultsSection">
+      <div class="results-header">
+        <h2><i class="fas fa-chart-bar"></i> LSAS-SR Results and Interpretation</h2>
+        <p>Based on your responses to the Liebowitz Social Anxiety Scale</p>
+      </div>
+      
+      <div class="diagnostic-summary">
+        <div class="summary-card total">
+          <div class="summary-title">Total LSAS-SR Score</div>
+          <div class="summary-score" id="summaryTotalScore">0</div>
+          <div class="summary-status" id="summaryTotalStatus" style="background: #E8F5E9; color: #388E3C;">
+            <i class="fas fa-check-circle"></i>
+            <span>No significant social anxiety</span>
+          </div>
+        </div>
+        
+        <div class="summary-card performance">
+          <div class="summary-title">Performance Situations (P)</div>
+          <div class="summary-score" id="summaryPerformanceScore">0</div>
+          <div class="summary-status" id="summaryPerformanceStatus" style="background: #E8F5E9; color: #388E3C;">
+            <i class="fas fa-chart-line"></i>
+            <span>Subscore</span>
+          </div>
+        </div>
+        
+        <div class="summary-card social">
+          <div class="summary-title">Social Interaction (S)</div>
+          <div class="summary-score" id="summarySocialScore">0</div>
+          <div class="summary-status" id="summarySocialStatus" style="background: #E8F5E9; color: #388E3C;">
+            <i class="fas fa-chart-line"></i>
+            <span>Subscore</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="interpretation-box">
+        <h3 style="color: var(--primary-blue); margin-bottom: 15px;">
+          <i class="fas fa-stethoscope"></i> Clinical Interpretation
+        </h3>
+        
+        <div id="interpretationText">
+          <!-- Interpretation will be inserted here dynamically -->
+        </div>
+        
+        <div class="cutoff-info">
+          <div class="cutoff-card low">
+            <div class="scale-title" style="color: #4CAF50;">No/Mild Social Anxiety</div>
+            <div class="cutoff-range">0 - 29</div>
+            <p>Sensitivity: 83%<br>Specificity: 81%</p>
+          </div>
+          
+          <div class="cutoff-card moderate">
+            <div class="scale-title" style="color: #FF9800;">Social Anxiety Disorder</div>
+            <div class="cutoff-range">30 - 59</div>
+            <p>Sensitivity: 89%<br>Specificity: 81%</p>
+          </div>
+          
+          <div class="cutoff-card high">
+            <div class="scale-title" style="color: #F44336;">Generalized Social Anxiety Disorder</div>
+            <div class="cutoff-range">60+</div>
+            <p>Sensitivity: 90%<br>Specificity: 89%</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="research-section">
+        <h3><i class="fas fa-graduation-cap"></i> Research Evidence</h3>
+        
+        <div class="research-citation">
+          <p><strong>Cutoff Validation Study:</strong></p>
+          <p>"Cutoffs of 30 and 60 on the LSAS-SR provided the best balance of sensitivity and specificity for classifying participants with social anxiety and generalized social anxiety disorder, respectively."</p>
+          <p style="margin-top: 10px; font-style: italic;">
+            Rytwinski, N. K., Fresco, D. M., et al. (2009). Screening for social anxiety disorder with the self-report version of the Liebowitz Social Anxiety Scale. <em>Depress Anxiety</em> 26(1): 34-38.
+          </p>
+        </div>
+        
+        <div class="research-citation">
+          <p><strong>Treatment Response:</strong></p>
+          <p>"In a trial of sertraline for severe generalized social anxiety disorder, LSAS scores dropped about 30 points (from 95.4 to 64.4) with active treatment compared to 21.7 points with placebo."</p>
+          <p style="margin-top: 10px; font-style: italic;">
+            Liebowitz, M. R., et al. (2003). Efficacy of sertraline in severe generalized social anxiety disorder: Results of a double-blind, placebo-controlled study. <em>Journal of Clinical Psychiatry</em> 64(7).
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Controls -->
+    <div class="controls">
+      <button class="control-btn reset-btn" onclick="resetAssessment()">
+        <i class="fas fa-redo"></i> Reset Assessment
+      </button>
+      
+      <button class="control-btn save-btn" onclick="saveAssessment()">
+        <i class="fas fa-save"></i> Save Progress
+      </button>
+      
+      <button class="control-btn calculate-btn" onclick="showResults()">
+        <i class="fas fa-calculator"></i> Calculate Results
+      </button>
+      
+      <button class="control-btn print-btn" onclick="printReport()">
+        <i class="fas fa-print"></i> Print Report
+      </button>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+      <p><strong>Liebowitz Social Anxiety Scale (LSAS-SR)</strong></p>
+      <p>Self-Report Version - For assessment of social anxiety disorder</p>
+      
+      <div class="copyright">
+        <p>Based on: Liebowitz, M. R. (1987). "Social phobia" Modern Problems in Pharmacopsychiatry</p>
+        <p>Psychometric validation: Fresco, D. M. (2001). Psychological Medicine 1025-1035</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // LSAS-SR Items Data Structure
+    const lsasItems = [
+      {
+        id: 1,
+        description: "Telephoning in public",
+        category: "P",
+        fullCategory: "Performance"
+      },
+      {
+        id: 2,
+        description: "Participating in small groups",
+        category: "P",
+        fullCategory: "Performance"
+      },
+      {
+        id: 3,
+        description: "Eating in public places",
+        category: "P",
+        fullCategory: "Performance"
+      },
+      {
+        id: 4,
+        description: "Drinking with others in public places",
+        category: "P",
+        fullCategory: "Performance"
+      },
+      {
+        id: 5,
+        description: "Talking to people in authority",
+        category: "S",
+        fullCategory: "Social Interaction"
+      },
+      {
+        id: 6,
+        description: "Acting, performing or giving a talk in front of an audience",
+        category: "P",
+        fullCategory: "Performance"
+      },
+      {
+        id: 7,
+        description: "Going to a party",
+        category: "S",
+        fullCategory: "Social Interaction"
+      },
+      {
+        id: 8,
+        description: "Working while being observed",
+        category: "P",
+        fullCategory: "Performance"
+      },
+      {
+        id: 9,
+        description: "Writing while being observed",
+        category: "P",
+        fullCategory: "Performance"
+      },
+      {
+        id: 10,
+        description: "Calling someone you don't know very well",
+        category: "S",
+        fullCategory: "Social Interaction"
+      },
+      {
+        id: 11,
+        description: "Talking with people you don't know very well",
+        category: "S",
+        fullCategory: "Social Interaction"
+      },
+      {
+        id: 12,
+        description: "Meeting strangers",
+        category: "S",
+        fullCategory: "Social Interaction"
+      },
+      {
+        id: 13,
+        description: "Urinating in a public bathroom",
+        category: "P",
+        fullCategory: "Performance"
+      },
+      {
+        id: 14,
+        description: "Entering a room when others are already seated",
+        category: "P",
+        fullCategory: "Performance"
+      },
+      {
+        id: 15,
+        description: "Being the centre of attention",
+        category: "S",
+        fullCategory: "Social Interaction"
+      },
+      {
+        id: 16,
+        description: "Speaking up at a meeting",
+        category: "P",
+        fullCategory: "Performance"
+      },
+      {
+        id: 17,
+        description: "Taking a test",
+        category: "P",
+        fullCategory: "Performance"
+      },
+      {
+        id: 18,
+        description: "Expressing a disagreement or disapproval to people you don't know very well",
+        category: "S",
+        fullCategory: "Social Interaction"
+      },
+      {
+        id: 19,
+        description: "Looking at people you don't very well in the eyes",
+        category: "S",
+        fullCategory: "Social Interaction"
+      },
+      {
+        id: 20,
+        description: "Giving a report to a group",
+        category: "P",
+        fullCategory: "Performance"
+      },
+      {
+        id: 21,
+        description: "Trying to pick up someone",
+        category: "P",
+        fullCategory: "Performance"
+      },
+      {
+        id: 22,
+        description: "Returning goods to a store",
+        category: "S",
+        fullCategory: "Social Interaction"
+      },
+      {
+        id: 23,
+        description: "Giving a party",
+        category: "S",
+        fullCategory: "Social Interaction"
+      },
+      {
+        id: 24,
+        description: "Resisting a high pressure salesperson",
+        category: "S",
+        fullCategory: "Social Interaction"
+      }
+    ];
+
+    // User responses storage
+    let userResponses = {};
+
+    // Initialize the assessment
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set assessment date to today
+      const today = new Date();
+      const formattedDate = today.toISOString().split('T')[0];
+      document.getElementById('assessmentDate').value = formattedDate;
+      
+      // Render all items
+      renderAllItems();
+      
+      // Update scores
+      updateScoreDisplay();
+      
+      // Load saved data
+      loadFormData();
+    });
+
+    // Render all items
+    function renderAllItems() {
+      const container = document.getElementById('itemsContainer');
+      let html = '';
+      
+      lsasItems.forEach(item => {
+        const anxietyResponse = userResponses[`${item.id}_anxiety`] !== undefined ? userResponses[`${item.id}_anxiety`] : null;
+        const avoidanceResponse = userResponses[`${item.id}_avoidance`] !== undefined ? userResponses[`${item.id}_avoidance`] : null;
+        
+        html += `
+          <div class="item-row" id="item-${item.id}">
+            <div class="item-description">
+              <div class="item-number">${item.id}</div>
+              <div class="item-text">
+                ${item.description}
+                <div class="item-category">(${item.category}) - ${item.fullCategory}</div>
+              </div>
+            </div>
+            
+            <div class="rating-column">
+              <div class="rating-buttons">
+                ${[0, 1, 2, 3].map(value => `
+                  <button class="rating-btn anxiety ${anxietyResponse === value ? 'selected' : ''}"
+                          data-value="${value}"
+                          onclick="selectRating(${item.id}, 'anxiety', ${value})">
+                    ${value}
+                  </button>
+                `).join('')}
+              </div>
+              <div class="rating-label">Fear/Anxiety</div>
+            </div>
+            
+            <div class="rating-column">
+              <div class="rating-buttons">
+                ${[0, 1, 2, 3].map(value => `
+                  <button class="rating-btn avoidance ${avoidanceResponse === value ? 'selected' : ''}"
+                          data-value="${value}"
+                          onclick="selectRating(${item.id}, 'avoidance', ${value})">
+                    ${value}
+                  </button>
+                `).join('')}
+              </div>
+              <div class="rating-label">Avoidance</div>
+            </div>
+          </div>
+        `;
+      });
+      
+      container.innerHTML = html;
+    }
+
+    // Select rating
+    function selectRating(itemId, type, value) {
+      const key = `${itemId}_${type}`;
+      userResponses[key] = value;
+      
+      // Update UI
+      const itemRow = document.getElementById(`item-${itemId}`);
+      const buttons = itemRow.querySelectorAll(`.rating-btn.${type}`);
+      buttons.forEach(btn => {
+        const btnValue = parseInt(btn.getAttribute('data-value'));
+        btn.classList.toggle('selected', btnValue === value);
+      });
+      
+      updateScoreDisplay();
+      saveFormData();
+    }
+
+    // Calculate scores
+    function calculateAllScores() {
+      let anxietyTotal = 0;
+      let avoidanceTotal = 0;
+      let performanceTotal = 0;
+      let socialTotal = 0;
+      
+      lsasItems.forEach(item => {
+        const anxietyScore = userResponses[`${item.id}_anxiety`] || 0;
+        const avoidanceScore = userResponses[`${item.id}_avoidance`] || 0;
+        
+        anxietyTotal += anxietyScore;
+        avoidanceTotal += avoidanceScore;
+        
+        if (item.category === 'P') {
+          performanceTotal += anxietyScore + avoidanceScore;
+        } else if (item.category === 'S') {
+          socialTotal += anxietyScore + avoidanceScore;
+        }
+      });
+      
+      const totalScore = anxietyTotal + avoidanceTotal;
+      
+      return {
+        anxietyTotal,
+        avoidanceTotal,
+        performanceTotal,
+        socialTotal,
+        totalScore,
+        completedItems: Object.keys(userResponses).length / 2 // Each item has 2 ratings
+      };
+    }
+
+    // Update score display
+    function updateScoreDisplay() {
+      const scores = calculateAllScores();
+      
+      // Update score values
+      document.getElementById('totalScore').textContent = scores.totalScore;
+      document.getElementById('anxietyScore').textContent = scores.anxietyTotal;
+      document.getElementById('avoidanceScore').textContent = scores.avoidanceTotal;
+      document.getElementById('performanceScore').textContent = scores.performanceTotal;
+      document.getElementById('socialScore').textContent = scores.socialTotal;
+      
+      // Update status indicators
+      updateStatusIndicator('totalStatus', scores.totalScore);
+      updateStatusIndicator('anxietyStatus', scores.anxietyTotal, 'anxiety');
+      updateStatusIndicator('avoidanceStatus', scores.avoidanceTotal, 'avoidance');
+      updateStatusIndicator('performanceStatus', scores.performanceTotal, 'subscore');
+      updateStatusIndicator('socialStatus', scores.socialTotal, 'subscore');
+    }
+
+    // Update status indicator
+    function updateStatusIndicator(elementId, score, type = 'total') {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      
+      if (type === 'total') {
+        if (score >= 60) {
+          element.innerHTML = '<i class="fas fa-circle" style="font-size: 0.6rem;"></i><span>Generalized Social Anxiety</span>';
+          element.style.background = '#FFEBEE';
+          element.style.color = '#C62828';
+        } else if (score >= 30) {
+          element.innerHTML = '<i class="fas fa-circle" style="font-size: 0.6rem;"></i><span>Social Anxiety Disorder</span>';
+          element.style.background = '#FFF3E0';
+          element.style.color = '#F57C00';
+        } else {
+          element.innerHTML = '<i class="fas fa-circle" style="font-size: 0.6rem;"></i><span>No significant social anxiety</span>';
+          element.style.background = '#E8F5E9';
+          element.style.color = '#388E3C';
+        }
+      } else if (type === 'anxiety' || type === 'avoidance') {
+        const maxScore = type === 'anxiety' ? 72 : 72; // 24 items * 3
+        const percentage = (score / maxScore) * 100;
+        
+        if (percentage >= 67) {
+          element.innerHTML = '<i class="fas fa-circle" style="font-size: 0.6rem;"></i><span>High</span>';
+          element.style.background = '#FFEBEE';
+          element.style.color = '#C62828';
+        } else if (percentage >= 33) {
+          element.innerHTML = '<i class="fas fa-circle" style="font-size: 0.6rem;"></i><span>Moderate</span>';
+          element.style.background = '#FFF3E0';
+          element.style.color = '#F57C00';
+        } else {
+          element.innerHTML = '<i class="fas fa-circle" style="font-size: 0.6rem;"></i><span>Low</span>';
+          element.style.background = '#E8F5E9';
+          element.style.color = '#388E3C';
+        }
+      } else {
+        element.innerHTML = '<i class="fas fa-circle" style="font-size: 0.6rem;"></i><span>Calculated</span>';
+        element.style.background = '#E8F5E9';
+        element.style.color = '#388E3C';
+      }
+    }
+
+    // Show results
+    function showResults() {
+      const scores = calculateAllScores();
+      
+      // Check if all items are completed
+      if (scores.completedItems < 24) {
+        const confirmProceed = confirm(`You have completed ${scores.completedItems} out of 24 items. Would you like to proceed with calculating results anyway?`);
+        if (!confirmProceed) return;
+      }
+      
+      // Update summary display
+      document.getElementById('summaryTotalScore').textContent = scores.totalScore;
+      document.getElementById('summaryPerformanceScore').textContent = scores.performanceTotal;
+      document.getElementById('summarySocialScore').textContent = scores.socialTotal;
+      
+      // Update summary status indicators
+      updateSummaryStatus('summaryTotalStatus', scores.totalScore);
+      updateSummaryStatus('summaryPerformanceStatus', scores.performanceTotal, 'subscore');
+      updateSummaryStatus('summarySocialStatus', scores.socialTotal, 'subscore');
+      
+      // Generate interpretation
+      generateInterpretation(scores);
+      
+      // Show results section
+      document.getElementById('itemsSection').style.display = 'none';
+      document.getElementById('resultsSection').classList.add('active');
+      document.getElementById('scoreDisplay').style.display = 'none';
+      
+      // Scroll to results
+      document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Update summary status
+    function updateSummaryStatus(elementId, score, type = 'total') {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      
+      if (type === 'total') {
+        if (score >= 60) {
+          element.innerHTML = '<i class="fas fa-exclamation-circle"></i><span>Generalized Social Anxiety</span>';
+          element.style.background = '#FFEBEE';
+          element.style.color = '#C62828';
+        } else if (score >= 30) {
+          element.innerHTML = '<i class="fas fa-exclamation-triangle"></i><span>Social Anxiety Disorder</span>';
+          element.style.background = '#FFF3E0';
+          element.style.color = '#F57C00';
+        } else {
+          element.innerHTML = '<i class="fas fa-check-circle"></i><span>No significant social anxiety</span>';
+          element.style.background = '#E8F5E9';
+          element.style.color = '#388E3C';
+        }
+      } else {
+        element.innerHTML = '<i class="fas fa-chart-line"></i><span>Subscore</span>';
+        element.style.background = '#E8F5E9';
+        element.style.color = '#388E3C';
+      }
+    }
+
+    // Generate interpretation
+    function generateInterpretation(scores) {
+      const container = document.getElementById('interpretationText');
+      let interpretation = '';
+      
+      // Determine diagnosis based on cutoff scores
+      let diagnosis = '';
+      let diagnosisColor = '';
+      let recommendations = [];
+      
+      if (scores.totalScore >= 60) {
+        diagnosis = 'Generalized Social Anxiety Disorder';
+        diagnosisColor = '#C62828';
+        recommendations = [
+          'Consider formal evaluation by a mental health professional',
+          'Evidence-based treatments include CBT and SSRIs',
+          'Sertraline has shown significant efficacy in reducing LSAS scores by approximately 30 points',
+          'Consider group therapy or social skills training',
+          'Regular monitoring of symptoms is recommended'
+        ];
+      } else if (scores.totalScore >= 30) {
+        diagnosis = 'Social Anxiety Disorder';
+        diagnosisColor = '#F57C00';
+        recommendations = [
+          'Consider consultation with a mental health professional',
+          'Cognitive Behavioral Therapy (CBT) is highly effective',
+          'Medication options include SSRIs',
+          'Consider self-help resources and support groups',
+          'Practice gradual exposure to feared situations'
+        ];
+      } else {
+        diagnosis = 'No significant social anxiety';
+        diagnosisColor = '#388E3C';
+        recommendations = [
+          'Your score suggests minimal social anxiety concerns',
+          'Continue healthy social engagement',
+          'Consider occasional check-ins if social situations become challenging',
+          'Maintain good self-care and stress management practices'
+        ];
+      }
+      
+      interpretation = `
+        <div style="margin-bottom: 20px;">
+          <h4 style="color: ${diagnosisColor}; margin-bottom: 10px;">Diagnostic Impression: ${diagnosis}</h4>
+          <p>Your total LSAS-SR score of <strong>${scores.totalScore}</strong> falls within the range associated with ${diagnosis.toLowerCase()}.</p>
+        </div>
+        
+        <div style="margin-bottom: 20px; padding: 15px; background: #F5F7FA; border-radius: 8px;">
+          <h4 style="color: var(--primary-blue); margin-bottom: 10px;">Score Breakdown</h4>
+          <ul style="margin-left: 20px;">
+            <li><strong>Total Fear/Anxiety Score:</strong> ${scores.anxietyTotal} (out of 72)</li>
+            <li><strong>Total Avoidance Score:</strong> ${scores.avoidanceTotal} (out of 72)</li>
+            <li><strong>Performance Situations (P):</strong> ${scores.performanceTotal}</li>
+            <li><strong>Social Interaction (S):</strong> ${scores.socialTotal}</li>
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+          <h4 style="color: var(--primary-blue); margin-bottom: 10px;">Clinical Recommendations</h4>
+          <ul style="margin-left: 20px;">
+            ${recommendations.map(rec => `<li>${rec}</li>`).join('')}
+          </ul>
+        </div>
+        
+        <div style="padding: 15px; background: #E8F5E9; border-radius: 8px; border-left: 4px solid #4CAF50;">
+          <h4 style="color: #2E7D32; margin-bottom: 10px;">Research-Based Cutoffs</h4>
+          <p>The LSAS-SR has demonstrated excellent psychometric properties:</p>
+          <ul style="margin-left: 20px; margin-top: 10px;">
+            <li><strong>Cutoff ≥30:</strong> 89% sensitivity and 81% specificity for Social Anxiety Disorder</li>
+            <li><strong>Cutoff ≥60:</strong> 90% sensitivity and 89% specificity for Generalized Social Anxiety Disorder</li>
+            <li>In clinical trials, effective treatment typically reduces LSAS scores by 30+ points</li>
+          </ul>
+        </div>
+      `;
+      
+      container.innerHTML = interpretation;
+    }
+
+    // Save assessment
+    function saveAssessment() {
+      const subjectData = {
+        subjectName: document.getElementById('subjectName').value,
+        assessmentDate: document.getElementById('assessmentDate').value,
+        timePeriod: document.getElementById('timePeriod').value,
+        responses: userResponses,
+        scores: calculateAllScores(),
+        lastSaved: new Date().toISOString()
+      };
+      
+      localStorage.setItem('lsasAssessment', JSON.stringify(subjectData));
+      
+      // Show success message
+      alert('Assessment progress saved successfully!');
+    }
+
+    // Save form data
+    function saveFormData() {
+      const formData = {
+        subjectName: document.getElementById('subjectName').value,
+        assessmentDate: document.getElementById('assessmentDate').value,
+        timePeriod: document.getElementById('timePeriod').value,
+        responses: userResponses
+      };
+      
+      localStorage.setItem('lsasFormData', JSON.stringify(formData));
+    }
+
+    // Load form data
+    function loadFormData() {
+      const savedData = localStorage.getItem('lsasFormData');
+      if (savedData) {
+        try {
+          const formData = JSON.parse(savedData);
+          
+          document.getElementById('subjectName').value = formData.subjectName || '';
+          document.getElementById('assessmentDate').value = formData.assessmentDate || '';
+          document.getElementById('timePeriod').value = formData.timePeriod || 'Past week';
+          
+          if (formData.responses) {
+            userResponses = formData.responses;
+            renderAllItems();
+            updateScoreDisplay();
+          }
+        } catch (e) {
+          console.log('Could not load saved data:', e);
+        }
+      }
+    }
+
+    // Reset assessment
+    function resetAssessment() {
+      if (confirm("Are you sure you want to reset all responses? This action cannot be undone.")) {
+        userResponses = {};
+        
+        document.getElementById('subjectName').value = '';
+        document.getElementById('assessmentDate').value = '';
+        document.getElementById('timePeriod').value = 'Past week';
+        
+        renderAllItems();
+        updateScoreDisplay();
+        
+        // Show items section
+        document.getElementById('itemsSection').style.display = 'block';
+        document.getElementById('resultsSection').classList.remove('active');
+        document.getElementById('scoreDisplay').style.display = 'grid';
+        
+        // Clear saved data
+        localStorage.removeItem('lsasFormData');
+      }
+    }
+
+    // Print report
+    function printReport() {
+      const scores = calculateAllScores();
+      const subjectData = {
+        name: document.getElementById('subjectName').value || 'Not Provided',
+        date: document.getElementById('assessmentDate').value || new Date().toISOString().split('T')[0],
+        timePeriod: document.getElementById('timePeriod').value || 'Past week'
+      };
+      
+      // Determine diagnosis
+      let diagnosis = '';
+      let diagnosisColor = '';
+      if (scores.totalScore >= 60) {
+        diagnosis = 'Generalized Social Anxiety Disorder';
+        diagnosisColor = '#C62828';
+      } else if (scores.totalScore >= 30) {
+        diagnosis = 'Social Anxiety Disorder';
+        diagnosisColor = '#F57C00';
+      } else {
+        diagnosis = 'No significant social anxiety';
+        diagnosisColor = '#388E3C';
+      }
+      
+      // Create print content
+      const printContent = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>LSAS-SR Assessment Report</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 30px; }
+            h1 { color: #4A6FA5; border-bottom: 2px solid #4A6FA5; padding-bottom: 10px; }
+            .info-box { margin: 20px 0; padding: 15px; background: #E8EFF7; border-radius: 8px; }
+            .score-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 20px 0; }
+            .score-box { padding: 20px; border: 2px solid; border-radius: 8px; text-align: center; }
+            .disclaimer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccc; font-size: 0.8rem; color: #666; }
+            .diagnosis-box { padding: 20px; border: 2px solid; border-radius: 8px; margin: 20px 0; }
+            .cutoff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 20px 0; }
+            .cutoff-item { padding: 15px; border-radius: 6px; text-align: center; }
+            table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+          </style>
+        </head>
+        <body>
+          <h1>Liebowitz Social Anxiety Scale (LSAS-SR) Report</h1>
+          
+          <div class="info-box">
+            <h3>Assessment Information</h3>
+            <p><strong>Name:</strong> ${subjectData.name}</p>
+            <p><strong>Date of Assessment:</strong> ${subjectData.date}</p>
+            <p><strong>Time Period Assessed:</strong> ${subjectData.timePeriod}</p>
+            <p><strong>Date Generated:</strong> ${new Date().toLocaleDateString()}</p>
+          </div>
+          
+          <h3>Score Summary</h3>
+          <div class="score-grid">
+            <div class="score-box" style="border-color: #4A6FA5;">
+              <h4 style="color: #4A6FA5;">Total LSAS-SR Score</h4>
+              <div style="font-size: 2.5rem; font-weight: bold; color: #4A6FA5;">${scores.totalScore}</div>
+              <p>Range: 0-144</p>
+            </div>
+            
+            <div class="score-box" style="border-color: #2196F3;">
+              <h4 style="color: #2196F3;">Fear/Anxiety Total</h4>
+              <div style="font-size: 2.5rem; font-weight: bold; color: #2196F3;">${scores.anxietyTotal}</div>
+              <p>Range: 0-72</p>
+            </div>
+            
+            <div class="score-box" style="border-color: #FF9800;">
+              <h4 style="color: #FF9800;">Avoidance Total</h4>
+              <div style="font-size: 2.5rem; font-weight: bold; color: #FF9800;">${scores.avoidanceTotal}</div>
+              <p>Range: 0-72</p>
+            </div>
+            
+            <div class="score-box" style="border-color: #9C27B0;">
+              <h4 style="color: #9C27B0;">Performance Situations</h4>
+              <div style="font-size: 2.5rem; font-weight: bold; color: #9C27B0;">${scores.performanceTotal}</div>
+              <p>Subscore</p>
+            </div>
+            
+            <div class="score-box" style="border-color: #4CAF50;">
+              <h4 style="color: #4CAF50;">Social Interaction</h4>
+              <div style="font-size: 2.5rem; font-weight: bold; color: #4CAF50;">${scores.socialTotal}</div>
+              <p>Subscore</p>
+            </div>
+          </div>
+          
+          <div class="diagnosis-box" style="border-color: ${diagnosisColor};">
+            <h3 style="color: ${diagnosisColor};">Diagnostic Impression</h3>
+            <div style="text-align: center; padding: 20px;">
+              <div style="font-size: 1.8rem; font-weight: bold; color: ${diagnosisColor};">${diagnosis}</div>
+              <p style="margin-top: 10px;">Based on a total score of ${scores.totalScore}</p>
+            </div>
+          </div>
+          
+          <h3>Interpretation Guidelines</h3>
+          <div class="cutoff-grid">
+            <div class="cutoff-item" style="background: #E8F5E9; border: 2px solid #4CAF50;">
+              <h4 style="color: #4CAF50;">0-29</h4>
+              <p><strong>No/Mild Social Anxiety</strong></p>
+              <p>Sensitivity: 83%<br>Specificity: 81%</p>
+            </div>
+            
+            <div class="cutoff-item" style="background: #FFF3E0; border: 2px solid #FF9800;">
+              <h4 style="color: #FF9800;">30-59</h4>
+              <p><strong>Social Anxiety Disorder</strong></p>
+              <p>Sensitivity: 89%<br>Specificity: 81%</p>
+            </div>
+            
+            <div class="cutoff-item" style="background: #FFEBEE; border: 2px solid #F44336;">
+              <h4 style="color: #F44336;">60+</h4>
+              <p><strong>Generalized Social Anxiety Disorder</strong></p>
+              <p>Sensitivity: 90%<br>Specificity: 89%</p>
+            </div>
+          </div>
+          
+          <h3>Research Evidence</h3>
+          <ul>
+            <li>Cutoffs validated by Rytwinski et al. (2009) for optimal sensitivity and specificity</li>
+            <li>In sertraline trials, LSAS scores dropped ~30 points with effective treatment</li>
+            <li>LSAS-SR demonstrates excellent psychometric properties for screening</li>
+          </ul>
+          
+          <div class="disclaimer">
+            <p><strong>Disclaimer:</strong> This report is based on self-assessment using the LSAS-SR. For formal diagnosis and treatment planning, consultation with a qualified mental health professional is recommended.</p>
+            <p style="margin-top: 10px;">Liebowitz, M. R. (1987). Social phobia. <em>Modern Problems in Pharmacopsychiatry</em></p>
+          </div>
+        </body>
+        </html>
+      `;
+      
+      // Open print window
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(printContent);
+      printWindow.document.close();
+      printWindow.focus();
+      
+      setTimeout(() => {
+        printWindow.print();
+      }, 250);
+    }
+  </script>
+</body>
+</html>

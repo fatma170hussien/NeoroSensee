@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindSpace Journey</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+      :root {
+    --primary: #1e5397;
+    --secondary: #FFFFFF;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    --transition: all 0.3s ease-in-out;
+}
+
+body {
+    background-color: #ffffff;
+    color: #1e3a8a;
+    min-height: 100vh;
+    margin: 0; /* 🔹 شيل أي مسافات حول الصفحة */
+    padding: 0;
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* Navigation Bar CSS - Full Width */
+header {
+    background: var(--primary);
+    color: var(--secondary);
+    padding: 1rem 0;
+    box-shadow: var(--shadow);
+    position: fixed; /* 🔹 بدّل sticky بـ fixed علشان يفضل فوق دايمًا */
+    top: 0;
+    left: 0; /* 🔹 تأكد إنه لازق في الشمال */
+    right: 0; /* 🔹 ولازق في اليمين */
+    width: 100%;
+    margin: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    width: 100%;
+    margin: 0;
+    padding: 0 2rem; /* 🔹 padding بسيط للداخل */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo-icon {
+    font-size: 1.8rem;
+    color: var(--secondary);
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.nav-link {
+    color: var(--secondary);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 1rem 2rem;
+    border-radius: 0;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+}
+
+.nav-link:hover, .nav-link.active {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Responsive Design for Navigation */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .logo {
+        padding: 1rem 0;
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .logo-text {
+        font-size: 1.3rem;
+    }
+    
+    nav {
+        width: 100%;
+        justify-content: stretch;
+    }
+    
+    .nav-link {
+        padding: 1rem;
+        font-size: 0.85rem;
+        flex: 1;
+        justify-content: center;
+        text-align: center;
+    }
+}
+
+/* باقي التنسيقات الأصلية */
+.condition-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid #1e3a8a;
+}
+.condition-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(30, 58, 138, 0.2);
+}
+.progress-bar {
+    transition: width 0.5s ease;
+    background-color: #1e3a8a;
+}
+.badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    background-color: #1e3a8a;
+    color: #ffffff;
+    transition: transform 0.2s;
+}
+.badge:hover {
+    transform: scale(1.05);
+}
+.quote-bubble {
+    background-color: #f1f5f9;
+    border: 1px solid #1e3a8a;
+    border-radius: 15px;
+    padding: 15px;
+    margin: 10px 0;
+    position: relative;
+}
+.quote-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 20px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #1e3a8a;
+}
+.activity-card {
+    background-color: #f8fafc;
+    border: 1px solid #1e3a8a;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 0;
+    transition: transform 0.2s;
+}
+.activity-card:hover {
+    transform: translateX(5px);
+}
+.modal {
+    transition: opacity 0.3s ease;
+}
+
+        /* Responsive Design for Navigation */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .logo {
+                padding: 1rem;
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .logo-text {
+                font-size: 1.3rem;
+            }
+            
+            nav {
+                width: 100%;
+                justify-content: stretch;
+            }
+            
+            .nav-link {
+                padding: 1rem;
+                font-size: 0.85rem;
+                flex: 1;
+                justify-content: center;
+                text-align: center;
+            }
+        }
+        /* Original Styles */
+        .condition-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid #1e3a8a;
+        }
+        .condition-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(30, 58, 138, 0.2);
+        }
+        .progress-bar {
+            transition: width 0.5s ease;
+            background-color: #1e3a8a;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            background-color: #1e3a8a;
+            color: #ffffff;
+            transition: transform 0.2s;
+        }
+        .badge:hover {
+            transform: scale(1.05);
+        }
+        .quote-bubble {
+            background-color: #f1f5f9;
+            border: 1px solid #1e3a8a;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 10px 0;
+            position: relative;
+        }
+        .quote-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #1e3a8a;
+        }
+        .activity-card {
+            background-color: #f8fafc;
+            border: 1px solid #1e3a8a;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            transition: transform 0.2s;
+        }
+        .activity-card:hover {
+            transform: translateX(5px);
+        }
+        .modal {
+            transition: opacity 0.3s ease;
+        }
+        
+        /* Description Styles */
+        .condition-description {
+            background-color: #f0f7ff;
+            border-left: 4px solid #1e3a8a;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 8px 8px 0;
+        }
+        
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            font-size: 1.8rem;
+            color: var(--secondary);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        nav {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.05);
+        }
+
+        /* Responsive Design for Navigation */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+            
+            .logo-text {
+                font-size: 1.3rem;
+            }
+            
+            nav {
+                justify-content: center;
+            }
+            
+            .nav-link {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Original Styles */
+        .condition-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid #1e3a8a;
+        }
+        .condition-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(30, 58, 138, 0.2);
+        }
+        .progress-bar {
+            transition: width 0.5s ease;
+            background-color: #1e3a8a;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            background-color: #1e3a8a;
+            color: #ffffff;
+            transition: transform 0.2s;
+        }
+        .badge:hover {
+            transform: scale(1.05);
+        }
+        .quote-bubble {
+            background-color: #f1f5f9;
+            border: 1px solid #1e3a8a;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 10px 0;
+            position: relative;
+        }
+        .quote-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 20px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid #1e3a8a;
+        }
+        .activity-card {
+            background-color: #f8fafc;
+            border: 1px solid #1e3a8a;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            transition: transform 0.2s;
+        }
+        .activity-card:hover {
+            transform: translateX(5px);
+        }
+        .modal {
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body class="font-sans p-4 md:p-6">
+    <!-- New Navigation Bar -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-brain logo-icon"></i>
+                <span class="logo-text">MindSpace Journey</span>
+            </div>
+            <nav>
+                <a href="J.html" class="nav-link">Journal</a>
+                <a href="4th.ex.html" class="nav-link">MindSpace</a>
+                <a href="mindful.html" class="nav-link">Meditation</a>
+                <a href="ex.ther.html" class="nav-link active">Exercises</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="text-center mb-10 mt-6">
+        <h1 class="text-4xl md:text-5xl font-bold text-blue-900">     . </h1>
+        <p class="text-blue-900 mt-2 text-lg">Your clear, supportive guide to mental wellness with practical steps.</p>
+        <div class="quote-bubble mt-4 max-w-md mx-auto">
+            <p class="text-center text-blue-900 italic">"Every step you take builds strength."</p>
+        </div>
+        <p class="text-blue-900 italic text-sm md:text-base mt-3 bg-white border border-blue-900 p-4 rounded-lg shadow">Disclaimer: These activities are designed to support mental health based on research. They are not a substitute for professional care. Consult a healthcare provider before starting, especially for diagnosed conditions.</p>
+    </div>
+
+    <main class="max-w-5xl mx-auto">
+        <!-- Progress Tracker -->
+        <section class="mb-12 bg-white p-6 rounded-lg shadow-lg border border-blue-900">
+            <h2 class="text-2xl font-semibold text-blue-900">Your Wellness Path</h2>
+            <p class="text-blue-900 text-base mt-1">Track your progress and collect badges for your efforts!</p>
+            <div class="w-full bg-gray-200 rounded-full h-6 mt-4 overflow-hidden">
+                <div id="progress-bar" class="progress-bar h-6 rounded-full flex items-center justify-center text-white font-bold"></div>
+            </div>
+            <p id="progress-text" class="text-blue-900 text-base mt-2 text-center"></p>
+            <div id="badges" class="mt-6 flex flex-wrap gap-3 justify-center">
+                <!-- Badges will be dynamically added here -->
+            </div>
+            <div class="mt-6 flex gap-3 justify-center">
+                <button id="reset-progress" class="bg-blue-900 text-white px-6 py-3 rounded-lg hover:bg-blue-800 font-semibold">Reset Daily Progress</button>
+                <button id="delete-data" class="bg-blue-900 text-white px-6 py-3 rounded-lg hover:bg-blue-800 font-semibold">Clear All Data</button>
+            </div>
+        </section>
+
+        <!-- Condition Cards -->
+        <section id="conditions" class="space-y-8">
+            <div class="condition-card bg-white p-8 rounded-xl shadow-lg cursor-pointer" onclick="toggleSection('depression')">
+                <h2 class="text-2xl font-semibold text-blue-900 mb-4"> Depression</h2>
+                <div id="depression" class="hidden mt-4 space-y-4">
+                    <p class="text-blue-900 text-lg">Brighten your day with clear, uplifting activities.</p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Gratitude Journal</h3>
+                            <p>Write 3 things you're thankful for to focus on positivity (Emmons & McCullough, 2003).</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Gratitude Journal (10 min)" data-points="15">Start Journaling</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Sunlight Walk</h3>
+                            <p>Walk outside for 20 minutes to boost serotonin with natural light.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Sunlight Walk (20 min)" data-points="20">Take a Walk</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Joy Jar</h3>
+                            <p>Collect notes of happy moments in a jar for tough days.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Joy Jar (15 min)" data-points="18">Create Jar</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Music Playlist</h3>
+                            <p>Curate a list of uplifting songs to elevate your mood.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Music Playlist (10 min)" data-points="12">Build Playlist</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Task Triumph</h3>
+                            <p>Complete one small task (e.g., tidy a drawer) and celebrate it (Cuijpers et al., 2007).</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Task Triumph (10 min)" data-points="15">Start Task</button>
+                        </div>
+                    </div>
+                    <div class="quote-bubble">
+                        <p class="text-center text-blue-900">"Small wins light up the darkest days."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="condition-card bg-white p-8 rounded-xl shadow-lg cursor-pointer" onclick="toggleSection('ptsd')">
+                <h2 class="text-2xl font-semibold text-blue-900 mb-4">PTSD</h2>
+                <div id="ptsd" class="hidden mt-4 space-y-4">
+                    <p class="text-blue-900 text-lg">Find calm and safety with grounding activities.</p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Sensory Grounding</h3>
+                            <p>Use the 5-4-3-2-1 method to stay present (Bisson et al., 2015).</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Sensory Grounding (5 min)" data-points="10">Start Grounding</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Safe Space Visualization</h3>
+                            <p>Imagine a comforting, safe place in detail.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Safe Space Visualization (10 min)" data-points="15">Visualize Space</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Memory Journal</h3>
+                            <p>Write about a positive, safe moment to anchor emotions.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Memory Journal (15 min)" data-points="18">Write Memory</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Breathing Anchor</h3>
+                            <p>Practice slow, deep breaths for 8 minutes to calm arousal.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Breathing Anchor (8 min)" data-points="12">Start Breathing</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Texture Touch</h3>
+                            <p>Explore calming textures (e.g., soft fabric) to stay grounded.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Texture Touch (10 min)" data-points="15">Touch Textures</button>
+                        </div>
+                    </div>
+                    <div class="quote-bubble">
+                        <p class="text-center text-blue-900">"You are the anchor in your storm."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="condition-card bg-white p-8 rounded-xl shadow-lg cursor-pointer" onclick="toggleSection('anxiety')">
+                <h2 class="text-2xl font-semibold text-blue-900 mb-4"> Anxiety Disorder</h2>
+                <div id="anxiety" class="hidden mt-4 space-y-4">
+                    <p class="text-blue-900 text-lg">Soothe worries with clear, calming steps.</p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Worry Jar</h3>
+                            <p>Write worries and store them for later review (Borkovec et al., 1983).</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Worry Jar (10 min)" data-points="15">Create Jar</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Body Scan</h3>
+                            <p>Focus on each body part to release tension for 12 minutes.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Body Scan (12 min)" data-points="16">Scan Body</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Emotion Sketch</h3>
+                            <p>Draw your feelings as shapes or colors to externalize them.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Emotion Sketch (15 min)" data-points="20">Start Sketching</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Grounding Walk</h3>
+                            <p>Walk slowly, noticing each step, for 10 minutes.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Grounding Walk (10 min)" data-points="12">Take Walk</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Thought Challenge</h3>
+                            <p>Write an anxious thought and counter it with evidence.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Thought Challenge (10 min)" data-points="15">Challenge Thought</button>
+                        </div>
+                    </div>
+                    <div class="quote-bubble">
+                        <p class="text-center text-blue-900">"Worries fade when you take control."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="condition-card bg-white p-8 rounded-xl shadow-lg cursor-pointer" onclick="toggleSection('schizophrenia')">
+                <h2 class="text-2xl font-semibold text-blue-900 mb-4"> Schizophrenia</h2>
+                <div id="schizophrenia" class="hidden mt-4 space-y-4">
+                    <p class="text-blue-900 text-lg">Build stability with structured, clear activities.</p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Daily Schedule</h3>
+                            <p>Create a visual daily plan to reduce stress (Eack et al., 2013).</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Daily Schedule (15 min)" data-points="20">Plan Day</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Calming Music</h3>
+                            <p>Listen to soothing instrumental music for 12 minutes.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Calming Music (12 min)" data-points="15">Listen Now</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Story Writing</h3>
+                            <p>Write a short story about a positive memory.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Story Writing (20 min)" data-points="25">Write Story</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Art Expression</h3>
+                            <p>Draw or color to express emotions safely.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Art Expression (10 min)" data-points="12">Start Drawing</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Routine Check</h3>
+                            <p>Review and adjust your daily routine for consistency.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Routine Check (10 min)" data-points="15">Check Routine</button>
+                        </div>
+                    </div>
+                    <div class="quote-bubble">
+                        <p class="text-center text-blue-900">"Structure is your steady foundation."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="condition-card bg-white p-8 rounded-xl shadow-lg cursor-pointer" onclick="toggleSection('social-anxiety')">
+                <h2 class="text-2xl font-semibold text-blue-900 mb-4"> Social Anxiety</h2>
+                <div id="social-anxiety" class="hidden mt-4 space-y-4">
+                    <p class="text-blue-900 text-lg">Build confidence with simple, empowering steps.</p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Social Steps</h3>
+                            <p>Start with small interactions, like smiling at someone (Hofmann & Otto, 2017).</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Social Steps (10 min)" data-points="15">Take Step</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Role-Play Practice</h3>
+                            <p>Rehearse a social scenario in front of a mirror.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Role-Play Practice (8 min)" data-points="12">Practice Now</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Self-Affirmations</h3>
+                            <p>Write 3 positive qualities about yourself.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Self-Affirmations (7 min)" data-points="10">Write Affirmations</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Conversation Prompts</h3>
+                            <p>Create a list of easy conversation starters.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Conversation Prompts (12 min)" data-points="16">Make Prompts</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Comfort Object</h3>
+                            <p>Carry a small, comforting item during social events.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Comfort Object (5 min)" data-points="10">Choose Object</button>
+                        </div>
+                    </div>
+                    <div class="quote-bubble">
+                        <p class="text-center text-blue-900">"Your courage grows with every interaction."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="condition-card bg-white p-8 rounded-xl shadow-lg cursor-pointer" onclick="toggleSection('adhd')">
+                <h2 class="text-2xl font-semibold text-blue-900 mb-4"> ADHD</h2>
+                <div id="adhd" class="hidden mt-4 space-y-4">
+                    <p class="text-blue-900 text-lg">Channel energy with clear, focused activities.</p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Puzzle Challenge</h3>
+                            <p>Solve a simple puzzle to boost focus (Ratey & Hagerman, 2008).</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Puzzle Challenge (10 min)" data-points="15">Solve Puzzle</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Energy Break</h3>
+                            <p>Do 5 minutes of high-energy movement like dancing.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Energy Break (5 min)" data-points="10">Move Now</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Task Timer</h3>
+                            <p>Work on a task for 5 minutes with a timer.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Task Timer (5 min)" data-points="10">Set Timer</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Reward System</h3>
+                            <p>Create a reward for completing a small task.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Reward System (7 min)" data-points="12">Plan Reward</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Fidget Focus</h3>
+                            <p>Use a fidget tool to stay engaged during tasks.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Fidget Focus (10 min)" data-points="15">Use Fidget</button>
+                        </div>
+                    </div>
+                    <div class="quote-bubble">
+                        <p class="text-center text-blue-900">"Your energy is your unique strength."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="condition-card bg-white p-8 rounded-xl shadow-lg cursor-pointer" onclick="toggleSection('autism')">
+                <h2 class="text-2xl font-semibold text-blue-900 mb-4"> Autism Spectrum</h2>
+                <div id="autism" class="hidden mt-4 space-y-4">
+                    <p class="text-blue-900 text-lg">Support your needs with clear, calming tasks.</p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Sensory Kit</h3>
+                            <p>Assemble calming items like a stress ball (Schaaf & Lane, 2015).</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Sensory Kit (10 min)" data-points="15">Build Kit</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Visual Schedule</h3>
+                            <p>Create a colorful daily plan for predictability.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Visual Schedule (15 min)" data-points="20">Plan Schedule</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Interest Story</h3>
+                            <p>Write or draw about a favorite topic.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Interest Story (20 min)" data-points="25">Create Story</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Calming Patterns</h3>
+                            <p>Draw repetitive patterns to soothe.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Calming Patterns (12 min)" data-points="16">Draw Patterns</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Social Prep</h3>
+                            <p>Write a short script for a social situation.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Social Prep (10 min)" data-points="15">Prepare Script</button>
+                        </div>
+                    </div>
+                    <div class="quote-bubble">
+                        <p class="text-center text-blue-900">"Your unique perspective is a gift."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="condition-card bg-white p-8 rounded-xl shadow-lg cursor-pointer" onclick="toggleSection('bipolar')">
+                <h2 class="text-2xl font-semibold text-blue-900 mb-4"> Bipolar Disorder</h2>
+                <div id="bipolar" class="hidden mt-4 space-y-4">
+                    <p class="text-blue-900 text-lg">Balance your mood with consistent, clear habits.</p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Mood Tracker</h3>
+                            <p>Log daily moods to spot patterns (Harvey et al., 2015).</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Mood Tracker (15 min)" data-points="20">Track Mood</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Nature Walk</h3>
+                            <p>Spend 20 minutes in nature to promote calm.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Nature Walk (20 min)" data-points="25">Take Walk</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Mood Journal</h3>
+                            <p>Write about your day to process emotions.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Mood Journal (10 min)" data-points="15">Start Journal</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Sleep Routine</h3>
+                            <p>Create a consistent sleep schedule.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Sleep Routine (10 min)" data-points="12">Plan Sleep</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Balance Board</h3>
+                            <p>List one calming and one energizing activity for balance.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Balance Board (10 min)" data-points="15">Create Board</button>
+                        </div>
+                    </div>
+                    <div class="quote-bubble">
+                        <p class="text-center text-blue-900">"Balance is built one choice at a time."</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="condition-card bg-white p-8 rounded-xl shadow-lg cursor-pointer" onclick="toggleSection('ocd')">
+                <h2 class="text-2xl font-semibold text-blue-900 mb-4"> OCD</h2>
+                <div id="ocd" class="hidden mt-4 space-y-4">
+                    <p class="text-blue-900 text-lg">Manage thoughts with clear, practical steps.</p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Thought Delay</h3>
+                            <p>Pause intrusive thoughts by counting to 10 (Foa et al., 2012).</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Thought Delay (10 min)" data-points="15">Delay Thought</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Craft Focus</h3>
+                            <p>Engage in a simple craft like origami to shift focus.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Craft Focus (12 min)" data-points="16">Start Craft</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Gratitude List</h3>
+                            <p>Write 5 things you're thankful for to redirect thoughts.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Gratitude List (8 min)" data-points="12">Make List</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Pattern Break</h3>
+                            <p>Change one routine to disrupt compulsive loops.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Pattern Break (10 min)" data-points="15">Break Pattern</button>
+                        </div>
+                        <div class="activity-card">
+                            <h3 class="font-bold text-blue-900">Focus Object</h3>
+                            <p>Use a small object to anchor attention during urges.</p>
+                            <button class="start-activity bg-blue-900 text-white px-4 py-2 rounded-lg w-full mt-2 hover:bg-blue-800" data-activity="Focus Object (10 min)" data-points="15">Choose Object</button>
+                        </div>
+                    </div>
+                    <div class="quote-bubble">
+                        <p class="text-center text-blue-900">"You are stronger than your thoughts."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Activity Modal -->
+    <div id="activity-modal" class="modal fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white p-8 rounded-xl shadow-2xl text-center max-w-md w-full relative">
+            <button class="absolute top-2 right-2 text-blue-900 hover:text-blue-700 text-xl" onclick="closeActivityModal()">&times;</button>
+            <h3 id="activity-title" class="text-xl font-semibold text-blue-900 mb-4"></h3>
+            <p id="timer-display" class="text-3xl font-bold text-blue-900 my-4">00:00</p>
+            <p id="activity-status" class="text-blue-900 text-base mb-4"></p>
+            <div class="mt-4 flex gap-3 justify-center">
+                <button id="start-activity" class="bg-blue-900 text-white px-6 py-3 rounded-lg hover:bg-blue-800 font-semibold">Start Activity</button>
+                <button id="stop-activity" class="bg-blue-900 text-white px-6 py-3 rounded-lg hover:bg-blue-800 font-semibold">Pause Activity</button>
+            </div>
+            <button id="complete-activity" class="mt-4 bg-blue-900 text-white px-6 py-3 rounded-lg hover:bg-blue-800 font-semibold hidden">Complete Activity</button>
+        </div>
+    </div>
+
+<script>
+        // Local storage for progress and badges
+        let progress = parseInt(localStorage.getItem('progress')) || 0;
+        let badges = JSON.parse(localStorage.getItem('badges')) || [];
+        let completedActivities = JSON.parse(localStorage.getItem('completedActivities')) || [];
+
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const badgesContainer = document.getElementById('badges');
+        const resetButton = document.getElementById('reset-progress');
+        const deleteButton = document.getElementById('delete-data');
+
+        function updateProgress(points = 0) {
+            progress = Math.min(progress + points, 100);
+            progressBar.style.width = `${progress}%`;
+            progressBar.textContent = `${progress}%`;
+            progressText.textContent = `${progress}% Daily Progress Complete`;
+            localStorage.setItem('progress', progress);
+            checkBadges();
+        }
+
+        function checkBadges() {
+            const badgeList = [
+                { threshold: 25, name: 'First Step', color: 'bg-blue-900' },
+                { threshold: 50, name: 'Steady Strider', color: 'bg-blue-900' },
+                { threshold: 75, name: 'Pathfinder', color: 'bg-blue-900' },
+                { threshold: 100, name: 'Wellness Champion', color: 'bg-blue-900' }
+            ];
+            badgesContainer.innerHTML = '';
+            badgeList.forEach(badge => {
+                if (progress >= badge.threshold && !badges.includes(badge.name)) {
+                    badges.push(badge.name);
+                    localStorage.setItem('badges', JSON.stringify(badges));
+                }
+                if (badges.includes(badge.name)) {
+                    const badgeEl = document.createElement('span');
+                    badgeEl.className = `badge ${badge.color} text-white`;
+                    badgeEl.textContent = badge.name;
+                    badgesContainer.appendChild(badgeEl);
+                }
+            });
+        }
+
+        resetButton.addEventListener('click', () => {
+            if (confirm('Reset today’s progress? Your badges will remain!')) {
+                progress = 0;
+                updateProgress();
+            }
+        });
+
+        deleteButton.addEventListener('click', () => {
+            if (confirm('Clear all data? This will erase progress and badges!')) {
+                progress = 0;
+                badges = [];
+                completedActivities = [];
+                localStorage.clear();
+                updateProgress();
+                location.reload();
+            }
+        });
+
+        // Toggle condition sections
+        function toggleSection(id) {
+            const section = document.getElementById(id);
+            section.classList.toggle('hidden');
+        }
+
+        // Activity modal
+        const modal = document.getElementById('activity-modal');
+        const activityTitle = document.getElementById('activity-title');
+        const timerDisplay = document.getElementById('timer-display');
+        const activityStatus = document.getElementById('activity-status');
+        const startActivityBtn = document.getElementById('start-activity');
+        const stopActivityBtn = document.getElementById('stop-activity');
+        const completeActivityBtn = document.getElementById('complete-activity');
+        let timerInterval;
+        let timeLeft;
+        let currentPoints;
+
+        document.querySelectorAll('.start-activity').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const activity = button.dataset.activity;
+                const points = parseInt(button.dataset.points);
+                currentPoints = points;
+                activityTitle.textContent = activity;
+                const durationMatch = activity.match(/\((\d+) min\)/);
+                timeLeft = durationMatch ? parseInt(durationMatch[1]) * 60 : 600;
+                activityStatus.textContent = completedActivities.includes(activity) ? 'You’ve done this before! Want to repeat?' : 'Ready to start this activity?';
+                updateTimerDisplay();
+                modal.classList.remove('hidden');
+                completeActivityBtn.classList.add('hidden');
+            });
+        });
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        startActivityBtn.addEventListener('click', () => {
+            if (!timerInterval) {
+                timerInterval = setInterval(() => {
+                    timeLeft--;
+                    updateTimerDisplay();
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        timerInterval = null;
+                        completeActivityBtn.classList.remove('hidden');
+                        activityStatus.textContent = 'Great work! Ready to complete?';
+                    }
+                }, 1000);
+            }
+        });
+
+        stopActivityBtn.addEventListener('click', () => {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            activityStatus.textContent = 'Paused. Resume or close?';
+        });
+
+        completeActivityBtn.addEventListener('click', () => {
+            const activity = activityTitle.textContent;
+            if (!completedActivities.includes(activity)) {
+                completedActivities.push(activity);
+                localStorage.setItem('completedActivities', JSON.stringify(completedActivities));
+            }
+            updateProgress(currentPoints);
+            modal.classList.add('hidden');
+            alert(`Well done on ${activity}! You’ve earned ${currentPoints} points.`);
+        });
+
+        function closeActivityModal() {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            modal.classList.add('hidden');
+        }
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) closeActivityModal();
+        });
+
+        // Initialize
+        updateProgress();
+        // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+    </script>
+</body>
+</html>
+</body>
+</html>

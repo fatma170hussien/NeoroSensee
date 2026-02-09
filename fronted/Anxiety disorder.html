@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anxiety Disorders: Comprehensive Research Overview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      line-height: 1.8;
+      background: #f5f5f5;
+      color: #333;
+      overflow-x: hidden;
+      font-size: 18px;
+      background-image: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      background-color: white;
+      box-shadow: 0 0 30px rgba(0,0,0,0.1);
+      border-radius: 5px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: #2c3e50;
+      text-align: center;
+      margin: 40px 0;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #e74c3c;
+      position: relative;
+    }
+
+    h1:after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: #3498db;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: #2c3e50;
+      margin: 40px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: #2c3e50;
+      margin: 30px 0 15px;
+    }
+
+    h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: #2c3e50;
+      margin: 25px 0 15px;
+    }
+
+    .article-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-bottom: 60px;
+      align-items: flex-start;
+    }
+
+    .article-section:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .text {
+      flex: 2;
+      min-width: 300px;
+      padding: 20px;
+    }
+
+    p {
+      margin-bottom: 25px;
+      color: #555;
+      font-size: 1.1rem;
+      text-align: justify;
+    }
+
+    ul, ol {
+      margin-left: 40px;
+      margin-bottom: 25px;
+    }
+
+    li {
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    .abstract {
+      background-color: #f8f9fa;
+      padding: 25px;
+      border-radius: 8px;
+      margin-bottom: 40px;
+      border-left: 5px solid #3498db;
+    }
+
+    .abstract h2 {
+      margin-top: 0;
+      color: #3498db;
+    }
+
+    .author {
+      margin-top: 60px;
+      font-weight: 600;
+      text-align: right;
+      color: #2c3e50;
+      font-size: 1.2rem;
+      font-style: italic;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+
+    .caption {
+      text-align: center;
+      margin-top: 10px;
+      color: #7f8c8d;
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    /* نظام الصور المحدث - نفس نظام كود الاكتئاب */
+    .image-container {
+      flex: 1;
+      min-width: 300px;
+      max-width: 500px;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.5s ease;
+      opacity: 0;
+      transform: translateY(30px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .image-container.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .image-container:hover {
+      transform: scale(1.02) translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+
+    .image-container img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .research-highlights {
+      background-color: #e8f4f8;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 30px 0;
+      border-left: 5px solid #2c3e50;
+    }
+
+    .treatment-section {
+      background-color: #f0f8f0;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 30px 0;
+      border-left: 5px solid #27ae60;
+    }
+
+    .treatment-section h3 {
+      color: #27ae60;
+      margin-top: 0;
+    }
+
+    .symptoms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .symptom-category {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #e74c3c;
+    }
+
+    .symptom-category h4 {
+      margin-top: 0;
+      color: #e74c3c;
+    }
+
+    .anxiety-types-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .anxiety-type {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #9b59b6;
+    }
+
+    .anxiety-type h4 {
+      margin-top: 0;
+      color: #9b59b6;
+    }
+
+    .statistics-box {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 25px 0;
+      text-align: center;
+    }
+
+    .statistics-box h3 {
+      color: white;
+      margin-top: 0;
+    }
+
+    .stat-item {
+      margin: 15px 0;
+      font-size: 1.1rem;
+    }
+
+    .self-care-section {
+      background-color: #fff8e1;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 25px 0;
+      border-left: 5px solid #ffa000;
+    }
+
+    .self-care-section h3 {
+      color: #ffa000;
+      margin-top: 0;
+    }
+
+    @media(max-width: 768px) {
+      .article-section, 
+      .article-section:nth-child(even) {
+        flex-direction: column;
+      }
+      
+      .image-container {
+        max-width: 100%;
+      }
+      
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      h2 {
+        font-size: 1.8rem;
+      }
+      
+      .symptoms-grid,
+      .anxiety-types-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Floating image effect */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .floating-img {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .specifier-list {
+      columns: 2;
+      column-gap: 40px;
+    }
+
+    .specifier-list li {
+      break-inside: avoid;
+    }
+
+    @media(max-width: 768px) {
+      .specifier-list {
+        columns: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Anxiety Disorders: Comprehensive Research Overview</h1>
+
+    <div class="abstract">
+      <h2>Overview</h2>
+      <p>An anxiety disorder is a type of mental health condition characterized by responses to certain things and situations with fear and dread, along with physical signs of anxiety such as a pounding heart and sweating. While some anxiety is normal and can even be beneficial by helping us notice dangerous situations, anxiety disorders go beyond regular nervousness.</p>
+      <p>Anxiety disorders make it difficult to get through the day and are diagnosed when anxiety interferes with functioning, reactions are out of proportion to situations, and individuals can't control their responses. These conditions affect children, adolescents, and adults, with women being about twice as likely as men to experience them.</p>
+    </div>
+
+    <h2>Introduction to Anxiety Disorders</h2>
+
+    <div class="article-section">
+      <div class="text">
+        <h3>Normal vs. Pathological Anxiety</h3>
+        <p>Experiencing occasional anxiety is a normal part of life. However, people with anxiety disorders frequently have intense, excessive and persistent worry and fear about everyday situations. Often, anxiety disorders involve repeated episodes of sudden feelings of intense anxiety and fear or terror that reach a peak within minutes (panic attacks).</p>
+        <p>These feelings of anxiety and panic interfere with daily activities, are difficult to control, are out of proportion to the actual danger and can last a long time. Symptoms may start during childhood or the teen years and continue into adulthood.</p>
+        <p>Generalized anxiety disorder produces fear, worry, and a constant feeling of being overwhelmed. It is characterized by persistent, excessive, and unrealistic worry about everyday things including financial, family, health, and future concerns.</p>
+      </div>
+      <div>
+        <div class="image-container floating-img">
+          <img src="dis1.jpg" alt="Anxiety Brain Pathways">
+        </div>
+        <div class="caption">Figure 1: Neural pathways involved in anxiety disorders</div>
+      </div>
+    </div>
+
+    <div class="statistics-box">
+      <h3>Anxiety Disorders Epidemiology</h3>
+      <div class="stat-item">Up to 20% of adults affected by anxiety disorders each year</div>
+      <div class="stat-item">Women approximately twice as likely as men to have anxiety disorders</div>
+      <div class="stat-item">1 in 4 children develops anxiety between ages 13-18</div>
+      <div class="stat-item">Average age of onset: 11 years</div>
+      <div class="stat-item">Lifetime prevalence of severe anxiety in adolescents: ~6%</div>
+    </div>
+
+    <h2>Types of Anxiety Disorders</h2>
+
+    <div class="anxiety-types-grid">
+      <div class="anxiety-type">
+        <h4>Generalized Anxiety Disorder (GAD)</h4>
+        <p>Characterized by persistent, excessive worry about different activities, events, and people. The source of worry changes but the worry itself is present most of the time and significantly interferes with functioning. Most people with GAD feel powerless to stop worrying.</p>
+      </div>
+      
+      <div class="anxiety-type">
+        <h4>Social Anxiety Disorder</h4>
+        <p>Involves high levels of anxiety, fear and avoidance of social situations due to feelings of embarrassment, self-consciousness and concern about being judged negatively by others. Early negative social experiences like bullying can contribute.</p>
+      </div>
+
+      <div class="anxiety-type">
+        <h4>Panic Disorder</h4>
+        <p>Characterized by repeated panic attacks - sudden feelings of intense anxiety and fear that peak within minutes. Includes physical symptoms like shortness of breath, chest pain, heart palpitations, and feelings of impending doom.</p>
+      </div>
+
+      <div class="anxiety-type">
+        <h4>Phobias</h4>
+        <p>Exaggerated fear of specific objects, animals, or situations that don't pose significant threat. Common phobias include fear of spiders, flying, or dentists. People often alter behavior to avoid confronting their fear.</p>
+      </div>
+
+      <div class="anxiety-type">
+        <h4>Stress Disorders</h4>
+        <p>Includes Acute Stress Disorder (ASD) and Post-Traumatic Stress Disorder (PTSD), both triggered by traumatic events. Symptoms include flashbacks, difficulty sleeping, nightmares, and intrusive thoughts about the event.</p>
+      </div>
+
+      <div class="anxiety-type">
+        <h4>Other Types</h4>
+        <p>Includes agoraphobia (fear of places causing panic), selective mutism (failure to speak in specific situations), separation anxiety disorder, substance-induced anxiety, and anxiety due to medical conditions.</p>
+      </div>
+    </div>
+
+    <h2>Symptoms of Anxiety Disorders</h2>
+
+    <div class="symptoms-grid">
+      <div class="symptom-category">
+        <h4>Physical Symptoms</h4>
+        <ul>
+          <li>Pounding heart and palpitations</li>
+          <li>Sweating, trembling, shaking</li>
+          <li>Muscle tension</li>
+          <li>Rapid breathing (hyperventilation)</li>
+          <li>Nausea and digestive problems</li>
+          <li>Weakness and fatigue</li>
+          <li>Chest pain</li>
+          <li>Insomnia or excessive sleeping</li>
+        </ul>
+      </div>
+      
+      <div class="symptom-category">
+        <h4>Emotional & Cognitive Symptoms</h4>
+        <ul>
+          <li>Excessive fear and worry</li>
+          <li>Feelings of nervousness or impending danger</li>
+          <li>Difficulty controlling worries</li>
+          <li>Restlessness and irritability</li>
+          <li>Difficulty concentrating</li>
+          <li>Constant feeling of being overwhelmed</li>
+          <li>Sense of panic or doom</li>
+          <li>Avoidance of anxiety triggers</li>
+        </ul>
+      </div>
+
+      <div class="symptom-category">
+        <h4>Disorder-Specific Symptoms</h4>
+        <p><strong>Social Anxiety:</strong> Shortness of breath, blushing, nausea, feeling tongue-tied</p>
+        <p><strong>Panic Disorder:</strong> Palpitations, smothering sensation, feelings of losing control</p>
+        <p><strong>OCD:</strong> Obsessive thoughts and compulsive behaviors to manage them</p>
+        <p><strong>PTSD:</strong> Flashbacks, hypervigilance, emotional numbness</p>
+      </div>
+    </div>
+
+    <h2>Causes and Pathophysiology</h2>
+
+    <div class="article-section">
+      <div>
+        <div class="image-container floating-img">
+          <img src="dis2.jpg" alt="Neurotransmitter Systems">
+        </div>
+        <div class="caption">Figure 2: Neurotransmitter systems involved in anxiety</div>
+      </div>
+      <div class="text">
+        <h3>Biological Factors</h3>
+        
+        <h4>Chemical Imbalances</h4>
+        <p>Several neurotransmitters and hormones play a role in anxiety, including norepinephrine, serotonin, dopamine and gamma-aminobutyric acid (GABA). Imbalances in these chemicals can contribute to anxiety disorders. Research suggests that low serotonin system activity and high noradrenaline system activity may be responsible for anxiety development.</p>
+        
+        <h4>Brain Changes</h4>
+        <p>The amygdala plays an important role in managing fear and anxiety. Studies show that people with anxiety disorders show increased amygdala activity in response to anxiety cues. Structural and functional changes in brain regions involved in emotion regulation contribute to anxiety disorders.</p>
+        
+        <h4>Genetics</h4>
+        <p>Anxiety disorders tend to run in biological families, suggesting genetic factors play a role. Individuals with first-degree relatives (biological parents or siblings) with anxiety disorders have increased risk.</p>
+        
+        <h4>Environmental Factors</h4>
+        <p>Severe or long-lasting stress can change neurotransmitter balances that control mood. Experiencing significant stress over long periods or traumatic events can trigger anxiety disorders.</p>
+      </div>
+    </div>
+
+    <h2>Diagnosis and Assessment</h2>
+
+    <div class="article-section">
+      <div class="text">
+        <h3>Diagnostic Criteria</h3>
+        <p>The Diagnostic and Statistical Manual of Mental Disorders (DSM) criteria for generalized anxiety disorder require the presence of pervasive, uncontrollable worry that is excessive or unrealistic in relation to objective life circumstances, lasting for specified periods (currently 6 months in DSM-5).</p>
+        
+        <h4>Historical Evolution</h4>
+        <p>The diagnosis of GAD has evolved significantly. Originally considered part of anxiety neurosis alongside panic disorder, GAD became a separate diagnosis in DSM-III. The required duration increased from 1 month to 6 months in DSM-III-R based on findings that comorbidity rates decrease with longer disorder duration.</p>
+        
+        <h4>Assessment Methods</h4>
+        <p>Diagnosis involves comprehensive clinical evaluation including:</p>
+        <ul>
+          <li>Detailed symptom history</li>
+          <li>Assessment of functional impairment</li>
+          <li>Evaluation of comorbid conditions</li>
+          <li>Physical examination to rule out medical causes</li>
+          <li>Standardized assessment tools and rating scales</li>
+        </ul>
+      </div>
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Diagnostic Process">
+        </div>
+        <div class="caption">Figure 3: Comprehensive diagnostic approach for anxiety disorders</div>
+      </div>
+    </div>
+
+    <h2>Treatment Approaches</h2>
+
+    <div class="treatment-section">
+      <h3>Psychotherapy Interventions</h3>
+      <p>Psychological interventions are essential treatments for anxiety disorders, primarily involving talk therapy with professionals or supervised lay therapists. These interventions help people learn new ways of thinking, coping, and relating to their anxiety.</p>
+    </div>
+
+    <div class="symptoms-grid">
+      <div class="symptom-category">
+        <h4>Cognitive Behavioral Therapy (CBT)</h4>
+        <p>Most effective psychotherapy for anxiety disorders. Helps people learn to reframe negative thought patterns and change behaviors in anxiety-triggering situations. Teaches specific skills to manage symptoms and gradually return to avoided activities.</p>
+      </div>
+      
+      <div class="symptom-category">
+        <h4>Exposure Therapy</h4>
+        <p>Involves gradual, controlled exposure to feared objects or situations. Can be done through role-playing or imagined exposure. Anxiety decreases with repeated, systematic exposure. Process may take days, weeks, or months.</p>
+      </div>
+
+      <div class="symptom-category">
+        <h4>Other Therapies</h4>
+        <p><strong>Acceptance and Commitment Therapy (ACT):</strong> Applies self-acceptance with mindfulness practices</p>
+        <p><strong>Interpersonal Therapy (IPT):</strong> Addresses underlying interpersonal issues</p>
+        <p><strong>Insight-oriented Psychotherapy:</strong> Explores how past experiences contribute to current anxiety</p>
+      </div>
+    </div>
+
+    <h3>Medication Treatments</h3>
+    
+    <div class="article-section">
+      <div class="text">
+        <h4>First-Line Medications</h4>
+        <p><strong>Selective Serotonin Reuptake Inhibitors (SSRIs):</strong> First-line medication treatment including citalopram, escitalopram, fluoxetine, and paroxetine. Used for GAD, OCD, social anxiety, panic disorder, and PTSD. Typically take several weeks to become effective.</p>
+        
+        <h4>Other Medications</h4>
+        <p><strong>Serotonin-Norepinephrine Reuptake Inhibitors (SNRIs):</strong> Venlafaxine and duloxetine</p>
+        <p><strong>Buspirone:</strong> Anti-anxiety medication with few side effects</p>
+        <p><strong>Benzodiazepines:</strong> Provide short-term relief but risk of dependence</p>
+        <p><strong>Beta Blockers:</strong> Propranolol for physical anxiety symptoms</p>
+        <p><strong>Other Options:</strong> Pregabalin, hydroxyzine, certain anticonvulsants</p>
+        
+        <h4>Medication Considerations</h4>
+        <p>Medications are especially helpful when beginning therapy. It's crucial to continue medications as prescribed rather than stopping when symptoms improve. Different medications may be combined or sequenced based on individual response and side effects.</p>
+      </div>
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Treatment Modalities">
+        </div>
+        <div class="caption">Figure 4: Various treatment approaches for anxiety disorders</div>
+      </div>
+    </div>
+
+    <h2>Self-Care and Lifestyle Management</h2>
+
+    <div class="self-care-section">
+      <h3>Effective Self-Help Strategies</h3>
+      <p>Self-care plays an important role in supporting treatment and managing anxiety symptoms. Several evidence-based strategies can help reduce anxiety severity and frequency.</p>
+    </div>
+
+    <div class="symptoms-grid">
+      <div class="symptom-category">
+        <h4>Physical Health Strategies</h4>
+        <ul>
+          <li><strong>Regular Exercise:</strong> Powerful stress reducer that improves mood</li>
+          <li><strong>Healthy Sleep Patterns:</strong> Consistent bedtime and adequate rest</li>
+          <li><strong>Balanced Nutrition:</strong> Focus on vegetables, fruits, whole grains, fish</li>
+          <li><strong>Limit Stimulants:</strong> Reduce caffeine and nicotine intake</li>
+          <li><strong>Avoid Alcohol/Drugs:</strong> Can worsen anxiety symptoms</li>
+        </ul>
+      </div>
+      
+      <div class="symptom-category">
+        <h4>Psychological Strategies</h4>
+        <ul>
+          <li><strong>Stress Management:</strong> Meditation, breathing exercises, mindfulness</li>
+          <li><strong>Relaxation Techniques:</strong> Deep breathing, visualization, body scanning</li>
+          <li><strong>Mindfulness Meditation:</strong> Focusing on present moment without judgment</li>
+          <li><strong>Time Management:</strong> Careful planning to reduce stress</li>
+          <li><strong>Social Connection:</strong> Maintain relationships and avoid isolation</li>
+        </ul>
+      </div>
+
+      <div class="symptom-category">
+        <h4>Support and Education</h4>
+        <ul>
+          <li><strong>Support Groups:</strong> Share experiences and coping strategies</li>
+          <li><strong>Education:</strong> Learn about condition and teach loved ones</li>
+          <li><strong>Journaling:</strong> Track triggers and effective management techniques</li>
+          <li><strong>Professional Support:</strong> Regular therapy sessions and medication management</li>
+          <li><strong>Crisis Planning:</strong> Develop strategies for managing anxiety attacks</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Prevention and Coping Strategies</h2>
+
+    <div class="article-section">
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Prevention Strategies">
+        </div>
+        <div class="caption">Figure 5: Community-based approaches to anxiety prevention</div>
+      </div>
+      <div class="text">
+        <h3>Prevention Approaches</h3>
+        <p>Effective community-based approaches to prevent anxiety include parental education and school-based programs to enhance social and emotional learning and build positive coping in children and adolescents. Exercise programs can also be effective in preventing anxiety disorders in adults.</p>
+        
+        <h3>Coping and Support</h3>
+        <p>Learning about your disorder, involving family and friends, sticking to treatment plans, and developing practical coping strategies are essential for managing anxiety disorders. Key approaches include:</p>
+        
+        <h4>Practical Coping Techniques</h4>
+        <ul>
+          <li>Identify and avoid anxiety triggers when possible</li>
+          <li>Practice strategies developed with mental health providers</li>
+          <li>Keep a journal to identify stress causes and effective responses</li>
+          <li>Learn time management techniques</li>
+          <li>Break anxiety cycles with physical activity or hobbies</li>
+          <li>Maintain social connections and activities</li>
+        </ul>
+        
+        <h4>Long-Term Management</h4>
+        <p>Anxiety disorders, like other mental health conditions, result from a complex interaction of social, psychological and biological factors. Effective long-term management involves consistent treatment, lifestyle adjustments, and developing robust coping mechanisms. People who have lived through abuse, severe losses or other adverse experiences may need additional support.</p>
+      </div>
+    </div>
+
+    <div class="research-highlights">
+      <h3>Key Treatment Principles</h3>
+      <p><strong>Early Intervention:</strong> Early diagnosis and treatment significantly improve outcomes and prevent symptom worsening</p>
+      <p><strong>Combined Approaches:</strong> Psychotherapy combined with medication when needed provides most comprehensive treatment</p>
+      <p><strong>Consistency:</strong> Regular therapy attendance and consistent medication use are crucial for success</p>
+      <p><strong>Individualization:</strong> Treatment should be tailored to specific anxiety type, severity, and individual preferences</p>
+      <p><strong>Holistic Approach:</strong> Addressing physical health, lifestyle factors, and social support enhances treatment effectiveness</p>
+    </div>
+
+    <div class="author">Research compiled by: NeuroScence Team</div>
+  </div>
+
+  <script>
+    const images = document.querySelectorAll('.image-container');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    });
+
+    images.forEach(img => observer.observe(img));
+    // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+  </script>
+</body>
+</html>

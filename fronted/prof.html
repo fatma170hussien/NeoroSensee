@@ -1,0 +1,1962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Professionals Directory</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8fbfe;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #4a90e2 0%, #63b3ed 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            border-radius: 0 0 30px 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+        
+        header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        
+        .search-filter {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .search-box {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 15px 20px 15px 45px;
+            border: 1px solid #e1e8ed;
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #4a90e2;
+        }
+        
+        .filter-select {
+            padding: 15px 20px;
+            border: 1px solid #e1e8ed;
+            border-radius: 50px;
+            font-size: 1rem;
+            background: white;
+            min-width: 200px;
+            cursor: pointer;
+        }
+        
+        .doctors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .doctor-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+        }
+        
+        .doctor-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .doctor-header {
+            background: linear-gradient(135deg, #4a90e2 0%, #63b3ed 100%);
+            color: white;
+            padding: 25px;
+            position: relative;
+        }
+        
+        .doctor-name {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        
+        .doctor-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.25);
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .doctor-specialty {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .doctor-body {
+            padding: 25px;
+        }
+        
+        .doctor-contact {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .contact-item i {
+            margin-right: 12px;
+            color: #4a90e2;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .doctor-about {
+            margin-top: 15px;
+        }
+        
+        .toggle-btn {
+            background: #4a90e2;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background 0.3s;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .toggle-btn:hover {
+            background: #3a7bc8;
+        }
+        
+        .full-bio {
+            display: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #f0f0f0;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .country-flag {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 20px;
+            border-radius: 3px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 50px;
+            background: linear-gradient(135deg, #4a90e2 0%, #63b3ed 100%);
+            color: white;
+            border-radius: 30px 30px 0 0;
+        }
+        
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background: white;
+            color: #4a90e2;
+            transform: translateY(-3px);
+        }
+        
+        @media (max-width: 768px) {
+            .doctors-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .search-filter {
+                flex-direction: column;
+            }
+            
+            .search-box {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Mental Health Professionals Directory</h1>
+            <p>Find certified psychiatrists and therapists across the Arab world and beyond</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="search-filter">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search by name, specialty, or location...">
+            </div>
+            <select class="filter-select" id="countryFilter">
+                <option value="">All Countries</option>
+                <option value="Egypt">Egypt</option>
+                <option value="Jordan">Jordan</option>
+                <option value="Saudi Arabia">Saudi Arabia</option>
+                <option value="Kuwait">Kuwait</option>
+                <option value="UAE">UAE</option>
+                <option value="Palestine">Palestine</option>
+                <option value="Iraq">Iraq</option>
+                <option value="Lebanon">Lebanon</option>
+                <option value="Syria">Syria</option>
+                <option value="Yemen">Yemen</option>
+                <option value="Germany">Germany</option>
+                <option value="Bahrain">Bahrain</option>
+                <option value="Turkey">Turkey</option>
+                <option value="USA">USA</option>
+                <option value="Sudan">Sudan</option>
+                <option value="Canada">Canada</option>
+            </select>
+            <select class="filter-select" id="specialtyFilter">
+                <option value="">All Specialties</option>
+                <option value="Psychiatry">Psychiatry</option>
+                <option value="Psychology">Psychology</option>
+                <option value="Therapy">Therapy</option>
+                <option value="Counseling">Counseling</option>
+                <option value="Physical Therapy">Physical Therapy</option>
+            </select>
+        </div>
+        
+        <div class="doctors-grid" id="doctorsContainer">
+            <!-- Doctor cards will be inserted here by JavaScript -->
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <h3>Mental Health Support</h3>
+                <p>Your well-being is our priority. Connect with certified professionals today.</p>
+                
+                <div class="footer-links">
+                    <a href="#">About Us</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Contact</a>
+                </div>
+                
+                <p>&copy; 2025 Mental Health Professionals Directory. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample data for mental health professionals (over 100 professionals)
+        const doctors = [
+            {
+                name: "Dr. Dina Al-Jayyar",
+                specialty: "Psychiatry",
+                phone: "00201003931533",
+                location: "Aswan, Egypt",
+                address: "6th of October - 8th District",
+                bio: "Introduction: Dr. Dina Galal Al-Jayyar. Member of: Egyptian Association of Psychologists, Positive Psychology Association, European Leadership Academy in London. 14 years of experience in training and 3 years in special education.",
+                fullBio: "Introduction: Dr. Dina Galal Al-Jayyar. Member of: Egyptian Association of Psychologists, Positive Psychology Association, European Leadership Academy in London. 14 years of experience in training and 3 years in special education, conducting psychological tests, therapy sessions, speech sessions, skill development, behavior modification, and learning difficulties. Certified international trainer from: London International Organization for Development and Consultations, International Education Network, Ain Shams University, Professional Academy for Teacher Training. Awarded 'Ambassador of Creative Programs' at the First Conference for Professional Training and Creative Programs at Suez Canal University. Holds: PhD researcher in mental health, Master's in mental health with excellence from Helwan University 2020, Diploma in mental health with excellence from Helwan University, Professional diploma in special education with excellence from Helwan University, General diploma in education from Helwan University with very good grade.",
+                country: "Egypt",
+                treatments: ["Depression", "Anxiety", "Behavioral Issues", "Learning Difficulties"]
+            },
+            {
+                name: "Dr. Wael Wahba",
+                specialty: "Psychiatry",
+                phone: "Not provided",
+                location: "Cairo, Egypt",
+                address: "Maadi: Street of Safa and Marwa from Hassanein Diouki",
+                bio: "Dr. Wael is a certified psychotherapist from the Ministry of Health. He holds a PhD in psychology specializing in trauma treatment.",
+                fullBio: "Dr. Wael is a certified psychotherapist from the Ministry of Health. He holds a PhD in psychology specializing in trauma treatment, a Master's in special needs children, in addition to diplomas in clinical psychology and sports psychology. He began his professional career with special needs children and gifted athletic children, then moved to psychotherapy through work in several specialized institutions in addition to some international organizations and finally in his private clinic.",
+                country: "Egypt",
+                treatments: ["Trauma", "Special Needs Children", "Sports Psychology"]
+            },
+            {
+                name: "Dr. Rana Al-Zawawi",
+                specialty: "Psychology",
+                phone: "962797466740",
+                location: "Amman, Jordan",
+                address: "8th Circle",
+                bio: "Rana Al-Zawawi / ABD-LPC. Dialectical Behavior Therapist (DBT). Licensed Professional Counselor.",
+                fullBio: "Rana Al-Zawawi / ABD-LPC. Dialectical Behavior Therapist (DBT). Licensed Professional Counselor. Widely trained practitioner of various therapy styles; including Dialectical Behavior Therapy (DBT), Cognitive Behavioral Therapy (CBT), Cognitive Processing Therapy (CPT) and Prolonged Exposure (PE) trauma interventions, Motivational Interviewing (MI), Rational Emotive Behavior Therapy (REBT), Narrative Therapy (NT), Person-Centered Therapy (PCT), Solution-Focused Therapy (SFT), and Acceptance and Commitment Therapy (ACT).",
+                country: "Jordan",
+                treatments: ["DBT", "CBT", "Trauma", "Depression", "Anxiety"]
+            },
+            {
+                name: "Ragda Bou",
+                specialty: "Therapy",
+                phone: "00966122346666",
+                location: "Riyadh, Saudi Arabia",
+                address: "Al-Murjaq Medical Clinics",
+                bio: "Cognitive Behavioral Therapist specializing in treatment of adults, adolescents, children, couples and family therapy.",
+                fullBio: "Cognitive Behavioral Therapist specializing in treatment of adults, adolescents, children, couples and family therapy. Master's in psychotherapy from University of Colorado Denver. Member of American Counseling Association (ACA) and American Association for Marriage and Family Therapy (AAMFT).",
+                country: "Saudi Arabia",
+                treatments: ["CBT", "Family Therapy", "Couples Therapy", "Adolescent Issues"]
+            },
+            {
+                name: "Dr. Ahmed Al-Saleh",
+                specialty: "Psychiatry",
+                phone: "00966122346666",
+                location: "Riyadh, Saudi Arabia",
+                address: "Elite Al-Shati Clinics (Al-Murjaq Medical)",
+                bio: "Certified psychiatrist with extensive experience in clinical practice.",
+                fullBio: "Certified psychiatrist with extensive experience in clinical practice. Specializes in adult and adolescent psychiatry with focus on mood disorders and anxiety treatments.",
+                country: "Saudi Arabia",
+                treatments: ["Mood Disorders", "Anxiety", "Adult Psychiatry", "Adolescent Psychiatry"]
+            },
+            {
+                name: "Dr. Mohamed Ayman Orkossi",
+                specialty: "Psychiatry",
+                phone: "00966502100136",
+                location: "Jeddah, Saudi Arabia",
+                address: "Saudi Arabia - Al-Amal Hospital - Jeddah",
+                bio: "Psychotherapy consultant at Ittizan Center for Psychological and Family Counseling formerly and Rashad Center for Psychological Rehabilitation.",
+                fullBio: "Psychotherapy consultant at Ittizan Center for Psychological and Family Counseling formerly and Rashad Center for Psychological Rehabilitation and Addiction Treatment in Al-Hada currently. Holds a PhD in psychology specializing in psychotherapy (mental health) from University of Khartoum 1992. Certified in acupuncture for treating withdrawal symptoms in addiction, evidence-based medicine, supervisory skills, and the relationship between psychotherapy and traditional Chinese medicine from Chengdu University China. Fellow of University of Malaya for psychotherapy and family therapy in addiction medicine 2011.",
+                country: "Saudi Arabia",
+                treatments: ["Addiction", "Family Therapy", "Psychotherapy", "Traditional Chinese Medicine"]
+            },
+            {
+                name: "Dr. Abdulrahman Al-Omari",
+                specialty: "Psychology",
+                phone: "112786164",
+                location: "Riyadh, Saudi Arabia",
+                address: "Al-Maghrabi Hospital for Eyes, Ears and Teeth",
+                bio: "Holds a PhD in Psychology. Certified trainer in human development. Conducted several researches in the clinical field.",
+                fullBio: "Holds a PhD in Psychology. Certified trainer in human development. Conducted several researches in the clinical field. Published a book in cognitive psychology and a book on cognitive behavioral assessment (under publication). Worked as a clinical psychologist at Al-Amal Complex for Mental Health - Mental Health Department for over 30 years. Attended many courses, workshops and conferences in the field of specialization.",
+                country: "Saudi Arabia",
+                treatments: ["Cognitive Psychology", "Behavioral Assessment", "Clinical Psychology"]
+            },
+            {
+                name: "Dr. Jaafar Ahmed",
+                specialty: "Psychology",
+                phone: "1067707682",
+                location: "Menoufia, Egypt",
+                address: "Egypt",
+                bio: "Director of the Egyptian Psychology Foundation - Professional research PhD in Psychology.",
+                fullBio: "Director of the Egyptian Psychology Foundation - Professional research PhD in Psychology - Master's researcher at Menoufia University in psychological atheism - 3 professional master's degrees in special education - 3 professional master's degrees in human development - More than 20 diplomas in psychology and education from universities of Cairo, Ain Shams, Menoufia, Tanta and Benha - More than 20 courses in psychology, education and human development - Writer and lecturer in philosophy, psychology and education - Author of the book 'Attempts to Understand and Treat Autism' - Author of the book 'Attempts to Understand and Modify Behavior' - Author of a number of other books in psychology and mental illnesses - Innovator of the 'Clown Specialist' program for rehabilitating autistic children - Author of the book 'Attempts to Understand and Modify Behavior' under publication - Delivered many courses and lectures in various governorates of Egypt - In addition to many other qualifications.",
+                country: "Egypt",
+                treatments: ["Autism", "Behavior Modification", "Special Education"]
+            },
+            {
+                name: "Dr. Abdulrahman Mazhar",
+                specialty: "Therapist",
+                phone: "962790456058",
+                location: "Amman, Jordan",
+                address: "Al-Khalidi Street / Al-Rowwad Complex",
+                bio: "Consultant in psychiatry and addiction in a private clinic in Jordan, Amman, Al-Khalidi Street.",
+                fullBio: "Consultant in psychiatry and addiction in a private clinic in Jordan, Amman, Al-Khalidi Street. Former psychiatric consultant at Dr. Tariq Al-Habib's clinics. Former psychiatric consultant at Saudi Ministry of Defense hospitals. Lecturer at the Anti-Narcotics Committee.",
+                country: "Jordan",
+                treatments: ["Addiction", "Psychiatry", "Mental Health Disorders"]
+            },
+            {
+                name: "Dr. Zakaria Al-Badani",
+                specialty: "Therapist",
+                phone: "700524553",
+                location: "Kuwait",
+                address: "Kuwait",
+                bio: "Certified psychotherapist practicing in Kuwait.",
+                fullBio: "Certified psychotherapist with experience in treating various mental health conditions. Specializes in cognitive behavioral approaches and provides therapy for depression, anxiety, and relationship issues.",
+                country: "Kuwait",
+                treatments: ["Depression", "Anxiety", "Relationship Issues", "CBT"]
+            },
+            {
+                name: "Dr. Khalid Al-Saleh",
+                specialty: "Therapist",
+                phone: "0096525611102",
+                location: "Kuwait",
+                address: "Private Clinic/Hawalli",
+                bio: "Certified psychotherapist with a private practice in Hawalli, Kuwait.",
+                fullBio: "Certified psychotherapist with extensive experience in clinical practice. Specializes in treating mood disorders, anxiety, and providing family counseling services.",
+                country: "Kuwait",
+                treatments: ["Mood Disorders", "Anxiety", "Family Counseling"]
+            },
+            {
+                name: "Dr. Adel Al-Zayed",
+                specialty: "Therapist",
+                phone: "0096522633930",
+                location: "Kuwait",
+                address: "Kuwait",
+                bio: "Consultant Psychiatrist - Fellow of the Royal College of Psychiatrists.",
+                fullBio: "Consultant Psychiatrist - Fellow of the Royal College of Psychiatrists - One of the first to obtain the British Royal College certificate in Kuwait - Bachelor of General Medicine and Surgery from Kuwait University 1993.",
+                country: "Kuwait",
+                treatments: ["General Psychiatry", "Mood Disorders", "Anxiety Disorders"]
+            },
+            {
+                name: "Dr. Ivona Ivo Al-Amleh",
+                specialty: "Therapist",
+                phone: "972 2 599385481",
+                location: "Bethlehem, Palestine",
+                address: "Bethlehem",
+                bio: "Certified psychotherapist practicing in Bethlehem, Palestine.",
+                fullBio: "Certified psychotherapist with experience in treating trauma, depression, and anxiety disorders. Provides counseling services for individuals and families affected by conflict-related stress.",
+                country: "Palestine",
+                treatments: ["Trauma", "Depression", "Anxiety", "Conflict-related Stress"]
+            },
+            {
+                name: "Dr. Naeem Al-Sheikh",
+                specialty: "Therapist",
+                phone: "0599713872",
+                location: "Bethlehem, Palestine",
+                address: "West Bank - Bethlehem Mental Hospital",
+                bio: "Certified psychotherapist at Bethlehem Mental Hospital.",
+                fullBio: "Certified psychotherapist specializing in severe mental health disorders and inpatient psychiatric care. Works at the Bethlehem Mental Hospital providing comprehensive treatment for various psychiatric conditions.",
+                country: "Palestine",
+                treatments: ["Severe Mental Disorders", "Inpatient Care", "Psychiatric Treatment"]
+            },
+            {
+                name: "Dr. Mohammed Wafiq",
+                specialty: "Therapist",
+                phone: "971 4 4079100",
+                location: "Dubai, UAE",
+                address: "Dubai",
+                bio: "Certified psychotherapist practicing in Dubai, UAE.",
+                fullBio: "Certified psychotherapist with expertise in cognitive behavioral therapy and mindfulness-based approaches. Provides therapy for expatriates dealing with adjustment issues, depression, and anxiety.",
+                country: "UAE",
+                treatments: ["CBT", "Mindfulness", "Expatriate Adjustment", "Depression"]
+            },
+            {
+                name: "Dr. Saad Fahim Ghalib",
+                specialty: "Therapist",
+                phone: "0097126102000",
+                location: "Abu Dhabi, UAE",
+                address: "Abu Dhabi - Sheikh Khalifa Medical City",
+                bio: "Dr. Ghalib joined the Behavioral Sciences Wing at Sheikh Khalifa Medical City as a Consultant in Geriatric Psychiatry in 2010.",
+                fullBio: "Dr. Ghalib joined the Behavioral Sciences Wing at Sheikh Khalifa Medical City as a Consultant in Geriatric Psychiatry in 2010. Prior to that, he worked for four years at the University of South Essex affiliated with the National Health Service as a Senior Consultant in Geriatric Psychiatry where he contributed to the development of memory problems services and intermediate care. He joined the training program at the Royal London Hospital specializing in psychiatry in 1998 and became a member of the Royal College of Psychiatrists in the United Kingdom in 2001. In 2002, Dr. Ghalib joined the University of London for higher specialized training with honorary research duties. He was awarded a certificate of completion of specialized training in geriatric psychiatry in 2005. Education and Scholarships: Bachelor of Medicine and Surgery from the University of Baghdad in 2005.",
+                country: "UAE",
+                treatments: ["Geriatric Psychiatry", "Memory Disorders", "Elderly Mental Health"]
+            },
+            {
+                name: "Martin Karamar",
+                specialty: "Therapist",
+                phone: "0097143635343",
+                location: "Dubai, UAE",
+                address: "UAE",
+                bio: "Certified psychotherapist practicing in Dubai, UAE.",
+                fullBio: "Certified psychotherapist with experience in treating various mental health conditions. Specializes in providing therapy for depression, anxiety, and stress-related disorders.",
+                country: "UAE",
+                treatments: ["Depression", "Anxiety", "Stress Management"]
+            },
+            {
+                name: "Dr. Sadiq Sarraf",
+                specialty: "Therapist",
+                phone: "866-600-2273",
+                location: "Fallujah, Iraq",
+                address: "Canada",
+                bio: "Certified psychotherapist originally from Fallujah, Iraq, now practicing in Canada.",
+                fullBio: "Certified psychotherapist originally from Fallujah, Iraq, now practicing in Canada. Specializes in trauma therapy and providing support for individuals affected by conflict and displacement.",
+                country: "Iraq",
+                treatments: ["Trauma", "PTSD", "Displacement Issues"]
+            },
+            {
+                name: "Dr. Aziz Salim Shaker Al-Zubaidi",
+                specialty: "Therapist",
+                phone: "7811976016",
+                location: "Fallujah, Iraq",
+                address: "Iraq",
+                bio: "Certified psychotherapist practicing in Fallujah, Iraq.",
+                fullBio: "Certified psychotherapist practicing in Fallujah, Iraq. Specializes in providing mental health support in conflict-affected areas and treating trauma-related disorders.",
+                country: "Iraq",
+                treatments: ["Trauma", "Conflict-related Stress", "Mental Health Support"]
+            },
+            {
+                name: "Dr. Ali Abdul Razzaq Mohammed",
+                specialty: "Therapist",
+                phone: "009647906221674",
+                location: "Fallujah, Iraq",
+                address: "Iraq",
+                bio: "Certified psychotherapist practicing in Fallujah, Iraq.",
+                fullBio: "Certified psychotherapist practicing in Fallujah, Iraq. Provides mental health services to individuals affected by conflict and specializes in trauma therapy.",
+                country: "Iraq",
+                treatments: ["Trauma Therapy", "Mental Health Services", "Conflict Recovery"]
+            },
+            {
+                name: "Dr. Zuhair Malaeb",
+                specialty: "Physical Therapist",
+                phone: "+9615557538",
+                location: "Beirut, Lebanon",
+                address: "Center Shaheeb, Al-Jbeili Street, Aley, Lebanon",
+                bio: "Specialist in therapeutic massage and spinal correction. Holds diplomas in nutrition and sports training.",
+                fullBio: "Specialist in therapeutic massage and spinal correction. Holds diplomas in nutrition and sports training. Specialist in practicing Chinese medicine/acupuncture/cupping. Provides holistic approaches to physical and mental wellness.",
+                country: "Lebanon",
+                treatments: ["Therapeutic Massage", "Spinal Correction", "Nutrition", "Chinese Medicine"]
+            },
+            {
+                name: "Dr. Hikam Diab",
+                specialty: "Therapist",
+                phone: "00963932391735",
+                location: "Damascus, Syria",
+                address: "Electronic Clinic",
+                bio: "Certified psychotherapist providing online consultations through electronic clinic.",
+                fullBio: "Certified psychotherapist providing online consultations through electronic clinic. Specializes in treating various mental health conditions through remote therapy sessions.",
+                country: "Syria",
+                treatments: ["Online Therapy", "Remote Consultations", "Mental Health Conditions"]
+            },
+            {
+                name: "Dr. Abed Ali Shanab",
+                specialty: "Therapist",
+                phone: "050 704 7361",
+                location: "Sana'a, Yemen",
+                address: "Yemen",
+                bio: "Certified psychotherapist practicing in Sana'a, Yemen.",
+                fullBio: "Certified psychotherapist practicing in Sana'a, Yemen. Provides mental health services in challenging environments and specializes in trauma and stress-related disorders.",
+                country: "Yemen",
+                treatments: ["Trauma", "Stress-related Disorders", "Mental Health Services"]
+            },
+            {
+                name: "Dr. Mahdi Abdul Karim",
+                specialty: "Therapist",
+                phone: "009647812345919",
+                location: "Fallujah, Iraq",
+                address: "Iraq",
+                bio: "Certified psychotherapist practicing in Fallujah, Iraq.",
+                fullBio: "Certified psychotherapist practicing in Fallujah, Iraq. Specializes in providing mental health support in conflict-affected areas.",
+                country: "Iraq",
+                treatments: ["Mental Health Support", "Conflict Recovery", "Trauma Therapy"]
+            },
+            {
+                name: "Dr. Amin Al-Zamil",
+                specialty: "Therapist",
+                phone: "009647805942054",
+                location: "Basra, Iraq",
+                address: "Al-Amal Psychiatric Clinic - Al-Mawda Medical Complex - Breihe near Al-Maha Plaza Hotel - Al-Saadi Street",
+                bio: "Certified psychotherapist at Al-Amal Psychiatric Clinic in Basra, Iraq.",
+                fullBio: "Certified psychotherapist at Al-Amal Psychiatric Clinic in Basra, Iraq. Provides comprehensive mental health services including therapy for various psychological conditions.",
+                country: "Iraq",
+                treatments: ["Comprehensive Mental Health Services", "Psychological Conditions"]
+            },
+            {
+                name: "Dr. Ahmed Shaker Brancy",
+                specialty: "Psychiatry",
+                phone: "+49523145850900",
+                location: "Dortmund, Germany",
+                address: "Germany Detmold",
+                bio: "Director of the Psychiatric Hospital in Detmold. Member of the Westphalia Medical Association and certified teacher for psychiatric specialization.",
+                fullBio: "Director of the Psychiatric Hospital in Detmold. Member of the Westphalia Medical Association and certified teacher for psychiatric specialization. Associate professor at Bielefeld University. Specialist in treating depression and obsessive-compulsive disorder. Specialist in geriatric psychiatry. Specialist in addiction medicine. Member of the German Society of Neurology and Psychiatry. Member of the German Society of Geriatric Psychiatry. Founding member and treasurer of the German-Russian Society of Psychiatry. Specialist in oxygen and ozone therapy. Specialist in Neuraltherapy.",
+                country: "Germany",
+                treatments: ["Depression", "Obsessive-Compulsive Disorder", "Geriatric Psychiatry", "Addiction Medicine"]
+            },
+            {
+                name: "Dr. Mamdouh Mohammed",
+                specialty: "Therapist",
+                phone: "675675675756756",
+                location: "Manama, Bahrain",
+                address: "Bahrain",
+                bio: "Certified psychotherapist practicing in Manama, Bahrain.",
+                fullBio: "Certified psychotherapist practicing in Manama, Bahrain. Provides mental health services and therapy for various psychological conditions.",
+                country: "Bahrain",
+                treatments: ["Mental Health Services", "Psychological Conditions"]
+            },
+            {
+                name: "Dr. Essam Sarhan",
+                specialty: "Therapist",
+                phone: "089898",
+                location: "Manama, Bahrain",
+                address: "Bahrain",
+                bio: "Certified psychotherapist practicing in Manama, Bahrain.",
+                fullBio: "Certified psychotherapist practicing in Manama, Bahrain. Specializes in providing therapy for various mental health conditions.",
+                country: "Bahrain",
+                treatments: ["Therapy", "Mental Health Conditions"]
+            },
+            {
+                name: "Dr. Mohamed Al-Wasifi",
+                specialty: "Psychiatry",
+                phone: "00201025071007",
+                location: "Dakahlia, Egypt",
+                address: "Mansoura",
+                bio: "Consultant psychiatrist practicing in Mansoura, Egypt.",
+                fullBio: "Consultant psychiatrist with extensive experience in clinical practice. Specializes in adult psychiatry and mood disorders.",
+                country: "Egypt",
+                treatments: ["Adult Psychiatry", "Mood Disorders", "Anxiety"]
+            },
+            {
+                name: "Dr. Hazem Awad",
+                specialty: "Psychiatry",
+                phone: "01093984468",
+                location: "Aswan, Egypt",
+                address: "Aswan",
+                bio: "Consultant psychiatrist practicing in Aswan, Egypt.",
+                fullBio: "Consultant psychiatrist with experience in treating various mental health conditions. Provides comprehensive psychiatric care.",
+                country: "Egypt",
+                treatments: ["General Psychiatry", "Mental Health Disorders"]
+            },
+            {
+                name: "Dr. Mohamed Saeed",
+                specialty: "Psychiatry",
+                phone: "0102 2797739",
+                location: "Cairo, Egypt",
+                address: "Hadaek Al-Ahram, First Gate, Gardina Corner, Above Alpha Scan",
+                bio: "Certified psychiatrist practicing in Cairo, Egypt.",
+                fullBio: "Certified psychiatrist with experience in clinical practice. Specializes in adult psychiatry and anxiety disorders.",
+                country: "Egypt",
+                treatments: ["Adult Psychiatry", "Anxiety Disorders"]
+            },
+            {
+                name: "Dr. Hoda Ghanem",
+                specialty: "Psychiatry",
+                phone: "1143131118",
+                location: "Cairo, Egypt",
+                address: "Nasr City: Abdel Hakim Al-Rifai Street",
+                bio: "Certified psychiatrist practicing in Nasr City, Cairo.",
+                fullBio: "Certified psychiatrist with experience in treating various mental health conditions. Provides comprehensive psychiatric care.",
+                country: "Egypt",
+                treatments: ["General Psychiatry", "Mental Health Conditions"]
+            },
+            {
+                name: "Dr. Sameh Othman",
+                specialty: "Psychiatry",
+                phone: "+201070668427",
+                location: "Kafr El-Sheikh, Egypt",
+                address: "Tabuk",
+                bio: "Consultant in evaluation and behavioral therapy CBT DBT. Medical Services Management - Behavioral Sciences Center.",
+                fullBio: "Consultant in evaluation and behavioral therapy CBT DBT. Medical Services Management - Behavioral Sciences Center - General Secretariat for Mental Health and Addiction Treatment.",
+                country: "Egypt",
+                treatments: ["CBT", "DBT", "Behavioral Therapy"]
+            },
+            {
+                name: "Dr. Thikra Youssef Al-Khalili",
+                specialty: "Psychiatry",
+                phone: "07 9047 6883",
+                location: "Amman, Jordan",
+                address: "Jordan",
+                bio: "Specialized in psychology since 1995. Holds Bachelor's and Master's qualifications and preparatory PhD in child psychology.",
+                fullBio: "Specialized in psychology since 1995. Holds Bachelor's and Master's qualifications and preparatory PhD in child psychology. Trainer in behavioral psychology for children and development, and certified trainer in creative thinking and scientific imagination programs (CORT - TRIZ - SCAMPER) in developing creative and critical thinking for all age groups. Work areas: - Early childhood consultant. - Diagnosis and treatment of behavioral problems in children. - Diagnosis of learning difficulties in children. - Development of creative thinking and scientific imagination. - Methods of studying and evaluating the child. - Analysis of children's drawings.",
+                country: "Jordan",
+                treatments: ["Child Psychology", "Behavioral Problems", "Learning Difficulties"]
+            },
+            {
+                name: "Shatha Abduljalil",
+                specialty: "Psychiatry",
+                phone: "0791476766",
+                location: "Amman, Jordan",
+                address: "Khalda Extension of Wasfi Tal Street near Dabouq Bridge opposite Alia Central Restaurants, Nicola Jaraysat Complex, 3rd Floor",
+                bio: "Holds Bachelor's and Master's degrees in Psychological Counseling and Mental Health in addition to a professional practice license from the Jordanian Ministry of Health as a psychological counselor.",
+                fullBio: "Holds Bachelor's and Master's degrees in Psychological Counseling and Mental Health in addition to a professional practice license from the Jordanian Ministry of Health as a psychological counselor. Worked at Al-Rashid Hospital for Addiction and Psychiatry as a psychologist for three years. Specialized in treating all types of psychological disorders such as depression, anxiety, panic attacks, etc. in addition to counseling in overcoming various problems for all age groups: psychological, social, family, professional and personal.",
+                country: "Jordan",
+                treatments: ["Depression", "Anxiety", "Panic Attacks", "Psychological Counseling"]
+            },
+            {
+                name: "Michelle Benham Aghabi",
+                specialty: "Psychiatry",
+                phone: "126675000",
+                location: "Jeddah, Saudi Arabia",
+                address: "New Jeddah Clinic Hospital (New Jeddah National Hospital)",
+                bio: "Certified psychiatrist practicing in Jeddah, Saudi Arabia.",
+                fullBio: "Certified psychiatrist with experience in treating various mental health conditions. Provides comprehensive psychiatric care.",
+                country: "Saudi Arabia",
+                treatments: ["General Psychiatry", "Mental Health Conditions"]
+            },
+            {
+                name: "Abdulqader Al-Jarrad",
+                specialty: "Psychiatry",
+                phone: "114670011",
+                location: "Riyadh, Saudi Arabia",
+                address: "King Khalid University Hospital / King Saud University",
+                bio: "Certified psychiatrist practicing in Riyadh, Saudi Arabia.",
+                fullBio: "Certified psychiatrist with experience in clinical practice. Specializes in adult psychiatry.",
+                country: "Saudi Arabia",
+                treatments: ["Adult Psychiatry", "Mental Health Disorders"]
+            },
+            {
+                name: "Shalawih Al-Anzi",
+                specialty: "Psychiatry",
+                phone: "114670011",
+                location: "Riyadh, Saudi Arabia",
+                address: "King Khalid University Hospital / King Saud University",
+                bio: "Certified psychiatrist practicing in Riyadh, Saudi Arabia.",
+                fullBio: "Certified psychiatrist with experience in clinical practice. Specializes in mood disorders.",
+                country: "Saudi Arabia",
+                treatments: ["Mood Disorders", "Psychiatry"]
+            },
+            {
+                name: "Abdulsamad Abdulhamid Al-Jashi",
+                specialty: "Psychiatry",
+                phone: "173250191",
+                location: "Riyadh, Saudi Arabia",
+                address: "Mental Health Hospital",
+                bio: "Certified psychiatrist practicing in Riyadh, Saudi Arabia.",
+                fullBio: "Certified psychiatrist with experience in clinical practice. Provides comprehensive psychiatric care.",
+                country: "Saudi Arabia",
+                treatments: ["General Psychiatry", "Mental Health Services"]
+            },
+            {
+                name: "Faten Nabil Al-Zabin",
+                specialty: "Psychiatry",
+                phone: "920029090",
+                location: "Riyadh, Saudi Arabia",
+                address: "Modern First Clinic Complex",
+                bio: "Certified psychiatrist practicing in Riyadh, Saudi Arabia.",
+                fullBio: "Certified psychiatrist with experience in clinical practice. Specializes in anxiety disorders.",
+                country: "Saudi Arabia",
+                treatments: ["Anxiety Disorders", "Psychiatry"]
+            },
+            {
+                name: "Mahmoud Diab Mohammed",
+                specialty: "Psychiatry",
+                phone: "112296669",
+                location: "Riyadh, Saudi Arabia",
+                address: "Mutma'inna Medical Center",
+                bio: "Certified psychiatrist practicing in Riyadh, Saudi Arabia.",
+                fullBio: "Certified psychiatrist with experience in clinical practice. Provides comprehensive psychiatric care.",
+                country: "Saudi Arabia",
+                treatments: ["General Psychiatry", "Mental Health Conditions"]
+            },
+            {
+                name: "Al-Anoud Al-Otaibi",
+                specialty: "Psychiatry",
+                phone: "112296669",
+                location: "Riyadh, Saudi Arabia",
+                address: "Mutma'inna Medical Center",
+                bio: "Certified psychiatrist practicing in Riyadh, Saudi Arabia.",
+                fullBio: "Certified psychiatrist with experience in clinical practice. Specializes in mood disorders.",
+                country: "Saudi Arabia",
+                treatments: ["Mood Disorders", "Psychiatry"]
+            },
+            {
+                name: "Attiya Mahmoud Ataqi",
+                specialty: "Psychiatry",
+                phone: "112296669",
+                location: "Riyadh, Saudi Arabia",
+                address: "Mutma'inna Medical Center",
+                bio: "Certified psychiatrist practicing in Riyadh, Saudi Arabia.",
+                fullBio: "Certified psychiatrist with experience in clinical practice. Provides comprehensive psychiatric care.",
+                country: "Saudi Arabia",
+                treatments: ["General Psychiatry", "Mental Health Services"]
+            },
+            {
+                name: "Dr. Abdul Mohsen Deghm",
+                specialty: "Psychiatry",
+                phone: "1227986775",
+                location: "Cairo, Egypt",
+                address: "Mohandessin: Tahrir Street",
+                bio: "Certified psychiatrist practicing in Mohandessin, Cairo.",
+                fullBio: "Certified psychiatrist with experience in treating various mental health conditions. Provides comprehensive psychiatric care.",
+                country: "Egypt",
+                treatments: ["General Psychiatry", "Mental Health Disorders"]
+            },
+            {
+                name: "Yasser Al-Dabbagh",
+                specialty: "Psychiatry",
+                phone: "163252000",
+                location: "Riyadh, Saudi Arabia",
+                address: "King Fahad Specialist Hospital",
+                bio: "Certified psychiatrist practicing in Riyadh, Saudi Arabia.",
+                fullBio: "Certified psychiatrist with experience in clinical practice. Specializes in adult psychiatry.",
+                country: "Saudi Arabia",
+                treatments: ["Adult Psychiatry", "Mental Health Conditions"]
+            },
+            {
+                name: "Imtithal Mohammed Daum",
+                specialty: "Psychiatry",
+                phone: "125665000",
+                location: "Riyadh, Saudi Arabia",
+                address: "Al-Noor Specialist Hospital",
+                bio: "Certified psychiatrist practicing in Riyadh, Saudi Arabia.",
+                fullBio: "Certified psychiatrist with experience in clinical practice. Provides comprehensive psychiatric care.",
+                country: "Saudi Arabia",
+                treatments: ["General Psychiatry", "Mental Health Services"]
+            },
+            {
+                name: "Juliet Denkha",
+                specialty: "Therapist",
+                phone: "0096522628796",
+                location: "Kuwait",
+                address: "Kuwait",
+                bio: "Certified psychotherapist practicing in Kuwait.",
+                fullBio: "Certified psychotherapist with experience in treating various mental health conditions. Specializes in cognitive behavioral approaches.",
+                country: "Kuwait",
+                treatments: ["CBT", "Depression", "Anxiety"]
+            },
+            {
+                name: "Zeina Al-Zabin",
+                specialty: "Therapist",
+                phone: "0096522901677",
+                location: "Kuwait",
+                address: "Kuwait",
+                bio: "Certified psychotherapist practicing in Kuwait.",
+                fullBio: "Certified psychotherapist with experience in clinical practice. Provides therapy for various mental health conditions.",
+                country: "Kuwait",
+                treatments: ["Therapy", "Mental Health Conditions"]
+            },
+            {
+                name: "Samira Ahmed Dahrab",
+                specialty: "Therapist",
+                phone: "0096525711411",
+                location: "Kuwait",
+                address: "Kuwait",
+                bio: "Certified psychotherapist practicing in Kuwait.",
+                fullBio: "Certified psychotherapist with experience in treating various mental health conditions. Specializes in mood disorders.",
+                country: "Kuwait",
+                treatments: ["Mood Disorders", "Therapy"]
+            },
+            {
+                name: "Nasreen Abulhassan",
+                specialty: "Therapist",
+                phone: "0096522901677",
+                location: "Kuwait",
+                address: "Kuwait",
+                bio: "Certified psychotherapist practicing in Kuwait.",
+                fullBio: "Certified psychotherapist with experience in clinical practice. Provides comprehensive therapy services.",
+                country: "Kuwait",
+                treatments: ["Therapy", "Mental Health Services"]
+            },
+            {
+                name: "Waleed Al-Rajeb",
+                specialty: "Therapist",
+                phone: "0096525660704",
+                location: "Kuwait",
+                address: "Kuwait",
+                bio: "Certified psychotherapist practicing in Kuwait.",
+                fullBio: "Certified psychotherapist with experience in treating various mental health conditions. Specializes in anxiety disorders.",
+                country: "Kuwait",
+                treatments: ["Anxiety Disorders", "Therapy"]
+            },
+            {
+                name: "Naif Abdulrahman Al-Mutawa",
+                specialty: "Therapist",
+                phone: "0096522901677",
+                location: "Kuwait",
+                address: "Kuwait",
+                bio: "Certified psychotherapist practicing in Kuwait.",
+                fullBio: "Certified psychotherapist with experience in clinical practice. Provides comprehensive therapy services.",
+                country: "Kuwait",
+                treatments: ["Therapy", "Mental Health Conditions"]
+            },
+            {
+                name: "Mona Al-Obaidan",
+                specialty: "Therapist",
+                phone: "0096594416239",
+                location: "Kuwait",
+                address: "Kuwait",
+                bio: "Certified psychotherapist practicing in Kuwait.",
+                fullBio: "Certified psychotherapist with experience in treating various mental health conditions. Specializes in depression.",
+                country: "Kuwait",
+                treatments: ["Depression", "Therapy"]
+            },
+            {
+                name: "Masouma Al-Mutairi",
+                specialty: "Therapist",
+                phone: "0096525755515",
+                location: "Kuwait",
+                address: "Kuwait",
+                bio: "Certified psychotherapist practicing in Kuwait.",
+                fullBio: "Certified psychotherapist with experience in clinical practice. Provides comprehensive therapy services.",
+                country: "Kuwait",
+                treatments: ["Therapy", "Mental Health Services"]
+            },
+            {
+                name: "Fawzia Al-Durai",
+                specialty: "Therapist",
+                phone: "0096525740005",
+                location: "Kuwait",
+                address: "Kuwait",
+                bio: "Certified psychotherapist practicing in Kuwait.",
+                fullBio: "Certified psychotherapist with experience in treating various mental health conditions. Specializes in mood disorders.",
+                country: "Kuwait",
+                treatments: ["Mood Disorders", "Therapy"]
+            },
+            {
+                name: "Abdullah Ghaloum",
+                specialty: "Therapist",
+                phone: "0096525635500",
+                location: "Kuwait",
+                address: "Dr. Abdullah Ghaloum Clinic - Salmiya",
+                bio: "Certified psychotherapist practicing in Kuwait.",
+                fullBio: "Certified psychotherapist with experience in clinical practice. Provides comprehensive therapy services.",
+                country: "Kuwait",
+                treatments: ["Therapy", "Mental Health Conditions"]
+            },
+            {
+                name: "Mohammed Hajjaj Boukhdour",
+                specialty: "Therapist",
+                phone: "0096525755515",
+                location: "Kuwait",
+                address: "Kuwait",
+                bio: "Certified psychotherapist practicing in Kuwait.",
+                fullBio: "Certified psychotherapist with experience in treating various mental health conditions. Specializes in anxiety disorders.",
+                country: "Kuwait",
+                treatments: ["Anxiety Disorders", "Therapy"]
+            },
+            {
+                name: "Dr. Essam Jeries Banoura",
+                specialty: "Therapist",
+                phone: "00970 2 2777525",
+                location: "Bethlehem, Palestine",
+                address: "Bethlehem",
+                bio: "Certified psychotherapist practicing in Bethlehem, Palestine.",
+                fullBio: "Certified psychotherapist with experience in treating various mental health conditions. Provides therapy for individuals and families.",
+                country: "Palestine",
+                treatments: ["Therapy", "Mental Health Services"]
+            },
+            {
+                name: "Jared Al-Din",
+                specialty: "Therapist",
+                phone: "0097144298578",
+                location: "Dubai, UAE",
+                address: "German Center for Neuroscience - Dubai",
+                bio: "Psychological and educational consultant.",
+                fullBio: "Psychological and educational consultant with experience in providing counseling services.",
+                country: "UAE",
+                treatments: ["Psychological Counseling", "Educational Consulting"]
+            },
+            {
+                name: "Hani Al-Shafie",
+                specialty: "Therapist",
+                phone: "0097143496666",
+                location: "Dubai, UAE",
+                address: "Dubai",
+                bio: "Certified psychotherapist practicing in Dubai, UAE.",
+                fullBio: "Certified psychotherapist with experience in treating various mental health conditions. Provides comprehensive therapy services.",
+                country: "UAE",
+                treatments: ["Therapy", "Mental Health Conditions"]
+            },
+            {
+                name: "Jessica Lee",
+                specialty: "Therapist",
+                phone: "0097143948994",
+                location: "Dubai, UAE",
+                address: "Clinical Psychological Consultant - Dubai",
+                bio: "Clinical psychological consultant practicing in Dubai, UAE.",
+                fullBio: "Clinical psychological consultant with experience in providing psychological assessments and therapy.",
+                country: "UAE",
+                treatments: ["Psychological Assessments", "Therapy"]
+            },
+            {
+                name: "Hartmut Kolkowski",
+                specialty: "Therapist",
+                phone: "00971044298578",
+                location: "Dubai, UAE",
+                address: "UAE",
+                bio: "Certified psychotherapist practicing in UAE.",
+                fullBio: "Certified psychotherapist with experience in treating various mental health conditions. Provides comprehensive therapy services.",
+                country: "UAE",
+                treatments: ["Therapy", "Mental Health Services"]
+            },
+            {
+                name: "Riyad Al-Baladawi",
+                specialty: "Therapist",
+                phone: "0097144298578",
+                location: "Dubai, UAE",
+                address: "German Center for Neuroscience - Dubai",
+                bio: "Psychological and educational consultations. Member of the Swedish Medical Association and Swedish Psychiatric Association.",
+                fullBio: "Psychological and educational consultations. Member of the Swedish Medical Association and Swedish Psychiatric Association. Also a member of many international organizations and recently became a board member of the World Association of Cultural Psychiatry (WACP). Board member of the Iraqi International Medical Association (IIMA) and was one of its founders. Psychological disorders. Depression and mood disorders. Anxiety disorders. Stress-related problems, social phobia, and other types of phobias. Obsessive-compulsive disorders and personality disorders, and other types of psychosis and bipolar disorder. Family relationship problems such as problems between spouses and parent-child relationships. Problems related to adolescent conflicts and challenges. Treatment for autism and attention deficit hyperactivity disorder in children and adolescents.",
+                country: "UAE",
+                treatments: ["Psychological Disorders", "Mood Disorders", "Anxiety", "Family Therapy"]
+            },
+            {
+                name: "Abdulnasser Areeda",
+                specialty: "Therapist",
+                phone: "0097126979999",
+                location: "Abu Dhabi, UAE",
+                address: "UAE",
+                bio: "Certified psychotherapist practicing in Abu Dhabi, UAE.",
+                fullBio: "Certified psychotherapist with experience in treating various mental health conditions. Provides comprehensive therapy services.",
+                country: "UAE",
+                treatments: ["Therapy", "Mental Health Services"]
+            },
+            {
+                name: "Samra Taher",
+                specialty: "Therapist",
+                phone: "0097126979999",
+                location: "Abu Dhabi, UAE",
+                address: "UAE",
+                bio: "Certified psychotherapist practicing in Abu Dhabi, UAE.",
+                fullBio: "Certified psychotherapist with experience in clinical practice. Specializes in mood disorders.",
+                country: "UAE",
+                treatments: ["Mood Disorders", "Therapy"]
+            },
+            {
+                name: "Atif Mustafa",
+                specialty: "Therapist",
+                phone: "0097126979999",
+                location: "Abu Dhabi, UAE",
+                address: "UAE",
+                bio: "Certified psychotherapist practicing in Abu Dhabi, UAE.",
+                fullBio: "Certified psychotherapist with experience in treating various mental health conditions. Provides comprehensive therapy services.",
+                country: "UAE",
+                treatments: ["Therapy", "Mental Health Conditions"]
+            },
+            {
+                name: "Kasper Gopert",
+                specialty: "Therapist",
+                phone: "0097143948994",
+                location: "Dubai, UAE",
+                address: "UAE",
+                bio: "Certified psychotherapist practicing in UAE.",
+                fullBio: "Certified psychotherapist with experience in clinical practice. Specializes in anxiety disorders.",
+                country: "UAE",
+                treatments: ["Anxiety Disorders", "Therapy"]
+            },
+            {
+                name: "Vina Lutheria",
+                specialty: "Therapist",
+                phone: "0097126979999",
+                location: "Abu Dhabi, UAE",
+                address: "UAE",
+                bio: "Certified psychotherapist practicing in Abu Dhabi, UAE.",
+                fullBio: "Certified psychotherapist with experience in treating various mental health conditions. Provides comprehensive therapy services.",
+                country: "UAE",
+                treatments: ["Therapy", "Mental Health Services"]
+            },
+            {
+                name: "Christina Burmester",
+                specialty: "Therapist",
+                phone: "0097144298578",
+                location: "Dubai, UAE",
+                address: "UAE",
+                bio: "Certified psychotherapist practicing in UAE.",
+                fullBio: "Certified psychotherapist with experience in clinical practice. Specializes in depression.",
+                country: "UAE",
+                treatments: ["Depression", "Therapy"]
+            },
+            {
+                name: "Dr. Hasna Ghanoum",
+                specialty: "Psychology",
+                phone: "0032465583072",
+                location: "Istanbul, Turkey",
+                address: "Online via mobile through voice or video call",
+                bio: "Best Arab psychiatrist in Istanbul with Bachelor's and Master's in Clinical Psychology. Treats depression, OCD, and pathological fears with over 5 years of experience.",
+                fullBio: "Best Arab psychiatrist in Istanbul with Bachelor's and Master's in Clinical Psychology. Treats depression, OCD, and pathological fears with over 5 years of experience in providing online psychotherapy via WhatsApp.",
+                country: "Turkey",
+                treatments: ["Depression", "OCD", "Pathological Fears", "Online Therapy"]
+            },
+            {
+                name: "Dr. Yalcin Gozlehan",
+                specialty: "Psychiatry",
+                phone: "+905522243538",
+                location: "Istanbul, Turkey",
+                address: "Başak, Ertuğrul Gazi Cd UĞUR İŞ MERKEZİ NO: 21 / 1 KAT : 4 DAİRE : 42, 34480 Başakşehir/İstanbul, Turkey",
+                bio: "One of the best psychiatrists in Istanbul treating psychological and behavioral disorders and mental illnesses.",
+                fullBio: "One of the best psychiatrists in Istanbul treating psychological and behavioral disorders and mental illnesses. Holds a medical license and specializes in psychiatry with over 9 years of experience in providing medication and psychotherapy in his private clinic in person.",
+                country: "Turkey",
+                treatments: ["Psychological Disorders", "Behavioral Disorders", "Mental Illnesses"]
+            },
+            {
+                name: "Dr. Majdoline Tilili",
+                specialty: "Psychology",
+                phone: "0032465583072",
+                location: "Istanbul, Turkey",
+                address: "Online via mobile through voice or video call",
+                bio: "One of the most prominent psychologists in Istanbul with Bachelor's and Master's in Psychological Support and Counseling.",
+                fullBio: "One of the most prominent psychologists in Istanbul with Bachelor's and Master's in Psychological Support and Counseling. With over 5 years of experience in treating depression, phobia, and fear. Provides therapeutic sessions online easily and safely via WhatsApp.",
+                country: "Turkey",
+                treatments: ["Depression", "Phobia", "Fear", "Online Therapy"]
+            },
+            {
+                name: "Dr. Ilfan Jijekji",
+                specialty: "Psychiatry",
+                phone: "+905366166632",
+                location: "Istanbul, Turkey",
+                address: "Caferağa Mühürdar Caddesi No:83 D:1 Uras, Apt, 34710, 34710 Kadıköy/İstanbul, Turkey",
+                bio: "Best psychiatrist in Istanbul with PhD in Psychiatry.",
+                fullBio: "Best psychiatrist in Istanbul with PhD in Psychiatry. Specializes in treating mental and psychological illnesses and sexual disorders. Has long experience in psychotherapy and provides psychological consultations in person at his clinic by prior appointment.",
+                country: "Turkey",
+                treatments: ["Mental Illnesses", "Psychological Disorders", "Sexual Disorders"]
+            },
+            {
+                name: "Dr. Roua Daryous",
+                specialty: "Psychology",
+                phone: "0032465583072",
+                location: "Istanbul, Turkey",
+                address: "Online via mobile through voice or video call",
+                bio: "Important Arab psychiatrist in Istanbul with over 5 years of experience.",
+                fullBio: "Important Arab psychiatrist in Istanbul with over 5 years of experience. Holds diploma and master's in clinical psychology and treats depression, anxiety disorders, and post-traumatic stress disorder. Book your session and talk to her now easily via WhatsApp.",
+                country: "Turkey",
+                treatments: ["Depression", "Anxiety Disorders", "PTSD", "Online Therapy"]
+            },
+            {
+                name: "Dr. Ersin Baltaji",
+                specialty: "Psychiatry",
+                phone: "+905326826632",
+                location: "Istanbul, Turkey",
+                address: "Caferağa, Hacı İzzet Sk. Ufuk Apt No: 13/12 Kat 3, 34710 Kadıköy/İstanbul, Turkey",
+                bio: "One of the most important psychiatrists in Istanbul with long experience in psychotherapy.",
+                fullBio: "One of the most important psychiatrists in Istanbul with long experience in psychotherapy. Holds a medical license and specializes in psychiatry. Treats psychological disorders, mental illnesses, and addiction disorders. Provides therapeutic sessions in his private clinic in person.",
+                country: "Turkey",
+                treatments: ["Psychological Disorders", "Mental Illnesses", "Addiction Disorders"]
+            },
+            {
+                name: "Dr. Baraa Al-Sharaa",
+                specialty: "Psychology",
+                phone: "0032465583072",
+                location: "Istanbul, Turkey",
+                address: "Online via mobile through voice or video call",
+                bio: "Skilled Arab psychotherapist in Istanbul with Bachelor's and Master's in Clinical Psychology.",
+                fullBio: "Skilled Arab psychotherapist in Istanbul with Bachelor's and Master's in Clinical Psychology. Treats depression, phobia, and personality disorders. Has over 5 years of experience and provides therapeutic sessions online easily and safely via WhatsApp.",
+                country: "Turkey",
+                treatments: ["Depression", "Phobia", "Personality Disorders", "Online Therapy"]
+            },
+            {
+                name: "Dr. Aynil Yanal Yenişantaşi",
+                specialty: "Psychiatry",
+                phone: "+902122250775",
+                location: "Istanbul, Turkey",
+                address: "Halaskargazi, Vali Konağı Cd. No:99, 34363 Şişli/İstanbul, Turkey",
+                bio: "Prominent psychiatrist in Istanbul with PhD in Psychiatry.",
+                fullBio: "Prominent psychiatrist in Istanbul with PhD in Psychiatry. Treats psychological disorders, mental illnesses, and sexual disorders. Has long experience in treatment and provides psychological consultations in person at his private clinic.",
+                country: "Turkey",
+                treatments: ["Psychological Disorders", "Mental Illnesses", "Sexual Disorders"]
+            },
+            {
+                name: "Dr. Majd Suwaidan",
+                specialty: "Psychology",
+                phone: "0032465583072",
+                location: "Istanbul, Turkey",
+                address: "Online via mobile through voice or video call",
+                bio: "Important Arab psychotherapist in Istanbul with over 5 years of experience.",
+                fullBio: "Important Arab psychotherapist in Istanbul with over 5 years of experience. Holds Bachelor's and Master's in therapeutic psychology. Treats depression, anxiety, and marital and family conflicts. Provides counseling sessions online easily and safely via WhatsApp.",
+                country: "Turkey",
+                treatments: ["Depression", "Anxiety", "Marital Conflicts", "Family Conflicts", "Online Therapy"]
+            },
+            {
+                name: "Dr. Jijdem Delik Shahbaz",
+                specialty: "Psychiatry",
+                phone: "+905326394717",
+                location: "Istanbul, Turkey",
+                address: "Milas Apartment, Masrutiyah, Qasr Valley Street No: 129 Floor: 7, 34360 Şişli/İstanbul, Turkey",
+                bio: "Psychiatrist in Istanbul with medical license and specialization in psychiatry.",
+                fullBio: "Psychiatrist in Istanbul with medical license and specialization in psychiatry. Treats psychological disorders, mental illnesses, and behavioral problems. Has over 8 years of experience and provides psychotherapy face-to-face in his private clinic.",
+                country: "Turkey",
+                treatments: ["Psychological Disorders", "Mental Illnesses", "Behavioral Problems"]
+            },
+            {
+                name: "Dr. Khalid Al-Hissan",
+                specialty: "Psychiatry",
+                phone: "0032465583072",
+                location: "Istanbul, Turkey",
+                address: "Online via mobile through voice or video call",
+                bio: "One of the most important Arab psychiatrists in Istanbul with medical license and specialization in psychiatry.",
+                fullBio: "One of the most important Arab psychiatrists in Istanbul with medical license and specialization in psychiatry. Treats depression, bipolar disorder, and sexual disorders. Has over 8 years of experience and provides therapeutic sessions online via mobile through WhatsApp.",
+                country: "Turkey",
+                treatments: ["Depression", "Bipolar Disorder", "Sexual Disorders", "Online Therapy"]
+            },
+            {
+                name: "Dr. Azza Sabbagh",
+                specialty: "Psychology",
+                phone: "0032465583072",
+                location: "Istanbul, Turkey",
+                address: "Online via mobile through voice or video call",
+                bio: "Distinguished Arab psychologist in Istanbul treating self-confidence problems, shyness, and works on raising self-esteem.",
+                fullBio: "Distinguished Arab psychologist in Istanbul treating self-confidence problems, shyness, and works on raising self-esteem. Holds Bachelor's and Master's in psychotherapy. Has over 5 years of experience in treatment and provides psychological sessions online easily via WhatsApp.",
+                country: "Turkey",
+                treatments: ["Self-confidence Issues", "Shyness", "Self-esteem", "Online Therapy"]
+            },
+            {
+                name: "Dr. Mariam Al-Awn",
+                specialty: "Psychology",
+                phone: "0032465583072",
+                location: "Istanbul, Turkey",
+                address: "Online via mobile through voice or video call",
+                bio: "Important Arab psychotherapist in Istanbul with over 5 years of experience.",
+                fullBio: "Important Arab psychotherapist in Istanbul with over 5 years of experience. Treats depression, sleep disorders, and OCD. Holds Bachelor's and Master's in psychological counseling. Book your therapeutic session and talk to her now easily and safely via WhatsApp.",
+                country: "Turkey",
+                treatments: ["Depression", "Sleep Disorders", "OCD", "Online Therapy"]
+            },
+            {
+                name: "Dr. Zeina Deeb",
+                specialty: "Psychology",
+                phone: "0032465583072",
+                location: "Istanbul, Turkey",
+                address: "Online via mobile through voice or video call",
+                bio: "Best Arab psychiatrist in Istanbul treating depression, PTSD, and personality disorders.",
+                fullBio: "Best Arab psychiatrist in Istanbul treating depression, PTSD, and personality disorders. Holds Bachelor's and Master's in clinical psychology. Has over 5 years of experience and provides counseling sessions online via mobile through WhatsApp.",
+                country: "Turkey",
+                treatments: ["Depression", "PTSD", "Personality Disorders", "Online Therapy"]
+            },
+            {
+                name: "Dr. Faten Mashael",
+                specialty: "Psychology",
+                phone: "0032465583072",
+                location: "Istanbul, Turkey",
+                address: "Online via mobile through voice or video call",
+                bio: "Important psychiatrist in Istanbul with Master's and PhD in Clinical Psychology.",
+                fullBio: "Important psychiatrist in Istanbul with Master's and PhD in Clinical Psychology. With over 8 years of experience in treating depression, anxiety disorders, and sexual disorders. Provides therapeutic sessions easily and safely via mobile through WhatsApp.",
+                country: "Turkey",
+                treatments: ["Depression", "Anxiety Disorders", "Sexual Disorders", "Online Therapy"]
+            },
+            {
+                name: "Dr. Dalia Saleh",
+                specialty: "Psychology",
+                phone: "0032465583072",
+                location: "USA",
+                address: "Treatment online through our platform",
+                bio: "Best Arab psychiatrist in America specializing in treating psychological and behavioral diseases, panic attacks, and bipolar disorder.",
+                fullBio: "Best Arab psychiatrist in America specializing in treating psychological and behavioral diseases, panic attacks, and bipolar disorder. Holds Master's and PhD degrees in clinical psychology and has 10 years of experience in treatment and psychological guidance. Provides psychological consultations online via WhatsApp.",
+                country: "USA",
+                treatments: ["Psychological Diseases", "Behavioral Diseases", "Panic Attacks", "Bipolar Disorder", "Online Therapy"]
+            },
+            {
+                name: "Dr. Antoine Adam",
+                specialty: "Psychiatry",
+                phone: "2122544455",
+                location: "New York, USA",
+                address: "11 5th Ave, New York, NY 10003, United States",
+                bio: "Best psychiatrist in America with PhD in General and Psychiatric Medicine.",
+                fullBio: "Best psychiatrist in America with PhD in General and Psychiatric Medicine. Specializes in treating all kinds of severe and moderate psychological and mental disorders. Manages a center for psychotherapy and addiction and has over 10 years of experience in providing healthcare.",
+                country: "USA",
+                treatments: ["Psychological Disorders", "Mental Disorders", "Addiction"]
+            },
+            {
+                name: "Dr. Arnab Datta",
+                specialty: "Psychiatry",
+                phone: "8773764560",
+                location: "New York, USA",
+                address: "535 5th Ave 4th floor, New York, NY 10017, United States",
+                bio: "Specialized in treating psychological disorders such as depression, anxiety disorder, and phobia.",
+                fullBio: "Specialized in treating psychological disorders such as depression, anxiety disorder, and phobia. Considered best psychiatrist in America with over 13 years of experience in psychotherapy. Holds medical degree from New York University and specializes in psychiatric care.",
+                country: "USA",
+                treatments: ["Psychological Disorders", "Depression", "Anxiety", "Phobia"]
+            },
+            {
+                name: "Dr. Amanda Itzkov",
+                specialty: "Psychology",
+                phone: "9179822184",
+                location: "New York, USA",
+                address: "276 5th Ave, New York, NY 10001, United States",
+                bio: "Specialized in cognitive behavioral therapy for treating psychological disorders.",
+                fullBio: "Specialized in cognitive behavioral therapy for treating psychological disorders. Holds degree in psychology. Provides couples counseling and emotional and social problems. Has over 8 years of experience working in mental health field. Manages a famous clinic with psychiatric care services.",
+                country: "USA",
+                treatments: ["Psychological Disorders", "Couples Counseling", "Emotional Problems"]
+            },
+            {
+                name: "Dr. Brian Bujy",
+                specialty: "Psychiatry",
+                phone: "6465808839",
+                location: "New York, USA",
+                address: "445 W 23rd St Suite 1EE, New York, NY 10011, United States",
+                bio: "Has 15 years of experience in psychiatry.",
+                fullBio: "Has 15 years of experience in psychiatry. Specialized in treating all kinds of psychological and mental disorders and psychotic diseases. Holds PhD in psychiatry and classified as best psychiatrist in America. Provides psychotherapy sessions in his private clinic in New York.",
+                country: "USA",
+                treatments: ["Psychological Disorders", "Mental Disorders", "Psychotic Diseases"]
+            },
+            {
+                name: "Dr. Amy Midnik",
+                specialty: "Psychiatry",
+                phone: "3474808608",
+                location: "New York, USA",
+                address: "171 Madison Ave, New York, NY 10016, United States",
+                bio: "Considered one of the best psychiatrists in America.",
+                fullBio: "Considered one of the best psychiatrists in America. Holds PhD in general and psychiatric medicine. Specialized in treating all kinds of psychological disorders. Enjoys distinguished experience of over 8 years in providing psychological consultations in her private clinic located in New York.",
+                country: "USA",
+                treatments: ["Psychological Disorders", "Mental Health Services"]
+            },
+            {
+                name: "Dr. Tharaa Gerges",
+                specialty: "Psychology",
+                phone: "0032465583072",
+                location: "USA",
+                address: "Treatment online through our platform",
+                bio: "Best Arab psychiatrist in America treating behavioral problems and psychological disorders.",
+                fullBio: "Best Arab psychiatrist in America treating behavioral problems and psychological disorders. Has 10 years of experience in psychotherapy. Holds Master's and PhD in treating psychological deviation. Provides psychological consultations online through video call, call, or text conversation.",
+                country: "USA",
+                treatments: ["Behavioral Problems", "Psychological Disorders", "Online Therapy"]
+            },
+            {
+                name: "Al-Ahfad Center for Counseling and Psychological Trauma Treatment",
+                specialty: "Counseling",
+                phone: "+249 15 488 8908",
+                location: "Sudan",
+                address: "Sudan",
+                bio: "Counseling center specializing in psychological trauma treatment.",
+                fullBio: "Counseling center specializing in psychological trauma treatment. Provides comprehensive counseling services for individuals and families.",
+                country: "Sudan",
+                treatments: ["Psychological Trauma", "Counseling", "Mental Health Services"]
+            },
+            {
+                name: "Ithar Center",
+                specialty: "Counseling",
+                phone: "+249 12 557 4474",
+                location: "Sudan",
+                address: "Sudan",
+                bio: "Counseling center providing mental health services.",
+                fullBio: "Counseling center providing mental health services. Specializes in various psychological conditions and counseling.",
+                country: "Sudan",
+                treatments: ["Counseling", "Mental Health Services"]
+            },
+            {
+                name: "Dannan and Rawan Center",
+                specialty: "Counseling",
+                phone: "+249 92 006 1232",
+                location: "Sudan",
+                address: "Sudan",
+                bio: "Counseling center providing psychological services.",
+                fullBio: "Counseling center providing psychological services. Specializes in various mental health conditions and therapy.",
+                country: "Sudan",
+                treatments: ["Counseling", "Therapy", "Mental Health Services"]
+            },
+            {
+                name: "Yusra Center for Psychological Consultations",
+                specialty: "Counseling",
+                phone: "+249 11 969 8810",
+                location: "Sudan",
+                address: "Sudan",
+                bio: "Center for psychological consultations.",
+                fullBio: "Center for psychological consultations. Provides comprehensive counseling services for individuals and families.",
+                country: "Sudan",
+                treatments: ["Psychological Consultations", "Counseling"]
+            },
+            {
+                name: "Fadfada Services Center",
+                specialty: "Counseling",
+                phone: "+249 11 806 0801",
+                location: "Sudan",
+                address: "Sudan",
+                bio: "Counseling center providing mental health services.",
+                fullBio: "Counseling center providing mental health services. Specializes in various psychological conditions and counseling.",
+                country: "Sudan",
+                treatments: ["Counseling", "Mental Health Services"]
+            },
+            {
+                name: "Al-Fanar Center",
+                specialty: "Counseling",
+                phone: "0155316404",
+                location: "Sudan",
+                address: "Sudan",
+                bio: "Counseling center providing psychological services.",
+                fullBio: "Counseling center providing psychological services. Specializes in various mental health conditions and therapy.",
+                country: "Sudan",
+                treatments: ["Counseling", "Therapy", "Mental Health Services"]
+            },
+            {
+                name: "Dr. Salah Haroun",
+                specialty: "Psychiatry",
+                phone: "0155132940",
+                location: "Khartoum, Sudan",
+                address: "Khartoum 2, Markets Number 2",
+                bio: "Consultant psychiatrist practicing in Khartoum, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in treating various mental health conditions. Provides comprehensive psychiatric care.",
+                country: "Sudan",
+                treatments: ["General Psychiatry", "Mental Health Disorders"]
+            },
+            {
+                name: "Dr. Najla Al-Musharaf",
+                specialty: "Psychiatry",
+                phone: "0120761905",
+                location: "Khartoum, Sudan",
+                address: "Al-Taif Medical Complex / Eastern Street / East of Al-Bayt Al-Shami",
+                bio: "Consultant psychiatrist practicing in Khartoum, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in clinical practice. Specializes in adult psychiatry.",
+                country: "Sudan",
+                treatments: ["Adult Psychiatry", "Mental Health Conditions"]
+            },
+            {
+                name: "Dr. Abdulghani Al-Sheikh",
+                specialty: "Psychiatry",
+                phone: "0962554233",
+                location: "Khartoum, Sudan",
+                address: "Modern Medical Center",
+                bio: "Consultant psychiatrist practicing in Khartoum, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in treating various mental health conditions. Provides comprehensive psychiatric care.",
+                country: "Sudan",
+                treatments: ["General Psychiatry", "Mental Health Services"]
+            },
+            {
+                name: "Prof. Fath Al-Alim Mohammed Abdul Rahim",
+                specialty: "Psychiatry",
+                phone: "Not provided",
+                location: "Khartoum, Sudan",
+                address: "Yastabshiron Hospital - Riyadh",
+                bio: "Professor of psychiatry practicing in Khartoum, Sudan.",
+                fullBio: "Professor of psychiatry with extensive experience in clinical practice and academic work. Specializes in various psychiatric conditions.",
+                country: "Sudan",
+                treatments: ["General Psychiatry", "Academic Psychiatry"]
+            },
+            {
+                name: "Dr. Aisha Mutawakil",
+                specialty: "Psychiatry",
+                phone: "0922592095",
+                location: "Khartoum, Sudan",
+                address: "Al-Manshiya, Street 60 Intersection",
+                bio: "Consultant psychiatrist practicing in Khartoum, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in treating various mental health conditions. Provides comprehensive psychiatric care.",
+                country: "Sudan",
+                treatments: ["General Psychiatry", "Mental Health Disorders"]
+            },
+            {
+                name: "Dr. Fathiya Shabo Bari",
+                specialty: "Psychiatry",
+                phone: "0115258384 - 0123853636",
+                location: "Khartoum, Sudan",
+                address: "Al-Rabat Medical Complex",
+                bio: "Consultant psychiatrist practicing in Khartoum, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in clinical practice. Specializes in mood disorders.",
+                country: "Sudan",
+                treatments: ["Mood Disorders", "Psychiatry"]
+            },
+            {
+                name: "Dr. Amal Al-Tijani",
+                specialty: "Psychiatry",
+                phone: "0916067575",
+                location: "Khartoum, Sudan",
+                address: "Accidents Street, Al-Quds Medical Complex",
+                bio: "Consultant psychiatrist practicing in Khartoum, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in treating various mental health conditions. Provides comprehensive psychiatric care.",
+                country: "Sudan",
+                treatments: ["General Psychiatry", "Mental Health Services"]
+            },
+            {
+                name: "Dr. Al-Nil Al-Kabashi",
+                specialty: "Psychiatry",
+                phone: "0125410410",
+                location: "Khartoum, Sudan",
+                address: "Dream Hospital - Al-Manshiya",
+                bio: "Consultant psychiatrist practicing in Khartoum, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in clinical practice. Specializes in anxiety disorders.",
+                country: "Sudan",
+                treatments: ["Anxiety Disorders", "Psychiatry"]
+            },
+            {
+                name: "Dr. Lababa Abdullah",
+                specialty: "Psychiatry",
+                phone: "Not provided",
+                location: "Khartoum, Sudan",
+                address: "Al-Sharif Hospital",
+                bio: "Consultant psychiatrist practicing in Khartoum, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in treating various mental health conditions. Provides comprehensive psychiatric care.",
+                country: "Sudan",
+                treatments: ["General Psychiatry", "Mental Health Disorders"]
+            },
+            {
+                name: "Dr. Amal Jabrallah",
+                specialty: "Psychiatry",
+                phone: "0100978678",
+                location: "Khartoum, Sudan",
+                address: "Accidents Street opposite Al-Zaytouna",
+                bio: "Consultant psychiatrist practicing in Khartoum, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in clinical practice. Specializes in adult psychiatry.",
+                country: "Sudan",
+                treatments: ["Adult Psychiatry", "Mental Health Conditions"]
+            },
+            {
+                name: "Dr. Azza Kamal Al-Nurani",
+                specialty: "Psychiatry",
+                phone: "Not provided",
+                location: "Khartoum, Sudan",
+                address: "Al-Nuzha Clinics Complex in Riyadh, Abdullah Al-Tayeb Street near their intersection with 60",
+                bio: "Consultant psychiatrist practicing in Khartoum, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in treating various mental health conditions. Provides comprehensive psychiatric care.",
+                country: "Sudan",
+                treatments: ["General Psychiatry", "Mental Health Services"]
+            },
+            {
+                name: "Dr. Yassir Al-Qaddal",
+                specialty: "Psychiatry",
+                phone: "Not provided",
+                location: "Khartoum, Sudan",
+                address: "Royal Care Hospital",
+                bio: "Consultant psychiatrist practicing in Khartoum, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in clinical practice. Specializes in mood disorders.",
+                country: "Sudan",
+                treatments: ["Mood Disorders", "Psychiatry"]
+            },
+            {
+                name: "Dr. Abdulrahman Aboudom",
+                specialty: "Psychiatry",
+                phone: "Not provided",
+                location: "Khartoum, Sudan",
+                address: "Dar Al-Ilaj Hospital",
+                bio: "Consultant psychiatrist practicing in Khartoum, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in treating various mental health conditions. Provides comprehensive psychiatric care.",
+                country: "Sudan",
+                treatments: ["General Psychiatry", "Mental Health Disorders"]
+            },
+            {
+                name: "Dr. Abdulqadir Hussein",
+                specialty: "Psychiatry",
+                phone: "Not provided",
+                location: "Khartoum, Sudan",
+                address: "Khartoum Center for Psychiatry east of Cinema Coliseum opposite Al-Nilein Center",
+                bio: "Consultant psychiatrist practicing in Khartoum, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in clinical practice. Specializes in anxiety disorders.",
+                country: "Sudan",
+                treatments: ["Anxiety Disorders", "Psychiatry"]
+            },
+            {
+                name: "Dr. Israa Balla",
+                specialty: "Psychiatry",
+                phone: "Not provided",
+                location: "Antalya, Turkey",
+                address: "Antalya",
+                bio: "Consultant psychiatrist practicing in Antalya, Turkey.",
+                fullBio: "Consultant psychiatrist with experience in treating various mental health conditions. Provides comprehensive psychiatric care.",
+                country: "Turkey",
+                treatments: ["General Psychiatry", "Mental Health Services"]
+            },
+            {
+                name: "Dr. Sabah Mohammed Al-Sharif",
+                specialty: "Psychiatry",
+                phone: "0911253477",
+                location: "Khartoum, Sudan",
+                address: "Abdulkarim Othman Center - Khartoum, Obeid Khatim Street",
+                bio: "Consultant psychiatrist practicing in Khartoum, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in clinical practice. Specializes in adult psychiatry.",
+                country: "Sudan",
+                treatments: ["Adult Psychiatry", "Mental Health Conditions"]
+            },
+            {
+                name: "Dr. Mohammed Ahmed Abdul Rahim",
+                specialty: "Psychiatry",
+                phone: "0902522115",
+                location: "Khartoum, Sudan",
+                address: "Al-Munira Hospital",
+                bio: "Consultant psychiatrist practicing in Khartoum, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in treating various mental health conditions. Provides comprehensive psychiatric care.",
+                country: "Sudan",
+                treatments: ["General Psychiatry", "Mental Health Disorders"]
+            },
+            {
+                name: "Dr. Emad Al-Sinni",
+                specialty: "Psychiatry",
+                phone: "0905439117",
+                location: "Khartoum, Sudan",
+                address: "Khartoum Accidents Street - Al-Huda Complex",
+                bio: "Consultant psychiatrist practicing in Khartoum, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in clinical practice. Specializes in mood disorders.",
+                country: "Sudan",
+                treatments: ["Mood Disorders", "Psychiatry"]
+            },
+            {
+                name: "Dr. Kamal Hassan",
+                specialty: "Psychiatry",
+                phone: "0112501444-0960224585",
+                location: "Khartoum, Sudan",
+                address: "Youssef Hussein Complex - Airport Street opposite Omdurman Boys",
+                bio: "Consultant psychiatrist practicing in Khartoum, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in treating various mental health conditions. Provides comprehensive psychiatric care.",
+                country: "Sudan",
+                treatments: ["General Psychiatry", "Mental Health Services"]
+            },
+            {
+                name: "Dr. Nader Al-Zain Amara",
+                specialty: "Psychiatry",
+                phone: "0183520555",
+                location: "Khartoum, Sudan",
+                address: "Al-Nuzha Clinics Complex, Abdullah Al-Tayeb Street next to Al-Burj Medical Laboratories",
+                bio: "Consultant psychiatrist practicing in Khartoum, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in clinical practice. Specializes in anxiety disorders.",
+                country: "Sudan",
+                treatments: ["Anxiety Disorders", "Psychiatry"]
+            },
+            {
+                name: "Dr. Abdullah Abdulrahman",
+                specialty: "Psychiatry",
+                phone: "0115818889",
+                location: "Khartoum, Sudan",
+                address: "Kafouri Square 6 next to Amana Pump",
+                bio: "Consultant psychiatrist practicing in Khartoum, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in treating various mental health conditions. Provides comprehensive psychiatric care.",
+                country: "Sudan",
+                treatments: ["General Psychiatry", "Mental Health Disorders"]
+            },
+            {
+                name: "Dr. Abla Mohammed Al-Mahdi",
+                specialty: "Psychiatry",
+                phone: "0112706514",
+                location: "Khartoum, Sudan",
+                address: "Municipality Street, Bahri",
+                bio: "Consultant psychiatrist practicing in Khartoum, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in clinical practice. Specializes in adult psychiatry.",
+                country: "Sudan",
+                treatments: ["Adult Psychiatry", "Mental Health Conditions"]
+            },
+            {
+                name: "Dr. Hala Mahmoud",
+                specialty: "Psychiatry",
+                phone: "0920625157",
+                location: "Khartoum, Sudan",
+                address: "Al-Ayadi Al-Bayda Complex north of Al-Zaeem Al-Azhari University and south of Al-Ihsan Mall",
+                bio: "Consultant psychiatrist practicing in Khartoum, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in treating various mental health conditions. Provides comprehensive psychiatric care.",
+                country: "Sudan",
+                treatments: ["General Psychiatry", "Mental Health Services"]
+            },
+            {
+                name: "Dr. Najla Ahmed",
+                specialty: "Psychiatry",
+                phone: "0122933068",
+                location: "Khartoum, Sudan",
+                address: "Asbab Hospital, Kafouri Square 6",
+                bio: "Consultant psychiatrist practicing in Khartoum, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in clinical practice. Specializes in mood disorders.",
+                country: "Sudan",
+                treatments: ["Mood Disorders", "Psychiatry"]
+            },
+            {
+                name: "Dr. Bashar Al-Asha",
+                specialty: "Psychiatry",
+                phone: "0919668585",
+                location: "Khartoum, Sudan",
+                address: "Zainab Medical Center, Accidents Street, Bahri Teaching Hospital",
+                bio: "Consultant psychiatrist practicing in Khartoum, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in treating various mental health conditions. Provides comprehensive psychiatric care.",
+                country: "Sudan",
+                treatments: ["General Psychiatry", "Mental Health Disorders"]
+            },
+            {
+                name: "Dr. Hamid Ibrahim",
+                specialty: "Psychiatry",
+                phone: "Not provided",
+                location: "Omdurman, Sudan",
+                address: "Asia Hospital",
+                bio: "Consultant psychiatrist practicing in Omdurman, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in clinical practice. Specializes in adult psychiatry.",
+                country: "Sudan",
+                treatments: ["Adult Psychiatry", "Mental Health Conditions"]
+            },
+            {
+                name: "Dr. Taha Abdul Fattah",
+                specialty: "Psychiatry",
+                phone: "0914858936",
+                location: "Omdurman, Sudan",
+                address: "West of Omdurman Hospital",
+                bio: "Consultant psychiatrist practicing in Omdurman, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in treating various mental health conditions. Provides comprehensive psychiatric care.",
+                country: "Sudan",
+                treatments: ["General Psychiatry", "Mental Health Services"]
+            },
+            {
+                name: "Dr. Mutasim Othman",
+                specialty: "Psychiatry",
+                phone: "Not provided",
+                location: "Omdurman, Sudan",
+                address: "Abdullah Khalil Complex - north of Al-Taqwa Hospital Omdurman",
+                bio: "Consultant psychiatrist practicing in Omdurman, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in clinical practice. Specializes in mood disorders.",
+                country: "Sudan",
+                treatments: ["Mood Disorders", "Psychiatry"]
+            },
+            {
+                name: "Dr. Abdullah Idris",
+                specialty: "Psychiatry",
+                phone: "Not provided",
+                location: "Omdurman, Sudan",
+                address: "Alia Hospital",
+                bio: "Consultant psychiatrist practicing in Omdurman, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in treating various mental health conditions. Provides comprehensive psychiatric care.",
+                country: "Sudan",
+                treatments: ["General Psychiatry", "Mental Health Disorders"]
+            },
+            {
+                name: "Dr. Nadia Kambal",
+                specialty: "Psychiatry",
+                phone: "Not provided",
+                location: "Omdurman, Sudan",
+                address: "Al-Arbaeen Hospital",
+                bio: "Consultant psychiatrist practicing in Omdurman, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in clinical practice. Specializes in anxiety disorders.",
+                country: "Sudan",
+                treatments: ["Anxiety Disorders", "Psychiatry"]
+            },
+            {
+                name: "Dr. Mohammed Bakri",
+                specialty: "Psychiatry",
+                phone: "0121236713, 0112908183",
+                location: "Omdurman, Sudan",
+                address: "Omdurman opposite the Western Gate of Omdurman Hospital opposite Abdullah Khalil Diabetes Center",
+                bio: "Consultant psychiatrist practicing in Omdurman, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in treating various mental health conditions. Provides comprehensive psychiatric care.",
+                country: "Sudan",
+                treatments: ["General Psychiatry", "Mental Health Services"]
+            },
+            {
+                name: "Dr. Mohammed Mekki Qanjari",
+                specialty: "Psychiatry",
+                phone: "Not provided",
+                location: "Omdurman, Sudan",
+                address: "Al-Thawra, Harat 24, Extension Street next to Ardh Al-Taybat Pharmacy",
+                bio: "Consultant psychiatrist practicing in Omdurman, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in clinical practice. Specializes in adult psychiatry.",
+                country: "Sudan",
+                treatments: ["Adult Psychiatry", "Mental Health Conditions"]
+            },
+            {
+                name: "Dr. Mohammed Ahmed Abdul Rahim",
+                specialty: "Psychiatry",
+                phone: "0912558943",
+                location: "Omdurman, Sudan",
+                address: "Omdurman Autopsy Street",
+                bio: "Consultant psychiatrist practicing in Omdurman, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in treating various mental health conditions. Provides comprehensive psychiatric care.",
+                country: "Sudan",
+                treatments: ["General Psychiatry", "Mental Health Disorders"]
+            },
+            {
+                name: "Dr. Mai Mohammed Youssef Musa",
+                specialty: "Psychiatry",
+                phone: "0122309424",
+                location: "Omdurman, Sudan",
+                address: "Omdurman Bant west of Al-Mustafa Complex",
+                bio: "Consultant psychiatrist practicing in Omdurman, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in clinical practice. Specializes in mood disorders.",
+                country: "Sudan",
+                treatments: ["Mood Disorders", "Psychiatry"]
+            },
+            {
+                name: "Dr. Israa Abdul Azim",
+                specialty: "Psychiatry",
+                phone: "0904840084",
+                location: "Omdurman, Sudan",
+                address: "Hafiz Al-Misbah Medical Center - end of Al-Arda Street west of Wad Al-Bashir Bridge",
+                bio: "Consultant psychiatrist practicing in Omdurman, Sudan.",
+                fullBio: "Consultant psychiatrist with experience in treating various mental health conditions. Provides comprehensive psychiatric care.",
+                country: "Sudan",
+                treatments: ["General Psychiatry", "Mental Health Services"]
+            }
+        ];
+
+        // Function to render doctor cards
+        function renderDoctors(doctorsArray) {
+            const container = document.getElementById('doctorsContainer');
+            container.innerHTML = '';
+            
+            if (doctorsArray.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 40px; font-size: 1.2rem; color: #666;">No professionals found matching your criteria.</div>';
+                return;
+            }
+            
+            doctorsArray.forEach(doctor => {
+                const card = document.createElement('div');
+                card.className = 'doctor-card';
+                card.innerHTML = `
+                    <div class="doctor-header">
+                        <div class="doctor-name">${doctor.name}</div>
+                        <div class="doctor-badge">Certified</div>
+                        <div class="doctor-specialty">${doctor.specialty}</div>
+                        <img src="https://flagcdn.com/w40/${getCountryCode(doctor.country).toLowerCase()}.png" 
+                             class="country-flag" 
+                             alt="${doctor.country} flag">
+                    </div>
+                    <div class="doctor-body">
+                        <div class="doctor-contact">
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span>${doctor.phone}</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>${doctor.location}</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-home"></i>
+                                <span>${doctor.address}</span>
+                            </div>
+                        </div>
+                        <div class="doctor-about">
+                            <p>${doctor.bio}</p>
+                            <button class="toggle-btn" onclick="toggleBio(this)">
+                                <i class="fas fa-chevron-down"></i> Read More
+                            </button>
+                            <div class="full-bio">
+                                <p>${doctor.fullBio}</p>
+                                ${doctor.treatments ? `<div style="margin-top: 15px;"><strong>Specializes in treating:</strong> ${doctor.treatments.join(', ')}</div>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Function to get country code for flag
+        function getCountryCode(country) {
+            const codes = {
+                "Egypt": "eg",
+                "Jordan": "jo",
+                "Saudi Arabia": "sa",
+                "Kuwait": "kw",
+                "UAE": "ae",
+                "Palestine": "ps",
+                "Iraq": "iq",
+                "Lebanon": "lb",
+                "Syria": "sy",
+                "Yemen": "ye",
+                "Germany": "de",
+                "Bahrain": "bh",
+                "Turkey": "tr",
+                "USA": "us",
+                "Sudan": "sd",
+                "Canada": "ca"
+            };
+            return codes[country] || "un";
+        }
+
+        // Function to toggle bio visibility
+        function toggleBio(button) {
+            const fullBio = button.nextElementSibling;
+            const icon = button.querySelector('i');
+            
+            if (fullBio.style.display === 'block') {
+                fullBio.style.display = 'none';
+                icon.className = 'fas fa-chevron-down';
+                button.innerHTML = '<i class="fas fa-chevron-down"></i> Read More';
+            } else {
+                fullBio.style.display = 'block';
+                icon.className = 'fas fa-chevron-up';
+                button.innerHTML = '<i class="fas fa-chevron-up"></i> Show Less';
+            }
+        }
+
+        // Filter functionality
+        document.getElementById('searchInput').addEventListener('input', filterDoctors);
+        document.getElementById('countryFilter').addEventListener('change', filterDoctors);
+        document.getElementById('specialtyFilter').addEventListener('change', filterDoctors);
+
+        function filterDoctors() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const countryFilter = document.getElementById('countryFilter').value;
+            const specialtyFilter = document.getElementById('specialtyFilter').value;
+            
+            const filteredDoctors = doctors.filter(doctor => {
+                const matchesSearch = doctor.name.toLowerCase().includes(searchTerm) ||
+                                    doctor.specialty.toLowerCase().includes(searchTerm) ||
+                                    doctor.location.toLowerCase().includes(searchTerm) ||
+                                    doctor.bio.toLowerCase().includes(searchTerm) ||
+                                    (doctor.treatments && doctor.treatments.some(t => t.toLowerCase().includes(searchTerm)));
+                
+                const matchesCountry = countryFilter === '' || doctor.country === countryFilter;
+                const matchesSpecialty = specialtyFilter === '' || doctor.specialty === specialtyFilter;
+                
+                return matchesSearch && matchesCountry && matchesSpecialty;
+            });
+            
+            renderDoctors(filteredDoctors);
+        }
+
+        // Initial render
+        renderDoctors(doctors);
+        // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+    </script>
+</body>
+</html>

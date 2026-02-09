@@ -1,0 +1,2246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAPS-5 - Clinician-Administered PTSD Scale for DSM-5</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --accent-color: #2980b9;
+      --text-color: #333;
+      --light-text: #fff;
+      --card-bg: #fff;
+      --section-bg: #ecf0f1;
+      --border-color: #bdc3c7;
+      --criterion-b: #e74c3c;
+      --criterion-c: #e67e22;
+      --criterion-d: #f39c12;
+      --criterion-e: #27ae60;
+      --criterion-g: #8e44ad;
+      --absent: #95a5a6;
+      --mild: #3498db;
+      --moderate: #f39c12;
+      --severe: #e67e22;
+      --extreme: #c0392b;
+      --clinical-threshold: #e74c3c;
+      --dissociation: #9b59b6;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: var(--section-bg);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 25px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #e74c3c, #c0392b);
+    }
+    
+    .header h1 {
+      font-size: 2rem;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+    
+    .header .subtitle {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-bottom: 15px;
+    }
+    
+    .header-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .info-card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 12px;
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+    }
+    
+    .info-card h4 {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      margin-bottom: 5px;
+    }
+    
+    .info-input {
+      width: 100%;
+      padding: 8px;
+      border: none;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--text-color);
+      font-size: 0.9rem;
+    }
+    
+    /* Assessment Flow */
+    .assessment-flow {
+      display: flex;
+      overflow-x: auto;
+      gap: 10px;
+      margin-bottom: 25px;
+      padding: 10px 0;
+    }
+    
+    .flow-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0.6;
+      transition: all 0.3s;
+      cursor: pointer;
+      min-width: 100px;
+    }
+    
+    .flow-item.active {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+    
+    .flow-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: white;
+    }
+    
+    .flow-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      text-align: center;
+    }
+    
+    /* Content Sections */
+    .content-section {
+      display: none;
+      background: white;
+      border-radius: 12px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+    
+    .content-section.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .section-header {
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid var(--border-color);
+    }
+    
+    .section-header h2 {
+      color: var(--primary-color);
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .criterion-label {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-left: 10px;
+    }
+    
+    /* Criterion Cards */
+    .criterion-card {
+      border-left: 5px solid;
+      padding: 20px;
+      margin: 25px 0;
+      background: var(--section-bg);
+      border-radius: 0 8px 8px 0;
+    }
+    
+    .criterion-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .criterion-number {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: white;
+    }
+    
+    .criterion-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+    
+    /* Item Cards */
+    .item-card {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 15px 0;
+      border: 2px solid var(--border-color);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .item-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+    
+    .item-number {
+      width: 32px;
+      height: 32px;
+      background: var(--section-bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: var(--primary-color);
+      font-size: 1rem;
+    }
+    
+    .item-title {
+      font-size: 1.1rem;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+    
+    .prompt-box {
+      background: #f8f9fa;
+      border-left: 4px solid var(--border-color);
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+      color: #666;
+    }
+    
+    /* Rating Scales */
+    .rating-section {
+      margin: 20px 0;
+      padding: 15px;
+      background: var(--section-bg);
+      border-radius: 8px;
+    }
+    
+    .rating-title {
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--primary-color);
+    }
+    
+    .intensity-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 15px 0;
+    }
+    
+    @media (max-width: 768px) {
+      .intensity-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    .intensity-btn {
+      padding: 12px 8px;
+      border: 2px solid var(--border-color);
+      border-radius: 6px;
+      background: white;
+      color: var(--text-color);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .intensity-btn:hover {
+      transform: translateY(-2px);
+    }
+    
+    .intensity-btn.selected {
+      border-color: var(--accent-color);
+      background: var(--section-bg);
+    }
+    
+    .intensity-label {
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+    
+    .intensity-desc {
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+    
+    /* Frequency Input */
+    .frequency-input {
+      margin: 15px 0;
+    }
+    
+    .input-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 10px 0;
+    }
+    
+    .input-label {
+      min-width: 150px;
+      font-weight: 500;
+    }
+    
+    .number-input {
+      width: 100px;
+      padding: 8px;
+      border: 2px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    
+    .percentage-input {
+      width: 100px;
+      padding: 8px;
+      border: 2px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    
+    .range-display {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 10px 0;
+    }
+    
+    .range-value {
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+    
+    /* Trauma-Relatedness */
+    .trauma-relatedness {
+      margin: 15px 0;
+      padding: 15px;
+      background: #fff8e1;
+      border-radius: 8px;
+      border-left: 4px solid #ffb300;
+    }
+    
+    .tr-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+    
+    .tr-btn {
+      padding: 10px;
+      border: 2px solid var(--border-color);
+      border-radius: 6px;
+      background: white;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    
+    .tr-btn:hover {
+      transform: translateY(-2px);
+    }
+    
+    .tr-btn.selected {
+      border-color: var(--accent-color);
+      background: var(--section-bg);
+      font-weight: 600;
+    }
+    
+    /* Scoring Grid */
+    .scoring-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1px;
+      background: var(--border-color);
+      border: 1px solid var(--border-color);
+      margin: 20px 0;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+    
+    .grid-cell {
+      background: white;
+      padding: 10px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    
+    .grid-header {
+      background: var(--primary-color);
+      color: white;
+      font-weight: 600;
+    }
+    
+    .severity-result {
+      text-align: center;
+      margin: 15px 0;
+      padding: 15px;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      display: none;
+    }
+    
+    /* Current Score Display */
+    .score-summary {
+      position: sticky;
+      top: 10px;
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      border: 2px solid var(--primary-color);
+      z-index: 100;
+    }
+    
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+    }
+    
+    .summary-item {
+      text-align: center;
+      padding: 10px;
+      border-radius: 6px;
+      background: var(--section-bg);
+    }
+    
+    .summary-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+    
+    .summary-label {
+      font-size: 0.8rem;
+      color: #666;
+    }
+    
+    /* Controls */
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+    }
+    
+    .control-btn {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .prev-btn {
+      background: var(--section-bg);
+      color: #666;
+    }
+    
+    .prev-btn:hover {
+      background: #e0e0e0;
+    }
+    
+    .next-btn {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .next-btn:hover {
+      background: var(--accent-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .complete-btn {
+      background: linear-gradient(135deg, #27ae60, #2ecc71);
+      color: white;
+      padding: 14px 35px;
+      font-size: 1rem;
+    }
+    
+    .complete-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+    }
+    
+    /* Results */
+    .results-container {
+      display: none;
+      background: white;
+      border-radius: 12px;
+      padding: 35px;
+      margin-top: 25px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+    
+    .results-header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+    
+    .total-score {
+      text-align: center;
+      margin: 30px 0;
+    }
+    
+    .score-display {
+      font-size: 4rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      margin: 10px 0;
+    }
+    
+    .score-range {
+      color: #666;
+      font-size: 1.1rem;
+    }
+    
+    .cluster-results {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+    
+    .cluster-card {
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      color: white;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .cluster-title {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      opacity: 0.9;
+    }
+    
+    .cluster-score {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    
+    .cluster-symptoms {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+    
+    .diagnostic-summary {
+      background: var(--section-bg);
+      padding: 25px;
+      border-radius: 10px;
+      margin: 30px 0;
+    }
+    
+    .criteria-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    
+    .criteria-table th,
+    .criteria-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .criteria-table th {
+      background: var(--section-bg);
+      font-weight: 600;
+    }
+    
+    .symptom-present {
+      color: #27ae60;
+      font-weight: bold;
+    }
+    
+    .symptom-absent {
+      color: #e74c3c;
+    }
+    
+    /* Recommendations */
+    .recommendations {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    
+    .recommendation-card {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border-left: 4px solid var(--primary-color);
+    }
+    
+    .recommendation-card h4 {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    /* Actions */
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 40px;
+    }
+    
+    .action-btn {
+      padding: 12px 25px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .retake-btn {
+      background: var(--section-bg);
+      color: #666;
+    }
+    
+    .retake-btn:hover {
+      background: #e0e0e0;
+    }
+    
+    .print-btn {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .print-btn:hover {
+      background: var(--accent-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      .header {
+        padding: 20px;
+      }
+      
+      .header h1 {
+        font-size: 1.7rem;
+      }
+      
+      .header-info {
+        grid-template-columns: 1fr;
+      }
+      
+      .intensity-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .tr-buttons {
+        grid-template-columns: 1fr;
+      }
+      
+      .controls {
+        flex-direction: column;
+      }
+      
+      .control-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .actions {
+        flex-direction: column;
+      }
+      
+      .action-btn {
+        width: 100%;
+        text-align: center;
+      }
+      
+      .cluster-results {
+        grid-template-columns: 1fr;
+      }
+      
+      .recommendations {
+        grid-template-columns: 1fr;
+      }
+      
+      .scoring-grid {
+        grid-template-columns: repeat(2, 1fr);
+        font-size: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>Clinician-Administered PTSD Scale for DSM-5 (CAPS-5)</h1>
+      <div class="subtitle">Past Week Version - Clinician-Administered Assessment</div>
+      
+      <div class="header-info">
+        <div class="info-card">
+          <h4>Patient Name</h4>
+          <input type="text" class="info-input" id="patientName" placeholder="Enter patient name">
+        </div>
+        <div class="info-card">
+          <h4>Interviewer</h4>
+          <input type="text" class="info-input" id="interviewer" placeholder="Interviewer name">
+        </div>
+        <div class="info-card">
+          <h4>Study ID</h4>
+          <input type="text" class="info-input" id="studyId" placeholder="Study ID">
+        </div>
+        <div class="info-card">
+          <h4>Date</h4>
+          <input type="date" class="info-input" id="assessmentDate" value="<?php echo date('Y-m-d'); ?>">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Assessment Flow -->
+    <div class="assessment-flow" id="assessmentFlow">
+      <!-- Flow items will be dynamically generated -->
+    </div>
+    
+    <!-- Current Score Summary -->
+    <div class="score-summary" id="scoreSummary">
+      <div class="summary-grid">
+        <div class="summary-item" style="border-left: 4px solid var(--criterion-b);">
+          <div class="summary-label">Criterion B</div>
+          <div class="summary-value" id="criterionBScore">0</div>
+          <div class="summary-label" id="criterionBSx">0/5</div>
+        </div>
+        <div class="summary-item" style="border-left: 4px solid var(--criterion-c);">
+          <div class="summary-label">Criterion C</div>
+          <div class="summary-value" id="criterionCScore">0</div>
+          <div class="summary-label" id="criterionCSx">0/2</div>
+        </div>
+        <div class="summary-item" style="border-left: 4px solid var(--criterion-d);">
+          <div class="summary-label">Criterion D</div>
+          <div class="summary-value" id="criterionDScore">0</div>
+          <div class="summary-label" id="criterionDSx">0/7</div>
+        </div>
+        <div class="summary-item" style="border-left: 4px solid var(--criterion-e);">
+          <div class="summary-label">Criterion E</div>
+          <div class="summary-value" id="criterionEScore">0</div>
+          <div class="summary-label" id="criterionESx">0/6</div>
+        </div>
+        <div class="summary-item" style="border-left: 4px solid var(--primary-color);">
+          <div class="summary-label">Total Score</div>
+          <div class="summary-value" id="totalScore">0</div>
+          <div class="summary-label" id="totalSymptoms">0/20</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Content Sections -->
+    <div class="content-section" id="sectionCriterionA">
+      <div class="section-header">
+        <h2><i class="fas fa-clipboard-list"></i> Criterion A: Trauma Exposure</h2>
+      </div>
+      
+      <div class="criterion-card" style="border-left-color: var(--primary-color);">
+        <div class="criterion-header">
+          <div class="criterion-number" style="background: var(--primary-color);">A</div>
+          <div class="criterion-title">Exposure to Actual or Threatened Death, Serious Injury, or Sexual Violence</div>
+        </div>
+        
+        <div class="prompt-box">
+          <p><strong>Note:</strong> Criterion A should already have been evaluated in a prior administration of the PAST MONTH version of the CAPS-5. For most applications of the PAST WEEK version, Criterion A does not need to be re-evaluated.</p>
+        </div>
+        
+        <div class="item-card">
+          <h4>Index Traumatic Event</h4>
+          <textarea id="indexEvent" rows="3" style="width: 100%; padding: 10px; border: 2px solid var(--border-color); border-radius: 6px; margin: 10px 0;"></textarea>
+          
+          <div class="rating-section">
+            <div class="rating-title">Exposure Type</div>
+            <div class="intensity-grid">
+              <button class="intensity-btn" onclick="selectExposureType('experienced')">
+                <div class="intensity-label">Experienced</div>
+                <div class="intensity-desc">Directly experiencing</div>
+              </button>
+              <button class="intensity-btn" onclick="selectExposureType('witnessed')">
+                <div class="intensity-label">Witnessed</div>
+                <div class="intensity-desc">In person, to others</div>
+              </button>
+              <button class="intensity-btn" onclick="selectExposureType('learned')">
+                <div class="intensity-label">Learned About</div>
+                <div class="intensity-desc">Close family/friend</div>
+              </button>
+              <button class="intensity-btn" onclick="selectExposureType('exposed')">
+                <div class="intensity-label">Exposed to Details</div>
+                <div class="intensity-desc">Repeated/extreme exposure</div>
+              </button>
+            </div>
+            <div id="exposureTypeDisplay" style="margin-top: 10px; font-weight: 600;"></div>
+          </div>
+          
+          <div class="rating-section">
+            <div class="rating-title">Criterion A Met?</div>
+            <div class="intensity-grid" style="grid-template-columns: repeat(3, 1fr);">
+              <button class="intensity-btn" onclick="selectCriterionA('no')">
+                <div class="intensity-label">No</div>
+              </button>
+              <button class="intensity-btn" onclick="selectCriterionA('probable')">
+                <div class="intensity-label">Probable</div>
+              </button>
+              <button class="intensity-btn" onclick="selectCriterionA('yes')">
+                <div class="intensity-label">Yes</div>
+              </button>
+            </div>
+            <div id="criterionADisplay" style="margin-top: 10px; font-weight: 600;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Criterion B Section (will be dynamically loaded) -->
+    <div class="content-section" id="sectionDynamic">
+      <!-- Dynamic content will be loaded here -->
+    </div>
+    
+    <!-- Controls -->
+    <div class="controls" id="controls">
+      <button class="control-btn prev-btn" id="prevBtn" onclick="prevSection()">
+        <i class="fas fa-arrow-left"></i> Previous
+      </button>
+      <button class="control-btn next-btn" id="nextBtn" onclick="nextSection()">
+        Next Section <i class="fas fa-arrow-right"></i>
+      </button>
+      <button class="control-btn complete-btn" id="completeBtn" onclick="completeAssessment()">
+        <i class="fas fa-clipboard-check"></i> Complete Assessment
+      </button>
+    </div>
+    
+    <!-- Results -->
+    <div class="results-container" id="resultsContainer">
+      <div class="results-header">
+        <i class="fas fa-file-medical-alt" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 15px;"></i>
+        <h2>CAPS-5 Assessment Results</h2>
+        <p>Clinician-Administered PTSD Scale for DSM-5 - Past Week Version</p>
+      </div>
+      
+      <div class="total-score">
+        <div class="score-range">Total Symptom Severity Score</div>
+        <div class="score-display" id="finalTotalScore">0</div>
+        <div class="score-range">Range: 0-80</div>
+      </div>
+      
+      <div class="cluster-results">
+        <div class="cluster-card" style="background: linear-gradient(135deg, var(--criterion-b), #e84a5f);">
+          <div class="cluster-title">Criterion B: Intrusion Symptoms</div>
+          <div class="cluster-score" id="resultCriterionB">0</div>
+          <div class="cluster-symptoms" id="resultCriterionBSx">0/5 symptoms present</div>
+        </div>
+        <div class="cluster-card" style="background: linear-gradient(135deg, var(--criterion-c), #f8a055);">
+          <div class="cluster-title">Criterion C: Avoidance</div>
+          <div class="cluster-score" id="resultCriterionC">0</div>
+          <div class="cluster-symptoms" id="resultCriterionCSx">0/2 symptoms present</div>
+        </div>
+        <div class="cluster-card" style="background: linear-gradient(135deg, var(--criterion-d), #f7d674);">
+          <div class="cluster-title">Criterion D: Negative Cognitions & Mood</div>
+          <div class="cluster-score" id="resultCriterionD">0</div>
+          <div class="cluster-symptoms" id="resultCriterionDSx">0/7 symptoms present</div>
+        </div>
+        <div class="cluster-card" style="background: linear-gradient(135deg, var(--criterion-e), #2ecc71);">
+          <div class="cluster-title">Criterion E: Arousal & Reactivity</div>
+          <div class="cluster-score" id="resultCriterionE">0</div>
+          <div class="cluster-symptoms" id="resultCriterionESx">0/6 symptoms present</div>
+        </div>
+      </div>
+      
+      <div class="diagnostic-summary">
+        <h3 style="color: var(--primary-color); margin-bottom: 20px;"><i class="fas fa-diagnoses"></i> Diagnostic Summary</h3>
+        
+        <table class="criteria-table">
+          <thead>
+            <tr>
+              <th>DSM-5 Criterion</th>
+              <th>Required</th>
+              <th>Present</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Criterion A (Trauma Exposure)</td>
+              <td>Yes</td>
+              <td id="resultCriterionA">No</td>
+              <td id="statusCriterionA" class="symptom-absent">Not Met</td>
+            </tr>
+            <tr>
+              <td>Criterion B (≥1 intrusion symptom)</td>
+              <td>≥1</td>
+              <td id="resultBcount">0</td>
+              <td id="statusCriterionB" class="symptom-absent">Not Met</td>
+            </tr>
+            <tr>
+              <td>Criterion C (≥1 avoidance symptom)</td>
+              <td>≥1</td>
+              <td id="resultCcount">0</td>
+              <td id="statusCriterionC" class="symptom-absent">Not Met</td>
+            </tr>
+            <tr>
+              <td>Criterion D (≥2 cognition/mood symptoms)</td>
+              <td>≥2</td>
+              <td id="resultDcount">0</td>
+              <td id="statusCriterionD" class="symptom-absent">Not Met</td>
+            </tr>
+            <tr>
+              <td>Criterion E (≥2 arousal symptoms)</td>
+              <td>≥2</td>
+              <td id="resultEcount">0</td>
+              <td id="statusCriterionE" class="symptom-absent">Not Met</td>
+            </tr>
+            <tr>
+              <td>Criterion F (Duration >1 month)</td>
+              <td>Yes</td>
+              <td colspan="2"><em>Not assessed in Past Week version</em></td>
+            </tr>
+            <tr>
+              <td>Criterion G (Functional Impairment)</td>
+              <td>Yes</td>
+              <td id="resultGstatus">Not Assessed</td>
+              <td id="statusCriterionG">-</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <div id="diagnosticConclusion" style="margin-top: 20px; padding: 15px; background: white; border-radius: 8px; border-left: 4px solid #e74c3c;">
+          <h4 style="color: #e74c3c;"><i class="fas fa-exclamation-circle"></i> Note on Diagnostic Status:</h4>
+          <p><strong>The CAPS-5 Past Week version should NOT be used to establish PTSD diagnostic status.</strong> This version is best used for determining whether PTSD symptoms have changed over time (e.g., in treatment studies). PTSD diagnostic status should be evaluated with the PAST MONTH version of the CAPS-5.</p>
+        </div>
+      </div>
+      
+      <h3 style="color: var(--primary-color); margin: 30px 0 20px 0;"><i class="fas fa-chart-line"></i> Symptom Severity Profile</h3>
+      <div class="recommendations" id="symptomProfile">
+        <!-- Will be dynamically filled -->
+      </div>
+      
+      <h3 style="color: var(--primary-color); margin: 30px 0 20px 0;"><i class="fas fa-heartbeat"></i> Clinical Recommendations</h3>
+      <div class="recommendations" id="clinicalRecommendations">
+        <!-- Will be dynamically filled -->
+      </div>
+      
+      <div class="actions">
+        <button class="action-btn retake-btn" onclick="retakeAssessment()">
+          <i class="fas fa-redo"></i> New Assessment
+        </button>
+        <button class="action-btn print-btn" onclick="printResults()">
+          <i class="fas fa-print"></i> Print Report
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // CAPS-5 Data Structure
+    const caps5Structure = {
+      "criterionA": {
+        title: "Criterion A: Trauma Exposure",
+        color: "#2c3e50",
+        description: "Exposure to actual or threatened death, serious injury, or sexual violence"
+      },
+      "criterionB": {
+        title: "Criterion B: Intrusion Symptoms",
+        color: "#e74c3c",
+        description: "Presence of one (or more) intrusion symptoms associated with the traumatic event(s)",
+        items: [
+          {
+            id: 1,
+            code: "B1",
+            title: "Intrusive Memories",
+            prompt: "In the past week, have you had any unwanted memories of the event while you were awake, so not counting dreams?",
+            frequencyType: "count",
+            keyDimensions: "frequency / intensity of distress"
+          },
+          {
+            id: 2,
+            code: "B2",
+            title: "Distressing Dreams",
+            prompt: "In the past week, have you had any unpleasant dreams about the event?",
+            frequencyType: "count",
+            keyDimensions: "frequency / intensity of distress"
+          },
+          {
+            id: 3,
+            code: "B3",
+            title: "Dissociative Reactions (Flashbacks)",
+            prompt: "In the past week, have there been times when you suddenly acted or felt as if the event were actually happening again?",
+            frequencyType: "count",
+            keyDimensions: "frequency / intensity of dissociation"
+          },
+          {
+            id: 4,
+            code: "B4",
+            title: "Cued Psychological Distress",
+            prompt: "In the past week, have you gotten emotionally upset when something reminded you of the event?",
+            frequencyType: "count",
+            keyDimensions: "frequency / intensity of distress"
+          },
+          {
+            id: 5,
+            code: "B5",
+            title: "Cued Physiological Reactions",
+            prompt: "In the past week, have you had any physical reactions when something reminded you of the event?",
+            frequencyType: "count",
+            keyDimensions: "frequency / intensity of physiological arousal"
+          }
+        ]
+      },
+      "criterionC": {
+        title: "Criterion C: Avoidance",
+        color: "#e67e22",
+        description: "Persistent avoidance of stimuli associated with the traumatic event(s)",
+        items: [
+          {
+            id: 6,
+            code: "C1",
+            title: "Avoidance of Thoughts/Feelings",
+            prompt: "In the past week, have you tried to avoid thoughts or feelings about the event?",
+            frequencyType: "count",
+            keyDimensions: "frequency / intensity of avoidance"
+          },
+          {
+            id: 7,
+            code: "C2",
+            title: "Avoidance of External Reminders",
+            prompt: "In the past week, have you tried to avoid things that remind you of the event, like certain people, places, or situations?",
+            frequencyType: "count",
+            keyDimensions: "frequency / intensity of avoidance"
+          }
+        ]
+      },
+      "criterionD": {
+        title: "Criterion D: Negative Cognitions & Mood",
+        color: "#f39c12",
+        description: "Negative alterations in cognitions and mood associated with the traumatic event(s)",
+        items: [
+          {
+            id: 8,
+            code: "D1",
+            title: "Inability to Recall Important Aspects",
+            prompt: "In the past week, have you had difficulty remembering some important parts of the event?",
+            frequencyType: "amount",
+            keyDimensions: "amount of event not recalled / intensity of inability to recall"
+          },
+          {
+            id: 9,
+            code: "D2",
+            title: "Exaggerated Negative Beliefs",
+            prompt: "In the past week, have you had strong negative beliefs about yourself, other people, or the world?",
+            frequencyType: "percentage",
+            requiresTR: true,
+            keyDimensions: "frequency / intensity of beliefs"
+          },
+          {
+            id: 10,
+            code: "D3",
+            title: "Distorted Cognitions Leading to Blame",
+            prompt: "In the past week, have you blamed yourself or others for the event or what happened as a result of it?",
+            frequencyType: "percentage",
+            keyDimensions: "frequency / intensity of blame"
+          },
+          {
+            id: 11,
+            code: "D4",
+            title: "Persistent Negative Emotional State",
+            prompt: "In the past week, have you had any strong negative feelings such as fear, horror, anger, guilt, or shame?",
+            frequencyType: "percentage",
+            requiresTR: true,
+            keyDimensions: "frequency / intensity of negative emotions"
+          },
+          {
+            id: 12,
+            code: "D5",
+            title: "Diminished Interest/Participation",
+            prompt: "In the past week, have you been less interested in activities that you used to enjoy?",
+            frequencyType: "percentage",
+            requiresTR: true,
+            keyDimensions: "percent of activities affected / intensity of loss of interest"
+          },
+          {
+            id: 13,
+            code: "D6",
+            title: "Detachment or Estrangement",
+            prompt: "In the past week, have you felt distant or cut off from other people?",
+            frequencyType: "percentage",
+            requiresTR: true,
+            keyDimensions: "frequency / intensity of detachment or estrangement"
+          },
+          {
+            id: 14,
+            code: "D7",
+            title: "Inability to Experience Positive Emotions",
+            prompt: "In the past week, have there been times when you had difficulty experiencing positive feelings like love or happiness?",
+            frequencyType: "percentage",
+            requiresTR: true,
+            keyDimensions: "frequency / intensity of reduction in positive emotions"
+          }
+        ]
+      },
+      "criterionE": {
+        title: "Criterion E: Arousal & Reactivity",
+        color: "#27ae60",
+        description: "Marked alterations in arousal and reactivity associated with the traumatic event(s)",
+        items: [
+          {
+            id: 15,
+            code: "E1",
+            title: "Irritable Behavior & Angry Outbursts",
+            prompt: "In the past week, have there been times when you felt especially irritable or angry and showed it in your behavior?",
+            frequencyType: "count",
+            requiresTR: true,
+            keyDimensions: "frequency / intensity of aggressive behavior"
+          },
+          {
+            id: 16,
+            code: "E2",
+            title: "Reckless or Self-Destructive Behavior",
+            prompt: "In the past week, have there been times when you were taking more risks or doing things that might have caused you harm?",
+            frequencyType: "count",
+            requiresTR: true,
+            keyDimensions: "frequency / degree of risk"
+          },
+          {
+            id: 17,
+            code: "E3",
+            title: "Hypervigilance",
+            prompt: "In the past week, have you been especially alert or watchful, even when there was no specific threat or danger?",
+            frequencyType: "percentage",
+            requiresTR: true,
+            keyDimensions: "frequency / intensity of hypervigilance"
+          },
+          {
+            id: 18,
+            code: "E4",
+            title: "Exaggerated Startle Response",
+            prompt: "In the past week, have you had any strong startle reactions?",
+            frequencyType: "count",
+            requiresTR: true,
+            keyDimensions: "frequency / intensity of startle"
+          },
+          {
+            id: 19,
+            code: "E5",
+            title: "Problems with Concentration",
+            prompt: "In the past week, have you had any problems with concentration?",
+            frequencyType: "percentage",
+            requiresTR: true,
+            keyDimensions: "frequency / intensity of concentration problems"
+          },
+          {
+            id: 20,
+            code: "E6",
+            title: "Sleep Disturbance",
+            prompt: "In the past week, have you had any problems falling or staying asleep?",
+            frequencyType: "count",
+            requiresTR: true,
+            keyDimensions: "frequency / intensity of sleep problems"
+          }
+        ]
+      },
+      "criterionG": {
+        title: "Criterion G: Functional Impairment",
+        color: "#8e44ad",
+        description: "Clinically significant distress or impairment in social, occupational, or other important areas of functioning"
+      }
+    };
+
+    // Global variables
+    let currentSection = "criterionA";
+    let assessmentData = {
+      criterionA: {
+        indexEvent: "",
+        exposureType: null,
+        criterionAMet: null
+      },
+      items: {},
+      criterionG: {},
+      dissociationItems: {}
+    };
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      generateAssessmentFlow();
+      loadSection(currentSection);
+      updateScoreSummary();
+      
+      // Set today's date as default
+      document.getElementById('assessmentDate').valueAsDate = new Date();
+    });
+
+    // Generate assessment flow
+    function generateAssessmentFlow() {
+      const flowContainer = document.getElementById('assessmentFlow');
+      const sections = [
+        { id: "criterionA", label: "Criterion A", icon: "fa-clipboard-list" },
+        { id: "criterionB", label: "Criterion B", icon: "fa-brain" },
+        { id: "criterionC", label: "Criterion C", icon: "fa-ban" },
+        { id: "criterionD", label: "Criterion D", icon: "fa-comment-slash" },
+        { id: "criterionE", label: "Criterion E", icon: "fa-bolt" },
+        { id: "criterionG", label: "Criterion G", icon: "fa-chart-line" }
+      ];
+      
+      sections.forEach(section => {
+        const flowItem = document.createElement('div');
+        flowItem.className = 'flow-item';
+        flowItem.id = `flow-${section.id}`;
+        flowItem.onclick = () => navigateToSection(section.id);
+        
+        const iconColor = section.id === "criterionA" ? "#2c3e50" : 
+                         section.id === "criterionB" ? "#e74c3c" :
+                         section.id === "criterionC" ? "#e67e22" :
+                         section.id === "criterionD" ? "#f39c12" :
+                         section.id === "criterionE" ? "#27ae60" : "#8e44ad";
+        
+        flowItem.innerHTML = `
+          <div class="flow-icon" style="background: ${iconColor};">
+            <i class="fas ${section.icon}"></i>
+          </div>
+          <div class="flow-label">${section.label}</div>
+        `;
+        
+        flowContainer.appendChild(flowItem);
+      });
+      
+      // Activate first section
+      document.getElementById(`flow-criterionA`).classList.add('active');
+    }
+
+    // Navigate to section
+    function navigateToSection(sectionId) {
+      // Deactivate all flow items
+      document.querySelectorAll('.flow-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      
+      // Activate clicked flow item
+      document.getElementById(`flow-${sectionId}`).classList.add('active');
+      
+      // Load section
+      currentSection = sectionId;
+      loadSection(sectionId);
+    }
+
+    // Load section content
+    function loadSection(sectionId) {
+      const dynamicSection = document.getElementById('sectionDynamic');
+      
+      if (sectionId === "criterionA") {
+        document.getElementById('sectionCriterionA').classList.add('active');
+        dynamicSection.classList.remove('active');
+        updateControls("criterionA");
+      } else {
+        document.getElementById('sectionCriterionA').classList.remove('active');
+        dynamicSection.classList.add('active');
+        
+        const criterion = caps5Structure[sectionId];
+        dynamicSection.innerHTML = generateCriterionContent(criterion);
+        updateControls(sectionId);
+      }
+    }
+
+    // Generate criterion content
+    function generateCriterionContent(criterion) {
+      let itemsHTML = '';
+      
+      if (criterion.items) {
+        criterion.items.forEach(item => {
+          const itemData = assessmentData.items[item.id] || {};
+          itemsHTML += generateItemContent(item, itemData);
+        });
+      } else if (criterion.id === "criterionG") {
+        itemsHTML = generateCriterionGContent();
+      }
+      
+      return `
+        <div class="section-header">
+          <h2><i class="fas fa-clipboard-check"></i> ${criterion.title}</h2>
+          <div class="criterion-label" style="background: ${criterion.color};">${criterion.description}</div>
+        </div>
+        
+        <div class="criterion-card" style="border-left-color: ${criterion.color};">
+          <div class="criterion-header">
+            <div class="criterion-number" style="background: ${criterion.color};">${criterion.id.charAt(criterion.id.length-1)}</div>
+            <div class="criterion-title">${criterion.title}</div>
+          </div>
+          
+          ${criterion.items ? `
+            <div class="prompt-box">
+              <p><strong>Instructions:</strong> Rate each symptom based on frequency and intensity in the past week. Use the scoring grid below to determine final severity score.</p>
+            </div>
+          ` : ''}
+          
+          ${itemsHTML}
+        </div>
+        
+        ${criterion.items ? generateScoringGrid() : ''}
+      `;
+    }
+
+    // Generate item content
+    function generateItemContent(item, itemData) {
+      const isPercentage = item.frequencyType === "percentage";
+      const isAmount = item.frequencyType === "amount";
+      
+      return `
+        <div class="item-card">
+          <div class="item-header">
+            <div class="item-number">${item.id}</div>
+            <div class="item-title">${item.code}: ${item.title}</div>
+          </div>
+          
+          <div class="prompt-box">
+            <p><strong>Prompt:</strong> "${item.prompt}"</p>
+          </div>
+          
+          <div class="rating-section">
+            <div class="rating-title">Intensity Rating</div>
+            <div class="intensity-grid">
+              <button class="intensity-btn ${itemData.intensity === 'minimal' ? 'selected' : ''}" onclick="selectIntensity(${item.id}, 'minimal')">
+                <div class="intensity-label">Minimal</div>
+                <div class="intensity-desc">Minimal distress/difficulty</div>
+              </button>
+              <button class="intensity-btn ${itemData.intensity === 'clearlyPresent' ? 'selected' : ''}" onclick="selectIntensity(${item.id}, 'clearlyPresent')">
+                <div class="intensity-label">Clearly Present</div>
+                <div class="intensity-desc">Clear but manageable</div>
+              </button>
+              <button class="intensity-btn ${itemData.intensity === 'pronounced' ? 'selected' : ''}" onclick="selectIntensity(${item.id}, 'pronounced')">
+                <div class="intensity-label">Pronounced</div>
+                <div class="intensity-desc">Considerable difficulty</div>
+              </button>
+              <button class="intensity-btn ${itemData.intensity === 'extreme' ? 'selected' : ''}" onclick="selectIntensity(${item.id}, 'extreme')">
+                <div class="intensity-label">Extreme</div>
+                <div class="intensity-desc">Overwhelming, incapacitating</div>
+              </button>
+            </div>
+            <div id="intensityDisplay${item.id}" style="margin-top: 10px; font-weight: 600;">
+              ${itemData.intensity ? `Selected: ${formatIntensity(itemData.intensity)}` : 'Not rated'}
+            </div>
+          </div>
+          
+          <div class="rating-section">
+            <div class="rating-title">Frequency in Past Week</div>
+            <div class="frequency-input">
+              ${isPercentage ? `
+                <div class="input-group">
+                  <div class="input-label">Percentage of time:</div>
+                  <input type="number" id="frequency${item.id}" class="percentage-input" min="0" max="100" value="${itemData.frequency || ''}" onchange="updateFrequency(${item.id})" placeholder="0-100%">
+                  <span>%</span>
+                </div>
+                <div class="range-display">
+                  <div>Some of the time: 20-30%</div>
+                  <div>Much of the time: 50-60%</div>
+                </div>
+              ` : isAmount ? `
+                <div class="input-group">
+                  <div class="input-label">Number of important aspects:</div>
+                  <input type="number" id="frequency${item.id}" class="number-input" min="0" max="10" value="${itemData.frequency || ''}" onchange="updateFrequency(${item.id})">
+                </div>
+                <div class="range-display">
+                  <div>1-2 aspects = Mild/Moderate</div>
+                  <div>Several aspects = Severe</div>
+                  <div>Most/all aspects = Extreme</div>
+                </div>
+              ` : `
+                <div class="input-group">
+                  <div class="input-label">Number of times:</div>
+                  <input type="number" id="frequency${item.id}" class="number-input" min="0" max="100" value="${itemData.frequency || ''}" onchange="updateFrequency(${item.id})">
+                </div>
+                <div class="range-display">
+                  <div>1x/week = Mild/Moderate</div>
+                  <div>2x/week = Severe</div>
+                  <div>Daily = Extreme</div>
+                </div>
+              `}
+            </div>
+          </div>
+          
+          ${item.requiresTR ? `
+            <div class="trauma-relatedness">
+              <div class="rating-title">Trauma-Relatedness (TR)</div>
+              <p>Is this symptom functionally related to the index traumatic event?</p>
+              <div class="tr-buttons">
+                <button class="tr-btn ${itemData.TR === 'definite' ? 'selected' : ''}" onclick="selectTR(${item.id}, 'definite')">
+                  Definite
+                </button>
+                <button class="tr-btn ${itemData.TR === 'probable' ? 'selected' : ''}" onclick="selectTR(${item.id}, 'probable')">
+                  Probable
+                </button>
+                <button class="tr-btn ${itemData.TR === 'unlikely' ? 'selected' : ''}" onclick="selectTR(${item.id}, 'unlikely')">
+                  Unlikely
+                </button>
+              </div>
+              <div id="trDisplay${item.id}" style="margin-top: 10px; font-weight: 600;">
+                ${itemData.TR ? `TR: ${formatTR(itemData.TR)}` : 'Not rated'}
+              </div>
+            </div>
+          ` : ''}
+          
+          <div class="rating-section">
+            <div class="rating-title">Severity Score</div>
+            <div class="severity-result" id="severityResult${item.id}" style="background: ${getSeverityColor(itemData.severity)}; color: white; display: ${itemData.severity !== undefined ? 'block' : 'none'};">
+              ${itemData.severity !== undefined ? formatSeverity(itemData.severity) : ''}
+            </div>
+            <div id="severityInfo${item.id}" style="font-size: 0.9rem; color: #666;">
+              ${itemData.severity !== undefined ? `<strong>Key dimensions:</strong> ${item.keyDimensions}` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Generate Criterion G content
+    function generateCriterionGContent() {
+      const gData = assessmentData.criterionG || {};
+      
+      return `
+        <div class="item-card">
+          <div class="item-header">
+            <div class="item-number">23</div>
+            <div class="item-title">Subjective Distress</div>
+          </div>
+          
+          <div class="rating-section">
+            <div class="rating-title">Overall Distress from PTSD Symptoms</div>
+            <div class="intensity-grid">
+              <button class="intensity-btn ${gData.distress === 0 ? 'selected' : ''}" onclick="selectDistress(0)">
+                <div class="intensity-label">0</div>
+                <div class="intensity-desc">None</div>
+              </button>
+              <button class="intensity-btn ${gData.distress === 1 ? 'selected' : ''}" onclick="selectDistress(1)">
+                <div class="intensity-label">1</div>
+                <div class="intensity-desc">Mild, minimal</div>
+              </button>
+              <button class="intensity-btn ${gData.distress === 2 ? 'selected' : ''}" onclick="selectDistress(2)">
+                <div class="intensity-label">2</div>
+                <div class="intensity-desc">Moderate</div>
+              </button>
+              <button class="intensity-btn ${gData.distress === 3 ? 'selected' : ''}" onclick="selectDistress(3)">
+                <div class="intensity-label">3</div>
+                <div class="intensity-desc">Severe</div>
+              </button>
+              <button class="intensity-btn ${gData.distress === 4 ? 'selected' : ''}" onclick="selectDistress(4)">
+                <div class="intensity-label">4</div>
+                <div class="intensity-desc">Extreme</div>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="item-card">
+          <div class="item-header">
+            <div class="item-number">24</div>
+            <div class="item-title">Impairment in Social Functioning</div>
+          </div>
+          
+          <div class="rating-section">
+            <div class="intensity-grid">
+              <button class="intensity-btn ${gData.social === 0 ? 'selected' : ''}" onclick="selectSocialImpairment(0)">
+                <div class="intensity-label">0</div>
+                <div class="intensity-desc">No impact</div>
+              </button>
+              <button class="intensity-btn ${gData.social === 1 ? 'selected' : ''}" onclick="selectSocialImpairment(1)">
+                <div class="intensity-label">1</div>
+                <div class="intensity-desc">Mild impact</div>
+              </button>
+              <button class="intensity-btn ${gData.social === 2 ? 'selected' : ''}" onclick="selectSocialImpairment(2)">
+                <div class="intensity-label">2</div>
+                <div class="intensity-desc">Moderate impact</div>
+              </button>
+              <button class="intensity-btn ${gData.social === 3 ? 'selected' : ''}" onclick="selectSocialImpairment(3)">
+                <div class="intensity-label">3</div>
+                <div class="intensity-desc">Severe impact</div>
+              </button>
+              <button class="intensity-btn ${gData.social === 4 ? 'selected' : ''}" onclick="selectSocialImpairment(4)">
+                <div class="intensity-label">4</div>
+                <div class="intensity-desc">Extreme impact</div>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="item-card">
+          <div class="item-header">
+            <div class="item-number">25</div>
+            <div class="item-title">Impairment in Occupational/Other Functioning</div>
+          </div>
+          
+          <div class="rating-section">
+            <div class="intensity-grid">
+              <button class="intensity-btn ${gData.occupational === 0 ? 'selected' : ''}" onclick="selectOccupationalImpairment(0)">
+                <div class="intensity-label">0</div>
+                <div class="intensity-desc">No impact</div>
+              </button>
+              <button class="intensity-btn ${gData.occupational === 1 ? 'selected' : ''}" onclick="selectOccupationalImpairment(1)">
+                <div class="intensity-label">1</div>
+                <div class="intensity-desc">Mild impact</div>
+              </button>
+              <button class="intensity-btn ${gData.occupational === 2 ? 'selected' : ''}" onclick="selectOccupationalImpairment(2)">
+                <div class="intensity-label">2</div>
+                <div class="intensity-desc">Moderate impact</div>
+              </button>
+              <button class="intensity-btn ${gData.occupational === 3 ? 'selected' : ''}" onclick="selectOccupationalImpairment(3)">
+                <div class="intensity-label">3</div>
+                <div class="intensity-desc">Severe impact</div>
+              </button>
+              <button class="intensity-btn ${gData.occupational === 4 ? 'selected' : ''}" onclick="selectOccupationalImpairment(4)">
+                <div class="intensity-label">4</div>
+                <div class="intensity-desc">Extreme impact</div>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Generate scoring grid
+    function generateScoringGrid() {
+      return `
+        <div class="rating-section">
+          <div class="rating-title">CAPS-5 Scoring Rules</div>
+          <div class="scoring-grid">
+            <div class="grid-cell grid-header">Intensity</div>
+            <div class="grid-cell grid-header">Frequency</div>
+            <div class="grid-cell grid-header">Severity</div>
+            
+            <div class="grid-cell">Minimal</div>
+            <div class="grid-cell">1x/week or more<br>1-100%</div>
+            <div class="grid-cell">1 = Mild/subthreshold</div>
+            
+            <div class="grid-cell">Clearly Present</div>
+            <div class="grid-cell">1-19%</div>
+            <div class="grid-cell">1 = Mild/subthreshold</div>
+            
+            <div class="grid-cell">Clearly Present</div>
+            <div class="grid-cell">1x/week or more<br>20-100%</div>
+            <div class="grid-cell">2 = Moderate/threshold</div>
+            
+            <div class="grid-cell">Pronounced</div>
+            <div class="grid-cell">1x/week only<br>1-49%</div>
+            <div class="grid-cell">2 = Moderate/threshold</div>
+            
+            <div class="grid-cell">Pronounced</div>
+            <div class="grid-cell">2x/week or more<br>50-100%</div>
+            <div class="grid-cell">3 = Severe/markedly elevated</div>
+            
+            <div class="grid-cell">Extreme</div>
+            <div class="grid-cell">1x/week only<br>1-19%</div>
+            <div class="grid-cell">2 = Moderate/threshold</div>
+            
+            <div class="grid-cell">Extreme</div>
+            <div class="grid-cell">At least 2x/week but not daily<br>20-79%</div>
+            <div class="grid-cell">3 = Severe/markedly elevated</div>
+            
+            <div class="grid-cell">Extreme</div>
+            <div class="grid-cell">Daily/almost every day<br>80-100%</div>
+            <div class="grid-cell">4 = Extreme/incapacitating</div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Formatting functions
+    function formatIntensity(intensity) {
+      const map = {
+        minimal: "Minimal",
+        clearlyPresent: "Clearly Present",
+        pronounced: "Pronounced",
+        extreme: "Extreme"
+      };
+      return map[intensity] || intensity;
+    }
+
+    function formatTR(tr) {
+      const map = {
+        definite: "Definite",
+        probable: "Probable",
+        unlikely: "Unlikely"
+      };
+      return map[tr] || tr;
+    }
+
+    function formatSeverity(severity) {
+      const map = {
+        0: "0 = Absent (no symptom)",
+        1: "1 = Mild / subthreshold",
+        2: "2 = Moderate / threshold",
+        3: "3 = Severe / markedly elevated",
+        4: "4 = Extreme / incapacitating"
+      };
+      return map[severity] || severity;
+    }
+
+    function getSeverityColor(severity) {
+      const map = {
+        0: "#95a5a6",
+        1: "#3498db",
+        2: "#f39c12",
+        3: "#e67e22",
+        4: "#c0392b"
+      };
+      return map[severity] || "#95a5a6";
+    }
+
+    // Selection functions
+    function selectExposureType(type) {
+      assessmentData.criterionA.exposureType = type;
+      const displayMap = {
+        experienced: "Directly experienced",
+        witnessed: "Witnessed in person",
+        learned: "Learned about",
+        exposed: "Exposed to aversive details"
+      };
+      document.getElementById('exposureTypeDisplay').textContent = displayMap[type];
+      document.getElementById('exposureTypeDisplay').style.color = "#27ae60";
+    }
+
+    function selectCriterionA(status) {
+      assessmentData.criterionA.criterionAMet = status;
+      const displayMap = {
+        no: "Criterion A NOT met",
+        probable: "Criterion A probably met",
+        yes: "Criterion A met"
+      };
+      document.getElementById('criterionADisplay').textContent = displayMap[status];
+      document.getElementById('criterionADisplay').style.color = status === "yes" ? "#27ae60" : "#e74c3c";
+    }
+
+    function selectIntensity(itemId, intensity) {
+      if (!assessmentData.items[itemId]) {
+        assessmentData.items[itemId] = {};
+      }
+      assessmentData.items[itemId].intensity = intensity;
+      document.getElementById(`intensityDisplay${itemId}`).textContent = `Selected: ${formatIntensity(intensity)}`;
+      document.getElementById(`intensityDisplay${itemId}`).style.color = "#27ae60";
+      calculateSeverity(itemId);
+    }
+
+    function updateFrequency(itemId) {
+      const value = parseInt(document.getElementById(`frequency${itemId}`).value);
+      if (isNaN(value)) return;
+      
+      if (!assessmentData.items[itemId]) {
+        assessmentData.items[itemId] = {};
+      }
+      assessmentData.items[itemId].frequency = value;
+      calculateSeverity(itemId);
+    }
+
+    function selectTR(itemId, tr) {
+      if (!assessmentData.items[itemId]) {
+        assessmentData.items[itemId] = {};
+      }
+      assessmentData.items[itemId].TR = tr;
+      document.getElementById(`trDisplay${itemId}`).textContent = `TR: ${formatTR(tr)}`;
+      document.getElementById(`trDisplay${itemId}`).style.color = tr === "unlikely" ? "#e74c3c" : "#27ae60";
+    }
+
+    function selectDistress(value) {
+      if (!assessmentData.criterionG) assessmentData.criterionG = {};
+      assessmentData.criterionG.distress = value;
+    }
+
+    function selectSocialImpairment(value) {
+      if (!assessmentData.criterionG) assessmentData.criterionG = {};
+      assessmentData.criterionG.social = value;
+    }
+
+    function selectOccupationalImpairment(value) {
+      if (!assessmentData.criterionG) assessmentData.criterionG = {};
+      assessmentData.criterionG.occupational = value;
+    }
+
+    // Calculate severity based on CAPS-5 rules
+    function calculateSeverity(itemId) {
+      const item = getItemById(itemId);
+      if (!item) return;
+      
+      const itemData = assessmentData.items[itemId];
+      if (!itemData || !itemData.intensity || itemData.frequency === undefined) return;
+      
+      let intensity = itemData.intensity;
+      let frequency = itemData.frequency;
+      let severity = 0;
+      
+      // Apply CAPS-5 scoring rules
+      if (intensity === "minimal") {
+        if ((item.frequencyType === "count" && frequency >= 1) || 
+            (item.frequencyType === "percentage" && frequency > 0)) {
+          severity = 1; // Mild/subthreshold
+        }
+      } else if (intensity === "clearlyPresent") {
+        if (item.frequencyType === "percentage") {
+          if (frequency >= 20) {
+            severity = 2; // Moderate/threshold
+          } else {
+            severity = 1; // Mild/subthreshold
+          }
+        } else {
+          if (frequency >= 1) {
+            severity = 2; // Moderate/threshold
+          }
+        }
+      } else if (intensity === "pronounced") {
+        if (item.frequencyType === "percentage") {
+          if (frequency >= 50) {
+            severity = 3; // Severe/markedly elevated
+          } else if (frequency >= 1) {
+            severity = 2; // Moderate/threshold
+          }
+        } else {
+          if (frequency >= 2) {
+            severity = 3; // Severe/markedly elevated
+          } else if (frequency >= 1) {
+            severity = 2; // Moderate/threshold
+          }
+        }
+      } else if (intensity === "extreme") {
+        if (item.frequencyType === "percentage") {
+          if (frequency >= 80) {
+            severity = 4; // Extreme/incapacitating
+          } else if (frequency >= 20) {
+            severity = 3; // Severe/markedly elevated
+          } else if (frequency >= 1) {
+            severity = 2; // Moderate/threshold
+          }
+        } else {
+          if (frequency >= 7) { // Daily/almost every day
+            severity = 4; // Extreme/incapacitating
+          } else if (frequency >= 2) {
+            severity = 3; // Severe/markedly elevated
+          } else if (frequency >= 1) {
+            severity = 2; // Moderate/threshold
+          }
+        }
+      }
+      
+      itemData.severity = severity;
+      
+      // Update display
+      const severityResult = document.getElementById(`severityResult${itemId}`);
+      if (severityResult) {
+        severityResult.textContent = formatSeverity(severity);
+        severityResult.style.background = getSeverityColor(severity);
+        severityResult.style.display = 'block';
+        
+        document.getElementById(`severityInfo${itemId}`).innerHTML = `
+          <strong>Key dimensions:</strong> ${item.keyDimensions}<br>
+          <strong>Symptom present:</strong> ${severity >= 2 ? 'Yes (threshold/above)' : 'No (subthreshold)'}
+        `;
+      }
+      
+      updateScoreSummary();
+    }
+
+    // Get item by ID
+    function getItemById(itemId) {
+      for (const criterion of ['criterionB', 'criterionC', 'criterionD', 'criterionE']) {
+        if (caps5Structure[criterion] && caps5Structure[criterion].items) {
+          const item = caps5Structure[criterion].items.find(i => i.id === itemId);
+          if (item) return item;
+        }
+      }
+      return null;
+    }
+
+    // Update controls
+    function updateControls(sectionId) {
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const completeBtn = document.getElementById('completeBtn');
+      
+      // Define section order
+      const sections = ['criterionA', 'criterionB', 'criterionC', 'criterionD', 'criterionE', 'criterionG'];
+      const currentIndex = sections.indexOf(sectionId);
+      
+      prevBtn.style.display = currentIndex === 0 ? 'none' : 'flex';
+      nextBtn.style.display = currentIndex === sections.length - 1 ? 'none' : 'flex';
+      completeBtn.style.display = currentIndex === sections.length - 1 ? 'flex' : 'none';
+    }
+
+    // Previous section
+    function prevSection() {
+      const sections = ['criterionA', 'criterionB', 'criterionC', 'criterionD', 'criterionE', 'criterionG'];
+      const currentIndex = sections.indexOf(currentSection);
+      if (currentIndex > 0) {
+        navigateToSection(sections[currentIndex - 1]);
+      }
+    }
+
+    // Next section
+    function nextSection() {
+      const sections = ['criterionA', 'criterionB', 'criterionC', 'criterionD', 'criterionE', 'criterionG'];
+      const currentIndex = sections.indexOf(currentSection);
+      if (currentIndex < sections.length - 1) {
+        navigateToSection(sections[currentIndex + 1]);
+      }
+    }
+
+    // Update score summary
+    function updateScoreSummary() {
+      let bScore = 0, bCount = 0;
+      let cScore = 0, cCount = 0;
+      let dScore = 0, dCount = 0;
+      let eScore = 0, eCount = 0;
+      
+      // Calculate scores for each criterion
+      for (let itemId = 1; itemId <= 20; itemId++) {
+        const itemData = assessmentData.items[itemId];
+        if (itemData && itemData.severity !== undefined) {
+          // Check if symptom is trauma-related (if applicable)
+          const item = getItemById(itemId);
+          const isTraumaRelated = !item?.requiresTR || itemData.TR !== 'unlikely';
+          
+          if (isTraumaRelated) {
+            const severity = itemData.severity;
+            
+            if (itemId >= 1 && itemId <= 5) {
+              bScore += severity;
+              if (severity >= 2) bCount++;
+            } else if (itemId >= 6 && itemId <= 7) {
+              cScore += severity;
+              if (severity >= 2) cCount++;
+            } else if (itemId >= 8 && itemId <= 14) {
+              dScore += severity;
+              if (severity >= 2) dCount++;
+            } else if (itemId >= 15 && itemId <= 20) {
+              eScore += severity;
+              if (severity >= 2) eCount++;
+            }
+          }
+        }
+      }
+      
+      // Update summary display
+      document.getElementById('criterionBScore').textContent = bScore;
+      document.getElementById('criterionBSx').textContent = `${bCount}/5`;
+      document.getElementById('criterionCScore').textContent = cScore;
+      document.getElementById('criterionCSx').textContent = `${cCount}/2`;
+      document.getElementById('criterionDScore').textContent = dScore;
+      document.getElementById('criterionDSx').textContent = `${dCount}/7`;
+      document.getElementById('criterionEScore').textContent = eScore;
+      document.getElementById('criterionESx').textContent = `${eCount}/6`;
+      
+      const totalScore = bScore + cScore + dScore + eScore;
+      const totalSymptoms = bCount + cCount + dCount + eCount;
+      document.getElementById('totalScore').textContent = totalScore;
+      document.getElementById('totalSymptoms').textContent = `${totalSymptoms}/20`;
+    }
+
+    // Complete assessment
+    function completeAssessment() {
+      const patientName = document.getElementById('patientName').value.trim();
+      const interviewer = document.getElementById('interviewer').value.trim();
+      
+      if (!patientName) {
+        alert("Please enter the patient's name before completing the assessment.");
+        return;
+      }
+      
+      if (!assessmentData.criterionA.criterionAMet) {
+        if (!confirm("Criterion A (trauma exposure) has not been rated. Continue anyway?")) {
+          return;
+        }
+      }
+      
+      // Calculate final scores
+      updateScoreSummary();
+      
+      // Populate results
+      document.getElementById('finalTotalScore').textContent = 
+        parseInt(document.getElementById('totalScore').textContent);
+      
+      document.getElementById('resultCriterionB').textContent = 
+        document.getElementById('criterionBScore').textContent;
+      document.getElementById('resultCriterionBSx').textContent = 
+        document.getElementById('criterionBSx').textContent + ' symptoms present';
+      
+      document.getElementById('resultCriterionC').textContent = 
+        document.getElementById('criterionCScore').textContent;
+      document.getElementById('resultCriterionCSx').textContent = 
+        document.getElementById('criterionCSx').textContent + ' symptoms present';
+      
+      document.getElementById('resultCriterionD').textContent = 
+        document.getElementById('criterionDScore').textContent;
+      document.getElementById('resultCriterionDSx').textContent = 
+        document.getElementById('criterionDSx').textContent + ' symptoms present';
+      
+      document.getElementById('resultCriterionE').textContent = 
+        document.getElementById('criterionEScore').textContent;
+      document.getElementById('resultCriterionESx').textContent = 
+        document.getElementById('criterionESx').textContent + ' symptoms present';
+      
+      // Update diagnostic summary
+      const bCount = parseInt(document.getElementById('criterionBSx').textContent.split('/')[0]);
+      const cCount = parseInt(document.getElementById('criterionCSx').textContent.split('/')[0]);
+      const dCount = parseInt(document.getElementById('criterionDSx').textContent.split('/')[0]);
+      const eCount = parseInt(document.getElementById('criterionESx').textContent.split('/')[0]);
+      
+      document.getElementById('resultCriterionA').textContent = 
+        assessmentData.criterionA.criterionAMet === 'yes' ? 'Yes' : 
+        assessmentData.criterionA.criterionAMet === 'probable' ? 'Probable' : 'No';
+      
+      document.getElementById('resultBcount').textContent = bCount;
+      document.getElementById('resultCcount').textContent = cCount;
+      document.getElementById('resultDcount').textContent = dCount;
+      document.getElementById('resultEcount').textContent = eCount;
+      
+      // Update status indicators
+      document.getElementById('statusCriterionA').textContent = 
+        assessmentData.criterionA.criterionAMet === 'yes' ? 'Met' : 'Not Met';
+      document.getElementById('statusCriterionA').className = 
+        assessmentData.criterionA.criterionAMet === 'yes' ? 'symptom-present' : 'symptom-absent';
+      
+      document.getElementById('statusCriterionB').textContent = bCount >= 1 ? 'Met' : 'Not Met';
+      document.getElementById('statusCriterionB').className = bCount >= 1 ? 'symptom-present' : 'symptom-absent';
+      
+      document.getElementById('statusCriterionC').textContent = cCount >= 1 ? 'Met' : 'Not Met';
+      document.getElementById('statusCriterionC').className = cCount >= 1 ? 'symptom-present' : 'symptom-absent';
+      
+      document.getElementById('statusCriterionD').textContent = dCount >= 2 ? 'Met' : 'Not Met';
+      document.getElementById('statusCriterionD').className = dCount >= 2 ? 'symptom-present' : 'symptom-absent';
+      
+      document.getElementById('statusCriterionE').textContent = eCount >= 2 ? 'Met' : 'Not Met';
+      document.getElementById('statusCriterionE').className = eCount >= 2 ? 'symptom-present' : 'symptom-absent';
+      
+      // Generate symptom profile
+      generateSymptomProfile();
+      
+      // Generate clinical recommendations
+      generateClinicalRecommendations();
+      
+      // Show results
+      document.getElementById('sectionCriterionA').style.display = 'none';
+      document.getElementById('sectionDynamic').style.display = 'none';
+      document.getElementById('controls').style.display = 'none';
+      document.getElementById('scoreSummary').style.display = 'none';
+      document.getElementById('resultsContainer').style.display = 'block';
+      
+      // Save results
+      saveAssessmentResults(patientName, interviewer);
+    }
+
+    // Generate symptom profile
+    function generateSymptomProfile() {
+      const container = document.getElementById('symptomProfile');
+      let html = '';
+      
+      // Group symptoms by severity
+      const symptomsBySeverity = { 4: [], 3: [], 2: [], 1: [], 0: [] };
+      
+      for (let itemId = 1; itemId <= 20; itemId++) {
+        const itemData = assessmentData.items[itemId];
+        if (itemData && itemData.severity !== undefined) {
+          const item = getItemById(itemId);
+          if (item) {
+            symptomsBySeverity[itemData.severity].push(item);
+          }
+        }
+      }
+      
+      // Create cards for each severity level
+      for (let severity = 4; severity >= 0; severity--) {
+        const symptoms = symptomsBySeverity[severity];
+        if (symptoms.length > 0) {
+          let title = '';
+          let color = '';
+          
+          switch(severity) {
+            case 4: title = 'Extreme Symptoms'; color = '#c0392b'; break;
+            case 3: title = 'Severe Symptoms'; color = '#e67e22'; break;
+            case 2: title = 'Moderate Symptoms'; color = '#f39c12'; break;
+            case 1: title = 'Mild Symptoms'; color = '#3498db'; break;
+            case 0: title = 'Absent Symptoms'; color = '#95a5a6'; break;
+          }
+          
+          html += `
+            <div class="recommendation-card">
+              <h4 style="color: ${color};"><i class="fas fa-${severity >= 2 ? 'exclamation-triangle' : 'check-circle'}"></i> ${title} (${symptoms.length})</h4>
+              <ul style="margin-left: 20px; margin-top: 10px;">
+                ${symptoms.map(s => `<li>${s.code}: ${s.title}</li>`).join('')}
+              </ul>
+            </div>
+          `;
+        }
+      }
+      
+      container.innerHTML = html;
+    }
+
+    // Generate clinical recommendations
+    function generateClinicalRecommendations() {
+      const container = document.getElementById('clinicalRecommendations');
+      const totalScore = parseInt(document.getElementById('totalScore').textContent);
+      const symptomsPresent = parseInt(document.getElementById('totalSymptoms').textContent.split('/')[0]);
+      
+      let recommendations = [];
+      
+      // Determine severity level
+      if (totalScore === 0) {
+        recommendations = [
+          {
+            title: "No Significant Symptoms",
+            icon: "fa-check-circle",
+            content: "No clinically significant PTSD symptoms were reported for the past week. Continue routine monitoring."
+          },
+          {
+            title: "Consider Follow-up",
+            icon: "fa-calendar-check",
+            content: "Schedule next assessment based on clinical needs and treatment progress."
+          }
+        ];
+      } else if (totalScore <= 20) {
+        recommendations = [
+          {
+            title: "Mild to Moderate Symptoms",
+            icon: "fa-user-md",
+            content: "Consider trauma-focused psychotherapy such as Prolonged Exposure (PE) or Cognitive Processing Therapy (CPT)."
+          },
+          {
+            title: "Functional Assessment",
+            icon: "fa-chart-line",
+            content: "Assess impact on daily functioning and quality of life to determine treatment priorities."
+          }
+        ];
+      } else if (totalScore <= 40) {
+        recommendations = [
+          {
+            title: "Moderate to Severe Symptoms",
+            icon: "fa-clinic-medical",
+            content: "Comprehensive treatment plan needed, potentially including both psychotherapy and pharmacotherapy."
+          },
+          {
+            title: "Safety Planning",
+            icon: "fa-shield-alt",
+            content: "Assess for risk behaviors, substance use, and suicidality. Develop safety plan as needed."
+          }
+        ];
+      } else {
+        recommendations = [
+          {
+            title: "Severe Symptoms",
+            icon: "fa-ambulance",
+            content: "Urgent comprehensive evaluation needed. Consider intensive outpatient or residential treatment."
+          },
+          {
+            title: "Multimodal Treatment",
+            icon: "fa-handshake",
+            content: "Coordination of multiple treatment modalities including medication management and intensive therapy."
+          },
+          {
+            title: "Crisis Management",
+            icon: "fa-life-ring",
+            content: "Establish crisis plan with emergency contacts and resources. Consider hospitalization if safety concerns."
+          }
+        ];
+      }
+      
+      // Add CAPS-5 specific recommendations
+      recommendations.push(
+        {
+          title: "CAPS-5 Administration Notes",
+          icon: "fa-clipboard-list",
+          content: "Remember: This Past Week version should NOT be used for diagnostic purposes. Use Past Month version for diagnosis."
+        },
+        {
+          title: "Trauma-Relatedness Assessment",
+          icon: "fa-link",
+          content: symptomsPresent > 0 ? `${symptomsPresent} symptoms were assessed for trauma-relatedness. Review TR ratings for treatment planning.` : "No symptoms met threshold for trauma-relatedness assessment."
+        }
+      );
+      
+      // Render recommendations
+      container.innerHTML = recommendations.map(rec => `
+        <div class="recommendation-card">
+          <h4><i class="fas ${rec.icon}"></i> ${rec.title}</h4>
+          <p>${rec.content}</p>
+        </div>
+      `).join('');
+    }
+
+    // Save assessment results
+    function saveAssessmentResults(patientName, interviewer) {
+      const assessmentDataToSave = {
+        test: "CAPS-5 Past Week Version",
+        date: new Date().toISOString(),
+        patientName: patientName,
+        interviewer: interviewer,
+        ...assessmentData,
+        calculatedScores: {
+          totalScore: parseInt(document.getElementById('totalScore').textContent),
+          symptomCount: parseInt(document.getElementById('totalSymptoms').textContent.split('/')[0]),
+          criterionScores: {
+            B: parseInt(document.getElementById('criterionBScore').textContent),
+            C: parseInt(document.getElementById('criterionCScore').textContent),
+            D: parseInt(document.getElementById('criterionDScore').textContent),
+            E: parseInt(document.getElementById('criterionEScore').textContent)
+          }
+        }
+      };
+      
+      // Save to localStorage
+      const assessments = JSON.parse(localStorage.getItem('caps5Assessments') || '[]');
+      assessments.push(assessmentDataToSave);
+      localStorage.setItem('caps5Assessments', JSON.stringify(assessments));
+    }
+
+    // Retake assessment
+    function retakeAssessment() {
+      // Reset data
+      assessmentData = {
+        criterionA: {
+          indexEvent: "",
+          exposureType: null,
+          criterionAMet: null
+        },
+        items: {},
+        criterionG: {},
+        dissociationItems: {}
+      };
+      
+      // Reset form
+      document.getElementById('indexEvent').value = "";
+      document.getElementById('exposureTypeDisplay').textContent = "";
+      document.getElementById('criterionADisplay').textContent = "";
+      
+      // Show assessment sections
+      document.getElementById('sectionCriterionA').style.display = 'block';
+      document.getElementById('sectionDynamic').style.display = 'block';
+      document.getElementById('controls').style.display = 'flex';
+      document.getElementById('scoreSummary').style.display = 'block';
+      document.getElementById('resultsContainer').style.display = 'none';
+      
+      // Reset navigation
+      navigateToSection('criterionA');
+      updateScoreSummary();
+    }
+
+    // Print results
+    function printResults() {
+      const printContent = document.getElementById('resultsContainer').innerHTML;
+      const originalContent = document.body.innerHTML;
+      const patientName = document.getElementById('patientName').value || "Patient";
+      const interviewer = document.getElementById('interviewer').value || "Clinician";
+      
+      document.body.innerHTML = `
+        <div style="padding: 30px; font-family: Arial, sans-serif;">
+          <h1 style="color: #2c3e50; margin-bottom: 20px; border-bottom: 2px solid #2c3e50; padding-bottom: 10px;">
+            CAPS-5 Assessment Report
+          </h1>
+          <div style="margin-bottom: 30px; color: #666;">
+            <strong>Patient:</strong> ${patientName}<br>
+            <strong>Interviewer:</strong> ${interviewer}<br>
+            <strong>Assessment Date:</strong> ${new Date().toLocaleDateString('en-US', { 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric'
+            })}
+          </div>
+          ${printContent}
+        </div>
+      `;
+      
+      window.print();
+      document.body.innerHTML = originalContent;
+      location.reload();
+    }
+  </script>
+</body>
+</html>

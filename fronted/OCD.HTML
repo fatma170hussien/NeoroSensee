@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding OCD - A Comprehensive Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4a6572; /* Structured gray-blue representing order */
+            --secondary: #7e9ba9; /* Softer blue-gray for balance */
+            --accent: #9c8cb9; /* Calming purple representing mental aspects */
+            --light: #f5f7f9; /* Clean, organized light background */
+            --dark: #344955; /* Deep blue-gray for contrast */
+            --text: #4a5568; /* Soft gray for text */
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+            --transition: all 0.4s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.7;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            animation: gentle-pulse 3s infinite;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(74, 101, 114, 0.85), rgba(52, 73, 85, 0.85)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%234a6572"/><path d="M0 50 L100 50 M50 0 L50 100" stroke="%237e9ba9" stroke-width="1.5"/></svg>');
+            background-size: cover;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            animation: gentle-fadeInDown 1.5s ease;
+            font-weight: 400;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            animation: gentle-fadeInUp 1.5s ease 0.3s both;
+            line-height: 1.8;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 14px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            animation: gentle-fadeIn 1.5s ease 0.6s both;
+            box-shadow: 0 4px 15px rgba(156, 140, 185, 0.3);
+        }
+        
+        .btn:hover {
+            background-color: #8a7ba6;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(156, 140, 185, 0.4);
+        }
+        
+        /* Sections */
+        section {
+            padding: 5rem 0;
+        }
+        
+        section:nth-child(even) {
+            background-color: #f0f4f7;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            display: inline-block;
+            font-weight: 400;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+        
+        /* Cards */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+            border: 1px solid rgba(74, 101, 114, 0.1);
+        }
+        
+        .card.animate {
+            animation: gentle-fadeInUp 0.8s ease forwards;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.8rem;
+            text-align: center;
+        }
+        
+        .card-body {
+            padding: 2rem;
+        }
+        
+        .card-body ul {
+            list-style-type: none;
+            padding-left: 1rem;
+        }
+        
+        .card-body ul li {
+            margin-bottom: 1rem;
+            position: relative;
+            line-height: 1.6;
+        }
+        
+        .card-body ul li::before {
+            content: '•';
+            color: var(--accent);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            font-size: 1.2rem;
+        }
+        
+        /* Comparison Table - UPDATED FOR MOBILE */
+        .comparison-table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px; /* الحد الأدنى للعرض لضمان عدم انضغاط المحتوى */
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 1.2rem;
+            text-align: left;
+            border: 1px solid #e8ecef;
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            font-weight: 500;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        
+        .comparison-table tr:hover {
+            background-color: #f0f7ff;
+        }
+        
+        /* Symptom Cards */
+        .symptom-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .symptom-card {
+            background: linear-gradient(135deg, #f8fafc, #e8f1f5);
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+            border: 1px solid rgba(74, 101, 114, 0.1);
+        }
+        
+        .symptom-card.animate {
+            animation: gentle-fadeInUp 0.8s ease forwards;
+        }
+        
+        .symptom-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+        
+        .symptom-icon {
+            font-size: 3.2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .symptom-card.obsessions {
+            border-top: 5px solid var(--accent);
+        }
+        
+        .symptom-card.compulsions {
+            border-top: 5px solid var(--secondary);
+        }
+        
+        /* Treatment Options */
+        .treatment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .treatment-card {
+            background: linear-gradient(135deg, #f8fafc, #e8f1f5);
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+            border: 1px solid rgba(74, 101, 114, 0.1);
+        }
+        
+        .treatment-card.animate {
+            animation: gentle-fadeInUp 0.8s ease forwards;
+        }
+        
+        .treatment-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+        
+        .treatment-icon {
+            font-size: 3.2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Emergency Section */
+        .emergency {
+            background: linear-gradient(135deg, var(--accent), #b4a5d4);
+            color: white;
+            text-align: center;
+            padding: 5rem 0;
+        }
+        
+        .emergency h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+        
+        .emergency p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+        
+        .hotline {
+            font-size: 2.2rem;
+            font-weight: 500;
+            margin: 2rem 0;
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: rgba(255, 255, 255, 0.25);
+            border-radius: 15px;
+            transition: var(--transition);
+        }
+        
+        .hotline:hover {
+            background-color: rgba(255, 255, 255, 0.35);
+            transform: scale(1.03);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.8rem;
+            position: relative;
+            display: inline-block;
+            font-weight: 400;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-section ul li a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--accent);
+            padding-left: 8px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #b0b0b0;
+        }
+        
+        /* Animations */
+        @keyframes gentle-fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes gentle-fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes gentle-fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes gentle-pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        /* Responsive Design - UPDATED FOR TABLES */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 1.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+            
+            /* تحسينات الجداول للهواتف */
+            .comparison-table-container {
+                font-size: 0.85rem;
+                border-radius: 8px;
+            }
+            
+            .comparison-table th, .comparison-table td {
+                padding: 0.8rem;
+            }
+            
+            .comparison-table {
+                min-width: 700px; /* تقليل العرض الأدنى للجداول على الهواتف */
+            }
+            
+            .hotline {
+                font-size: 1.8rem;
+                padding: 12px 20px;
+            }
+        }
+        
+        /* تحسينات إضافية للهواتف الصغيرة جداً */
+        @media (max-width: 480px) {
+            .comparison-table {
+                min-width: 650px; /* تقليل أكثر للهواتف الصغيرة */
+            }
+            
+            .comparison-table th, .comparison-table td {
+                padding: 0.6rem;
+                font-size: 0.8rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .hotline {
+                font-size: 1.6rem;
+                padding: 10px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                Understanding OCD
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#what-is">What is OCD?</a></li>
+                    <li><a href="#symptoms">Symptoms</a></li>
+                    <li><a href="#causes">Causes</a></li>
+                    <li><a href="#treatment">Treatment</a></li>
+                    <li><a href="#help">Getting Help</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Understanding Obsessive-Compulsive Disorder</h1>
+            <p>OCD is more than just habits or preferences for order. It's a serious mental health condition characterized by unwanted thoughts and repetitive behaviors. With proper treatment, recovery is possible.</p>
+            <a href="#what-is" class="btn">Learn More About OCD</a>
+        </div>
+    </section>
+
+    <!-- What is OCD Section -->
+    <section id="what-is">
+        <div class="container">
+            <div class="section-title">
+                <h2>What is OCD?</h2>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3>Obsessive-Compulsive Disorder (OCD)</h3>
+                </div>
+                <div class="card-body">
+                    <p>OCD is a neuropsychiatric disorder characterized by recurrent, unwanted thoughts (obsessions) and/or repetitive behaviors or mental acts (compulsions) performed to reduce anxiety. It can start in childhood, adolescence, or adulthood and may persist chronically. It differs from normal habits or worries because the obsessions and compulsions are time-consuming, distressing, and interfere with daily life.</p>
+                    
+                    <h4 style="margin-top: 1.5rem; color: var(--primary);">Difference Between Normal Habits/Worries and OCD</h4>
+                    <div class="comparison-table-container">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Criterion</th>
+                                    <th>Normal Habits/Worries</th>
+                                    <th>OCD</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Trigger</td>
+                                    <td>Appear occasionally in response to situations</td>
+                                    <td>Occurs persistently, often without a clear reason</td>
+                                </tr>
+                                <tr>
+                                    <td>Duration</td>
+                                    <td>Temporary and situational</td>
+                                    <td>Symptoms last ≥1 hour/day or more</td>
+                                </tr>
+                                <tr>
+                                    <td>Severity & Impact</td>
+                                    <td>Minor effect on daily life</td>
+                                    <td>Causes significant distress and affects work, school, and relationships</td>
+                                </tr>
+                                <tr>
+                                    <td>Thoughts & Behaviors</td>
+                                    <td>May be repetitive but manageable</td>
+                                    <td>Includes intrusive thoughts and compulsive rituals that feel uncontrollable</td>
+                                </tr>
+                                <tr>
+                                    <td>Response to Support</td>
+                                    <td>Often improve with reassurance</td>
+                                    <td>Typically requires specialized therapy or medication</td>
+                                </tr>
+                                <tr>
+                                    <td>Emotional Impact</td>
+                                    <td>Mild frustration or concern</td>
+                                    <td>Causes high anxiety, guilt, shame, or irritability</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Symptoms Section -->
+    <section id="symptoms" style="background-color: #f0f4f7;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Symptoms of OCD</h2>
+            </div>
+            <div class="symptom-cards">
+                <div class="symptom-card obsessions">
+                    <div class="symptom-icon">
+                        <i class="fas fa-thought-bubble"></i>
+                    </div>
+                    <h3>Obsessions</h3>
+                    <ul>
+                        <li>Intrusive, unwanted thoughts, images, or urges</li>
+                        <li>Fear of contamination (germs, dirt, chemicals)</li>
+                        <li>Fear of harming oneself or others</li>
+                        <li>Concerns with symmetry, order, or exactness</li>
+                        <li>Unwanted sexual or religious thoughts</li>
+                        <li>Fear of making mistakes or being responsible for harm</li>
+                    </ul>
+                </div>
+                <div class="symptom-card compulsions">
+                    <div class="symptom-icon">
+                        <i class="fas fa-redo-alt"></i>
+                    </div>
+                    <h3>Compulsions</h3>
+                    <ul>
+                        <li>Repetitive behaviors (hand washing, checking, arranging)</li>
+                        <li>Mental acts (counting, praying, repeating words)</li>
+                        <li>Feeling compelled to perform rituals to reduce anxiety</li>
+                        <li>Avoidance of certain situations or triggers</li>
+                        <li>Time-consuming activities interfering with daily life</li>
+                        <li>Anxiety and distress if rituals are prevented</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Causes & Risk Factors Section -->
+    <section id="causes">
+        <div class="container">
+            <div class="section-title">
+                <h2>Causes & Risk Factors</h2>
+            </div>
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Biological Factors</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Genetic predisposition (runs in families)</li>
+                            <li>Differences in brain regions (orbitofrontal cortex, basal ganglia)</li>
+                            <li>Neurotransmitter imbalance (serotonin, dopamine)</li>
+                            <li>Abnormal brain development or injury</li>
+                            <li>Rare infections (e.g., PANDAS in children)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Psychological Factors</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>High anxiety sensitivity</li>
+                            <li>History of trauma or stressful life events</li>
+                            <li>Personality traits (perfectionism, high responsibility)</li>
+                            <li>Difficulty tolerating uncertainty</li>
+                            <li>Inflated sense of responsibility for harm</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Environmental Factors</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Childhood abuse or neglect</li>
+                            <li>Chronic stress or family dysfunction</li>
+                            <li>Learned behaviors from family members</li>
+                            <li>Significant life changes or transitions</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diagnosis Section -->
+    <section id="diagnosis" style="background-color: #f0f4f7;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Diagnosis & Assessment</h2>
+            </div>
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Diagnostic Process</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Clinical interviews with patients and family</li>
+                            <li>Assessment of obsessions and compulsions</li>
+                            <li>Evaluation of time spent on symptoms</li>
+                            <li>Impact on daily functioning assessment</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Assessment Tools</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Y-BOCS (Yale-Brown Obsessive Compulsive Scale)</li>
+                            <li>OCI-R (Obsessive-Compulsive Inventory-Revised)</li>
+                            <li>CY-BOCS (for children and adolescents)</li>
+                            <li>Clinical evaluation based on DSM-5 criteria</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>DSM-5 Criteria</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Presence of obsessions, compulsions, or both</li>
+                            <li>Obsessions/compulsions are time-consuming (>1 hour/day)</li>
+                            <li>Cause significant distress or impairment</li>
+                            <li>Not attributable to substances or other medical conditions</li>
+                            <li>Not better explained by another mental disorder</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Treatment Options Section -->
+    <section id="treatment">
+        <div class="container">
+            <div class="section-title">
+                <h2>Treatment Options</h2>
+            </div>
+            <div class="treatment-options">
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Therapy</h3>
+                    <p>Cognitive-Behavioral Therapy (CBT), especially Exposure and Response Prevention (ERP), Acceptance and Commitment Therapy (ACT), Mindfulness-based approaches</p>
+                </div>
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <h3>Medication</h3>
+                    <p>SSRIs (fluoxetine, sertraline, etc.), Sometimes low-dose antipsychotics for severe cases, Clomipramine (tricyclic antidepressant)</p>
+                </div>
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Lifestyle Approaches</h3>
+                    <p>Structured daily routine, Stress management (exercise, relaxation), Adequate sleep and healthy diet, Limiting caffeine and alcohol</p>
+                </div>
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Additional Support</h3>
+                    <p>Support groups, Psychoeducation for family, Apps for symptom tracking, Intensive outpatient or residential programs for severe cases</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Self-Help & When to Seek Help Section -->
+    <section id="help" style="background-color: #f0f4f7;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Self-Help & Getting Support</h2>
+            </div>
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Self-Help Strategies</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Keep a journal to track triggers and rituals</li>
+                            <li>Practice gradual exposure to feared situations without performing rituals</li>
+                            <li>Use relaxation techniques (deep breathing, mindfulness)</li>
+                            <li>Set realistic goals and reward progress</li>
+                            <li>Limit avoidance behaviors gradually</li>
+                            <li>Challenge catastrophic thinking patterns</li>
+                            <li>Practice self-compassion - OCD is not your fault</li>
+                            <li>Educate yourself about the disorder</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>When to Seek Professional Help</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Symptoms are persistent, distressing, or worsening</li>
+                            <li>Significant interference with school, work, or relationships</li>
+                            <li>Rituals are time-consuming (>1 hour/day)</li>
+                            <li>Experiencing severe anxiety, depression, or self-harm thoughts</li>
+                            <li>Self-help strategies aren't providing sufficient relief</li>
+                            <li>Avoiding important activities or situations</li>
+                            <li>Family or relationships are significantly affected</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Section -->
+    <section class="emergency">
+        <div class="container">
+            <h2>Support Is Available</h2>
+            <p>If OCD symptoms are causing severe distress or you're having thoughts of self-harm, please reach out for help immediately.</p>
+            <div class="hotline">
+                <i class="fas fa-phone-alt"></i> 988 Suicide & Crisis Lifeline
+            </div>
+            <p>Available 24/7 - Free, confidential support from trained counselors</p>
+            <p style="margin-top: 1.5rem; font-size: 1.1rem;">You can also contact the International OCD Foundation for specialized resources</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Understanding OCD</h3>
+                    <p>A comprehensive resource for understanding Obsessive-Compulsive Disorder and finding effective treatment and support.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#what-is">What is OCD?</a></li>
+                        <li><a href="#symptoms">Symptoms</a></li>
+                        <li><a href="#causes">Causes</a></li>
+                        <li><a href="#diagnosis">Diagnosis</a></li>
+                        <li><a href="#treatment">Treatment</a></li>
+                        <li><a href="#help">Getting Help</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Additional Resources</h3>
+                    <ul>
+                        <li><a href="#">International OCD Foundation</a></li>
+                        <li><a href="#">Find a Therapist</a></li>
+                        <li><a href="#">Support Groups</a></li>
+                        <li><a href="#">Crisis Resources</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Understanding OCD. All rights reserved.</p>
+                <p style="margin-top: 10px; font-size: 0.9rem;">Recovery from OCD is possible with proper treatment and support.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card, .treatment-card, .symptom-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('animate');
+                        }, 100);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+        // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+    </script>
+</body>
+</html>

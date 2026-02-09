@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PCL-5 - PTSD Checklist for DSM-5</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #5d4037;
+      --secondary-color: #8d6e63;
+      --accent-color: #795548;
+      --text-color: #333;
+      --light-text: #fff;
+      --card-bg: #fff;
+      --section-bg: #efebe9;
+      --border-color: #d7ccc8;
+      --criterion-b: #e53935;
+      --criterion-c: #fb8c00;
+      --criterion-d: #fdd835;
+      --criterion-e: #43a047;
+      --criterion-f: #5e35b1;
+      --not-at-all: #4caf50;
+      --a-little: #8bc34a;
+      --moderately: #ffc107;
+      --quite-a-bit: #ff9800;
+      --extremely: #f44336;
+      --clinical-threshold: #d32f2f;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: var(--section-bg);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 25px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #ff5722, #e64a19);
+    }
+    
+    .header h1 {
+      font-size: 2rem;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+    
+    .header .subtitle {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-bottom: 15px;
+    }
+    
+    .demographics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .demo-card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 12px;
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+    }
+    
+    .demo-card h4 {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      margin-bottom: 5px;
+    }
+    
+    .demo-input {
+      width: 100%;
+      padding: 8px;
+      border: none;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--text-color);
+      font-size: 1rem;
+    }
+    
+    /* Event Description */
+    .event-description {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border-left: 4px solid var(--accent-color);
+    }
+    
+    .event-description h3 {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    #worstEvent {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 1rem;
+      line-height: 1.5;
+      margin-top: 10px;
+      resize: vertical;
+      min-height: 80px;
+    }
+    
+    /* Instructions */
+    .instructions {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border-left: 4px solid var(--accent-color);
+    }
+    
+    .instructions h3 {
+      color: var(--primary-color);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .instructions p {
+      margin-bottom: 15px;
+    }
+    
+    .time-frame {
+      background: #e8f5e9;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 15px 0;
+      border-left: 4px solid #4caf50;
+    }
+    
+    .time-frame h4 {
+      color: #388e3c;
+      margin-bottom: 10px;
+    }
+    
+    /* Current Score Display */
+    .score-display {
+      position: sticky;
+      top: 10px;
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      border: 2px solid var(--primary-color);
+      z-index: 100;
+    }
+    
+    .score-value {
+      font-size: 2.2rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      text-align: center;
+      margin: 5px 0;
+    }
+    
+    .score-label {
+      text-align: center;
+      color: #666;
+      font-size: 0.9rem;
+    }
+    
+    .progress-bar {
+      height: 8px;
+      background: var(--section-bg);
+      border-radius: 4px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      width: 0%;
+      transition: width 0.3s ease;
+      border-radius: 4px;
+    }
+    
+    /* Items Container */
+    .items-container {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+    
+    .item-group {
+      margin-bottom: 25px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .item-group:last-child {
+      border-bottom: none;
+    }
+    
+    .item-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: var(--section-bg);
+      color: var(--primary-color);
+      border-radius: 50%;
+      font-weight: bold;
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+    
+    .item-text {
+      font-size: 1.05rem;
+      color: var(--text-color);
+      margin-bottom: 15px;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+    
+    /* Response Options */
+    .response-options {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    @media (max-width: 768px) {
+      .response-options {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .response-options {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .response-option {
+      position: relative;
+    }
+    
+    .option-btn {
+      width: 100%;
+      padding: 12px 8px;
+      text-align: center;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      background: white;
+      color: var(--text-color);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .option-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .option-btn.selected {
+      border-color: var(--accent-color);
+      background: linear-gradient(135deg, var(--section-bg), white);
+      box-shadow: 0 4px 12px rgba(93, 64, 55, 0.15);
+    }
+    
+    .option-score {
+      font-size: 1.2rem;
+      font-weight: bold;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--section-bg);
+    }
+    
+    .option-btn.selected .option-score {
+      color: white;
+    }
+    
+    /* Color-coded option buttons */
+    .option-0.selected .option-score { background: var(--not-at-all); }
+    .option-1.selected .option-score { background: var(--a-little); }
+    .option-2.selected .option-score { background: var(--moderately); }
+    .option-3.selected .option-score { background: var(--quite-a-bit); }
+    .option-4.selected .option-score { background: var(--extremely); }
+    
+    .option-label {
+      font-size: 0.85rem;
+      font-weight: 500;
+      text-align: center;
+    }
+    
+    /* Criterion Labels */
+    .criterion-label {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      color: white;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-left: 10px;
+    }
+    
+    /* Controls */
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+    }
+    
+    .control-btn {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .prev-btn {
+      background: var(--section-bg);
+      color: #666;
+    }
+    
+    .prev-btn:hover {
+      background: #e0e0e0;
+    }
+    
+    .next-btn {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .next-btn:hover {
+      background: var(--accent-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .submit-btn {
+      background: linear-gradient(135deg, #1976d2, #2196f3);
+      color: white;
+      padding: 14px 35px;
+      font-size: 1rem;
+    }
+    
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3);
+    }
+    
+    /* Results */
+    .results-container {
+      display: none;
+      background: white;
+      border-radius: 12px;
+      padding: 35px;
+      margin-top: 25px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+    
+    .results-header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+    
+    .final-score-circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 25px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    }
+    
+    .score-number {
+      font-size: 2.8rem;
+      font-weight: bold;
+      line-height: 1;
+    }
+    
+    .score-total {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-top: 5px;
+    }
+    
+    .interpretation {
+      background: var(--section-bg);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 25px 0;
+    }
+    
+    .severity-scale {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin: 25px 0;
+    }
+    
+    .severity-card {
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    
+    .severity-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .severity-range {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    
+    .severity-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    
+    .symptom-clusters {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 25px 0;
+    }
+    
+    .cluster-card {
+      padding: 15px;
+      border-radius: 8px;
+      background: white;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      border-top: 4px solid;
+    }
+    
+    .cluster-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    
+    .cluster-score {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    
+    .cluster-info {
+      font-size: 0.8rem;
+      color: #666;
+    }
+    
+    .diagnostic-summary {
+      background: #e3f2fd;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 25px 0;
+      border-left: 4px solid #2196f3;
+    }
+    
+    .symptom-analysis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin: 25px 0;
+    }
+    
+    .symptom-card {
+      padding: 15px;
+      border-radius: 8px;
+      background: white;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      border-left: 4px solid var(--border-color);
+    }
+    
+    .symptom-card h5 {
+      color: var(--primary-color);
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .symptom-score {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--accent-color);
+      text-align: center;
+      margin: 10px 0;
+    }
+    
+    .recommendations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 25px;
+    }
+    
+    .recommendation-card {
+      background: white;
+      padding: 18px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border-left: 4px solid var(--primary-color);
+    }
+    
+    .recommendation-card h4 {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+    }
+    
+    /* Actions */
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+    
+    .action-btn {
+      padding: 12px 25px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .retake-btn {
+      background: var(--section-bg);
+      color: #666;
+    }
+    
+    .retake-btn:hover {
+      background: #e0e0e0;
+    }
+    
+    .print-btn {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .print-btn:hover {
+      background: var(--accent-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      .header {
+        padding: 20px;
+      }
+      
+      .header h1 {
+        font-size: 1.7rem;
+      }
+      
+      .demographics {
+        grid-template-columns: 1fr;
+      }
+      
+      .response-options {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      
+      .controls {
+        flex-direction: column;
+      }
+      
+      .control-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .actions {
+        flex-direction: column;
+      }
+      
+      .action-btn {
+        width: 100%;
+        text-align: center;
+      }
+      
+      .severity-scale,
+      .symptom-clusters,
+      .symptom-analysis,
+      .recommendations-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .response-options {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>PTSD Checklist for DSM-5 (PCL-5)</h1>
+      <div class="subtitle">Self-Report Assessment for PTSD Symptoms</div>
+      
+      <div class="demographics">
+        <div class="demo-card">
+          <h4>Your Name</h4>
+          <input type="text" class="demo-input" id="participantName" placeholder="Enter your name">
+        </div>
+        <div class="demo-card">
+          <h4>Date of Assessment</h4>
+          <input type="date" class="demo-input" id="assessmentDate" value="<?php echo date('Y-m-d'); ?>">
+        </div>
+        <div class="demo-card">
+          <h4>Reference Number</h4>
+          <input type="text" class="demo-input" id="referenceNumber" placeholder="Optional">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Event Description -->
+    <div class="event-description">
+      <h3><i class="fas fa-exclamation-circle"></i> Your Worst Stressful Experience</h3>
+      <p>Before completing the checklist, please briefly describe the worst stressful experience that you have in mind as you answer these questions. This will help you focus your responses.</p>
+      <textarea id="worstEvent" placeholder="Briefly describe the worst stressful experience you are thinking about as you answer these questions..."></textarea>
+    </div>
+    
+    <!-- Instructions -->
+    <div class="instructions">
+      <h3><i class="fas fa-info-circle"></i> Instructions</h3>
+      <p>Below is a list of problems that people sometimes have in response to a very stressful experience. <strong>Keeping your worst event in mind</strong>, please read each problem carefully and then select one of the numbers to the right to indicate how much you have been bothered by that problem <strong>in the past month</strong>.</p>
+      
+      <div class="time-frame">
+        <h4><i class="fas fa-calendar-alt"></i> Remember:</h4>
+        <p>Think about how you've felt <strong>over the past 30 days</strong> (not just today or this week).</p>
+      </div>
+      
+      <p><strong>Response Options:</strong></p>
+      <ul style="margin-left: 20px; margin-top: 10px;">
+        <li><strong>0 - Not at all:</strong> The problem did not bother you at all</li>
+        <li><strong>1 - A little bit:</strong> The problem bothered you a little</li>
+        <li><strong>2 - Moderately:</strong> The problem bothered you moderately</li>
+        <li><strong>3 - Quite a bit:</strong> The problem bothered you quite a bit</li>
+        <li><strong>4 - Extremely:</strong> The problem bothered you extremely</li>
+      </ul>
+    </div>
+    
+    <!-- Current Score Display -->
+    <div class="score-display" id="scoreDisplay">
+      <div class="score-label">Current Total Score</div>
+      <div class="score-value" id="currentScoreValue">0</div>
+      <div class="score-label" id="currentInterpretation">No/Minimal Symptoms</div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </div>
+    
+    <!-- Items Container -->
+    <div class="items-container" id="itemsContainer">
+      <!-- Items will be dynamically inserted here -->
+    </div>
+    
+    <!-- Controls -->
+    <div class="controls" id="controls">
+      <button class="control-btn prev-btn" id="prevBtn" onclick="prevItem()">
+        <i class="fas fa-arrow-left"></i> Previous
+      </button>
+      <button class="control-btn next-btn" id="nextBtn" onclick="nextItem()">
+        Next <i class="fas fa-arrow-right"></i>
+      </button>
+      <button class="control-btn submit-btn" id="submitBtn" onclick="submitAssessment()">
+        <i class="fas fa-paper-plane"></i> Complete Assessment
+      </button>
+    </div>
+    
+    <!-- Results -->
+    <div class="results-container" id="resultsContainer">
+      <div class="results-header">
+        <i class="fas fa-file-medical-alt" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 15px;"></i>
+        <h2>PCL-5 Assessment Results</h2>
+        <p>PTSD Checklist for DSM-5 - Self-Report Assessment</p>
+      </div>
+      
+      <div class="final-score-circle" id="finalScoreCircle">
+        <div class="score-number" id="finalScoreNumber">0</div>
+        <div class="score-total">/80</div>
+      </div>
+      
+      <div class="interpretation" id="interpretation">
+        <!-- Will be filled dynamically -->
+      </div>
+      
+      <h3 style="color: var(--primary-color); margin: 25px 0 15px 0;"><i class="fas fa-chart-bar"></i> PTSD Symptom Severity</h3>
+      <div class="severity-scale">
+        <div class="severity-card" style="background: rgba(76, 175, 80, 0.1); border: 2px solid var(--not-at-all);">
+          <div class="severity-range" style="color: var(--not-at-all);">0-10</div>
+          <div class="severity-label" style="color: var(--not-at-all);">No/Minimal Symptoms</div>
+        </div>
+        <div class="severity-card" style="background: rgba(139, 195, 74, 0.1); border: 2px solid var(--a-little);">
+          <div class="severity-range" style="color: var(--a-little);">11-20</div>
+          <div class="severity-label" style="color: var(--a-little);">Mild Symptoms</div>
+        </div>
+        <div class="severity-card" style="background: rgba(255, 193, 7, 0.1); border: 2px solid var(--moderately);">
+          <div class="severity-range" style="color: var(--moderately);">21-33</div>
+          <div class="severity-label" style="color: var(--moderately);">Moderate Symptoms</div>
+        </div>
+        <div class="severity-card" style="background: rgba(255, 152, 0, 0.1); border: 2px solid var(--quite-a-bit);">
+          <div class="severity-range" style="color: var(--quite-a-bit);">34-44</div>
+          <div class="severity-label" style="color: var(--quite-a-bit);">Moderately Severe Symptoms</div>
+        </div>
+        <div class="severity-card" style="background: rgba(244, 67, 54, 0.1); border: 2px solid var(--extremely);">
+          <div class="severity-range" style="color: var(--extremely);">45-80</div>
+          <div class="severity-label" style="color: var(--extremely);">Severe Symptoms</div>
+        </div>
+      </div>
+      
+      <h3 style="color: var(--primary-color); margin: 25px 0 15px 0;"><i class="fas fa-layer-group"></i> DSM-5 Symptom Clusters</h3>
+      <div class="symptom-clusters" id="symptomClusters">
+        <!-- Will be filled dynamically -->
+      </div>
+      
+      <div class="diagnostic-summary" id="diagnosticSummary">
+        <!-- Will be filled dynamically -->
+      </div>
+      
+      <h3 style="color: var(--primary-color); margin: 25px 0 15px 0;"><i class="fas fa-chart-pie"></i> Symptom Analysis</h3>
+      <div class="symptom-analysis" id="symptomAnalysis">
+        <!-- Will be filled dynamically -->
+      </div>
+      
+      <h3 style="color: var(--primary-color); margin: 25px 0 15px 0;"><i class="fas fa-heartbeat"></i> Recommendations</h3>
+      <div class="recommendations-grid" id="recommendationsGrid">
+        <!-- Will be filled dynamically -->
+      </div>
+      
+      <div class="actions">
+        <button class="action-btn retake-btn" onclick="retakeAssessment()">
+          <i class="fas fa-redo"></i> New Assessment
+        </button>
+        <button class="action-btn print-btn" onclick="printResults()">
+          <i class="fas fa-print"></i> Print Report
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // PCL-5 Items Data (20 items, scored 0-4)
+    const pcl5Items = [
+      {
+        id: 1,
+        text: "Repeated, disturbing, and unwanted memories of the stressful experience?",
+        criterion: "B",
+        criterionLabel: "Intrusion",
+        color: "#e53935"
+      },
+      {
+        id: 2,
+        text: "Repeated, disturbing dreams of the stressful experience?",
+        criterion: "B",
+        criterionLabel: "Intrusion",
+        color: "#e53935"
+      },
+      {
+        id: 3,
+        text: "Suddenly feeling or acting as if the stressful experience were actually happening again (as if you were actually back there reliving it)?",
+        criterion: "B",
+        criterionLabel: "Intrusion",
+        color: "#e53935"
+      },
+      {
+        id: 4,
+        text: "Feeling very upset when something reminded you of the stressful experience?",
+        criterion: "B",
+        criterionLabel: "Intrusion",
+        color: "#e53935"
+      },
+      {
+        id: 5,
+        text: "Having strong physical reactions when something reminded you of the stressful experience (for example, heart pounding, trouble breathing, sweating)?",
+        criterion: "B",
+        criterionLabel: "Intrusion",
+        color: "#e53935"
+      },
+      {
+        id: 6,
+        text: "Avoiding memories, thoughts, or feelings related to the stressful experience?",
+        criterion: "C",
+        criterionLabel: "Avoidance",
+        color: "#fb8c00"
+      },
+      {
+        id: 7,
+        text: "Avoiding external reminders of the stressful experience (for example, people, places, conversations, activities, objects, or situations)?",
+        criterion: "C",
+        criterionLabel: "Avoidance",
+        color: "#fb8c00"
+      },
+      {
+        id: 8,
+        text: "Trouble remembering important parts of the stressful experience?",
+        criterion: "D",
+        criterionLabel: "Negative Cognitions/Mood",
+        color: "#fdd835"
+      },
+      {
+        id: 9,
+        text: "Having strong negative beliefs about yourself, other people, or the world (for example, having thoughts such as: I am bad, there is something seriously wrong with me, no one can be trusted, the world is completely dangerous)?",
+        criterion: "D",
+        criterionLabel: "Negative Cognitions/Mood",
+        color: "#fdd835"
+      },
+      {
+        id: 10,
+        text: "Blaming yourself or someone else for the stressful experience or what happened after it?",
+        criterion: "D",
+        criterionLabel: "Negative Cognitions/Mood",
+        color: "#fdd835"
+      },
+      {
+        id: 11,
+        text: "Having strong negative feelings such as fear, horror, anger, guilt, or shame?",
+        criterion: "D",
+        criterionLabel: "Negative Cognitions/Mood",
+        color: "#fdd835"
+      },
+      {
+        id: 12,
+        text: "Loss of interest in activities that you used to enjoy?",
+        criterion: "D",
+        criterionLabel: "Negative Cognitions/Mood",
+        color: "#fdd835"
+      },
+      {
+        id: 13,
+        text: "Feeling distant or cut off from other people?",
+        criterion: "D",
+        criterionLabel: "Negative Cognitions/Mood",
+        color: "#fdd835"
+      },
+      {
+        id: 14,
+        text: "Trouble experiencing positive feelings (for example, being unable to feel happiness or have loving feelings for people close to you)?",
+        criterion: "D",
+        criterionLabel: "Negative Cognitions/Mood",
+        color: "#fdd835"
+      },
+      {
+        id: 15,
+        text: "Irritable behavior, angry outbursts, or acting aggressively?",
+        criterion: "E",
+        criterionLabel: "Arousal & Reactivity",
+        color: "#43a047"
+      },
+      {
+        id: 16,
+        text: "Taking too many risks or doing things that could cause you harm?",
+        criterion: "E",
+        criterionLabel: "Arousal & Reactivity",
+        color: "#43a047"
+      },
+      {
+        id: 17,
+        text: "Being 'superalert' or watchful or on guard?",
+        criterion: "E",
+        criterionLabel: "Arousal & Reactivity",
+        color: "#43a047"
+      },
+      {
+        id: 18,
+        text: "Feeling jumpy or easily startled?",
+        criterion: "E",
+        criterionLabel: "Arousal & Reactivity",
+        color: "#43a047"
+      },
+      {
+        id: 19,
+        text: "Having difficulty concentrating?",
+        criterion: "E",
+        criterionLabel: "Arousal & Reactivity",
+        color: "#43a047"
+      },
+      {
+        id: 20,
+        text: "Trouble falling or staying asleep?",
+        criterion: "E",
+        criterionLabel: "Arousal & Reactivity",
+        color: "#43a047"
+      }
+    ];
+
+    // DSM-5 Criteria mapping
+    const criteriaMapping = {
+      "B": { name: "Intrusion Symptoms", items: [1, 2, 3, 4, 5], threshold: 1, description: "≥1 of 5 symptoms" },
+      "C": { name: "Avoidance Symptoms", items: [6, 7], threshold: 1, description: "≥1 of 2 symptoms" },
+      "D": { name: "Negative Cognitions & Mood", items: [8, 9, 10, 11, 12, 13, 14], threshold: 2, description: "≥2 of 7 symptoms" },
+      "E": { name: "Arousal & Reactivity", items: [15, 16, 17, 18, 19, 20], threshold: 2, description: "≥2 of 6 symptoms" }
+    };
+
+    // User responses
+    let userResponses = new Array(pcl5Items.length).fill(null);
+    let currentItemIndex = 0;
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      renderCurrentItem();
+      updateScoreDisplay();
+      
+      // Set today's date as default
+      document.getElementById('assessmentDate').valueAsDate = new Date();
+      
+      // Auto-save worst event
+      document.getElementById('worstEvent').addEventListener('input', function() {
+        localStorage.setItem('pcl5_worstEvent', this.value);
+      });
+      
+      // Load saved worst event
+      const savedEvent = localStorage.getItem('pcl5_worstEvent');
+      if (savedEvent) {
+        document.getElementById('worstEvent').value = savedEvent;
+      }
+    });
+
+    // Render current item
+    function renderCurrentItem() {
+      const container = document.getElementById('itemsContainer');
+      const item = pcl5Items[currentItemIndex];
+      
+      // Create options HTML
+      const optionsHTML = `
+        <div class="response-option">
+          <button class="option-btn option-0 ${userResponses[currentItemIndex] === 0 ? 'selected' : ''}"
+                  onclick="selectOption(0)">
+            <div class="option-score">0</div>
+            <div class="option-label">Not at all</div>
+          </button>
+        </div>
+        <div class="response-option">
+          <button class="option-btn option-1 ${userResponses[currentItemIndex] === 1 ? 'selected' : ''}"
+                  onclick="selectOption(1)">
+            <div class="option-score">1</div>
+            <div class="option-label">A little bit</div>
+          </button>
+        </div>
+        <div class="response-option">
+          <button class="option-btn option-2 ${userResponses[currentItemIndex] === 2 ? 'selected' : ''}"
+                  onclick="selectOption(2)">
+            <div class="option-score">2</div>
+            <div class="option-label">Moderately</div>
+          </button>
+        </div>
+        <div class="response-option">
+          <button class="option-btn option-3 ${userResponses[currentItemIndex] === 3 ? 'selected' : ''}"
+                  onclick="selectOption(3)">
+            <div class="option-score">3</div>
+            <div class="option-label">Quite a bit</div>
+          </button>
+        </div>
+        <div class="response-option">
+          <button class="option-btn option-4 ${userResponses[currentItemIndex] === 4 ? 'selected' : ''}"
+                  onclick="selectOption(4)">
+            <div class="option-score">4</div>
+            <div class="option-label">Extremely</div>
+          </button>
+        </div>
+      `;
+      
+      container.innerHTML = `
+        <div class="item-group">
+          <div class="item-number">${item.id}</div>
+          <div class="item-text">${item.text}</div>
+          <span class="criterion-label" style="background: ${item.color};">Criterion ${item.criterion}: ${item.criterionLabel}</span>
+          
+          <div class="response-options">
+            ${optionsHTML}
+          </div>
+        </div>
+      `;
+      
+      updateNavigation();
+    }
+
+    // Select option
+    function selectOption(score) {
+      userResponses[currentItemIndex] = score;
+      renderCurrentItem();
+      updateScoreDisplay();
+      
+      // Auto-advance to next item if not last item
+      if (currentItemIndex < pcl5Items.length - 1) {
+        setTimeout(() => {
+          nextItem();
+        }, 300);
+      }
+    }
+
+    // Update navigation
+    function updateNavigation() {
+      document.getElementById('prevBtn').style.display = currentItemIndex === 0 ? 'none' : 'flex';
+      document.getElementById('nextBtn').style.display = currentItemIndex === pcl5Items.length - 1 ? 'none' : 'flex';
+      document.getElementById('submitBtn').style.display = currentItemIndex === pcl5Items.length - 1 ? 'flex' : 'none';
+    }
+
+    // Next item
+    function nextItem() {
+      if (currentItemIndex < pcl5Items.length - 1) {
+        currentItemIndex++;
+        renderCurrentItem();
+        updateScoreDisplay();
+      }
+    }
+
+    // Previous item
+    function prevItem() {
+      if (currentItemIndex > 0) {
+        currentItemIndex--;
+        renderCurrentItem();
+        updateScoreDisplay();
+      }
+    }
+
+    // Calculate total score
+    function calculateTotalScore() {
+      return userResponses.reduce((total, score) => {
+        return total + (score !== null ? score : 0);
+      }, 0);
+    }
+
+    // Calculate criterion scores
+    function calculateCriterionScores() {
+      const results = {};
+      
+      for (const [criterion, data] of Object.entries(criteriaMapping)) {
+        let score = 0;
+        let symptomCount = 0;
+        
+        data.items.forEach(itemIndex => {
+          const itemScore = userResponses[itemIndex - 1];
+          if (itemScore !== null && itemScore >= 2) { // Score of 2+ indicates symptom present
+            symptomCount++;
+          }
+          if (itemScore !== null) {
+            score += itemScore;
+          }
+        });
+        
+        results[criterion] = {
+          score: score,
+          symptomCount: symptomCount,
+          threshold: data.threshold,
+          met: symptomCount >= data.threshold,
+          name: data.name,
+          description: data.description,
+          color: pcl5Items.find(item => item.criterion === criterion)?.color || "#666"
+        };
+      }
+      
+      return results;
+    }
+
+    // Get interpretation
+    function getInterpretation(totalScore, criteriaResults) {
+      if (totalScore <= 10) {
+        return {
+          severity: "No/Minimal Symptoms",
+          description: `Your responses suggest minimal or no PTSD symptoms. The total score of ${totalScore} falls below the clinical threshold.`,
+          color: "#4caf50",
+          clinicalSignificance: "Unlikely to meet PTSD diagnostic criteria",
+          recommendations: [
+            "Continue routine monitoring and healthy coping strategies",
+            "Maintain awareness of any changes in symptoms over time",
+            "Consider periodic re-assessment if exposure to traumatic events occurs"
+          ]
+        };
+      } else if (totalScore <= 20) {
+        return {
+          severity: "Mild Symptoms",
+          description: `Your responses suggest mild PTSD symptoms with a total score of ${totalScore}. Some difficulties may be present but likely manageable.`,
+          color: "#8bc34a",
+          clinicalSignificance: "Subthreshold symptoms; may benefit from support",
+          recommendations: [
+            "Consider psychoeducation about PTSD and coping strategies",
+            "Monitor symptoms for any increase in severity",
+            "Seek support from mental health professional if symptoms persist or worsen"
+          ]
+        };
+      } else if (totalScore <= 33) {
+        return {
+          severity: "Moderate Symptoms",
+          description: `Your responses suggest moderate PTSD symptoms with a total score of ${totalScore}. These symptoms are likely affecting daily functioning.`,
+          color: "#ffc107",
+          clinicalSignificance: "Possible PTSD; clinical evaluation recommended",
+          recommendations: [
+            "Seek evaluation by mental health professional",
+            "Consider evidence-based treatments such as Cognitive Processing Therapy or Prolonged Exposure",
+            "Develop safety plan if experiencing significant distress"
+          ]
+        };
+      } else if (totalScore <= 44) {
+        return {
+          severity: "Moderately Severe Symptoms",
+          description: `Your responses suggest moderately severe PTSD symptoms with a total score of ${totalScore}. These symptoms are likely causing significant distress and impairment.`,
+          color: "#ff9800",
+          clinicalSignificance: "Probable PTSD; clinical intervention recommended",
+          recommendations: [
+            "Seek immediate evaluation by mental health professional",
+            "Consider trauma-focused psychotherapy",
+            "May benefit from medication management in conjunction with therapy",
+            "Develop comprehensive treatment plan"
+          ]
+        };
+      } else {
+        return {
+          severity: "Severe Symptoms",
+          description: `Your responses suggest severe PTSD symptoms with a total score of ${totalScore}. These symptoms are likely causing substantial impairment in multiple areas of life.`,
+          color: "#f44336",
+          clinicalSignificance: "High likelihood of PTSD; urgent clinical attention needed",
+          recommendations: [
+            "Seek immediate comprehensive evaluation and treatment",
+            "Consider intensive outpatient or residential treatment programs",
+            "Multimodal treatment including medication and psychotherapy",
+            "Develop crisis plan and safety strategies"
+          ]
+        };
+      }
+    }
+
+    // Check diagnostic criteria
+    function checkDiagnosticCriteria(criteriaResults) {
+      const criteriaMet = Object.values(criteriaResults).filter(c => c.met).length;
+      const allCriteriaMet = criteriaMet === 4;
+      
+      return {
+        allCriteriaMet,
+        criteriaMet,
+        details: criteriaResults
+      };
+    }
+
+    // Update score display
+    function updateScoreDisplay() {
+      const score = calculateTotalScore();
+      const interpretation = getInterpretation(score, {});
+      
+      document.getElementById('currentScoreValue').textContent = score;
+      document.getElementById('currentInterpretation').textContent = interpretation.severity;
+      document.getElementById('currentInterpretation').style.color = interpretation.color;
+      
+      // Update progress bar
+      const progress = (score / 80) * 100; // Max possible score is 80
+      document.getElementById('progressFill').style.width = `${progress}%`;
+      document.getElementById('progressFill').style.background = interpretation.color;
+    }
+
+    // Generate symptom clusters display
+    function generateSymptomClusters(criteriaResults) {
+      let html = '';
+      
+      for (const [criterion, data] of Object.entries(criteriaResults)) {
+        const maxScore = data.items * 4; // 4 is maximum score per item
+        const percentage = (data.score / maxScore) * 100;
+        
+        html += `
+          <div class="cluster-card" style="border-top-color: ${data.color};">
+            <div class="cluster-title" style="color: ${data.color};">Criterion ${criterion}: ${data.name}</div>
+            <div class="cluster-score" style="color: ${data.color};">${data.score}</div>
+            <div class="cluster-info">
+              ${data.symptomCount}/${data.threshold} symptoms present<br>
+              <strong>Status:</strong> ${data.met ? '<span style="color: #43a047;">✓ Met</span>' : '<span style="color: #f44336;">✗ Not Met</span>'}
+            </div>
+          </div>
+        `;
+      }
+      
+      return html;
+    }
+
+    // Generate diagnostic summary
+    function generateDiagnosticSummary(totalScore, criteriaResults, diagnosticCheck) {
+      const symptomClusters = diagnosticCheck.details;
+      
+      return `
+        <h4 style="color: #1976d2; margin-bottom: 15px;"><i class="fas fa-diagnoses"></i> DSM-5 Diagnostic Criteria Check</h4>
+        <div style="background: white; padding: 15px; border-radius: 8px; margin: 10px 0;">
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr style="border-bottom: 1px solid #e0e0e0;">
+              <td style="padding: 8px 0; font-weight: 500;">Criterion B (Intrusion):</td>
+              <td style="padding: 8px 0; text-align: right;">
+                ${symptomClusters.B.symptomCount}/1 required 
+                <span style="color: ${symptomClusters.B.met ? '#43a047' : '#f44336'}; font-weight: bold;">
+                  ${symptomClusters.B.met ? '✓ Met' : '✗ Not Met'}
+                </span>
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e0e0e0;">
+              <td style="padding: 8px 0; font-weight: 500;">Criterion C (Avoidance):</td>
+              <td style="padding: 8px 0; text-align: right;">
+                ${symptomClusters.C.symptomCount}/1 required 
+                <span style="color: ${symptomClusters.C.met ? '#43a047' : '#f44336'}; font-weight: bold;">
+                  ${symptomClusters.C.met ? '✓ Met' : '✗ Not Met'}
+                </span>
+              </td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e0e0e0;">
+              <td style="padding: 8px 0; font-weight: 500;">Criterion D (Cognition/Mood):</td>
+              <td style="padding: 8px 0; text-align: right;">
+                ${symptomClusters.D.symptomCount}/2 required 
+                <span style="color: ${symptomClusters.D.met ? '#43a047' : '#f44336'}; font-weight: bold;">
+                  ${symptomClusters.D.met ? '✓ Met' : '✗ Not Met'}
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; font-weight: 500;">Criterion E (Arousal):</td>
+              <td style="padding: 8px 0; text-align: right;">
+                ${symptomClusters.E.symptomCount}/2 required 
+                <span style="color: ${symptomClusters.E.met ? '#43a047' : '#f44336'}; font-weight: bold;">
+                  ${symptomClusters.E.met ? '✓ Met' : '✗ Not Met'}
+                </span>
+              </td>
+            </tr>
+          </table>
+        </div>
+        
+        <div style="margin-top: 15px; padding: 12px; background: ${diagnosticCheck.allCriteriaMet ? '#e8f5e9' : '#fff3e0'}; border-radius: 8px; border-left: 4px solid ${diagnosticCheck.allCriteriaMet ? '#4caf50' : '#ff9800'};">
+          <h5 style="color: ${diagnosticCheck.allCriteriaMet ? '#388e3c' : '#f57c00'}; margin-bottom: 8px;">
+            <i class="fas fa-${diagnosticCheck.allCriteriaMet ? 'check-circle' : 'exclamation-triangle'}"></i>
+            ${diagnosticCheck.allCriteriaMet ? 'All DSM-5 Criteria Met' : 'DSM-5 Criteria Not Fully Met'}
+          </h5>
+          <p style="color: #666; font-size: 0.95rem;">
+            ${diagnosticCheck.allCriteriaMet ? 
+              'Based on your responses, all DSM-5 criteria for PTSD appear to be met. <strong>Professional clinical evaluation is needed for formal diagnosis.</strong>' : 
+              `Based on your responses, ${diagnosticCheck.criteriaMet} of 4 DSM-5 criteria for PTSD are met. <strong>Note: This checklist is a screening tool, not a diagnostic instrument.</strong>`
+            }
+          </p>
+        </div>
+      `;
+    }
+
+    // Generate symptom analysis
+    function generateSymptomAnalysis() {
+      let html = '';
+      
+      // Group symptoms by severity
+      const symptomsBySeverity = {
+        extreme: [],
+        quiteBit: [],
+        moderate: [],
+        little: [],
+        none: []
+      };
+      
+      pcl5Items.forEach((item, index) => {
+        const score = userResponses[index];
+        if (score !== null) {
+          if (score === 4) symptomsBySeverity.extreme.push(item);
+          else if (score === 3) symptomsBySeverity.quiteBit.push(item);
+          else if (score === 2) symptomsBySeverity.moderate.push(item);
+          else if (score === 1) symptomsBySeverity.little.push(item);
+          else symptomsBySeverity.none.push(item);
+        }
+      });
+      
+      // Create analysis for each severity level
+      const levels = [
+        { level: 'extreme', label: 'Extremely Bothersome', color: '#f44336', icon: 'fa-exclamation-triangle' },
+        { level: 'quiteBit', label: 'Quite a Bit Bothersome', color: '#ff9800', icon: 'fa-exclamation-circle' },
+        { level: 'moderate', label: 'Moderately Bothersome', color: '#ffc107', icon: 'fa-chart-line' },
+        { level: 'little', label: 'A Little Bit Bothersome', color: '#8bc34a', icon: 'fa-info-circle' },
+        { level: 'none', label: 'Not at All Bothersome', color: '#4caf50', icon: 'fa-check-circle' }
+      ];
+      
+      levels.forEach(level => {
+        const symptoms = symptomsBySeverity[level.level];
+        if (symptoms.length > 0) {
+          html += `
+            <div class="symptom-card">
+              <h5 style="color: ${level.color};"><i class="fas ${level.icon}"></i> ${level.label} (${symptoms.length})</h5>
+              <div class="symptom-score">${symptoms.length}/20</div>
+              <div style="font-size: 0.85rem; color: #666;">
+                ${symptoms.slice(0, 3).map(item => `• Item ${item.id}: ${item.text.substring(0, 40)}...`).join('<br>')}
+                ${symptoms.length > 3 ? `<br><em>+ ${symptoms.length - 3} more symptoms</em>` : ''}
+              </div>
+            </div>
+          `;
+        }
+      });
+      
+      return html;
+    }
+
+    // Submit assessment
+    function submitAssessment() {
+      const participantName = document.getElementById('participantName').value.trim();
+      const worstEvent = document.getElementById('worstEvent').value.trim();
+      
+      if (!participantName) {
+        alert("Please enter your name before submitting the assessment.");
+        return;
+      }
+      
+      if (!worstEvent) {
+        if (!confirm("You haven't described your worst stressful experience. Would you like to continue anyway?")) {
+          return;
+        }
+      }
+      
+      const totalScore = calculateTotalScore();
+      const criteriaResults = calculateCriterionScores();
+      const interpretation = getInterpretation(totalScore, criteriaResults);
+      const diagnosticCheck = checkDiagnosticCriteria(criteriaResults);
+      
+      // Display final score
+      document.getElementById('finalScoreNumber').textContent = totalScore;
+      document.getElementById('finalScoreCircle').style.background = interpretation.color;
+      
+      // Update interpretation
+      document.getElementById('interpretation').innerHTML = `
+        <h3 style="color: ${interpretation.color}; margin-bottom: 15px;">
+          <i class="fas fa-chart-line"></i> ${interpretation.severity}
+        </h3>
+        <p>${interpretation.description}</p>
+        <div style="margin-top: 15px; padding: 12px; background: white; border-radius: 6px;">
+          <strong>Total PCL-5 Score:</strong> ${totalScore}/80<br>
+          <strong>Clinical Significance:</strong> ${interpretation.clinicalSignificance}<br>
+          <strong>Assessment Date:</strong> ${new Date().toLocaleDateString()}
+        </div>
+      `;
+      
+      // Generate symptom clusters
+      document.getElementById('symptomClusters').innerHTML = generateSymptomClusters(criteriaResults);
+      
+      // Generate diagnostic summary
+      document.getElementById('diagnosticSummary').innerHTML = generateDiagnosticSummary(totalScore, criteriaResults, diagnosticCheck);
+      
+      // Generate symptom analysis
+      document.getElementById('symptomAnalysis').innerHTML = generateSymptomAnalysis();
+      
+      // Generate recommendations
+      generateRecommendations(interpretation, diagnosticCheck);
+      
+      // Show results
+      document.getElementById('itemsContainer').style.display = 'none';
+      document.getElementById('controls').style.display = 'none';
+      document.getElementById('scoreDisplay').style.display = 'none';
+      document.getElementById('resultsContainer').style.display = 'block';
+      
+      // Save results
+      saveAssessmentResults(participantName, totalScore, criteriaResults, diagnosticCheck, worstEvent);
+    }
+
+    // Generate recommendations
+    function generateRecommendations(interpretation, diagnosticCheck) {
+      const container = document.getElementById('recommendationsGrid');
+      let recommendations = [...interpretation.recommendations];
+      
+      // Add diagnostic-specific recommendations
+      if (diagnosticCheck.allCriteriaMet) {
+        recommendations.unshift({
+          title: "Clinical Evaluation Recommended",
+          icon: "fa-user-md",
+          description: "Your responses suggest PTSD symptoms meeting DSM-5 criteria. Professional evaluation is strongly recommended."
+        });
+      }
+      
+      // Add PCL-5 specific recommendations
+      recommendations.push(
+        {
+          title: "Follow-up Assessment",
+          icon: "fa-redo",
+          description: "Consider re-administering the PCL-5 in 4-6 weeks to monitor symptom changes, especially if treatment is initiated."
+        },
+        {
+          title: "Professional Validation",
+          icon: "fa-stethoscope",
+          description: "The PCL-5 is a screening tool. Formal diagnosis requires comprehensive clinical assessment by a qualified professional."
+        },
+        {
+          title: "Treatment Options",
+          icon: "fa-handshake",
+          description: "Evidence-based PTSD treatments include Cognitive Processing Therapy (CPT), Prolonged Exposure (PE), and Eye Movement Desensitization and Reprocessing (EMDR)."
+        },
+        {
+          title: "Crisis Resources",
+          icon: "fa-life-ring",
+          description: "If experiencing severe distress or suicidal thoughts, contact crisis services: National Suicide Prevention Lifeline: 1-800-273-8255"
+        }
+      );
+      
+      // Render recommendations
+      container.innerHTML = recommendations.map(rec => `
+        <div class="recommendation-card">
+          <h4><i class="fas ${rec.icon}"></i> ${rec.title}</h4>
+          <p>${rec.description}</p>
+        </div>
+      `).join('');
+    }
+
+    // Save assessment results
+    function saveAssessmentResults(participantName, totalScore, criteriaResults, diagnosticCheck, worstEvent) {
+      const assessmentData = {
+        test: "PTSD Checklist for DSM-5 (PCL-5)",
+        date: new Date().toISOString(),
+        participantName: participantName,
+        worstEvent: worstEvent,
+        totalScore: totalScore,
+        interpretation: getInterpretation(totalScore, criteriaResults).severity,
+        diagnosticStatus: diagnosticCheck.allCriteriaMet ? "All criteria met" : "Criteria not fully met",
+        criteriaResults: criteriaResults,
+        itemResponses: pcl5Items.map((item, index) => ({
+          id: item.id,
+          text: item.text,
+          criterion: item.criterion,
+          score: userResponses[index] !== null ? userResponses[index] : null
+        })),
+        scoringNotes: {
+          threshold: "Symptom present if score ≥ 2",
+          totalRange: "0-80",
+          diagnosticCutoff: "31-33 suggested for probable PTSD"
+        }
+      };
+      
+      // Save to localStorage
+      const assessments = JSON.parse(localStorage.getItem('pcl5Assessments') || '[]');
+      assessments.push(assessmentData);
+      localStorage.setItem('pcl5Assessments', JSON.stringify(assessments));
+    }
+
+    // Retake assessment
+    function retakeAssessment() {
+      userResponses = new Array(pcl5Items.length).fill(null);
+      currentItemIndex = 0;
+      
+      document.getElementById('itemsContainer').style.display = 'block';
+      document.getElementById('controls').style.display = 'flex';
+      document.getElementById('scoreDisplay').style.display = 'block';
+      document.getElementById('resultsContainer').style.display = 'none';
+      
+      renderCurrentItem();
+      updateScoreDisplay();
+    }
+
+    // Print results
+    function printResults() {
+      const printContent = document.getElementById('resultsContainer').innerHTML;
+      const originalContent = document.body.innerHTML;
+      const participantName = document.getElementById('participantName').value || "Participant";
+      const worstEvent = document.getElementById('worstEvent').value || "Not specified";
+      
+      document.body.innerHTML = `
+        <div style="padding: 30px; font-family: Arial, sans-serif;">
+          <h1 style="color: #5d4037; margin-bottom: 20px; border-bottom: 2px solid #5d4037; padding-bottom: 10px;">
+            PCL-5 Assessment Report
+          </h1>
+          <div style="margin-bottom: 30px; color: #666;">
+            <strong>Participant:</strong> ${participantName}<br>
+            <strong>Worst Event:</strong> ${worstEvent.substring(0, 100)}${worstEvent.length > 100 ? '...' : ''}<br>
+            <strong>Assessment Date:</strong> ${new Date().toLocaleDateString('en-US', { 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric'
+            })}
+          </div>
+          ${printContent}
+        </div>
+      `;
+      
+      window.print();
+      document.body.innerHTML = originalContent;
+      location.reload();
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'ArrowRight' || event.key === ' ') {
+        event.preventDefault();
+        nextItem();
+      } else if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        prevItem();
+      } else if (event.key >= '0' && event.key <= '4') {
+        event.preventDefault();
+        const score = parseInt(event.key);
+        selectOption(score);
+      } else if (event.key === 'Enter' && currentItemIndex === pcl5Items.length - 1) {
+        event.preventDefault();
+        submitAssessment();
+      }
+    });
+  </script>
+</body>
+</html>

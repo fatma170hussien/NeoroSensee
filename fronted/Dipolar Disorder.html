@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Bipolar Disorder - A Comprehensive Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6a4c9c;
+            --secondary: #8b6bbd;
+            --accent: #ff9a56;
+            --light: #f5f7fa;
+            --dark: #2c3e50;
+            --text: #333333;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(106, 76, 156, 0.8), rgba(139, 107, 189, 0.8)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%236a4c9c"/><path d="M0 50 L100 50 M50 0 L50 100" stroke="%238b6bbd" stroke-width="2"/></svg>');
+            background-size: cover;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInDown 1s ease;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            animation: fadeIn 1s ease 0.6s both;
+        }
+        
+        .btn:hover {
+            background-color: #ff8a3d;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Sections */
+        section {
+            padding: 5rem 0;
+        }
+        
+        section:nth-child(even) {
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+        
+        /* Cards */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .card.animate {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .card-body ul {
+            list-style-type: none;
+            padding-left: 1rem;
+        }
+        
+        .card-body ul li {
+            margin-bottom: 0.8rem;
+            position: relative;
+        }
+        
+        .card-body ul li::before {
+            content: '•';
+            color: var(--accent);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        
+        /* Comparison Table - UPDATED FOR MOBILE */
+        .comparison-table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px; /* الحد الأدنى للعرض لضمان عدم انضغاط المحتوى */
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .comparison-table th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .comparison-table tr:hover {
+            background-color: #f0f5ff;
+        }
+        
+        /* Symptom Cards */
+        .symptom-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .symptom-card {
+            background: linear-gradient(135deg, #f5f7fa, #e4e8f0);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .symptom-card.animate {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .symptom-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+        
+        .symptom-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .symptom-card.mania {
+            border-top: 5px solid var(--accent);
+        }
+        
+        .symptom-card.depression {
+            border-top: 5px solid var(--secondary);
+        }
+        
+        /* Treatment Options */
+        .treatment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .treatment-card {
+            background: linear-gradient(135deg, #f5f7fa, #e4e8f0);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .treatment-card.animate {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .treatment-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+        
+        .treatment-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        /* Emergency Section */
+        .emergency {
+            background: linear-gradient(135deg, var(--accent), #ffb085);
+            color: white;
+            text-align: center;
+            padding: 4rem 0;
+        }
+        
+        .emergency h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .emergency p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hotline {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 1.5rem 0;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        /* Responsive Design - UPDATED FOR TABLES */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            /* تحسينات الجداول للهواتف */
+            .comparison-table-container {
+                font-size: 0.85rem;
+                border-radius: 8px;
+            }
+            
+            .comparison-table th, .comparison-table td {
+                padding: 0.8rem;
+            }
+            
+            .comparison-table {
+                min-width: 700px; /* تقليل العرض الأدنى للجداول على الهواتف */
+            }
+        }
+        
+        /* تحسينات إضافية للهواتف الصغيرة جداً */
+        @media (max-width: 480px) {
+            .comparison-table {
+                min-width: 650px; /* تقليل أكثر للهواتف الصغيرة */
+            }
+            
+            .comparison-table th, .comparison-table td {
+                padding: 0.6rem;
+                font-size: 0.8rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .hotline {
+                font-size: 1.6rem;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                Understanding Bipolar Disorder
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#what-is">What is Bipolar?</a></li>
+                    <li><a href="#symptoms">Symptoms</a></li>
+                    <li><a href="#causes">Causes</a></li>
+                    <li><a href="#treatment">Treatment</a></li>
+                    <li><a href="#help">Help</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Understanding Bipolar Disorder: A Path to Stability</h1>
+            <p>Discover comprehensive information about bipolar disorder, its symptoms, causes, and treatment options. Learn effective strategies for managing mood swings and achieving stability.</p>
+            <a href="#what-is" class="btn">Start Learning</a>
+        </div>
+    </section>
+
+    <!-- What is Bipolar Disorder Section -->
+    <section id="what-is">
+        <div class="container">
+            <div class="section-title">
+                <h2>What is Bipolar Disorder?</h2>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3>Bipolar Disorder</h3>
+                </div>
+                <div class="card-body">
+                    <p>Bipolar disorder is a chronic mental health condition characterized by extreme mood swings that include emotional heights (mania or hypomania) and lows (depression). It usually starts in late adolescence or early adulthood but can occur at any age. Unlike normal mood fluctuations, bipolar mood swings are intense, persistent, and disrupt daily life.</p>
+                    
+                    <h4 style="margin-top: 1.5rem; color: var(--primary);">Difference Between Normal Mood Changes and Bipolar Disorder</h4>
+                    <div class="comparison-table-container">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Criterion</th>
+                                    <th>Normal Mood Changes</th>
+                                    <th>Bipolar Disorder</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Trigger</td>
+                                    <td>Mood changes linked to clear life events</td>
+                                    <td>Mood swings occur without clear reason</td>
+                                </tr>
+                                <tr>
+                                    <td>Duration</td>
+                                    <td>Short-lived, resolve in days</td>
+                                    <td>Episodes last weeks to months</td>
+                                </tr>
+                                <tr>
+                                    <td>Severity</td>
+                                    <td>Mild effect on daily activities</td>
+                                    <td>Severe impact on work, school, and relationships</td>
+                                </tr>
+                                <tr>
+                                    <td>Thoughts and Behavior</td>
+                                    <td>Generally appropriate to situation</td>
+                                    <td>Racing thoughts, impulsive decisions, risk-taking during mania; hopelessness and suicidal thoughts during depression</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Symptoms Section -->
+    <section id="symptoms" style="background-color: #f8f9fa;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Symptoms of Bipolar Disorder</h2>
+            </div>
+            <div class="symptom-cards">
+                <div class="symptom-card mania">
+                    <div class="symptom-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Mania/Hypomania Symptoms</h3>
+                    <ul>
+                        <li>Excessive energy, decreased need for sleep</li>
+                        <li>Talking rapidly or more than usual</li>
+                        <li>Inflated self-esteem or grandiosity</li>
+                        <li>Impulsivity and risky behaviors</li>
+                        <li>Irritability or extreme euphoria</li>
+                        <li>Racing thoughts and ideas</li>
+                    </ul>
+                </div>
+                <div class="symptom-card depression">
+                    <div class="symptom-icon">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <h3>Depressive Episode Symptoms</h3>
+                    <ul>
+                        <li>Persistent sadness or emptiness</li>
+                        <li>Fatigue and lack of motivation</li>
+                        <li>Loss of interest in enjoyable activities</li>
+                        <li>Sleep changes (insomnia or oversleeping)</li>
+                        <li>Suicidal thoughts or feelings of worthlessness</li>
+                        <li>Difficulty concentrating and making decisions</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Causes & Risk Factors Section -->
+    <section id="causes">
+        <div class="container">
+            <div class="section-title">
+                <h2>Causes & Risk Factors</h2>
+            </div>
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Biological Factors</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Genetic predisposition (family history)</li>
+                            <li>Brain structure and neurotransmitter imbalances (dopamine, serotonin)</li>
+                            <li>Hormonal imbalances</li>
+                            <li>Differences in brain development</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Psychological Factors</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Stressful life events</li>
+                            <li>Co-occurring mental health conditions (anxiety, substance use)</li>
+                            <li>Traumatic experiences</li>
+                            <li>Personality traits</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Environmental Factors</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Childhood trauma</li>
+                            <li>Lack of social support</li>
+                            <li>Substance abuse</li>
+                            <li>Major life changes or stressors</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diagnosis Section -->
+    <section id="diagnosis" style="background-color: #f8f9fa;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Diagnosis & Assessment</h2>
+            </div>
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Diagnostic Process</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Clinical interviews and history taking</li>
+                            <li>Physical examination to rule out medical causes</li>
+                            <li>Psychiatric evaluation</li>
+                            <li>Input from family members</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Screening Tools</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Young Mania Rating Scale (YMRS)</li>
+                            <li>Mood Disorder Questionnaire (MDQ)</li>
+                            <li>Bipolar Spectrum Diagnostic Scale</li>
+                            <li>Clinical interviews based on DSM-5 criteria</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>DSM-5 Criteria</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Presence of at least one manic episode (with or without depression)</li>
+                            <li>Symptoms not attributable to substance use or medical condition</li>
+                            <li>Significant impairment in social or occupational functioning</li>
+                            <li>Rule out other psychiatric disorders</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Treatment Options Section -->
+    <section id="treatment">
+        <div class="container">
+            <div class="section-title">
+                <h2>Treatment Options</h2>
+            </div>
+            <div class="treatment-options">
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <h3>Medications</h3>
+                    <p>Mood stabilizers (Lithium, Valproate), Antipsychotics (Olanzapine, Quetiapine), Antidepressants (with caution, usually combined with stabilizers)</p>
+                </div>
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Psychotherapy</h3>
+                    <p>Cognitive Behavioral Therapy (CBT), Interpersonal and Social Rhythm Therapy, Family-focused therapy, Psychoeducation</p>
+                </div>
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Lifestyle Changes</h3>
+                    <p>Regular sleep and exercise, Stress management techniques, Avoiding alcohol and drugs, Maintaining a consistent routine</p>
+                </div>
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Other Treatments</h3>
+                    <p>Electroconvulsive Therapy (ECT) for severe cases, Transcranial Magnetic Stimulation (TMS), Support groups and peer support</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Self-Help & When to Seek Help Section -->
+    <section id="help" style="background-color: #f8f9fa;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Self-Help & When to Seek Help</h2>
+            </div>
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Self-Help Strategies</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Keeping a mood diary</li>
+                            <li>Following a consistent daily routine</li>
+                            <li>Practicing relaxation techniques (meditation, breathing)</li>
+                            <li>Building strong support networks</li>
+                            <li>Recognizing early warning signs of relapse</li>
+                            <li>Maintaining a healthy lifestyle</li>
+                            <li>Educating yourself about the condition</li>
+                            <li>Setting realistic goals and expectations</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>When to Seek Professional Help</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>If mood swings last for weeks or interfere with school/work</li>
+                            <li>If risky or impulsive behaviors appear</li>
+                            <li>If depressive symptoms lead to suicidal thoughts</li>
+                            <li>If daily functioning is significantly impaired</li>
+                            <li>If relationships are suffering due to mood symptoms</li>
+                            <li>If you're having difficulty managing symptoms on your own</li>
+                            <li>If substance use becomes a coping mechanism</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Section -->
+    <section class="emergency">
+        <div class="container">
+            <h2>Need Immediate Help?</h2>
+            <p>If you or someone you know is experiencing a mental health crisis, don't hesitate to seek help immediately</p>
+            <div class="hotline">
+                <i class="fas fa-phone-alt"></i> National Suicide Prevention Lifeline: 988
+            </div>
+            <p>Available 24 hours a day, 7 days a week for free and confidential support</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Understanding Bipolar Disorder</h3>
+                    <p>A website aimed at providing accurate and comprehensive information about bipolar disorder to increase awareness and encourage seeking appropriate help.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#what-is">What is Bipolar?</a></li>
+                        <li><a href="#symptoms">Symptoms</a></li>
+                        <li><a href="#causes">Causes</a></li>
+                        <li><a href="#diagnosis">Diagnosis</a></li>
+                        <li><a href="#treatment">Treatment</a></li>
+                        <li><a href="#help">Self-Help</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">National Alliance on Mental Illness</a></li>
+                        <li><a href="#">Depression and Bipolar Support Alliance</a></li>
+                        <li><a href="#">International Bipolar Foundation</a></li>
+                        <li><a href="#">Crisis Hotlines</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Understanding Bipolar Disorder. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card, .treatment-card, .symptom-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+        // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+    </script>
+</body>
+</html>

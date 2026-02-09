@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeuroSense - Mental Health Assessment</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #6a11cb;
+      --secondary-color: #2575fc;
+      --accent-color: #4a00e0;
+      --text-color: #333;
+      --light-text: #fff;
+      --card-bg: #fff;
+      --bot-bg: #f5f5f5;
+      --user-bg: #e3e6ff;
+      --warning-color: #ff9800;
+      --danger-color: #e74c3c;
+      --success-color: #2ecc71;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: #f4f6f9;
+      color: var(--text-color);
+    }
+    
+    header {
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      color: var(--light-text);
+      padding: 15px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    
+    .logo i {
+      margin-right: 10px;
+      font-size: 1.8rem;
+    }
+    
+    .back-btn {
+      color: var(--light-text);
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+    }
+    
+    .back-btn i {
+      margin-right: 5px;
+    }
+    
+    .language-selector {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+    
+    .lang-btn {
+      background: white;
+      border: 2px solid #ddd;
+      border-radius: 20px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+    }
+    
+    .lang-btn:hover, .lang-btn.active {
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      border-color: var(--primary-color);
+    }
+    
+    .assessment-container {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 0 20px;
+    }
+    
+    .chat-container {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      height: 500px;
+      overflow-y: auto;
+      padding: 20px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .message {
+      max-width: 70%;
+      padding: 12px 15px;
+      border-radius: 18px;
+      margin-bottom: 15px;
+      line-height: 1.5;
+      position: relative;
+      animation: fadeIn 0.3s ease-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .bot-message {
+      background: var(--bot-bg);
+      align-self: flex-start;
+      border-bottom-left-radius: 5px;
+    }
+    
+    .user-message {
+      background: var(--user-bg);
+      align-self: flex-end;
+      border-bottom-right-radius: 5px;
+    }
+    
+    .typing-indicator {
+      display: inline-block;
+      padding-left: 15px;
+    }
+    
+    .typing-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #999;
+      margin-right: 4px;
+      animation: typingAnimation 1.4s infinite both;
+    }
+    
+    .typing-dot:nth-child(1) { animation-delay: 0s; }
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    
+    @keyframes typingAnimation {
+      0%, 60%, 100% { transform: translateY(0); }
+      30% { transform: translateY(-5px); }
+    }
+    
+    .options-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    
+    .option-btn {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      padding: 8px 15px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 0.9rem;
+    }
+    
+    .option-btn:hover {
+      background: #f0f0f0;
+      border-color: var(--primary-color);
+    }
+    
+    .input-container {
+      display: flex;
+      gap: 10px;
+    }
+    
+    #userInput {
+      flex: 1;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 25px;
+      font-size: 1rem;
+    }
+    
+    #sendBtn {
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    #sendBtn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .result-container {
+      display: none;
+      background: white;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      margin-top: 20px;
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    .result-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .result-header h2 {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+    }
+    
+    .diagnosis-card {
+      background: #f9f9f9;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-left: 5px solid var(--warning-color);
+    }
+    
+    .diagnosis-card h3 {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .diagnosis-card h3 i {
+      margin-right: 10px;
+    }
+    
+    .depression { border-left-color: #3498db; }
+    .social-anxiety { border-left-color: #27ae60; }
+    .bipolar { border-left-color: #9b59b6; }
+    .ocd { border-left-color: #d35400; }
+    .ptsd { border-left-color: #8e44ad; }
+    .anxiety { border-left-color: #f39c12; }
+    .adhd { border-left-color: #16a085; }
+    .eating-disorder { border-left-color: #c0392b; }
+    .burnout { border-left-color: #e67e22; }
+    
+    .recommendation {
+      background: #e8f5e9;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 30px;
+      border-left: 5px solid var(--success-color);
+    }
+    
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+    
+    .action-btn {
+      padding: 12px 25px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 200px;
+    }
+    
+    .primary-btn {
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      color: white;
+    }
+    
+    .secondary-btn {
+      background: white;
+      color: var(--primary-color);
+      border: 1px solid var(--primary-color);
+    }
+    
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .progress-bar {
+      height: 8px;
+      background: #eee;
+      border-radius: 4px;
+      margin: 10px 0;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+    
+    .condition-selector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0;
+      justify-content: center;
+    }
+    
+    .condition-btn {
+      background: white;
+      border: 2px solid #ddd;
+      border-radius: 25px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    
+    .condition-btn:hover, .condition-btn.active {
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      border-color: var(--primary-color);
+    }
+    
+    .assessment-progress {
+      text-align: center;
+      margin: 10px 0;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+    
+    @media (max-width: 768px) {
+      .chat-container {
+        height: 400px;
+      }
+      
+      .message {
+        max-width: 85%;
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+      }
+      
+      .action-btn {
+        width: 100%;
+        text-align: center;
+      }
+      
+      .language-selector, .condition-selector {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <i class="fas fa-brain"></i>
+      <span>NeuroSense</span>
+    </div>
+    <a href="home.html" class="back-btn">
+      <i class="fas fa-arrow-left"></i> <span id="back-text">Back to Home</span>
+    </a>
+  </header>
+
+  <div class="language-selector" id="languageSelector">
+    <button class="lang-btn active" data-lang="en">English</button>
+    <button class="lang-btn" data-lang="ar">العربية</button>
+    <button class="lang-btn" data-lang="fr">Français</button>
+    <button class="lang-btn" data-lang="es">Español</button>
+    <button class="lang-btn" data-lang="de">Deutsch</button>
+    <button class="lang-btn" data-lang="ko">한국어</button>
+    <button class="lang-btn" data-lang="zh">中文</button>
+  </div>
+
+  <div class="assessment-container">
+    <div class="condition-selector" id="conditionSelector" style="display: none;">
+      <!-- Will be filled by JavaScript -->
+    </div>
+
+    <div class="assessment-progress" id="assessmentProgress" style="display: none;"></div>
+
+    <div class="chat-container" id="chatContainer">
+      <div class="message bot-message">
+        <p id="welcome-text">Hello! I'm NeuroSense, your mental health assistant.</p>
+        <p id="intro-text">I'll ask you some questions to understand how you've been feeling. This assessment will help identify potential mental health conditions.</p>
+        <p id="disclaimer-text">Remember, this is not a substitute for professional diagnosis, but it can provide helpful insights.</p>
+        <p id="ready-text">Are you ready to begin?</p>
+        <div class="options-container">
+          <button class="option-btn" id="ready-yes-btn">Yes, I'm ready</button>
+          <button class="option-btn" id="ready-no-btn">Maybe later</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="input-container">
+      <input type="text" id="userInput" placeholder="Type your response..." onkeypress="handleKeyPress(event)">
+      <button id="sendBtn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+    </div>
+
+    <div class="result-container" id="resultContainer">
+      <div class="result-header">
+        <h2><i class="fas fa-clipboard-check"></i> <span id="result-title">Assessment Results</span></h2>
+        <p id="result-description">Based on your responses, here's what we've identified:</p>
+      </div>
+      
+      <div id="diagnosisResults">
+        <!-- Will be filled by JavaScript -->
+      </div>
+      
+      <div class="recommendation">
+        <h3><i class="fas fa-heartbeat"></i> <span id="recommendation-title">Recommendations</span></h3>
+        <p id="recommendationText"></p>
+      </div>
+      
+      <div class="action-buttons">
+        <a href="home.html" class="action-btn secondary-btn">
+          <i class="fas fa-home"></i> <span id="home-btn">Return Home</span>
+        </a>
+        <a href="https://4a35fc5f98d5184aba.gradio.live/" class="action-btn primary-btn">
+          <i class="fas fa-robot"></i> <span id="ai-specific-btn">AI Specific Diagnosis</span>
+        </a>
+        <a href="http://www.chatbase.co/A6m58OXocseurLhkA1Ahe/help" class="action-btn primary-btn">
+          <i class="fas fa-robot"></i> <span id="ai-therapy-btn">Connect with AI Therapy</span>
+        </a>
+        <a href="https://www.chatbase.co/2w1DldfFXSF9GqgPRI2T4/help" class="action-btn primary-btn">
+          <i class="fas fa-robot"></i> <span id="ai-assistant-btn">Connect with AI Assistant</span>
+        </a>
+        <a href="prof.html" class="action-btn primary-btn" id="professionalsBtn">
+          <i class="fas fa-user-md"></i> <span id="professional-btn">Connect with Professionals</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Language support
+    const languages = {
+      en: {
+        welcome: "Hello! I'm NeuroSense, your mental health assistant.",
+        intro: "I'll ask you some questions to understand how you've been feeling. This assessment will help identify potential mental health conditions.",
+        disclaimer: "Remember, this is not a substitute for professional diagnosis, but it can provide helpful insights.",
+        ready: "Are you ready to begin?",
+        readyYes: "Yes, I'm ready",
+        readyNo: "Maybe later",
+        inputPlaceholder: "Type your response...",
+        resultTitle: "Assessment Results",
+        resultDescription: "Based on your responses, here's what we've identified:",
+        recommendationTitle: "Recommendations",
+        homeBtn: "Return Home",
+        aiSpecificBtn: "AI Specific Diagnosis",
+        aiTherapyBtn: "Connect with AI Therapy",
+        aiAssistantBtn: "Connect with AI Assistant",
+        professionalBtn: "Connect with Professionals",
+        backText: "Back to Home",
+        errorMessage: "Please select one of the options above",
+        maybeLaterResponse: "I hope you're doing well. Feel free to come back anytime when you're ready to take the assessment.",
+        selectCondition: "Please select a condition to assess:",
+        conditions: {
+          depression: "Depression",
+          socialAnxiety: "Social Anxiety",
+          bipolar: "Bipolar Disorder",
+          ocd: "OCD",
+          ptsd: "PTSD",
+          anxiety: "Anxiety",
+          adhd: "ADHD",
+          eatingDisorder: "Schizophrenia",
+          burnout: "Autism"
+        },
+        questions: {
+          depression: [
+            "Little interest or pleasure in doing things.",
+            "Feeling down, depressed, or hopeless.",
+            "Trouble sleeping (too little or too much) or feeling tired most of the day.",
+            "Feeling bad about yourself — that you are a failure or have let yourself or your family down.",
+            "Thoughts that you would be better off dead or of hurting yourself."
+          ],
+          socialAnxiety: [
+            "Feeling very nervous or anxious when you have to speak in front of people.",
+            "Avoiding social situations (e.g., parties, meetings, talking to strangers) because of fear of embarrassment.",
+            "Worrying for days before a social event (like a presentation, group discussion, or meeting new people).",
+            "Experiencing physical symptoms (sweating, trembling, fast heartbeat) when being the center of attention.",
+            "Thinking people are judging you negatively in social situations."
+          ],
+          bipolar: [
+            "Have you ever felt so good or so hyper that other people thought you were not your normal self, or you got into trouble because of it?",
+            "Have you ever felt much more self-confident than usual?",
+            "Have you ever gotten much less sleep than usual and found you didn't really miss it?",
+            "Have you ever been much more talkative or spoken faster than usual?",
+            "Have you ever done things that were unusual for you or that other people might have thought were excessive, foolish, or risky?"
+          ],
+          ocd: [
+            "Do you have unwanted thoughts, images, or urges that repeatedly enter your mind and are distressing or upsetting?",
+            "Do you feel the need to perform certain behaviors or rituals repeatedly (like checking, cleaning, counting) to relieve anxiety or prevent something bad from happening?",
+            "Do these thoughts or behaviors take up a significant amount of your time or interfere with your daily life?",
+            "Do you recognize that these thoughts or behaviors are excessive or unreasonable, but feel unable to control them?",
+            "Do you feel distress, anxiety, or discomfort if you are unable to complete your rituals or prevent certain events?"
+          ],
+          ptsd: [
+            "Have you experienced a traumatic event that caused intense fear, helplessness, or horror?",
+            "Do you have recurring, unwanted, and distressing memories or flashbacks of the traumatic event?",
+            "Do you try to avoid places, people, or activities that remind you of the trauma?",
+            "Do you experience heightened arousal, such as irritability, difficulty sleeping, or being easily startled?",
+            "Do you feel emotionally numb, detached from others, or have difficulty experiencing positive emotions since the traumatic event?"
+          ],
+          anxiety: [
+            "Feeling nervous, anxious, or on edge",
+            "Not being able to stop or control worrying",
+            "Worrying too much about different things",
+            "Trouble relaxing",
+            "Being so restless that it's hard to sit still"
+          ],
+          adhd: [
+            "Difficulty focusing on tasks or finishing work without getting distracted.",
+            "Forgetting appointments, deadlines, or important things frequently.",
+            "Feeling restless or having trouble sitting still for long periods.",
+            "Acting impulsively or making quick decisions without thinking of consequences.",
+            "Struggling to organize tasks, manage time, or feeling constantly disorganized."
+          ],
+          Schizophrenia: [
+            "Have you ever heard voices or sounds that others did not hear?",
+            "Have you ever believed things that other people thought were strange or not true (delusions)?",
+            "Do you find it difficult to think clearly, organize your thoughts, or concentrate?",
+            "Have you noticed a lack of motivation, interest, or pleasure in daily activities?",
+            "Have you shown unusual emotional responses, such as reduced or inappropriate emotions?"
+          ],
+          Autism: [
+            "Do you have difficulty understanding or responding to social cues, such as facial expressions, tone of voice, or gestures?",
+            "Do you find it hard to start or maintain conversations with others?",
+            "Do you have repetitive behaviors or routines (e.g., hand-flapping, rocking, lining up objects) that you feel compelled to do?",
+            "Do you have intense or highly focused interests in specific topics, sometimes to the exclusion of other activities?",
+            "Do changes in routine, environment, or unexpected events cause you significant stress or discomfort?"
+          ]
+        },
+        options: ["Never (0%)", "Sometimes (25%)", "Often (50%)", "Most of the time (75%)", "Always (100%)"],
+        recommendations: {
+          none: "Your responses indicate minimal symptoms. Continue maintaining good mental health practices.",
+          mild: "Consider implementing stress management techniques and monitoring your symptoms.",
+          moderate: "Professional evaluation is recommended to address these symptoms effectively.",
+          severe: "Immediate professional help is strongly recommended."
+        }
+      },
+      ar: {
+        welcome: "مرحبًا! أنا نيوروسينس، مساعدك للصحة النفسية.",
+        intro: "سأسألك بعض الأسئلة لفهم مشاعرك lately. هذا التقييم سيساعد في تحديد الحالات المحتملة للصحة النفسية.",
+        disclaimer: "تذكر، هذا ليس بديلاً عن التشخيص المهني، لكنه يمكن أن يقدم رؤى مفيدة.",
+        ready: "هل أنت مستعد للبدء؟",
+        readyYes: "نعم، أنا مستعد",
+        readyNo: "ربما لاحقًا",
+        inputPlaceholder: "اكتب ردك...",
+        resultTitle: "نتائج التقييم",
+        resultDescription: "بناءً على إجاباتك، إليك ما تم تحديده:",
+        recommendationTitle: "التوصيات",
+        homeBtn: "العودة للرئيسية",
+        aiSpecificBtn: "تشخيص محدد بالذكاء الاصطناعي",
+        aiTherapyBtn: "التواصل مع العلاج بالذكاء الاصطناعي",
+        aiAssistantBtn: "التواصل مع المساعد بالذكاء الاصطناعي",
+        professionalBtn: "التواصل مع المتخصصين",
+        backText: "العودة للرئيسية",
+        errorMessage: "يرجى اختيار أحد الخيارات أعلاه",
+        maybeLaterResponse: "آمل أن تكون بخير. لا تتردد في العودة في أي وقت عندما تكون مستعدًا لأخذ التقييم.",
+        selectCondition: "يرجى اختيار حالة للتقييم:",
+        conditions: {
+          depression: "الاكتئاب",
+          socialAnxiety: "القلق الاجتماعي",
+          bipolar: "الاضطراب ثنائي القطب",
+          ocd: "الوسواس القهري",
+          ptsd: "اضطراب ما بعد الصدمة",
+          anxiety: "القلق",
+          adhd: "اضطراب فرط الحركة ونقص الانتباه",
+          eatingDisorder: "الفصام",
+          burnout: "التوحد"
+        },
+        questions: {
+          depression: [
+            "قلة الاهتمام أو المتعة في فعل الأشياء.",
+            "الشعور بالإحباط، الاكتئاب، أو اليأس.",
+            "صعوبة في النوم (قليل جدًا أو كثير جدًا) أو الشعور بالتعب معظم اليوم.",
+            "الشعور بالسوء تجاه نفسك - أنك فاشل أو أنك خذلت نفسك أو عائلتك.",
+            "أفكار بأنك سيكون أفضل حالاً إذا مت أو أفكار بإيذاء نفسك."
+          ],
+          socialAnxiety: [
+            "الشعور بالتوتر الشديد أو القلق عندما تضطر للتحدث أمام الناس.",
+            "تجنب المواقف الاجتماعية (مثل الحفلات، الاجتماعات، التحدث إلى الغرباء) بسبب الخوف من الإحراج.",
+            "القلق لأيام قبل حدث اجتماعي (مثل عرض تقديمي، مناقشة جماعية، أو مقابلة أشخاص جدد).",
+            "الشعور بأعراض جسدية (تعرق، ارتعاش، سرعة ضربات القلب) عندما تكون مركز الاهتمام.",
+            "اعتقاد أن الناس يحكمون عليك سلبًا في المواقف الاجتماعية."
+          ],
+          bipolar: [
+            "هل شعرت يومًا بأنك بحالة جيدة جدًا أو مفرط النشاط لدرجة أن الآخرين اعتقدوا أنك لست طبيعتك المعتادة، أو وقعت في مشاكل بسبب ذلك؟",
+            "هل شعرت يومًا بثقة في النفس أكثر من المعتاد بكثير؟",
+            "هل حصلت يومًا على نوم أقل بكثير من المعتاد ووجدت أنك لا تفتقده حقًا؟",
+            "هل كنت يومًا ثرثارًا أكثر من المعتاد أو تتحدث بسرعة أكبر؟",
+            "هل فعلت يومًا أشياء كانت غير معتادة بالنسبة لك أو التي قد يعتبرها الآخرين مفرطة، حمقاء، أو محفوفة بالمخاطر؟"
+          ],
+          ocd: [
+            "هل لديك أفكار، صور، أو رغبات غير مرغوب فيها تدخل عقلك بشكل متكرر وتسبب ضيقًا أو انزعاجًا؟",
+            "هل تشعر بالحاجة لأداء سلوكيات أو طقوس معينة بشكل متكرر (مثل الفحص، التنظيف، العد) لتخفيف القلق أو منع حدوث شيء سيء؟",
+            "هل تأخذ هذه الأفكار أو السلوكيات وقتًا كبيرًا من يومك أو تتداخل مع حياتك اليومية؟",
+            "هل تدرك أن هذه الأفكار أو السلوكيات مفرطة أو غير معقولة، ولكن تشعر بعدم القدرة على التحكم فيها؟",
+            "هل تشعر بالضيق، القلق، أو الانزعاج إذا لم تستطع إكمال طقوسك أو منع أحداث معينة؟"
+          ],
+          ptsd: [
+            "هل مررت بحدث صادم تسبب في خوف شديد، عجز، أو رعب؟",
+            "هل لديك ذكريات أو فلاش باكس متكررة، غير مرغوب فيها، ومزعجة للحدث الصادم؟",
+            "هل تحاول تجنب الأماكن، الأشخاص، أو الأنشطة التي تذكرك بالصدمة؟",
+            "هل تعاني من استثارة زائدة، مثل التهيج، صعوبة النوم، أو سهولة الدهشة؟",
+            "هل تشعر بالخدر العاطفي، الانفصال عن الآخرين، أو لديك صعوبة في تجربة المشاعر الإيجابية منذ الحدث الصادم؟"
+          ],
+          anxiety: [
+            "الشعور بالتوتر، القلق، أو التوتر الشديد",
+            "عدم القدرة على التوقف أو التحكم في القلق",
+            "القلق المفرط حول أشياء مختلفة",
+            "صعوبة في الاسترخاء",
+            "التململ الشديد لدرجة صعوبة الجلوس ساكنًا"
+          ],
+          adhd: [
+            "صعوبة التركيز على المهام أو إنهاء العمل دون تشتيت الانتباه.",
+            "نسيان المواعيد، المواعيد النهائية، أو الأشياء المهمة بشكل متكرر.",
+            "الشعور بعدم الراحة أو صعوبة الجلوس ساكنًا لفترات طويلة.",
+            "التصرف باندفاع أو اتخاذ قرارات سريعة دون التفكير في العواقب.",
+            "الصعوبة في تنظيم المهام، إدارة الوقت، أو الشعور بعدم التنظيم باستمرار."
+          ],
+          schizophrenia: [
+            "هل سمعت يومًا أصواتًا أو ضوضاء لم يسمعها الآخرون؟",
+            "هل اعتقدت يومًا بأشياء اعتقد الآخرون أنها غريبة أو غير صحيحة (أوهام)؟",
+            "هل تجد صعوبة في التفكير بوضوح، تنظيم أفكارك، أو التركيز؟",
+            "هل لاحظت نقصًا في الدافع، الاهتمام، أو المتعة في الأنشطة اليومية؟",
+            "هل أظهرت استجابات عاطفية غير معتادة، مثل انخفاض أو عدم ملائمة المشاعر؟"
+          ],
+          autism: [
+            "هل لديك صعوبة في فهم أو الاستجابة للإشارات الاجتماعية، مثل تعابير الوجه، نبرة الصوت، أو الإيماءات؟",
+            "هل تجد صعوبة في بدء أو الحفاظ على المحادثات مع الآخرين؟",
+            "هل لديك سلوكيات أو روتين متكرر (مثل رفرفة اليدين، التأرجح، ترتيب الأشياء في صفوف) تشعر بأنك مضطر للقيام بها؟",
+            "هل لديك اهتمامات مكثفة أو مركزة للغاية في مواضيع محددة، أحيانًا باستثناء الأنشطة الأخرى؟",
+            "هل تسبب التغييرات في الروتين، البيئة، أو الأحداث غير المتوقعة ضغطًا شديدًا أو انزعاجًا لك؟"
+          ]
+        },
+        options: ["أبداً (0%)", "أحياناً (25%)", "غالباً (50%)", "معظم الوقت (75%)", "دائماً (100%)"],
+        recommendations: {
+          none: "إجاباتك تشير إلى أعراض minimal. استمر في الحفاظ على ممارسات الصحة النفسية الجيدة.",
+          mild: "فكر في تطبيق تقنيات إدارة التوتر ومراقبة أعراضك.",
+          moderate: "يوصى بالتقييم المهني لمعالجة هذه الأعراض بشكل فعال.",
+          severe: "يوصى بشدة بالحصول على مساعدة مهنية فورية."
+        }
+      },
+      
+    fr: {
+  welcome: "Bonjour ! Je suis Neuroscience, votre assistant en santé mentale.",
+  intro: "Je vais vous poser quelques questions pour comprendre vos sentiments récemment. Cette évaluation aidera à identifier les conditions potentielles de santé mentale.",
+  disclaimer: "Rappelez-vous, ceci n'est pas un substitut à un diagnostic professionnel, mais il peut fournir des informations utiles.",
+  ready: "Êtes-vous prêt à commencer ?",
+  readyYes: "Oui, je suis prêt",
+  readyNo: "Peut-être plus tard",
+  inputPlaceholder: "Tapez votre réponse...",
+  resultTitle: "Résultats de l'évaluation",
+  resultDescription: "Sur la base de vos réponses, voici ce qui a été identifié :",
+  recommendationTitle: "Recommandations",
+  homeBtn: "Retour à l'accueil",
+  aiTherapyBtn: "Communiquer avec la thérapie IA",
+  professionalBtn: "Contacter des professionnels",
+  backText: "Retour à l'accueil",
+  errorMessage: "Veuillez choisir l'une des options ci-dessus",
+  maybeLaterResponse: "J'espère que vous allez bien. N'hésitez pas à revenir à tout moment lorsque vous serez prêt à passer l'évaluation.",
+  selectCondition: "Veuillez sélectionner une condition pour l'évaluation :",
+  conditions: {
+    depression: "Dépression",
+    socialAnxiety: "Anxiété sociale",
+    bipolar: "Trouble bipolaire",
+    ocd: "TOC",
+    ptsd: "ESPT",
+    anxiety: "Anxiété",
+    adhd: "TDAH",
+    eatingDisorder: "Schizophrénie",
+    burnout: "Autisme"
+  },
+  questions: {
+    depression: [
+      "Peu d'intérêt ou de plaisir à faire des choses.",
+      "Se sentir déprimé, triste ou désespéré.",
+      "Difficulté à dormir (trop peu ou trop) ou se sentir fatigué la plupart de la journée.",
+      "Se sentir mal à propos de soi-même - être un échec ou avoir déçu sa famille.",
+      "Pensées que vous seriez mieux mort ou pensées de vous faire du mal."
+    ],
+    socialAnxiety: [
+      "Se sentir très nerveux ou anxieux lorsqu'on doit parler en public.",
+      "Éviter les situations sociales (comme les fêtes, réunions, parler à des inconnus) par peur de l'embarras.",
+      "S'inquiéter pendant des jours avant un événement social (comme une présentation, discussion de groupe, ou rencontrer de nouvelles personnes).",
+      "Avoir des symptômes physiques (transpiration, tremblements, rythme cardiaque rapide) lorsqu'on est le centre de l'attention.",
+      "Penser que les gens vous jugent négativement dans les situations sociales."
+    ],
+    bipolar: [
+      "Avez-vous déjà eu une période où vous vous sentiez si bien ou hyperactif que les autres pensaient que vous n'étiez pas votre moi habituel, ou cela vous a-t-il causé des problèmes ?",
+      "Avez-vous déjà eu une confiance en vous bien plus élevée que d'habitude ?",
+      "Avez-vous déjà dormi beaucoup moins que d'habitude sans vraiment le regretter ?",
+      "Avez-vous déjà été plus bavard que d'habitude ou parlé plus vite ?",
+      "Avez-vous déjà fait des choses inhabituelles pour vous ou que d'autres pourraient considérer comme excessives, stupides ou risquées ?"
+    ],
+    ocd: [
+      "Avez-vous des pensées, images ou pulsions indésirables qui reviennent fréquemment dans votre esprit et causent de la détresse ?",
+      "Ressentez-vous le besoin d'effectuer certains comportements ou rituels de manière répétitive (comme vérifier, nettoyer, compter) pour soulager l'anxiété ou empêcher qu'un événement négatif ne se produise ?",
+      "Est-ce que ces pensées ou comportements prennent beaucoup de temps dans votre journée ou interfèrent-ils avec votre vie quotidienne ?",
+      "Reconnaissez-vous que ces pensées ou comportements sont excessifs ou déraisonnables, mais avez du mal à les contrôler ?",
+      "Ressentez-vous de la détresse, de l'anxiété ou de l'inquiétude si vous ne pouvez pas accomplir vos rituels ou empêcher certains événements ?"
+    ],
+    ptsd: [
+      "Avez-vous vécu un événement traumatique qui a provoqué une peur intense, de l'impuissance ou de l'horreur ?",
+      "Avez-vous des souvenirs ou flashbacks récurrents, indésirables et dérangeants de l'événement traumatique ?",
+      "Essayez-vous d'éviter les lieux, personnes ou activités qui vous rappellent le traumatisme ?",
+      "Souffrez-vous d'hyperexcitation, comme de l'irritabilité, des difficultés à dormir ou à être facilement surpris ?",
+      "Ressentez-vous un engourdissement émotionnel, un détachement des autres, ou avez-vous des difficultés à éprouver des émotions positives depuis l'événement traumatique ?"
+    ],
+    anxiety: [
+      "Se sentir nerveux, anxieux ou très tendu",
+      "Incapacité d'arrêter ou de contrôler l'inquiétude",
+      "Inquiétude excessive à propos de diverses choses",
+      "Difficulté à se détendre",
+      "Agitation si forte qu'il est difficile de rester assis tranquillement"
+    ],
+    adhd: [
+      "Difficulté à se concentrer sur les tâches ou à terminer le travail sans être distrait.",
+      "Oublier fréquemment les rendez-vous, les échéances ou les choses importantes.",
+      "Se sentir mal à l'aise ou avoir du mal à rester assis pendant de longues périodes.",
+      "Agir de manière impulsive ou prendre des décisions rapides sans réfléchir aux conséquences.",
+      "Difficulté à organiser les tâches, gérer le temps ou se sentir constamment désorganisé."
+    ],
+    Schizophrenia: [
+      "Avez-vous déjà entendu des voix ou des bruits que d'autres n'entendaient pas ?",
+      "Avez-vous déjà cru à des choses que d'autres trouvaient étranges ou incorrectes (délires) ?",
+      "Avez-vous du mal à penser clairement, à organiser vos pensées ou à vous concentrer ?",
+      "Avez-vous remarqué un manque de motivation, d'intérêt ou de plaisir dans les activités quotidiennes ?",
+      "Avez-vous montré des réponses émotionnelles inhabituelles, comme une diminution ou une inadéquation des émotions ?"
+    ],
+    Autism: [
+      "Avez-vous des difficultés à comprendre ou à répondre aux signaux sociaux, comme les expressions faciales, le ton de la voix ou les gestes ?",
+      "Avez-vous du mal à initier ou à maintenir des conversations avec les autres ?",
+      "Avez-vous des comportements ou des routines répétitifs (comme battre des mains, se balancer, ranger les objets en rangées) que vous vous sentez obligé de faire ?",
+      "Avez-vous des intérêts intenses ou très concentrés sur des sujets spécifiques, excluant parfois d'autres activités ?",
+      "Les changements de routine, d'environnement ou des événements inattendus provoquent-ils un stress ou un inconfort intense ?"
+    ]
+  },
+  options: ["Jamais (0%)", "Parfois (25%)", "Souvent (50%)", "La plupart du temps (75%)", "Toujours (100%)"],
+  recommendations: {
+    none: "Vos réponses indiquent des symptômes minimes. Continuez à maintenir de bonnes pratiques de santé mentale.",
+    mild: "Envisagez d'appliquer des techniques de gestion du stress et de surveiller vos symptômes.",
+    moderate: "Une évaluation professionnelle est recommandée pour traiter efficacement ces symptômes.",
+    severe: "Il est fortement recommandé d'obtenir une aide professionnelle immédiate."
+  },
+    de: {
+    welcome: "Hallo! Ich bin NeuroSense, Ihr Assistent für psychische Gesundheit.",
+    intro: "Ich werde Ihnen einige Fragen stellen, um zu verstehen, wie Sie sich lately gefühlt haben. Diese Bewertung hilft dabei, mögliche psychische Gesundheitszustände zu identifizieren.",
+    disclaimer: "Denken Sie daran, dies ist kein Ersatz für eine professionelle Diagnose, kann aber hilfreiche Einblicke bieten.",
+    ready: "Sind Sie bereit zu beginnen?",
+    readyYes: "Ja, ich bin bereit",
+    readyNo: "Vielleicht später",
+    inputPlaceholder: "Geben Sie Ihre Antwort ein...",
+    resultTitle: "Bewertungsergebnisse",
+    resultDescription: "Basierend auf Ihren Antworten wurde Folgendes festgestellt:",
+    recommendationTitle: "Empfehlungen",
+    homeBtn: "Zurück zur Startseite",
+    aiTherapyBtn: "Mit KI-Therapie verbinden",
+    professionalBtn: "Mit Fachleuten verbinden",
+    backText: "Zurück zur Startseite",
+    errorMessage: "Bitte wählen Sie eine der oben genannten Optionen",
+    maybeLaterResponse: "Ich hoffe, es geht Ihnen gut. Kommen Sie jederzeit zurück, wenn Sie bereit für die Bewertung sind.",
+    selectCondition: "Bitte wählen Sie einen Zustand zur Bewertung aus:",
+    conditions: {
+      depression: "Depression",
+      socialAnxiety: "Soziale Angst",
+      bipolar: "Bipolare Störung",
+      ocd: "Zwangsstörung",
+      ptsd: "PTBS",
+      anxiety: "Angst",
+      adhd: "ADHS",
+      eatingDisorder: "Schizophrenie",
+      burnout: "Autismus"
+    },
+    questions: {
+      depression: [
+        "Wenig Interesse oder Freude an Aktivitäten.",
+        "Sich niedergeschlagen, deprimiert oder hoffnungslos fühlen.",
+        "Schlafprobleme (zu wenig oder zu viel) oder sich die meiste Zeit des Tages müde fühlen.",
+        "Sich schlecht fühlen über sich selbst - dass man ein Versager ist oder sich oder seine Familie enttäuscht hat.",
+        "Gedanken, dass man besser tot wäre oder sich selbst verletzen würde."
+      ],
+      socialAnxiety: [
+        "Sehr nervös oder ängstlich sein, wenn man vor Menschen sprechen muss.",
+        "Soziale Situationen vermeiden (z.B. Partys, Meetings, Gespräche mit Fremden) aus Angst vor Peinlichkeit.",
+        "Tage vor einem sozialen Ereignis sich Sorgen machen (wie eine Präsentation, Gruppendiskussion oder neue Leute treffen).",
+        "Körperliche Symptome haben (Schwitzen, Zittern, schneller Herzschlag), wenn man im Mittelpunkt steht.",
+        "Denken, dass Menschen einen in sozialen Situationen negativ beurteilen."
+      ],
+      bipolar: [
+        "Hatten Sie jemals eine Phase, in der Sie sich so gut oder hyperaktiv fühlten, dass andere dachten, Sie seien nicht Ihr normales Selbst, oder Sie deswegen in Schwierigkeiten gerieten?",
+        "Hatten Sie jemals viel mehr Selbstvertrauen als gewöhnlich?",
+        "Haben Sie jemals viel weniger geschlafen als üblich und festgestellt, dass Sie es nicht wirklich vermisst haben?",
+        "Waren Sie jemals viel gesprächiger oder haben schneller gesprochen als gewöhnlich?",
+        "Haben Sie jemals Dinge getan, die ungewöhnlich für Sie waren oder die andere als übertrieben, töricht oder riskant empfunden hätten?"
+      ],
+      ocd: [
+        "Haben Sie unerwünschte Gedanken, Bilder oder Impulse, die wiederholt in Ihren Geist eindringen und belastend oder beunruhigend sind?",
+        "Verspüren Sie das Bedürfnis, bestimmte Verhaltensweisen oder Rituale wiederholt auszuführen (wie Kontrollieren, Putzen, Zählen), um Angst zu lindern oder zu verhindern, dass etwas Schlimmes passiert?",
+        "Nehmen diese Gedanken oder Verhaltensweisen viel Zeit in Anspruch oder beeinträchtigen sie Ihr tägliches Leben?",
+        "Erkennen Sie, dass diese Gedanken oder Verhaltensweisen übertrieben oder unvernünftig sind, fühlen sich aber außerstande, sie zu kontrollieren?",
+        "Verspüren Sie Belastung, Angst oder Unbehagen, wenn Sie Ihre Rituale nicht abschließen oder bestimmte Ereignisse nicht verhindern können?"
+      ],
+      ptsd: [
+        "Haben Sie ein traumatisches Ereignis erlebt, das intensive Angst, Hilflosigkeit oder Entsetzen verursacht hat?",
+        "Haben Sie wiederkehrende, unerwünschte und belastende Erinnerungen oder Flashbacks an das traumatische Ereignis?",
+        "Versuchen Sie, Orte, Menschen oder Aktivitäten zu vermeiden, die Sie an das Trauma erinnern?",
+        "Erleben Sie erhöhte Erregung, wie Reizbarkeit, Schlafschwierigkeiten oder leichte Schreckhaftigkeit?",
+        "Fühlen Sie sich emotional taub, von anderen entfremdet oder haben Sie Schwierigkeiten, positive Emotionen seit dem traumatischen Ereignis zu empfinden?"
+      ],
+      anxiety: [
+        "Nervös, ängstlich oder angespannt sein",
+        "Nicht in der Lage sein, das Sorgenmachen zu stoppen oder zu kontrollieren",
+        "Übermäßige Sorgen über verschiedene Dinge",
+        "Schwierigkeiten sich zu entspannen",
+        "So unruhig sein, dass es schwer ist, stillzusitzen"
+      ],
+      adhd: [
+        "Schwierigkeiten, sich auf Aufgaben zu konzentrieren oder Arbeit ohne Ablenkung zu beenden.",
+        "Häufiges Vergessen von Terminen, Fristen oder wichtigen Dingen.",
+        "Unruhegefühle oder Schwierigkeiten, längere Zeit stillzusitzen.",
+        "Impulsiv handeln oder schnelle Entscheidungen treffen, ohne an Konsequenzen zu denken.",
+        "Schwierigkeiten, Aufgaben zu organisieren, Zeit zu managen oder sich ständig desorganisiert zu fühlen."
+      ],
+      schizophrenia: [
+        "Haben Sie jemals Stimmen oder Geräusche gehört, die andere nicht hörten?",
+        "Haben Sie jemals an Dinge geglaubt, die andere für seltsam oder nicht wahr hielten (Wahnvorstellungen)?",
+        "Haben Sie Schwierigkeiten, klar zu denken, Ihre Gedanken zu organisieren oder sich zu konzentrieren?",
+        "Haben Sie einen Mangel an Motivation, Interesse oder Freude an täglichen Aktivitäten bemerkt?",
+        "Haben Sie ungewöhnliche emotionale Reaktionen gezeigt, wie reduzierte oder unangemessene Emotionen?"
+      ],
+      autism: [
+        "Haben Sie Schwierigkeiten, soziale Signale wie Gesichtsausdrücke, Tonfall oder Gesten zu verstehen oder darauf zu reagieren?",
+        "Fällt es Ihnen schwer, Gespräche mit anderen zu beginnen oder aufrechtzuerhalten?",
+        "Haben Sie repetitive Verhaltensweisen oder Routinen (z.B. Händeflattern, Schaukeln, Objekte in Reihen anordnen), die Sie gezwungen fühlen auszuführen?",
+        "Haben Sie intensive oder hochkonzentrierte Interessen an bestimmten Themen, manchmal unter Ausschluss anderer Aktivitäten?",
+        "Verursachen Veränderungen in Routine, Umgebung oder unerwartete Ereignisse erheblichen Stress oder Unbehagen bei Ihnen?"
+      ]
+    },
+    options: ["Nie (0%)", "Manchmal (25%)", "Oft (50%)", "Meistens (75%)", "Immer (100%)"],
+    recommendations: {
+      none: "Ihre Antworten deuten auf minimale Symptome hin. Fahren Sie fort, gute Praktiken für psychische Gesundheit beizubehalten.",
+      mild: "Erwägen Sie die Anwendung von Stressmanagement-Techniken und die Überwachung Ihrer Symptome.",
+      moderate: "Eine professionelle Bewertung wird empfohlen, um diese Symptome effektiv anzugehen.",
+      severe: "Unmittelbare professionelle Hilfe wird dringend empfohlen."
+    }
+  },
+  es: {
+    welcome: "¡Hola! Soy NeuroSense, tu asistente de salud mental.",
+    intro: "Te haré algunas preguntas para entender cómo te has estado sintiendo lately. Esta evaluación ayudará a identificar posibles condiciones de salud mental.",
+    disclaimer: "Recuerda, esto no sustituye un diagnóstico profesional, pero puede proporcionar información útil.",
+    ready: "¿Estás listo para comenzar?",
+    readyYes: "Sí, estoy listo",
+    readyNo: "Quizás más tarde",
+    inputPlaceholder: "Escribe tu respuesta...",
+    resultTitle: "Resultados de la Evaluación",
+    resultDescription: "Según tus respuestas, esto es lo que se ha identificado:",
+    recommendationTitle: "Recomendaciones",
+    homeBtn: "Volver al Inicio",
+    aiTherapyBtn: "Conectar con Terapia IA",
+    professionalBtn: "Conectar con Profesionales",
+    backText: "Volver al Inicio",
+    errorMessage: "Por favor selecciona una de las opciones anteriores",
+    maybeLaterResponse: "Espero que estés bien. No dudes en volver en cualquier momento cuando estés listo para tomar la evaluación.",
+    selectCondition: "Por favor selecciona una condición para evaluar:",
+    conditions: {
+      depression: "Depresión",
+      socialAnxiety: "Ansiedad Social",
+      bipolar: "Trastorno Bipolar",
+      ocd: "TOC",
+      ptsd: "TEPT",
+      anxiety: "Ansiedad",
+      adhd: "TDAH",
+      eatingDisorder: "Esquizofrenia",
+      burnout: "Autismo"
+    },
+    questions: {
+      depression: [
+        "Poco interés o placer en hacer las cosas.",
+        "Sentirse down, deprimido o sin esperanza.",
+        "Problemas para dormir (demasiado poco o demasiado) o sentirse cansado la mayor parte del día.",
+        "Sentirse mal consigo mismo - que es un fracaso o que ha defraudado a su familia.",
+        "Pensamientos de que estaría mejor muerto o de hacerse daño a sí mismo."
+      ],
+      socialAnxiety: [
+        "Sentirse muy nervioso o ansioso cuando tiene que hablar frente a personas.",
+        "Evitar situaciones sociales (fiestas, reuniones, hablar con extraños) por miedo a la vergüenza.",
+        "Preocuparse durante días antes de un evento social (presentación, discusión grupal, conocer nuevas personas).",
+        "Experimentar síntomas físicos (sudoración, temblores, latidos rápidos del corazón) al ser el centro de atención.",
+        "Pensar que la gente te juzga negativamente en situaciones sociales."
+      ],
+      bipolar: [
+        "¿Alguna vez se ha sentido tan bien o hiperactivo que otras personas pensaron que no era su yo normal, o tuvo problemas por eso?",
+        "¿Alguna vez ha tenido mucha más confianza en sí mismo de lo habitual?",
+        "¿Alguna vez ha dormido mucho menos de lo habitual y descubrió que realmente no lo extrañaba?",
+        "¿Alguna vez ha sido mucho más hablador o ha hablado más rápido de lo normal?",
+        "¿Alguna vez ha hecho cosas que eran inusuales para usted o que otros podrían considerar excesivas, tontas o arriesgadas?"
+      ],
+      ocd: [
+        "¿Tiene pensamientos, imágenes o impulsos no deseados que entran repetidamente en su mente y son angustiosos o molestos?",
+        "¿Siente la necesidad de realizar ciertos comportamientos o rituales repetidamente (como verificar, limpiar, contar) para aliviar la ansiedad o evitar que suceda algo malo?",
+        "¿Estos pensamientos o comportamientos ocupan una cantidad significativa de su tiempo o interfieren con su vida diaria?",
+        "¿Reconoce que estos pensamientos o comportamientos son excesivos o irrazonables, pero se siente incapaz de controlarlos?",
+        "¿Siente angustia, ansiedad o incomodidad si no puede completar sus rituales o prevenir ciertos eventos?"
+      ],
+      ptsd: [
+        "¿Ha experimentado un evento traumático que causó miedo intenso, impotencia u horror?",
+        "¿Tiene recuerdos o flashbacks recurrentes, no deseados y angustiosos del evento traumático?",
+        "¿Intenta evitar lugares, personas o actividades que le recuerdan el trauma?",
+        "¿Experimenta excitación elevada, como irritabilidad, dificultad para dormir o sobresaltarse fácilmente?",
+        "¿Se siente emocionalmente entumecido, desconectado de otros o tiene dificultad para experimentar emociones positivas desde el evento traumático?"
+      ],
+      anxiety: [
+        "Sentirse nervioso, ansioso o al límite",
+        "No poder detener o controlar la preocupación",
+        "Preocuparse demasiado por diferentes cosas",
+        "Dificultad para relajarse",
+        "Estar tan inquieto que es difícil quedarse quieto"
+      ],
+      adhd: [
+        "Dificultad para concentrarse en tareas o terminar el trabajo sin distraerse.",
+        "Olvidar citas, plazos o cosas importantes con frecuencia.",
+        "Sentirse inquieto o tener problemas para permanecer sentado durante largos períodos.",
+        "Actuar impulsivamente o tomar decisiones rápidas sin pensar en las consecuencias.",
+        "Dificultad para organizar tareas, gestionar el tiempo o sentirse constantemente desorganizado."
+      ],
+      schizophrenia: [
+        "¿Alguna vez ha escuchado voces o sonidos que otros no escuchaban?",
+        "¿Alguna vez ha creído cosas que otras personas pensaban que eran extrañas o no ciertas (delirios)?",
+        "¿Le resulta difícil pensar con claridad, organizar sus pensamientos o concentrarse?",
+        "¿Ha notado falta de motivación, interés o placer en las actividades diarias?",
+        "¿Ha mostrado respuestas emocionales inusuales, como emociones reducidas o inapropiadas?"
+      ],
+      autism: [
+        "¿Tiene dificultad para entender o responder a señales sociales, como expresiones faciales, tono de voz o gestos?",
+        "¿Le resulta difícil iniciar o mantener conversaciones con otros?",
+        "¿Tiene comportamientos o rutinas repetitivas (aleteo de manos, balanceo, alinear objetos) que se siente obligado a hacer?",
+        "¿Tiene intereses intensos o muy concentrados en temas específicos, a veces excluyendo otras actividades?",
+        "¿Los cambios en la rutina, el ambiente o eventos inesperados le causan estrés o incomodidad significativos?"
+      ]
+    },
+    options: ["Nunca (0%)", "A veces (25%)", "A menudo (50%)", "La mayoría del tiempo (75%)", "Siempre (100%)"],
+    recommendations: {
+      none: "Sus respuestas indican síntomas mínimos. Continúe manteniendo buenas prácticas de salud mental.",
+      mild: "Considere implementar técnicas de manejo del estrés y monitorear sus síntomas.",
+      moderate: "Se recomienda evaluación profesional para abordar estos síntomas efectivamente.",
+      severe: "Se recomienda encarecidamente buscar ayuda profesional inmediata."
+    }
+  },
+  ko: {
+    welcome: "안녕하세요! 저는 NeuroSense, 당신의 정신 건강 도우미입니다.",
+    intro: "최근 기분을 이해하기 위해 몇 가지 질문을 드리겠습니다. 이 평가는 잠재적인 정신 건강 상태를 식별하는 데 도움이 됩니다.",
+    disclaimer: "기억하세요, 이것은 전문적인 진단을 대체하지는 않지만 유용한 통찰력을 제공할 수 있습니다.",
+    ready: "시작할 준비가 되셨나요?",
+    readyYes: "네, 준비되었습니다",
+    readyNo: "나중에 할게요",
+    inputPlaceholder: "답변을 입력하세요...",
+    resultTitle: "평가 결과",
+    resultDescription: "귀하의 응답을 기반으로 다음과 같이 확인되었습니다:",
+    recommendationTitle: "권장사항",
+    homeBtn: "홈으로 돌아가기",
+    aiTherapyBtn: "AI 치료 연결",
+    professionalBtn: "전문가 연결",
+    backText: "홈으로 돌아가기",
+    errorMessage: "위 옵션 중 하나를 선택해주세요",
+    maybeLaterResponse: "잘 지내시길 바랍니다. 평가를 받을 준비가 되셨을 때 언제든지 돌아오세요.",
+    selectCondition: "평가할 조건을 선택해주세요:",
+    conditions: {
+      depression: "우울증",
+      socialAnxiety: "사회불안",
+      bipolar: "양극성 장애",
+      ocd: "강박증",
+      ptsd: "PTSD",
+      anxiety: "불안",
+      adhd: "ADHD",
+      eatingDisorder: "조현병",
+      burnout: "자폐증"
+    },
+    questions: {
+      depression: [
+        "하는 일에 대한 관심이나 즐거움의 상실.",
+        "기분이 가라앉거나, 우울하거나, 절망감을 느낌.",
+        "수면 문제 (너무 적거나 너무 많음) 또는 하루 대부분 피로감을 느낌.",
+        "자신에 대해 나쁘게 느낌 - 실패자라고 생각하거나 자신이나 가족을 실망시켰다고 생각함.",
+        "차라리 죽는 것이 나을 것 같거나 자신을 해치려는 생각."
+      ],
+      socialAnxiety: [
+        "사람들 앞에서 말해야 할 때 매우 긴장되거나 불안함.",
+        "당황스러울까 봐 사회적 상황 (파티, 회의, 낯선 사람과 대화) 회피.",
+        "사회적 행사 (발표, 그룹 토론, 새로운 사람 만남) 전几日 동안 걱정함.",
+        "주목을 받을 때 신체적 증상 (땀, 떨림, 빠른 심장 박동) 경험.",
+        "사회적 상황에서 사람들이 자신을 부정적으로 판단한다고 생각함."
+      ],
+      bipolar: [
+        "다른 사람들이 당신이 평소 자신이 아니라고 생각하거나 그로 인해 문제가 생길 정도로 기분이 너무 좋거나 과도하게 활기찬 적이 있나요?",
+        "평소보다 훨씬 더 자신감이 넘쳤던 적이 있나요?",
+        "평소보다 훨씬 적게 잤는데도 별로 아쉽지 않았던 적이 있나요?",
+        "평소보다 훨씬 수다스러웠거나 빨리 말했던 적이 있나요?",
+        "평소와는 다른 이상한 행동을 하거나 다른 사람들이 과도하다고, 어리석다고, 위험하다고 생각할 만한 일을 한 적이 있나요?"
+      ],
+      ocd: [
+        "원하지 않는 생각, 이미지 또는 충동이 반복적으로 마음에 들어와 괴로움이나 불편함을 느끼나요?",
+        "불안을 완화하거나 나쁜 일이 일어나는 것을 막기 위해 특정 행동이나 의식을 반복적으로 수행해야 할 필요를 느끼나요?",
+        "이러한 생각이나 행동이 하루 중 상당한 시간을 차지하거나 일상 생활에 방해가 되나요?",
+        "이러한 생각이나 행동이 과도하거나 비합리적이라는 것을 인지하지만 통제할 수 없다고 느끼나요?",
+        "의식을 완료하지 못하거나 특정 사건을 막지 못하면 괴로움, 불안 또는 불편함을 느끼나요?"
+      ],
+      ptsd: [
+        "강렬한 공포, 무력감 또는 공포를 일으킨 외상 사건을 경험한 적이 있나요?",
+        "외상 사건에 대한 반복적, 원치 않으며 괴로운 기억이나 플래시백이 있나요?",
+        "외상을 상기시키는 장소, 사람 또는 활동을 피하려고 하나요?",
+        "과각성 증상을 경험하나요? (예: 짜증, 수면 곤란, 쉽게 놀람)",
+        "외상 사건 이후로 정서적 마비, 타인으로부터의 단절감 또는 긍정적 감정 경험의 어려움을 느끼나요?"
+      ],
+      anxiety: [
+        "신경质, 불안하거나 초조함을 느낌",
+        "걱정을 멈추거나 통제할 수 없음",
+        "다양한 것들에 대해 지나치게 걱정함",
+        "휴식하기 어려움",
+        "가만히 앉아 있기 어려울 정도로 안절부절못함"
+      ],
+      adhd: [
+        "집중力을 유지하거나 산만해지지 않고 일을 끝내는 것이 어려움.",
+        "약속, 마감일 또는 중요한 것을 자주 잊어버림.",
+        "안절부절못하거나 오랫동안 가만히 앉아 있기 어려움.",
+        "충동적으로 행동하거나 결과를 생각하지 않고 빠른 결정을 내림.",
+        "업무 조직, 시간 관리에 어려움을 겪거나 끊임없이 체계적이지 못하다고 느낌."
+      ],
+      schizophrenia: [
+        "다른 사람들은 듣지 못하는 목소리나 소리를 들은 적이 있나요?",
+        "다른 사람들이 이상하거나 사실이 아니라고 생각하는 것을 믿은 적이 있나요? (망상)",
+        "생각을 명확하게 하거나 정리하거나 집중하는 것이 어렵나요?",
+        "일상 활동에 대한 동기, 관심 또는 즐거움이 부족하다고 느끼나요?",
+        "감소되었거나 부적절한 감정과 같은 비정상적인 정서적 반응을 보인 적이 있나요?"
+      ],
+      autism: [
+        "표정, 어조, 제스처와 같은 사회적 단서를 이해하거나 반응하는 데 어려움이 있나요?",
+        "다른 사람들과 대화를 시작하거나 유지하는 것이 어렵나요?",
+        "반복적인 행동이나 루틴 (손 흔들기, 앞뒤로 흔들기, 물건 줄 세우기)을 해야 할 의무감을 느끼나요?",
+        "특정 주제에 대해 강렬하거나 매우 집중된 관심사를 가지고, 때로는 다른 활동을 배제하나요?",
+        "루틴, 환경의 변화 또는 예기치 않은 사건으로 인해 상당한 스트레스나 불편함을 느끼나요?"
+      ]
+    },
+    options: ["전혀 없음 (0%)", "가끔 (25%)", "자주 (50%)", "대부분의 시간 (75%)", "항상 (100%)"],
+    recommendations: {
+      none: "귀하의 응답은 최소한의 증상을 나타냅니다. 좋은 정신 건강 습관을 유지하세요.",
+      mild: "스트레스 관리 기술을 적용하고 증상을 모니터링하는 것을 고려해보세요.",
+      moderate: "이러한 증상을 효과적으로 해결하기 위해 전문가 평가를 권장합니다.",
+      severe: "즉각적인 전문가의 도움을 적극 권장합니다."
+    }
+  },
+  zh: {
+    welcome: "你好！我是NeuroSense，您的心理健康助手。",
+    intro: "我将问您一些问题来了解您最近的感受。此评估将有助于识别潜在的心理健康状况。",
+    disclaimer: "请记住，这不能替代专业诊断，但可以提供有用的见解。",
+    ready: "您准备好开始了吗？",
+    readyYes: "是的，我准备好了",
+    readyNo: "也许稍后",
+    inputPlaceholder: "输入您的回复...",
+    resultTitle: "评估结果",
+    resultDescription: "根据您的回答，以下是我们的发现：",
+    recommendationTitle: "建议",
+    homeBtn: "返回首页",
+    aiTherapyBtn: "连接AI治疗",
+    professionalBtn: "连接专业人士",
+    backText: "返回首页",
+    errorMessage: "请选择以上选项之一",
+    maybeLaterResponse: "希望您一切安好。当您准备好进行评估时，请随时回来。",
+    selectCondition: "请选择要评估的状况：",
+    conditions: {
+      depression: "抑郁症",
+      socialAnxiety: "社交焦虑",
+      bipolar: "双相情感障碍",
+      ocd: "强迫症",
+      ptsd: "创伤后应激障碍",
+      anxiety: "焦虑症",
+      adhd: "多动症",
+      eatingDisorder: "精神分裂症",
+      burnout: "自闭症"
+    },
+    questions: {
+      depression: [
+        "对做事失去兴趣或乐趣。",
+        "感到情绪低落、抑郁或绝望。",
+        "睡眠问题（太少或太多）或大部分时间感到疲倦。",
+        "对自己感到糟糕 - 觉得自己是个失败者或让自己或家人失望。",
+        "认为死了会更好或伤害自己的想法。"
+      ],
+      socialAnxiety: [
+        "在人群面前说话时感到非常紧张或焦虑。",
+        "因害怕尴尬而回避社交场合（如聚会、会议、与陌生人交谈）。",
+        "在社交活动（如演讲、小组讨论、认识新人）前几天就开始担心。",
+        "成为关注焦点时出现身体症状（出汗、颤抖、心跳加快）。",
+        "认为在社交场合中人们会负面评价你。"
+      ],
+      bipolar: [
+        "您是否曾感到如此良好或过度活跃，以至于别人认为您不是平常的自己，或因此惹上麻烦？",
+        "您是否曾感到比平时自信得多？",
+        "您是否曾睡得比平时少得多，但发现自己并不真的需要那么多睡眠？",
+        "您是否曾比平时健谈或说话更快？",
+        "您是否曾做过对您来说不寻常的事情，或别人可能认为是过度、愚蠢或冒险的事情？"
+      ],
+      ocd: [
+        "您是否有不需要的想法、图像或冲动反复进入您的脑海并引起痛苦或不安？",
+        "您是否感到需要反复执行某些行为或仪式（如检查、清洁、计数）以缓解焦虑或防止坏事发生？",
+        "这些想法或行为是否占用您大量时间或干扰您的日常生活？",
+        "您是否认识到这些想法或行为是过度或不合理的，但感到无法控制它们？",
+        "如果您无法完成仪式或防止某些事件发生，您是否感到痛苦、焦虑或不适？"
+      ],
+      ptsd: [
+        "您是否经历过引起强烈恐惧、无助或恐怖感的创伤事件？",
+        "您是否有关于创伤事件的反复、不需要且痛苦的记忆或闪回？",
+        "您是否试图回避让您想起创伤的地点、人物或活动？",
+        "您是否经历过度警觉，如易怒、睡眠困难或容易受惊？",
+        "自创伤事件以来，您是否感到情感麻木、与他人疏离或难以体验积极情绪？"
+      ],
+      anxiety: [
+        "感到紧张、焦虑或边缘",
+        "无法停止或控制担忧",
+        "对不同事物过度担忧",
+        "难以放松",
+        "如此不安以至于难以静坐"
+      ],
+      adhd: [
+        "难以专注于任务或在不分心的情况下完成工作。",
+        "经常忘记约会、截止日期或重要事情。",
+        "感到不安或难以长时间静坐。",
+        "冲动行事或不考虑后果就快速做决定。",
+        "难以组织任务、管理时间或感到持续无条理。"
+      ],
+      schizophrenia: [
+        "您是否曾听到别人听不到的声音或噪音？",
+        "您是否曾相信别人认为奇怪或不真实的事情（妄想）？",
+        "您是否发现难以清晰思考、组织想法或集中注意力？",
+        "您是否注意到对日常活动缺乏动力、兴趣或乐趣？",
+        "您是否表现出不寻常的情绪反应，如情绪减少或不恰当的情绪？"
+      ],
+      autism: [
+        "您在理解或回应社交线索（如面部表情、语调或手势）方面有困难吗？",
+        "您发现开始或维持与他人的对话有困难吗？",
+        "您是否有重复性行为或例行程序（如拍手、摇摆、将物体排成行）感到被迫执行？",
+        "您是否对特定主题有强烈或高度集中的兴趣，有时排除其他活动？",
+        "日常程序、环境的变化或意外事件是否会引起您显著的 stress 或不适？"
+      ]
+    },
+    options: ["从不 (0%)", "有时 (25%)", "经常 (50%)", "大部分时间 (75%)", "总是 (100%)"],
+    recommendations: {
+      none: "您的回答表明症状 minimal。请继续保持良好的心理健康实践。",
+      mild: "考虑实施压力管理技术并监测您的症状。",
+      moderate: "建议进行专业评估以有效解决这些症状。",
+      severe: "强烈建议立即寻求专业帮助。"
+    }}}
+  };      // باقي اللغات ممكن تضيفيها بنفس الطر;
+
+    // Current language
+    let currentLanguage = 'en';
+    let language = languages[currentLanguage];
+
+    // الأسئلة والأوزان
+    const questions = {
+      depression: [
+        { text: language.questions.depression[0], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.depression[1], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.depression[2], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.depression[3], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.depression[4], options: language.options, weights: [0, 25, 50, 75, 100] }
+      ],
+      socialAnxiety: [
+        { text: language.questions.socialAnxiety[0], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.socialAnxiety[1], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.socialAnxiety[2], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.socialAnxiety[3], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.socialAnxiety[4], options: language.options, weights: [0, 25, 50, 75, 100] }
+      ],
+      bipolar: [
+        { text: language.questions.bipolar[0], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.bipolar[1], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.bipolar[2], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.bipolar[3], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.bipolar[4], options: language.options, weights: [0, 25, 50, 75, 100] }
+      ],
+      ocd: [
+        { text: language.questions.ocd[0], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.ocd[1], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.ocd[2], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.ocd[3], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.ocd[4], options: language.options, weights: [0, 25, 50, 75, 100] }
+      ],
+      ptsd: [
+        { text: language.questions.ptsd[0], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.ptsd[1], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.ptsd[2], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.ptsd[3], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.ptsd[4], options: language.options, weights: [0, 25, 50, 75, 100] }
+      ],
+      anxiety: [
+        { text: language.questions.anxiety[0], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.anxiety[1], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.anxiety[2], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.anxiety[3], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.anxiety[4], options: language.options, weights: [0, 25, 50, 75, 100] }
+      ],
+      adhd: [
+        { text: language.questions.adhd[0], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.adhd[1], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.adhd[2], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.adhd[3], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.adhd[4], options: language.options, weights: [0, 25, 50, 75, 100] }
+      ],
+      Schizophrenia: [
+        { text: language.questions.Schizophrenia[0], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.Schizophrenia[1], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.Schizophrenia[2], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.Schizophrenia[3], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.Schizophrenia[4], options: language.options, weights: [0, 25, 50, 75, 100] }
+      ],
+      Autism: [
+        { text: language.questions.Autism[0], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.Autism[1], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.Autism[2], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.Autism[3], options: language.options, weights: [0, 25, 50, 75, 100] },
+        { text: language.questions.Autism[4], options: language.options, weights: [0, 25, 50, 75, 100] }
+      ]
+    };
+
+    // User responses and scores
+    let responses = {};
+    let currentCondition = '';
+    let currentQuestionIndex = 0;
+    let assessmentActive = false;
+    let conditionScores = {};
+    let completedAssessments = [];
+
+    // DOM elements
+    const chatContainer = document.getElementById('chatContainer');
+    const userInput = document.getElementById('userInput');
+    const resultContainer = document.getElementById('resultContainer');
+    const diagnosisResults = document.getElementById('diagnosisResults');
+    const recommendationText = document.getElementById('recommendationText');
+    const languageSelector = document.getElementById('languageSelector');
+    const conditionSelector = document.getElementById('conditionSelector');
+    const assessmentProgress = document.getElementById('assessmentProgress');
+    const readyYesBtn = document.getElementById('ready-yes-btn');
+    const readyNoBtn = document.getElementById('ready-no-btn');
+    const professionalsBtn = document.getElementById('professionalsBtn');
+
+    // Initialize language
+    function initLanguage() {
+      document.getElementById('welcome-text').textContent = language.welcome;
+      document.getElementById('intro-text').textContent = language.intro;
+      document.getElementById('disclaimer-text').textContent = language.disclaimer;
+      document.getElementById('ready-text').textContent = language.ready;
+      document.getElementById('result-title').textContent = language.resultTitle;
+      document.getElementById('result-description').textContent = language.resultDescription;
+      document.getElementById('recommendation-title').textContent = language.recommendationTitle;
+      document.getElementById('home-btn').textContent = language.homeBtn;
+      document.getElementById('ai-specific-btn').textContent = language.aiSpecificBtn;
+      document.getElementById('ai-therapy-btn').textContent = language.aiTherapyBtn;
+      document.getElementById('ai-assistant-btn').textContent = language.aiAssistantBtn;
+      document.getElementById('professional-btn').textContent = language.professionalBtn;
+      userInput.placeholder = language.inputPlaceholder;
+      document.getElementById('back-text').textContent = language.backText;
+      
+      if (readyYesBtn && readyNoBtn) {
+        readyYesBtn.textContent = language.readyYes;
+        readyNoBtn.textContent = language.readyNo;
+      }
+    }
+
+    // Language selection
+    languageSelector.addEventListener('click', (e) => {
+      if (e.target.classList.contains('lang-btn')) {
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        
+        e.target.classList.add('active');
+        currentLanguage = e.target.dataset.lang;
+        language = languages[currentLanguage];
+        
+        initLanguage();
+      }
+    });
+
+    // Show condition selector
+    function showConditionSelector() {
+      conditionSelector.innerHTML = `<p>${language.selectCondition}</p>`;
+      
+      Object.keys(language.conditions).forEach(condition => {
+        const button = document.createElement('button');
+        button.className = 'condition-btn';
+        button.textContent = language.conditions[condition];
+        button.onclick = () => startConditionAssessment(condition);
+        conditionSelector.appendChild(button);
+      });
+      
+      conditionSelector.style.display = 'flex';
+    }
+
+    // Start assessment for a specific condition
+    function startConditionAssessment(condition) {
+      assessmentActive = true;
+      currentCondition = condition;
+      currentQuestionIndex = 0;
+      conditionScores[condition] = 0;
+      
+      conditionSelector.style.display = 'none';
+      assessmentProgress.style.display = 'block';
+      updateProgress();
+      
+      askQuestion(condition, currentQuestionIndex);
+    }
+
+    // Ask a question
+    function askQuestion(condition, index) {
+      if (!assessmentActive) return;
+      
+      const conditionQuestions = questions[condition];
+      
+      if (index >= conditionQuestions.length) {
+        calculateConditionResults(condition);
+        return;
+      }
+
+      const question = conditionQuestions[index];
+      
+      userInput.disabled = true;
+      userInput.placeholder = language.errorMessage;
+      sendBtn.disabled = true;
+      
+      let messageHTML = `<div class="message bot-message"><p>${question.text}</p>`;
+
+      if (question.options.length > 0) {
+        messageHTML += `<div class="options-container">`;
+        question.options.forEach((option, i) => {
+          messageHTML += `<button class="option-btn" onclick="sendResponse('${option}', ${i})">${option}</button>`;
+        });
+        messageHTML += `</div>`;
+      }
+
+      messageHTML += `</div>`;
+      
+      chatContainer.innerHTML += `
+        <div class="message bot-message typing-indicator">
+          <span class="typing-dot"></span>
+          <span class="typing-dot"></span>
+          <span class="typing-dot"></span>
+        </div>
+      `;
+      
+      scrollToBottom();
+      
+      setTimeout(() => {
+        const typingIndicators = document.querySelectorAll('.typing-indicator');
+        typingIndicators.forEach(indicator => indicator.remove());
+        
+        chatContainer.innerHTML += messageHTML;
+        scrollToBottom();
+      }, 1000);
+    }
+
+    // Send user response
+    function sendResponse(response, weightIndex) {
+      if (!assessmentActive) return;
+      
+      const conditionQuestions = questions[currentCondition];
+      const question = conditionQuestions[currentQuestionIndex];
+      
+      responses[question.key] = response;
+      
+      const weight = question.weights[weightIndex];
+      conditionScores[currentCondition] += weight;
+      
+      chatContainer.innerHTML += `
+        <div class="message user-message">
+          <p>${response}</p>
+        </div>
+      `;
+      
+      scrollToBottom();
+      
+      currentQuestionIndex++;
+      updateProgress();
+      
+      setTimeout(() => {
+        askQuestion(currentCondition, currentQuestionIndex);
+      }, 800);
+    }
+
+    // Update progress
+    function updateProgress() {
+      const conditionQuestions = questions[currentCondition];
+      const progress = `${currentQuestionIndex + 1} / ${conditionQuestions.length} - ${language.conditions[currentCondition]}`;
+      assessmentProgress.textContent = progress;
+    }
+
+    // Calculate results for a condition
+    function calculateConditionResults(condition) {
+      const totalScore = conditionScores[condition];
+      const averageScore = totalScore / questions[condition].length;
+      
+      let severity = '';
+      let description = '';
+      let recommendation = '';
+      
+      if (averageScore <= 20) {
+        severity = 'None/Minimal';
+        description = 'No significant symptoms detected.';
+        recommendation = language.recommendations.none;
+      } else if (averageScore <= 45) {
+        severity = 'Mild';
+        description = 'Mild symptoms that may cause some distress.';
+        recommendation = language.recommendations.mild;
+      } else if (averageScore <= 70) {
+        severity = 'Moderate';
+        description = 'Moderate symptoms that significantly impact daily functioning.';
+        recommendation = language.recommendations.moderate;
+      } else {
+        severity = 'Severe';
+        description = 'Severe symptoms that substantially impair daily life.';
+        recommendation = language.recommendations.severe;
+      }
+      
+      completedAssessments.push({
+        condition: condition,
+        score: averageScore,
+        severity: severity
+      });
+      
+      const resultHTML = `
+        <div class="diagnosis-card ${condition}">
+          <h3><i class="fas ${getConditionIcon(condition)}"></i> ${language.conditions[condition]} - ${severity}</h3>
+          <p>${description}</p>
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: ${averageScore}%"></div>
+          </div>
+          <p>Average Score: ${Math.round(averageScore)}%</p>
+        </div>
+      `;
+      
+      diagnosisResults.innerHTML = resultHTML;
+      recommendationText.textContent = recommendation;
+      resultContainer.style.display = 'block';
+      scrollToBottom();
+      
+      assessmentActive = false;
+      assessmentProgress.style.display = 'none';
+      
+      // Show option to assess another condition
+      setTimeout(() => {
+        showAnotherConditionOption();
+      }, 2000);
+    }
+
+    // Show option to assess another condition
+    function showAnotherConditionOption() {
+      const remainingConditions = Object.keys(language.conditions).filter(
+        condition => !completedAssessments.some(assessment => assessment.condition === condition)
+      );
+      
+      if (remainingConditions.length > 0) {
+        const messageHTML = `
+          <div class="message bot-message">
+            <p>Would you like to assess another condition?</p>
+            <div class="options-container">
+              <button class="option-btn" onclick="showConditionSelector()">Yes, assess another condition</button>
+              <button class="option-btn" onclick="showFinalResults()">No, show final results</button>
+            </div>
+          </div>
+        `;
+        chatContainer.innerHTML += messageHTML;
+        scrollToBottom();
+      } else {
+        showFinalResults();
+      }
+    }
+
+    // Show final results
+    function showFinalResults() {
+      let finalHTML = '<div class="result-header"><h3>Complete Assessment Results</h3></div>';
+      
+      completedAssessments.forEach(assessment => {
+        finalHTML += `
+          <div class="diagnosis-card ${assessment.condition}">
+            <h3><i class="fas ${getConditionIcon(assessment.condition)}"></i> ${language.conditions[assessment.condition]} - ${assessment.severity}</h3>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: ${assessment.score}%"></div>
+            </div>
+            <p>Score: ${Math.round(assessment.score)}%</p>
+          </div>
+        `;
+      });
+      
+      diagnosisResults.innerHTML = finalHTML;
+      recommendationText.textContent = "Based on your complete assessment, we recommend discussing these results with a mental health professional for proper diagnosis and treatment.";
+      resultContainer.style.display = 'block';
+      scrollToBottom();
+    }
+
+    // Get condition icon
+    function getConditionIcon(condition) {
+      const icons = {
+        depression: 'fa-cloud',
+        socialAnxiety: 'fa-users-slash',
+        bipolar: 'fa-exchange-alt',
+        ocd: 'fa-sync',
+        ptsd: 'fa-trauma',
+        anxiety: 'fa-exclamation-triangle',
+        adhd: 'fa-bolt',
+        eatingDisorder: 'fa-utensils',
+        burnout: 'fa-fire-extinguisher'
+      };
+      return icons[condition] || 'fa-clipboard-list';
+    }
+
+    // Scroll chat to bottom
+    function scrollToBottom() {
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    // Initialize
+    function init() {
+      readyYesBtn.addEventListener('click', () => {
+        showConditionSelector();
+      });
+      
+      readyNoBtn.addEventListener('click', () => {
+        showBotMessage(language.maybeLaterResponse);
+      });
+      
+      // Ensure professionals button works correctly
+      if (professionalsBtn) {
+        professionalsBtn.addEventListener('click', (e) => {
+          // Allow the link to work normally
+          // No need to prevent default or do anything special
+          console.log("Professionals button clicked");
+        });
+      }
+      
+      initLanguage();
+    }
+
+    // Helper function to show bot message
+    function showBotMessage(text) {
+      chatContainer.innerHTML += `
+        <div class="message bot-message">
+          <p>${text}</p>
+        </div>
+      `;
+      scrollToBottom();
+    }
+
+    // Run initialization
+    init();
+    // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+// تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+  </script>
+</body>
+</html>

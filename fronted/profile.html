@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile - NeuroSense</title>
+  <style>
+    :root {
+      --primary-color: #6a11cb;
+      --secondary-color: #2575fc;
+      --text-color: #333;
+      --light-text: #fff;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      min-height: 100vh;
+      padding: 20px;
+    }
+    
+    .profile-container {
+      max-width: 500px;
+      margin: 50px auto;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+    
+    .profile-header {
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      color: var(--light-text);
+      padding: 30px;
+      text-align: center;
+    }
+    
+    .profile-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin: 0 auto 15px;
+      background: rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+    }
+    
+    .profile-body {
+      padding: 30px;
+    }
+    
+    .info-group {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 10px;
+    }
+    
+    .info-label {
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 5px;
+    }
+    
+    .info-value {
+      font-size: 1.1rem;
+    }
+    
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 20px;
+      text-decoration: none;
+      text-align: center;
+    }
+    
+    .btn-back {
+      background: #6c757d;
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-container">
+    <div class="profile-header">
+      <div class="profile-avatar">
+        <i class="fas fa-user"></i>
+      </div>
+      <h2 id="userName">User Name</h2>
+      <p>NeuroSense Member</p>
+    </div>
+    
+    <div class="profile-body">
+      <div class="info-group">
+        <div class="info-label">Full Name</div>
+        <div class="info-value" id="profileName">-</div>
+      </div>
+      
+      <div class="info-group">
+        <div class="info-label">Email Address</div>
+        <div class="info-value" id="profileEmail">-</div>
+      </div>
+      
+      <div class="info-group">
+        <div class="info-label">Member Since</div>
+        <div class="info-value" id="profileJoinDate">-</div>
+      </div>
+      
+      <div class="info-group">
+        <div class="info-label">User ID</div>
+        <div class="info-value" id="profileId">-</div>
+      </div>
+      
+      <a href="home.html" class="btn btn-back">Back to Home</a>
+    </div>
+  </div>
+
+  <script>
+    // التحقق من تسجيل الدخول
+    const token = localStorage.getItem('token');
+    const userData = localStorage.getItem('userData');
+    
+    if (!token || !userData) {
+      window.location.href = 'index.html';
+    }
+
+    // تحميل بيانات البروفايل
+    async function loadProfile() {
+      try {
+        const res = await fetch('http://localhost:3000/api/users/profile', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          const user = data.user;
+          
+          // تحديث واجهة المستخدم
+          document.getElementById('userName').textContent = user.name;
+          document.getElementById('profileName').textContent = user.name;
+          document.getElementById('profileEmail').textContent = user.email;
+          document.getElementById('profileId').textContent = user.id;
+          
+          // تنسيق التاريخ
+          const joinDate = new Date(user.joinedAt).toLocaleDateString();
+          document.getElementById('profileJoinDate').textContent = joinDate;
+          
+          // تحديث الأفاتار
+          document.querySelector('.profile-avatar').innerHTML = 
+            `<i class="fas fa-user"></i>`;
+        } else {
+          alert('Error loading profile');
+        }
+      } catch (error) {
+        console.error('Profile error:', error);
+        alert('Error loading profile data');
+      }
+    }
+
+    // تحميل البيانات عند فتح الصفحة
+    loadProfile();
+    // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+  </script>
+</body>
+</html>

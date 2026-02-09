@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schizophrenia: Comprehensive Research Overview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      line-height: 1.8;
+      background: #f5f5f5;
+      color: #333;
+      overflow-x: hidden;
+      font-size: 18px;
+      background-image: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      background-color: white;
+      box-shadow: 0 0 30px rgba(0,0,0,0.1);
+      border-radius: 5px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: #2c3e50;
+      text-align: center;
+      margin: 40px 0;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #e74c3c;
+      position: relative;
+    }
+
+    h1:after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: #3498db;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: #2c3e50;
+      margin: 40px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: #2c3e50;
+      margin: 30px 0 15px;
+    }
+
+    h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: #2c3e50;
+      margin: 25px 0 15px;
+    }
+
+    .article-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-bottom: 60px;
+      align-items: flex-start;
+    }
+
+    .article-section:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .text {
+      flex: 2;
+      min-width: 300px;
+      padding: 20px;
+    }
+
+    p {
+      margin-bottom: 25px;
+      color: #555;
+      font-size: 1.1rem;
+      text-align: justify;
+    }
+
+    ul, ol {
+      margin-left: 40px;
+      margin-bottom: 25px;
+    }
+
+    li {
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    .abstract {
+      background-color: #f8f9fa;
+      padding: 25px;
+      border-radius: 8px;
+      margin-bottom: 40px;
+      border-left: 5px solid #3498db;
+    }
+
+    .abstract h2 {
+      margin-top: 0;
+      color: #3498db;
+    }
+
+    .author {
+      margin-top: 60px;
+      font-weight: 600;
+      text-align: right;
+      color: #2c3e50;
+      font-size: 1.2rem;
+      font-style: italic;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+
+    .caption {
+      text-align: center;
+      margin-top: 10px;
+      color: #7f8c8d;
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    /* نظام الصور المحدث - نفس نظام كود الاكتئاب */
+    .image-container {
+      flex: 1;
+      min-width: 300px;
+      max-width: 500px;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.5s ease;
+      opacity: 0;
+      transform: translateY(30px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .image-container.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .image-container:hover {
+      transform: scale(1.02) translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+
+    .image-container img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .research-highlights {
+      background-color: #e8f4f8;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 30px 0;
+      border-left: 5px solid #2c3e50;
+    }
+
+    .treatment-section {
+      background-color: #f0f8f0;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 30px 0;
+      border-left: 5px solid #27ae60;
+    }
+
+    .treatment-section h3 {
+      color: #27ae60;
+      margin-top: 0;
+    }
+
+    .symptoms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .symptom-category {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #e74c3c;
+    }
+
+    .symptom-category h4 {
+      margin-top: 0;
+      color: #e74c3c;
+    }
+
+    .schizophrenia-types-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .schizophrenia-type {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #9b59b6;
+    }
+
+    .schizophrenia-type h4 {
+      margin-top: 0;
+      color: #9b59b6;
+    }
+
+    .statistics-box {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 25px 0;
+      text-align: center;
+    }
+
+    .statistics-box h3 {
+      color: white;
+      margin-top: 0;
+    }
+
+    .stat-item {
+      margin: 15px 0;
+      font-size: 1.1rem;
+    }
+
+    .diagnosis-section {
+      background-color: #fff8e1;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 25px 0;
+      border-left: 5px solid #ffa000;
+    }
+
+    .diagnosis-section h3 {
+      color: #ffa000;
+      margin-top: 0;
+    }
+
+    .causes-section {
+      background-color: #f9f0ff;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 25px 0;
+      border-left: 5px solid #8e44ad;
+    }
+
+    .causes-section h3 {
+      color: #8e44ad;
+      margin-top: 0;
+    }
+
+    .recovery-section {
+      background-color: #e8f8f5;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 25px 0;
+      border-left: 5px solid #16a085;
+    }
+
+    .recovery-section h3 {
+      color: #16a085;
+      margin-top: 0;
+    }
+
+    @media(max-width: 768px) {
+      .article-section, 
+      .article-section:nth-child(even) {
+        flex-direction: column;
+      }
+      
+      .image-container {
+        max-width: 100%;
+      }
+      
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      h2 {
+        font-size: 1.8rem;
+      }
+      
+      .symptoms-grid,
+      .schizophrenia-types-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Floating image effect */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .floating-img {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .specifier-list {
+      columns: 2;
+      column-gap: 40px;
+    }
+
+    .specifier-list li {
+      break-inside: avoid;
+    }
+
+    @media(max-width: 768px) {
+      .specifier-list {
+        columns: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Schizophrenia: Comprehensive Research Overview</h1>
+
+    <div class="abstract">
+      <h2>Overview</h2>
+      <p>Schizophrenia is a chronic, severe mental disorder that affects the way a person thinks, acts, expresses emotions, perceives reality, and relates to others. Schizophrenia isn't as common as other major mental illnesses, affecting less than 1% of the U.S. adult population, but it can be one of the most chronic and disabling conditions.</p>
+      <p>It is a brain disorder characterized by psychosis - the inability to recognize reality. Symptoms may include delusions (false beliefs), hallucinations (false perceptions), and disorganized speech or behavior. Contrary to popular belief, schizophrenia is not a split or multiple personality but rather involves periods where individuals lose touch with reality, experiencing a world that blends confusing thoughts, images, and sounds together.</p>
+    </div>
+
+    <h2>Introduction to Schizophrenia</h2>
+
+    <div class="article-section">
+      <div class="text">
+        <h3>Understanding Schizophrenia</h3>
+        <p>Schizophrenia is surprisingly common, affecting 1 in every 100 people worldwide. Although symptoms may vary widely, people with schizophrenia frequently have a hard time recognizing reality, thinking logically and behaving naturally in social situations.</p>
+        <p>The severity of schizophrenia varies from person to person. Some people have only one psychotic episode, while others have many episodes during their lifetime. In between psychotic episodes, individuals may lead relatively normal lives. Still, others may have more trouble functioning over time, with little improvement between full-blown psychotic episodes.</p>
+        <p>Schizophrenia symptoms seem to worsen, then improve, in cycles known as relapses and remissions. At least one in three people with schizophrenia will be able to fully recover with proper treatment and support.</p>
+      </div>
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Schizophrenia Brain Function">
+        </div>
+        <div class="caption">Figure 1: Brain differences in schizophrenia affecting perception and cognition</div>
+      </div>
+    </div>
+
+    <div class="statistics-box">
+      <h3>Schizophrenia Epidemiology</h3>
+      <div class="stat-item">Affects approximately 1% of the global population</div>
+      <div class="stat-item">10% risk if an immediate family member has the illness</div>
+      <div class="stat-item">65% risk for identical twins when one has schizophrenia</div>
+      <div class="stat-item">Typically begins in late teens to early 30s</div>
+      <div class="stat-item">Earlier onset in men (late teens to early 20s) than women (late 20s to early 30s)</div>
+    </div>
+
+    <h2>Symptom Categories in Schizophrenia</h2>
+
+    <div class="symptoms-grid">
+      <div class="symptom-category">
+        <h4>Positive Symptoms</h4>
+        <p><strong>"Added" thoughts or behaviors not based in reality</strong></p>
+        <ul>
+          <li><strong>Delusions:</strong> False, fixed beliefs not based in reality</li>
+          <li><strong>Hallucinations:</strong> Sensory experiences without external stimulus</li>
+          <li><strong>Disorganized Speech:</strong> Incoherent or illogical communication</li>
+          <li><strong>Disorganized Behavior:</strong> Unusual or inappropriate actions</li>
+          <li><strong>Catatonia:</strong> Unusual motor behavior or immobility</li>
+        </ul>
+      </div>
+      
+      <div class="symptom-category">
+        <h4>Negative Symptoms</h4>
+        <p><strong>Absence or reduction of normal behaviors</strong></p>
+        <ul>
+          <li><strong>Flat Affect:</strong> Reduced emotional expression</li>
+          <li><strong>Alogia:</strong> Reduced speech output</li>
+          <li><strong>Avolition:</strong> Decreased motivation</li>
+          <li><strong>Anhedonia:</strong> Reduced ability to experience pleasure</li>
+          <li><strong>Asociality:</strong> Lack of interest in social interactions</li>
+        </ul>
+      </div>
+
+      <div class="symptom-category">
+        <h4>Cognitive Symptoms</h4>
+        <p><strong>Problems with thinking processes</strong></p>
+        <ul>
+          <li><strong>Working Memory Deficits:</strong> Trouble holding information</li>
+          <li><strong>Executive Dysfunction:</strong> Poor planning and organization</li>
+          <li><strong>Attention Difficulties:</strong> Trouble focusing</li>
+          <li><strong>Processing Speed:</strong> Slowed thinking</li>
+          <li><strong>Poor Insight:</strong> Limited awareness of illness</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Detailed Symptom Description</h3>
+    
+    <div class="article-section">
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Symptom Manifestation">
+        </div>
+        <div class="caption">Figure 2: How different schizophrenia symptoms manifest in daily life</div>
+      </div>
+      <div class="text">
+        <h4>Positive Symptoms Explained</h4>
+        <p><strong>Delusions</strong> are false beliefs that persist despite evidence to the contrary. Common types include:</p>
+        <ul>
+          <li><strong>Persecutory:</strong> Belief of being harmed or harassed</li>
+          <li><strong>Referential:</strong> Belief that neutral events have special meaning</li>
+          <li><strong>Grandiose:</strong> Belief of having exceptional abilities or importance</li>
+          <li><strong>Control:</strong> Belief that thoughts or actions are controlled by external forces</li>
+        </ul>
+        
+        <h4>Hallucinations</h4>
+        <p>Hallucinations involve false sensory perceptions. <strong>Auditory hallucinations</strong> (hearing voices) are most common, often involving commentary, insults, or commands. Other types include visual, tactile, olfactory, and gustatory hallucinations.</p>
+        
+        <h4>Disorganized Symptoms</h4>
+        <p><strong>Disorganized speech</strong> may involve loose associations, tangentiality, or incoherence. <strong>Disorganized behavior</strong> can range from childlike silliness to unpredictable agitation or catatonic immobility.</p>
+      </div>
+    </div>
+
+    <h2>Causes and Risk Factors</h2>
+
+    <div class="causes-section">
+      <h3>Multifactorial Origins</h3>
+      <p>Experts believe schizophrenia results from a combination of genetic and environmental causes. Research has identified several genes that increase risk, suggesting schizophrenia may represent several related illnesses rather than a single condition.</p>
+    </div>
+
+    <div class="article-section">
+      <div class="text">
+        <h3>Genetic Factors</h3>
+        
+        <h4>Heritability Patterns</h4>
+        <p>The chance of having schizophrenia is 10% if an immediate family member (parent or sibling) has the illness. The risk increases to 65% for identical twins. Multiple genes are involved, likely affecting brain development and neural communication.</p>
+        
+        <h3>Environmental Triggers</h3>
+        <p>In vulnerable individuals, various environmental factors may trigger illness during critical periods of brain development:</p>
+        
+        <h4>Key Environmental Factors</h4>
+        <ul>
+          <li><strong>Prenatal Factors:</strong> Viral infections, malnutrition, complications</li>
+          <li><strong>Childhood Trauma:</strong> Abuse, neglect, or significant stress</li>
+          <li><strong>Substance Use:</strong> Cannabis, stimulants, hallucinogens</li>
+          <li><strong>Urban Environment:</strong> Increased risk in urban vs. rural settings</li>
+          <li><strong>Social Factors:</strong> Migration, social defeat, discrimination</li>
+        </ul>
+      </div>
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Risk Factors Diagram">
+        </div>
+        <div class="caption">Figure 3: Genetic and environmental factors in schizophrenia development</div>
+      </div>
+    </div>
+
+    <h2>Diagnosis and Assessment</h2>
+
+    <div class="diagnosis-section">
+      <h3>Diagnostic Criteria</h3>
+      <p>Only a psychiatrist can diagnose schizophrenia after comprehensive assessment. Diagnosis requires:</p>
+      <ul>
+        <li>Presence of characteristic symptoms for at least one month</li>
+        <li>Total duration of at least six months</li>
+        <li>Significant impairment in social/occupational functioning</li>
+        <li>Exclusion of other medical or psychiatric conditions</li>
+        <li>Rule out substance-induced symptoms</li>
+      </ul>
+    </div>
+
+    <div class="article-section">
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Diagnostic Process">
+        </div>
+        <div class="caption">Figure 4: Comprehensive assessment pathway for schizophrenia</div>
+      </div>
+      <div class="text">
+        <h3>Diagnostic Process</h3>
+        <p>The diagnosis of schizophrenia is often challenging and may take months or years to confirm. Assessment typically involves:</p>
+        
+        <h4>Clinical Evaluation</h4>
+        <ul>
+          <li>Detailed psychiatric history and mental status exam</li>
+          <li>Observation of behavior and speech patterns</li>
+          <li>Assessment of symptom duration and impact</li>
+          <li>Family history of mental illness</li>
+        </ul>
+        
+        <h4>Medical Assessment</h4>
+        <p>Physical examination and laboratory tests to rule out medical conditions that might mimic psychotic symptoms, including:</p>
+        <ul>
+          <li>Neurological disorders</li>
+          <li>Metabolic conditions</li>
+          <li>Substance intoxication or withdrawal</li>
+          <li>Infectious diseases</li>
+        </ul>
+        
+        <h3>Differential Diagnosis</h3>
+        <p>Conditions that may present similarly include schizoaffective disorder, bipolar disorder with psychotic features, depressive disorder with psychotic features, substance-induced psychosis, and various medical conditions.</p>
+      </div>
+    </div>
+
+    <h2>Treatment and Management</h2>
+
+    <div class="treatment-section">
+      <h3>Comprehensive Treatment Approach</h3>
+      <p>Lifelong treatment with medications and psychosocial therapy can help manage schizophrenia, though there is no cure. Treatment is needed even when symptoms ease. A team approach involving psychiatrists, psychologists, social workers, and case managers provides the most effective care.</p>
+    </div>
+
+    <div class="symptoms-grid">
+      <div class="symptom-category">
+        <h4>Medication Management</h4>
+        <p><strong>Antipsychotic Medications:</strong> Primary treatment targeting dopamine and serotonin systems</p>
+        <p><strong>Second-Generation Antipsychotics:</strong> Newer medications with fewer movement side effects</p>
+        <p><strong>Long-Acting Injectables:</strong> Formulations for improved adherence</p>
+        <p><strong>Adjunctive Medications:</strong> Mood stabilizers, antidepressants, anti-anxiety drugs</p>
+        <p><strong>Monitoring:</strong> Regular assessment of efficacy and side effects</p>
+      </div>
+      
+      <div class="symptom-category">
+        <h4>Psychosocial Interventions</h4>
+        <p><strong>Cognitive Behavioral Therapy (CBT):</strong> Addresses thought patterns and coping</p>
+        <p><strong>Social Skills Training:</strong> Improves communication and social functioning</p>
+        <p><strong>Family Therapy:</strong> Educates and supports family members</p>
+        <p><strong>Supported Employment:</strong> Vocational rehabilitation and job support</p>
+        <p><strong>Assertive Community Treatment (ACT):</strong> Intensive community-based care</p>
+      </div>
+
+      <div class="symptom-category">
+        <h4>Specialized Treatments</h4>
+        <p><strong>Coordinated Specialty Care (CSC):</strong> Team approach for first-episode psychosis</p>
+        <p><strong>Electroconvulsive Therapy (ECT):</strong> For treatment-resistant cases</p>
+        <p><strong>Cognitive Remediation:</strong> Improves cognitive functioning</p>
+        <p><strong>Peer Support:</strong> Connection with others with lived experience</p>
+        <p><strong>Hospitalization:</strong> For crisis stabilization and safety</p>
+      </div>
+    </div>
+
+    <h3>Medication Details</h3>
+    
+    <div class="article-section">
+      <div class="text">
+        <h4>Second-Generation Antipsychotics</h4>
+        <p>Newer medications that may have fewer side effects related to muscle movements:</p>
+        <ul>
+          <li>Aripiprazole (Abilify)</li>
+          <li>Clozapine (Clozaril) - for treatment-resistant cases</li>
+          <li>Olanzapine (Zyprexa)</li>
+          <li>Quetiapine (Seroquel)</li>
+          <li>Risperidone (Risperdal)</li>
+          <li>Several other options with varying profiles</li>
+        </ul>
+        
+        <h4>First-Generation Antipsychotics</h4>
+        <p>Older medications still used in certain situations:</p>
+        <ul>
+          <li>Haloperidol (Haldol)</li>
+          <li>Chlorpromazine</li>
+          <li>Fluphenazine</li>
+          <li>Perphenazine (Trilafon)</li>
+        </ul>
+        
+        <h4>Treatment Considerations</h4>
+        <p>Medication choice is individualized based on symptom profile, side effect tolerance, and patient preference. Regular monitoring is essential for managing potential side effects including metabolic changes, movement disorders, and other systemic effects.</p>
+      </div>
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Treatment Modalities">
+        </div>
+        <div class="caption">Figure 5: Integrated treatment approach for schizophrenia</div>
+      </div>
+    </div>
+
+    <div class="recovery-section">
+      <h3>Recovery and Prognosis</h3>
+      <div class="symptoms-grid">
+        <div class="symptom-category">
+          <h4>Recovery-Oriented Approach</h4>
+          <ul>
+            <li>Recovery is viewed as gaining control over one's life</li>
+            <li>Focus on meaning and purpose beyond symptom reduction</li>
+            <li>Emphasis on personal strengths and resilience</li>
+            <li>Recovery is possible even with ongoing symptoms</li>
+          </ul>
+        </div>
+        
+        <div class="symptom-category">
+          <h4>Prognostic Factors</h4>
+          <ul>
+            <li>Later age of onset</li>
+            <li>Good premorbid functioning</li>
+            <li>Positive response to medication</li>
+            <li>Good social support system</li>
+            <li>Absence of substance use</li>
+          </ul>
+        </div>
+
+        <div class="symptom-category">
+          <h4>Long-Term Outcomes</h4>
+          <ul>
+            <li>Approximately 1/3 achieve significant recovery</li>
+            <li>1/3 experience moderate impairment with relapses</li>
+            <li>1/3 have persistent significant disability</li>
+            <li>Early intervention improves long-term outcomes</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="research-highlights">
+      <h3>Key Treatment Principles</h3>
+      <p><strong>Early Intervention:</strong> Early treatment significantly improves long-term outcomes and recovery potential</p>
+      <p><strong>Integrated Care:</strong> Combining medication with psychosocial interventions provides most comprehensive treatment</p>
+      <p><strong>Personalized Approach:</strong> Treatment must be tailored to individual symptoms, preferences, and life circumstances</p>
+      <p><strong>Long-term Perspective:</strong> Schizophrenia requires ongoing management with periodic treatment adjustments</p>
+      <p><strong>Holistic Support:</strong> Addressing physical health, housing, employment, and social connection enhances recovery</p>
+      <p><strong>Family Involvement:</strong> Educated and supported family members significantly improve treatment outcomes</p>
+    </div>
+
+    <div class="author">Research compiled by: Psychiatry and Clinical Psychology Research Team</div>
+  </div>
+
+  <script>
+    const images = document.querySelectorAll('.image-container');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    });
+
+    images.forEach(img => observer.observe(img));
+    // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+  </script>
+</body>
+</html>

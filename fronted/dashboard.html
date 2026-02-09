@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Tracking - NeuroSense</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #6a11cb;
+            --secondary-color: #2575fc;
+            --accent-color: #4a00e0;
+            --text-color: #333;
+            --light-text: #fff;
+            --card-bg: #fff;
+            --section-bg: #f4f6f9;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: var(--section-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .header h1 {
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            border-top: 5px solid var(--primary-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .chart-card {
+            background: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .chart-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .chart-title {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .chart-title i {
+            margin-right: 10px;
+        }
+        
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .activity-card {
+            background: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .activity-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .activity-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .activity-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+        
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .insight-card {
+            background: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .insight-card:hover {
+            transform: translateY(-3px);
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(106, 17, 203, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(106, 17, 203, 0.4);
+        }
+        
+        .trend-indicator {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+            font-weight: 600;
+        }
+        
+        .trend-up {
+            background: #e8f5e8;
+            color: var(--success-color);
+        }
+        
+        .trend-down {
+            background: #ffeaea;
+            color: var(--danger-color);
+        }
+        
+        .motivation-message {
+            background: linear-gradient(135deg, #f5f7fa, #e4e8f1);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin: 20px 0;
+            text-align: center;
+            font-style: italic;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            margin: 30px 0 20px;
+            color: var(--primary-color);
+            border-bottom: 2px solid #eaeaea;
+            padding-bottom: 10px;
+        }
+        
+        .achievement-badge {
+            display: inline-flex;
+            align-items: center;
+            background: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 20px;
+            margin: 0 10px 10px 0;
+            font-size: 0.9rem;
+        }
+        
+        .achievement-badge i {
+            color: #f39c12;
+            margin-right: 8px;
+        }
+        
+        .progress-container {
+            margin-bottom: 15px;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .improvement-card {
+            background: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .improvement-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--success-color);
+            margin: 10px 0;
+        }
+        
+        .engagement-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .metric-card {
+            background: white;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .metric-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .mood-selector {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+        }
+        
+        .mood-option {
+            text-align: center;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .mood-option:hover {
+            background: #f0f0f0;
+        }
+        
+        .mood-option.selected {
+            background: rgba(106, 17, 203, 0.1);
+            border: 2px solid var(--primary-color);
+        }
+        
+        .mood-icon {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+        
+        .mood-label {
+            font-size: 0.9rem;
+        }
+        
+        .data-source-selector {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .data-source-btn {
+            flex: 1;
+            padding: 12px;
+            background: #f5f5f5;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .data-source-btn.selected {
+            background: rgba(106, 17, 203, 0.1);
+            border-color: var(--primary-color);
+        }
+        
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-card {
+                padding: 15px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .mood-selector {
+                flex-wrap: wrap;
+            }
+            
+            .mood-option {
+                flex: 0 0 20%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-chart-line"></i> Progress Tracking</h1>
+            <p>Monitor your mental health journey with clear insights and personalized feedback</p>
+        </div>
+        
+        <!-- Quick Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalSessions">0</div>
+                <div class="stat-label">Total Therapy Sessions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="moodScore">0%</div>
+                <div class="stat-label">Average Mood Score</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="completionRate">0%</div>
+                <div class="stat-label">Program Completion</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="streakDays">0</div>
+                <div class="stat-label">Current Streak</div>
+            </div>
+        </div>
+        
+        <!-- Data Source Selection -->
+        <div class="data-source-selector">
+            <div class="data-source-btn selected" id="manualDataBtn">
+                <i class="fas fa-edit"></i> Manual Entry
+            </div>
+            <div class="data-source-btn" id="healthAppBtn">
+                <i class="fas fa-mobile-alt"></i> Health Apps
+            </div>
+            <div class="data-source-btn" id="wearableBtn">
+                <i class="fas fa-watch"></i> Wearables
+            </div>
+        </div>
+        
+        <!-- Engagement Metrics -->
+        <h2 class="section-title"><i class="fas fa-chart-pie"></i> Engagement Metrics</h2>
+        <div class="engagement-metrics" id="engagementMetrics">
+            <!-- Will be filled by JavaScript -->
+        </div>
+        
+        <!-- Overall Improvement -->
+        <h2 class="section-title"><i class="fas fa-trending-up"></i> Overall Improvement</h2>
+        <div class="improvement-card">
+            <h3>Your Overall Progress</h3>
+            <div class="improvement-value" id="overallImprovement">0%</div>
+            <p>Based on your engagement and activity completion</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="improvementBar" style="width: 0%"></div>
+            </div>
+        </div>
+        
+        <!-- Motivation Message -->
+        <div class="motivation-message" id="motivationMessage">
+            <!-- Will be filled by JavaScript -->
+        </div>
+        
+        <!-- Log New Activity Button -->
+        <div style="text-align: center; margin: 20px 0;">
+            <button class="btn" id="logActivityBtn"><i class="fas fa-plus"></i> Log New Activity</button>
+            <button class="btn" id="logMoodBtn"><i class="fas fa-smile"></i> Log Mood</button>
+        </div>
+        
+        <!-- Charts -->
+        <h2 class="section-title"><i class="fas fa-chart-bar"></i> Progress Analytics</h2>
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h3 class="chart-title"><i class="fas fa-smile"></i> Mood Trends Over Time</h3>
+                <canvas id="moodChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3 class="chart-title"><i class="fas fa-tasks"></i> Activity Distribution</h3>
+                <canvas id="activityChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3 class="chart-title"><i class="fas fa-mouse-pointer"></i> Engagement Over Time</h3>
+                <canvas id="engagementChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3 class="chart-title"><i class="fas fa-chart-line"></i> Improvement Progress</h3>
+                <canvas id="improvementChart"></canvas>
+            </div>
+        </div>
+        
+        <!-- Activity Progress -->
+        <h2 class="section-title"><i class="fas fa-check-circle"></i> Activity Progress</h2>
+        <div class="activities-grid" id="activitiesGrid">
+            <!-- Will be filled by JavaScript -->
+        </div>
+        
+        <!-- Insights & Recommendations -->
+        <h2 class="section-title"><i class="fas fa-lightbulb"></i> Insights & Recommendations</h2>
+        <div class="insights-grid">
+            <div class="insight-card">
+                <h3><i class="fas fa-chart-line"></i> Weekly Insights</h3>
+                <div id="weeklyInsights">
+                    <!-- Will be filled by JavaScript -->
+                </div>
+                <button class="btn" id="insightBtn">Get Personalized Tips</button>
+            </div>
+            <div class="insight-card">
+                <h3><i class="fas fa-trophy"></i> Achievements</h3>
+                <div id="achievementsList">
+                    <!-- Will be filled by JavaScript -->
+                </div>
+                <button class="btn" id="achievementBtn">View All Achievements</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Log Activity Modal -->
+    <div class="modal" id="activityModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Log New Activity</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="activityForm">
+                <div class="form-group">
+                    <label for="activityType">Activity Type</label>
+                    <select class="form-control" id="activityType" required>
+                        <option value="">Select an activity</option>
+                        <option value="therapy">Therapy Session</option>
+                        <option value="meditation">Meditation</option>
+                        <option value="exercises">Mental Exercises</option>
+                        <option value="assessments">Self-Assessment</option>
+                        <option value="reading">Educational Reading</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="activityDuration">Duration (minutes)</label>
+                    <input type="number" class="form-control" id="activityDuration" min="1" max="240" required>
+                </div>
+                <div class="form-group">
+                    <label for="activityNotes">Notes (optional)</label>
+                    <textarea class="form-control" id="activityNotes" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Log Activity</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Log Mood Modal -->
+    <div class="modal" id="moodModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>How Are You Feeling?</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <form id="moodForm">
+                <div class="form-group">
+                    <label>Select Your Current Mood</label>
+                    <div class="mood-selector">
+                        <div class="mood-option" data-value="20">
+                            <div class="mood-icon">😢</div>
+                            <div class="mood-label">Very Low</div>
+                        </div>
+                        <div class="mood-option" data-value="40">
+                            <div class="mood-icon">😔</div>
+                            <div class="mood-label">Low</div>
+                        </div>
+                        <div class="mood-option" data-value="60">
+                            <div class="mood-icon">😐</div>
+                            <div class="mood-label">Neutral</div>
+                        </div>
+                        <div class="mood-option" data-value="80">
+                            <div class="mood-icon">😊</div>
+                            <div class="mood-label">Good</div>
+                        </div>
+                        <div class="mood-option" data-value="100">
+                            <div class="mood-icon">😄</div>
+                            <div class="mood-label">Excellent</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="moodValue" required>
+                </div>
+                <div class="form-group">
+                    <label for="moodNotes">What's influencing your mood? (optional)</label>
+                    <textarea class="form-control" id="moodNotes" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Save Mood</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Real data storage (in a real app, this would be a database)
+        let userData = JSON.parse(localStorage.getItem('neuroSenseUserData')) || {
+            mood: [],
+            activities: {
+                therapy: { completed: 0, total: 12, progress: 0 },
+                meditation: { completed: 0, total: 30, progress: 0 },
+                exercises: { completed: 0, total: 25, progress: 0 },
+                assessments: { completed: 0, total: 5, progress: 0 },
+                reading: { completed: 0, total: 20, progress: 0 }
+            },
+            sessions: 0,
+            streak: 0,
+            achievements: [],
+            engagement: {
+                pageViews: [],
+                buttonClicks: [],
+                timeSpent: []
+            },
+            improvement: [],
+            lastActivityDate: null
+        };
+
+        // Motivational messages based on progress
+        const motivationMessages = [
+            "Every step forward, no matter how small, is progress. Keep going!",
+            "Your consistency is building a stronger, healthier you. Well done!",
+            "Small daily improvements lead to stunning results over time.",
+            "You're doing better than you think. Look how far you've come!",
+            "Progress isn't always linear. Celebrate every step forward."
+        ];
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStats();
+            initializeCharts();
+            renderActivities();
+            renderInsights();
+            renderAchievements();
+            updateMotivationMessage();
+            renderEngagementMetrics();
+            
+            // Add event listeners
+            document.getElementById('insightBtn').addEventListener('click', showPersonalizedTips);
+            document.getElementById('achievementBtn').addEventListener('click', showAllAchievements);
+            document.getElementById('logActivityBtn').addEventListener('click', openActivityModal);
+            document.getElementById('logMoodBtn').addEventListener('click', openMoodModal);
+            
+            // Modal event listeners
+            document.querySelectorAll('.close-modal').forEach(button => {
+                button.addEventListener('click', closeModals);
+            });
+            
+            // Form submissions
+            document.getElementById('activityForm').addEventListener('submit', logActivity);
+            document.getElementById('moodForm').addEventListener('submit', logMood);
+            
+            // Mood selector
+            document.querySelectorAll('.mood-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.mood-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                    document.getElementById('moodValue').value = this.getAttribute('data-value');
+                });
+            });
+            
+            // Data source selection
+            document.querySelectorAll('.data-source-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.data-source-btn').forEach(b => {
+                        b.classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                    
+                    if (this.id === 'healthAppBtn') {
+                        connectToHealthApp();
+                    } else if (this.id === 'wearableBtn') {
+                        connectToWearable();
+                    }
+                });
+            });
+            
+            // Track page view
+            trackPageView();
+            
+            // Simulate real-time data updates
+            setInterval(updateRealTimeData, 30000);
+        });
+
+        function updateStats() {
+            document.getElementById('totalSessions').textContent = userData.sessions;
+            
+            // Calculate average mood
+            const avgMood = userData.mood.length > 0 
+                ? Math.round(userData.mood.reduce((a, b) => a + b, 0) / userData.mood.length) 
+                : 0;
+            document.getElementById('moodScore').textContent = avgMood + '%';
+            
+            // Calculate completion rate
+            const totalCompleted = Object.values(userData.activities).reduce((sum, activity) => sum + activity.completed, 0);
+            const totalActivities = Object.values(userData.activities).reduce((sum, activity) => sum + activity.total, 0);
+            const completionRate = totalActivities > 0 ? Math.round((totalCompleted / totalActivities) * 100) : 0;
+            document.getElementById('completionRate').textContent = completionRate + '%';
+            
+            document.getElementById('streakDays').textContent = userData.streak;
+            
+            // Update overall improvement
+            const latestImprovement = userData.improvement.length > 0 
+                ? userData.improvement[userData.improvement.length - 1] 
+                : 0;
+            document.getElementById('overallImprovement').textContent = latestImprovement + '%';
+            document.getElementById('improvementBar').style.width = latestImprovement + '%';
+        }
+
+        function initializeCharts() {
+            // Mood Chart
+            const moodCtx = document.getElementById('moodChart').getContext('2d');
+            if (window.moodChartInstance) {
+                window.moodChartInstance.destroy();
+            }
+            window.moodChartInstance = new Chart(moodCtx, {
+                type: 'line',
+                data: {
+                    labels: generateDateLabels(userData.mood.length),
+                    datasets: [{
+                        label: 'Mood Score',
+                        data: userData.mood,
+                        borderColor: '#6a11cb',
+                        backgroundColor: 'rgba(106, 17, 203, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#6a11cb',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                            titleFont: {
+                                size: 14
+                            },
+                            bodyFont: {
+                                size: 13
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Activity Chart
+            const activityCtx = document.getElementById('activityChart').getContext('2d');
+            if (window.activityChartInstance) {
+                window.activityChartInstance.destroy();
+            }
+            const activityData = [
+                userData.activities.therapy.completed,
+                userData.activities.meditation.completed,
+                userData.activities.exercises.completed,
+                userData.activities.assessments.completed,
+                userData.activities.reading.completed
+            ];
+            window.activityChartInstance = new Chart(activityCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Therapy', 'Meditation', 'Exercises', 'Assessments', 'Reading'],
+                    datasets: [{
+                        data: activityData,
+                        backgroundColor: [
+                            '#6a11cb', '#2575fc', '#4a00e0', '#8e2de2', '#4776E6'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        }
+                    },
+                    cutout: '60%'
+                }
+            });
+
+            // Engagement Chart
+            const engagementCtx = document.getElementById('engagementChart').getContext('2d');
+            if (window.engagementChartInstance) {
+                window.engagementChartInstance.destroy();
+            }
+            window.engagementChartInstance = new Chart(engagementCtx, {
+                type: 'bar',
+                data: {
+                    labels: generateDateLabels(userData.engagement.pageViews.length),
+                    datasets: [
+                        {
+                            label: 'Page Views',
+                            data: userData.engagement.pageViews,
+                            backgroundColor: 'rgba(106, 17, 203, 0.7)',
+                            borderColor: '#6a11cb',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Button Clicks',
+                            data: userData.engagement.buttonClicks,
+                            backgroundColor: 'rgba(37, 117, 252, 0.7)',
+                            borderColor: '#2575fc',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Improvement Chart
+            const improvementCtx = document.getElementById('improvementChart').getContext('2d');
+            if (window.improvementChartInstance) {
+                window.improvementChartInstance.destroy();
+            }
+            window.improvementChartInstance = new Chart(improvementCtx, {
+                type: 'line',
+                data: {
+                    labels: generateDateLabels(userData.improvement.length),
+                    datasets: [{
+                        label: 'Improvement Progress',
+                        data: userData.improvement,
+                        borderColor: '#2ecc71',
+                        backgroundColor: 'rgba(46, 204, 113, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#2ecc71',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderActivities() {
+            const grid = document.getElementById('activitiesGrid');
+            grid.innerHTML = '';
+            
+            Object.entries(userData.activities).forEach(([activity, data]) => {
+                const card = document.createElement('div');
+                card.className = 'activity-card';
+                card.innerHTML = `
+                    <div class="activity-header">
+                        <div class="activity-icon">
+                            <i class="fas fa-${getActivityIcon(activity)}"></i>
+                        </div>
+                        <div>
+                            <h4>${formatActivityName(activity)}</h4>
+                            <div>${data.completed}/${data.total} completed</div>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-info">
+                            <span>Progress</span>
+                            <span>${data.progress}%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${data.progress}%"></div>
+                        </div>
+                    </div>
+                    <button class="btn card-button" data-activity="${activity}">Log Activity</button>
+                `;
+                grid.appendChild(card);
+            });
+            
+            // Add event listeners to activity buttons
+            document.querySelectorAll('[data-activity]').forEach(button => {
+                button.addEventListener('click', function() {
+                    const activity = this.getAttribute('data-activity');
+                    document.getElementById('activityType').value = activity;
+                    openActivityModal();
+                });
+            });
+        }
+
+        function renderEngagementMetrics() {
+            const metricsContainer = document.getElementById('engagementMetrics');
+            const latestPageViews = userData.engagement.pageViews.length > 0 
+                ? userData.engagement.pageViews[userData.engagement.pageViews.length - 1] 
+                : 0;
+            const latestButtonClicks = userData.engagement.buttonClicks.length > 0 
+                ? userData.engagement.buttonClicks[userData.engagement.buttonClicks.length - 1] 
+                : 0;
+            const latestTimeSpent = userData.engagement.timeSpent.length > 0 
+                ? userData.engagement.timeSpent[userData.engagement.timeSpent.length - 1] 
+                : 0;
+            
+            metricsContainer.innerHTML = `
+                <div class="metric-card">
+                    <div class="metric-value">${latestPageViews}</div>
+                    <div class="metric-label">Page Views</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">${latestButtonClicks}</div>
+                    <div class="metric-label">Button Clicks</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">${latestTimeSpent} min</div>
+                    <div class="metric-label">Time Spent</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">${calculateEngagementScore()}%</div>
+                    <div class="metric-label">Engagement Score</div>
+                </div>
+            `;
+        }
+
+        function renderInsights() {
+            const insights = document.getElementById('weeklyInsights');
+            const latestMood = userData.mood.length > 0 ? userData.mood[userData.mood.length - 1] : 0;
+            const previousMood = userData.mood.length > 1 ? userData.mood[userData.mood.length - 2] : 0;
+            const trend = latestMood > previousMood ? 'up' : (latestMood < previousMood ? 'down' : 'stable');
+            
+            insights.innerHTML = `
+                <div style="margin-bottom: 15px;">
+                    <strong>Mood Trend:</strong> 
+                    Your mood has been trending 
+                    <span class="trend-indicator ${trend === 'up' ? 'trend-up' : trend === 'down' ? 'trend-down' : ''}">
+                        ${trend === 'up' ? '📈 Improving' : trend === 'down' ? '📉 Declining' : '➡️ Stable'}
+                    </span>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <strong>Engagement:</strong> 
+                    Your engagement score is ${calculateEngagementScore()}%
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <strong>Recommendation:</strong> 
+                    ${getRecommendation(latestMood, trend)}
+                </div>
+            `;
+        }
+
+        function renderAchievements() {
+            const achievements = document.getElementById('achievementsList');
+            
+            // Generate achievements based on user progress
+            updateAchievements();
+            
+            // Show only the first 3 achievements
+            const displayedAchievements = userData.achievements.slice(0, 3);
+            
+            if (displayedAchievements.length === 0) {
+                achievements.innerHTML = '<p>Complete activities to earn achievements!</p>';
+            } else {
+                achievements.innerHTML = displayedAchievements
+                    .map(achievement => `
+                        <div class="achievement-badge">
+                            <i class="fas fa-trophy"></i>
+                            ${achievement}
+                        </div>
+                    `)
+                    .join('');
+            }
+        }
+
+        function updateMotivationMessage() {
+            const messageElement = document.getElementById('motivationMessage');
+            const randomIndex = Math.floor(Math.random() * motivationMessages.length);
+            messageElement.textContent = motivationMessages[randomIndex];
+        }
+
+        function getActivityIcon(activity) {
+            const icons = {
+                therapy: 'heart',
+                meditation: 'om',
+                exercises: 'running',
+                assessments: 'clipboard-check',
+                reading: 'book'
+            };
+            return icons[activity] || 'check-circle';
+        }
+
+        function formatActivityName(activity) {
+            return activity.charAt(0).toUpperCase() + activity.slice(1);
+        }
+
+        function getRecommendation(mood, trend) {
+            if (mood >= 80) return "Great job! Maintain your current routine.";
+            if (mood >= 60) return "Good progress. Consider adding daily meditation.";
+            return "Let's focus on self-care activities this week.";
+        }
+
+        function calculateEngagementScore() {
+            const pageViews = userData.engagement.pageViews.length > 0 
+                ? userData.engagement.pageViews[userData.engagement.pageViews.length - 1] 
+                : 0;
+            const buttonClicks = userData.engagement.buttonClicks.length > 0 
+                ? userData.engagement.buttonClicks[userData.engagement.buttonClicks.length - 1] 
+                : 0;
+            const timeSpent = userData.engagement.timeSpent.length > 0 
+                ? userData.engagement.timeSpent[userData.engagement.timeSpent.length - 1] 
+                : 0;
+            
+            // Simple calculation for demonstration
+            return Math.min(100, Math.round((pageViews * 0.3) + (buttonClicks * 0.4) + (timeSpent * 0.3)));
+        }
+
+        function openActivityModal() {
+            document.getElementById('activityModal').style.display = 'flex';
+        }
+
+        function openMoodModal() {
+            document.getElementById('moodModal').style.display = 'flex';
+        }
+
+        function closeModals() {
+            document.querySelectorAll('.modal').forEach(modal => {
+                modal.style.display = 'none';
+            });
+        }
+
+        function logActivity(e) {
+            e.preventDefault();
+            
+            const activityType = document.getElementById('activityType').value;
+            const duration = parseInt(document.getElementById('activityDuration').value);
+            const notes = document.getElementById('activityNotes').value;
+            
+            if (!activityType || !duration) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // Update user data
+            userData.activities[activityType].completed += 1;
+            userData.activities[activityType].progress = 
+                Math.round((userData.activities[activityType].completed / userData.activities[activityType].total) * 100);
+            
+            // Update sessions count if it's a therapy session
+            if (activityType === 'therapy') {
+                userData.sessions += 1;
+            }
+            
+            // Update streak
+            updateStreak();
+            
+            // Update improvement
+            updateImprovement();
+            
+            // Save data
+            saveUserData();
+            
+            // Update the display
+            updateStats();
+            renderActivities();
+            initializeCharts();
+            renderAchievements();
+            
+            // Close modal and reset form
+            closeModals();
+            document.getElementById('activityForm').reset();
+            
+            // Show confirmation
+            alert(`Successfully logged ${formatActivityName(activityType)} activity!`);
+        }
+
+        function logMood(e) {
+            e.preventDefault();
+            
+            const moodValue = document.getElementById('moodValue').value;
+            const notes = document.getElementById('moodNotes').value;
+            
+            if (!moodValue) {
+                alert('Please select your mood');
+                return;
+            }
+            
+            // Add mood to user data
+            userData.mood.push(parseInt(moodValue));
+            
+            // Limit to last 30 entries
+            if (userData.mood.length > 30) {
+                userData.mood.shift();
+            }
+            
+            // Update improvement
+            updateImprovement();
+            
+            // Save data
+            saveUserData();
+            
+            // Update the display
+            updateStats();
+            initializeCharts();
+            renderInsights();
+            
+            // Close modal and reset form
+            closeModals();
+            document.getElementById('moodForm').reset();
+            document.querySelectorAll('.mood-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Show confirmation
+            alert('Mood logged successfully!');
+        }
+
+        function updateStreak() {
+            const today = new Date().toDateString();
+            const lastActivityDate = userData.lastActivityDate;
+            
+            if (!lastActivityDate) {
+                userData.streak = 1;
+            } else {
+                const lastDate = new Date(lastActivityDate);
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                
+                if (lastDate.toDateString() === yesterday.toDateString()) {
+                    userData.streak += 1;
+                } else if (lastDate.toDateString() !== today) {
+                    userData.streak = 1;
+                }
+            }
+            
+            userData.lastActivityDate = today;
+        }
+
+        function updateImprovement() {
+            // Calculate improvement based on various factors
+            const moodAvg = userData.mood.length > 0 
+                ? userData.mood.reduce((a, b) => a + b, 0) / userData.mood.length 
+                : 0;
+            
+            const activityCompletion = Object.values(userData.activities).reduce((sum, activity) => {
+                return sum + (activity.completed / activity.total);
+            }, 0) / Object.keys(userData.activities).length * 100;
+            
+            const engagementScore = calculateEngagementScore();
+            
+            // Weighted average
+            const improvement = Math.round(
+                (moodAvg * 0.4) + (activityCompletion * 0.4) + (engagementScore * 0.2)
+            );
+            
+            userData.improvement.push(improvement);
+            
+            // Limit to last 30 entries
+            if (userData.improvement.length > 30) {
+                userData.improvement.shift();
+            }
+        }
+
+        function updateAchievements() {
+            const achievements = [];
+            
+            // Check for various achievement conditions
+            if (userData.streak >= 7) {
+                achievements.push("Consistency Champion - 7 day streak!");
+            }
+            
+            if (userData.mood.length > 0) {
+                const avgMood = userData.mood.reduce((a, b) => a + b, 0) / userData.mood.length;
+                if (avgMood >= 80) {
+                    achievements.push("Mood Master - 80%+ average mood score");
+                }
+            }
+            
+            if (userData.activities.therapy.completed >= 5) {
+                achievements.push("Therapy Explorer - Completed 5+ sessions");
+            }
+            
+            if (userData.activities.meditation.completed >= 10) {
+                achievements.push("Meditation Beginner - 10+ sessions completed");
+            }
+            
+            if (userData.activities.exercises.progress >= 70) {
+                achievements.push("Exercise Enthusiast - 70%+ completion rate");
+            }
+            
+            if (userData.activities.reading.completed >= 5) {
+                achievements.push("Knowledge Seeker - Read 5+ articles");
+            }
+            
+            // Update user data
+            userData.achievements = [...new Set([...userData.achievements, ...achievements])];
+        }
+
+        function saveUserData() {
+            localStorage.setItem('neuroSenseUserData', JSON.stringify(userData));
+        }
+
+        function trackPageView() {
+            const today = new Date().toDateString();
+            
+            // Check if we already have data for today
+            if (userData.engagement.pageViews.length === 0 || 
+                new Date(userData.engagement.pageViews[userData.engagement.pageViews.length - 1].date).toDateString() !== today) {
+                // Add new entry for today
+                userData.engagement.pageViews.push(1);
+                userData.engagement.buttonClicks.push(0);
+                userData.engagement.timeSpent.push(0);
+            } else {
+                // Increment today's page views
+                const lastIndex = userData.engagement.pageViews.length - 1;
+                userData.engagement.pageViews[lastIndex]++;
+            }
+            
+            // Track time spent on page
+            let startTime = Date.now();
+            window.addEventListener('beforeunload', function() {
+                const timeSpent = Math.round((Date.now() - startTime) / 60000); // in minutes
+                const lastIndex = userData.engagement.timeSpent.length - 1;
+                userData.engagement.timeSpent[lastIndex] += timeSpent;
+                saveUserData();
+            });
+            
+            // Track button clicks
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('btn') || e.target.classList.contains('card-button')) {
+                    const lastIndex = userData.engagement.buttonClicks.length - 1;
+                    userData.engagement.buttonClicks[lastIndex]++;
+                    saveUserData();
+                    renderEngagementMetrics();
+                }
+            });
+            
+            saveUserData();
+            renderEngagementMetrics();
+        }
+
+        function generateDateLabels(count) {
+            const labels = [];
+            const today = new Date();
+            
+            for (let i = count - 1; i >= 0; i--) {
+                const date = new Date();
+                date.setDate(today.getDate() - i);
+                labels.push(date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+            }
+            
+            return labels;
+        }
+
+        function connectToHealthApp() {
+            alert('Connecting to health apps...\n\nIn a real implementation, this would connect to Apple Health, Google Fit, or other health platforms to import data like sleep, activity, and heart rate variability which can correlate with mental health.');
+        }
+
+        function connectToWearable() {
+            alert('Connecting to wearable devices...\n\nIn a real implementation, this would connect to devices like Fitbit, Apple Watch, or Garmin to import activity, sleep, and stress data.');
+        }
+
+        function showPersonalizedTips() {
+            const latestMood = userData.mood.length > 0 ? userData.mood[userData.mood.length - 1] : 50;
+            let tips = "";
+            
+            if (latestMood >= 80) {
+                tips = "Based on your excellent mood, we recommend:\n\n1. Maintain your current routine\n2. Try new mindfulness exercises\n3. Share your positive strategies with others";
+            } else if (latestMood >= 60) {
+                tips = "Based on your good mood, we recommend:\n\n1. Practice gratitude journaling\n2. Schedule regular breaks during work\n3. Try the new breathing exercises in the app";
+            } else {
+                tips = "Based on your current mood, we recommend:\n\n1. Practice self-compassion\n2. Try gentle movement or stretching\n3. Connect with supportive friends or family";
+            }
+            
+            alert(tips);
+        }
+
+        function showAllAchievements() {
+            if (userData.achievements.length === 0) {
+                alert("You haven't earned any achievements yet. Complete activities to earn them!");
+            } else {
+                alert("All Your Achievements:\n\n" + userData.achievements.join("\n\n"));
+            }
+        }
+
+        function updateRealTimeData() {
+            // In a real implementation, this would fetch new data from a server
+            // For demo purposes, we'll just update the engagement metrics
+            renderEngagementMetrics();
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                closeModals();
+            }
+        });
+    </script>
+</body>
+</html>

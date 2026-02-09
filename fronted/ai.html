@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health Assistant - Therapy Exercises</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --white: #FFFFFF;
+            --light-gray: #F5F7FA;
+            --medium-gray: #E4E7EB;
+            --dark-gray: #546E7A;
+            --navy: #1A237E;
+            --light-navy: #3949AB;
+            --accent: #5C6BC0;
+        }
+
+        body {
+            background-color: var(--light-gray);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--navy), var(--light-navy));
+            color: var(--white);
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .logo span {
+            font-weight: 300;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .chatbot-container {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 200px);
+            max-width: 1000px;
+            margin: 2rem auto;
+            background-color: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .chatbot-header {
+            background: linear-gradient(135deg, var(--navy), var(--light-navy));
+            color: var(--white);
+            padding: 1.5rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .chatbot-header i {
+            font-size: 1.8rem;
+        }
+
+        .chatbot-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            line-height: 1.4;
+            position: relative;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background-color: var(--navy);
+            color: var(--white);
+            border-bottom-right-radius: 5px;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background-color: var(--light-gray);
+            color: var(--dark-gray);
+            border-bottom-left-radius: 5px;
+        }
+
+        .chatbot-input {
+            display: flex;
+            padding: 20px;
+            background-color: var(--light-gray);
+            border-top: 1px solid var(--medium-gray);
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 1px solid var(--medium-gray);
+            border-radius: 25px;
+            outline: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .chatbot-input input:focus {
+            border-color: var(--navy);
+            box-shadow: 0 0 0 2px rgba(26, 35, 126, 0.2);
+        }
+
+        .chatbot-input button {
+            background-color: var(--navy);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chatbot-input button:hover {
+            background-color: var(--light-navy);
+            transform: scale(1.05);
+        }
+
+        .suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 0 20px 15px;
+            background-color: var(--light-gray);
+        }
+
+        .suggestion {
+            background-color: var(--white);
+            border: 1px solid var(--medium-gray);
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .suggestion:hover {
+            background-color: var(--navy);
+            color: var(--white);
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--white);
+            color: var(--navy);
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 20px 0;
+            border: 2px solid var(--navy);
+        }
+
+        .back-button:hover {
+            background-color: var(--navy);
+            color: var(--white);
+        }
+
+        footer {
+            background-color: var(--navy);
+            color: var(--white);
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 12px;
+        }
+
+        .footer-column a {
+            color: var(--light-gray);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-column a:hover {
+            color: var(--white);
+            text-decoration: underline;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light-gray);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .chatbot-container {
+                height: calc(100vh - 150px);
+                margin: 1rem auto;
+            }
+            
+            .message {
+                max-width: 90%;
+            }
+            
+            .chatbot-header {
+                padding: 1rem;
+            }
+            
+            .chatbot-header h2 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-brain"></i>
+                    <h1>Therapy<span>Exercises</span></h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="exercises.html">Exercises</a></li>
+                        <li><a href="progress.html">Progress</a></li>
+                        <li><a href="chatbot.html" class="active">Mental Health Assistant</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <a href="index.html" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+        </a>
+
+        <div class="chatbot-container">
+            <div class="chatbot-header">
+                <i class="fas fa-robot"></i>
+                <h2>Mental Health Assistant</h2>
+            </div>
+
+            <div class="chatbot-messages" id="chatMessages">
+                <div class="message bot-message">
+                    Hello! I'm the Therapy Exercises mental health assistant. How can I help you today?
+                </div>
+                <div class="message bot-message">
+                    I can provide information about:
+                    <br>• Breathing and relaxation exercises
+                    <br>• Mindfulness techniques
+                    <br>• Sleep hygiene tips
+                    <br>• Anxiety and stress management
+                </div>
+            </div>
+
+            <div class="suggestions">
+                <div class="suggestion" onclick="sendSuggestion('I need relaxation exercises')">I need relaxation exercises</div>
+                <div class="suggestion" onclick="sendSuggestion('How to deal with anxiety?')">How to deal with anxiety?</div>
+                <div class="suggestion" onclick="sendSuggestion('Mindfulness techniques')">Mindfulness techniques</div>
+                <div class="suggestion" onclick="sendSuggestion('Tips for better sleep')">Tips for better sleep</div>
+            </div>
+
+            <div class="chatbot-input">
+                <input type="text" id="userInput" placeholder="Type your message here..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Therapy Exercises</h3>
+                    <p>Evidence-based mental health exercises and resources to support your wellness journey.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="exercises.html">Exercises</a></li>
+                        <li><a href="progress.html">Progress Tracking</a></li>
+                        <li><a href="resources.html">Resources</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Emergency Resources</h3>
+                    <ul>
+                        <li><a href="#">Crisis Hotlines</a></li>
+                        <li><a href="#">Find a Therapist</a></li>
+                        <li><a href="#">Suicide Prevention</a></li>
+                        <li><a href="#">Mental Health First Aid</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@therapyexercises.com</li>
+                        <li><i class="fas fa-phone"></i> 1-800-HELP-NOW</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Wellness St, Mindful City</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Therapy Exercises. This application is for educational purposes and is not a substitute for professional therapy.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chatbase Integration Script -->
+    <script>
+        (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="2w1DldfFXSF9GqgPRI2T4";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+    </script>
+
+    <script>
+        // Simple chatbot functionality for the standalone page
+        function sendMessage() {
+            const userInput = document.getElementById('userInput');
+            const message = userInput.value.trim();
+            
+            if (message === '') return;
+            
+            // Add user message to chat
+            addMessage(message, 'user');
+            
+            // Clear input
+            userInput.value = '';
+            
+            // Simulate bot response
+            setTimeout(() => {
+                const botResponse = generateBotResponse(message);
+                addMessage(botResponse, 'bot');
+            }, 1000);
+        }
+        
+        function sendSuggestion(suggestion) {
+            document.getElementById('userInput').value = suggestion;
+            sendMessage();
+        }
+        
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+        
+        function addMessage(text, sender) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            messageDiv.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+            messageDiv.textContent = text;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function generateBotResponse(userMessage) {
+            const lowerMessage = userMessage.toLowerCase();
+            
+            if (lowerMessage.includes('relax') || lowerMessage.includes('calm')) {
+                return "For relaxation, try the 4-7-8 breathing technique: inhale for 4 seconds, hold for 7 seconds, exhale for 8 seconds. Repeat 4 times. This activates your parasympathetic nervous system to promote relaxation.";
+            } else if (lowerMessage.includes('anxiety') || lowerMessage.includes('stress')) {
+                return "When dealing with anxiety, try the 5-4-3-2-1 grounding technique: Identify 5 things you can see, 4 things you can touch, 3 things you can hear, 2 things you can smell, and 1 thing you can taste. This helps bring your focus to the present moment.";
+            } else if (lowerMessage.includes('mindfulness') || lowerMessage.includes('meditation')) {
+                return "A simple mindfulness exercise: Sit comfortably and focus on your breath for 5 minutes. When your mind wanders, gently bring your attention back to your breath without judgment. Regular practice can reduce stress and improve focus.";
+            } else if (lowerMessage.includes('sleep') || lowerMessage.includes('insomnia')) {
+                return "For better sleep: 1) Maintain a consistent sleep schedule, 2) Create a relaxing bedtime routine, 3) Avoid screens 1 hour before bed, 4) Keep your bedroom cool and dark, 5) Avoid caffeine after 2 PM.";
+            } else if (lowerMessage.includes('depression') || lowerMessage.includes('sad')) {
+                return "For managing depressive symptoms: 1) Engage in pleasant activities daily, 2) Practice gratitude by writing down 3 good things each day, 3) Connect with supportive people, 4) Engage in light physical activity, 5) Challenge negative thoughts with evidence.";
+            } else {
+                return "I understand you're asking about '" + userMessage + "'. As a mental health assistant, I can provide information about relaxation techniques, mindfulness, sleep hygiene, and coping strategies. Could you please be more specific about what you'd like help with?";
+            }
+        }
+        // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+    </script>
+</body>
+</html>

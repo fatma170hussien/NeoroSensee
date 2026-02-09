@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Depression - A Compassionate Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #5d8aa8; /* لون أزرق هادئ ومطمئن */
+            --secondary: #87aec5; /* أزرق فاتح مريح */
+            --accent: #a2c4c9; /* لون أخضر-أزرق مهدئ */
+            --light: #f8f9fa; /* خلفية فاتحة ناعمة */
+            --dark: #4a6572; /* لون داكن ناعم بدلاً من الأسود القاسي */
+            --text: #5a5a5a; /* نص رمادي ناعم بدلاً من الأسود */
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* ظل أخف */
+            --transition: all 0.4s ease; /* انتقالات أبطأ وأكثر سلاسة */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.7; /* تباعد أكبر للقراءة المريحة */
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            animation: gentle-pulse 3s infinite; /* نبض أبطأ وأكثر لطفاً */
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 8px 15px;
+            border-radius: 20px; /* زوايا أكثر استدارة */
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(93, 138, 168, 0.85), rgba(135, 174, 197, 0.85)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%235d8aa8"/><path d="M0 50 L100 50 M50 0 L50 100" stroke="%2387aec5" stroke-width="1.5"/></svg>');
+            background-size: cover;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            animation: gentle-fadeInDown 1.5s ease;
+            font-weight: 400; /* وزن خط أخف */
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            animation: gentle-fadeInUp 1.5s ease 0.3s both;
+            line-height: 1.8;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 14px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            animation: gentle-fadeIn 1.5s ease 0.6s both;
+            box-shadow: 0 4px 15px rgba(162, 196, 201, 0.3);
+        }
+        
+        .btn:hover {
+            background-color: #8fb6bc;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(162, 196, 201, 0.4);
+        }
+        
+        /* Sections */
+        section {
+            padding: 5rem 0;
+        }
+        
+        section:nth-child(even) {
+            background-color: #f0f4f8; /* خلفية أكثر نعومة للأقسام الزوجية */
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            display: inline-block;
+            font-weight: 400;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+        
+        /* Cards */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+            border: 1px solid rgba(93, 138, 168, 0.1);
+        }
+        
+        .card.animate {
+            animation: gentle-fadeInUp 0.8s ease forwards;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.8rem;
+            text-align: center;
+        }
+        
+        .card-body {
+            padding: 2rem;
+        }
+        
+        .card-body ul {
+            list-style-type: none;
+            padding-left: 1rem;
+        }
+        
+        .card-body ul li {
+            margin-bottom: 1rem;
+            position: relative;
+            line-height: 1.6;
+        }
+        
+        .card-body ul li::before {
+            content: '•';
+            color: var(--accent);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+            font-size: 1.2rem;
+        }
+        
+        /* Comparison Table - UPDATED FOR MOBILE */
+        .comparison-table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px; /* الحد الأدنى للعرض لضمان عدم انضغاط المحتوى */
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 1.2rem;
+            text-align: left;
+            border: 1px solid #e8ecef;
+        }
+        
+        .comparison-table th {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            font-weight: 500;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        
+        .comparison-table tr:hover {
+            background-color: #f0f7ff;
+        }
+        
+        /* Treatment Options */
+        .treatment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .treatment-card {
+            background: linear-gradient(135deg, #f8fafc, #e8f1f5);
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            text-align: center;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+            border: 1px solid rgba(93, 138, 168, 0.1);
+        }
+        
+        .treatment-card.animate {
+            animation: gentle-fadeInUp 0.8s ease forwards;
+        }
+        
+        .treatment-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+        
+        .treatment-icon {
+            font-size: 3.2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Emergency Section */
+        .emergency {
+            background: linear-gradient(135deg, var(--accent), #b8d4d8);
+            color: white;
+            text-align: center;
+            padding: 5rem 0;
+        }
+        
+        .emergency h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+        
+        .emergency p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+        
+        .hotline {
+            font-size: 2.2rem;
+            font-weight: 500;
+            margin: 2rem 0;
+            display: inline-block;
+            padding: 15px 30px;
+            background-color: rgba(255, 255, 255, 0.25);
+            border-radius: 15px;
+            transition: var(--transition);
+        }
+        
+        .hotline:hover {
+            background-color: rgba(255, 255, 255, 0.35);
+            transform: scale(1.03);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 2.5rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.8rem;
+            position: relative;
+            display: inline-block;
+            font-weight: 400;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-section ul li a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--accent);
+            padding-left: 8px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #b0b0b0;
+        }
+        
+        /* Animations */
+        @keyframes gentle-fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes gentle-fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes gentle-fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes gentle-pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        /* Responsive Design - UPDATED FOR TABLES */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 1.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+            
+            /* تحسينات الجداول للهواتف */
+            .comparison-table-container {
+                font-size: 0.85rem;
+                border-radius: 8px;
+            }
+            
+            .comparison-table th, .comparison-table td {
+                padding: 0.8rem;
+            }
+            
+            .comparison-table {
+                min-width: 700px; /* تقليل العرض الأدنى للجداول على الهواتف */
+            }
+            
+            .hotline {
+                font-size: 1.8rem;
+                padding: 12px 20px;
+            }
+        }
+        
+        /* تحسينات إضافية للهواتف الصغيرة جداً */
+        @media (max-width: 480px) {
+            .comparison-table {
+                min-width: 650px; /* تقليل أكثر للهواتف الصغيرة */
+            }
+            
+            .comparison-table th, .comparison-table td {
+                padding: 0.6rem;
+                font-size: 0.8rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-heart"></i>
+                Hope & Healing
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#what-is">Understanding Depression</a></li>
+                    <li><a href="#symptoms">Recognizing Symptoms</a></li>
+                    <li><a href="#causes">Causes & Factors</a></li>
+                    <li><a href="#treatment">Path to Recovery</a></li>
+                    <li><a href="#help">Getting Help</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>You're Not Alone in This Journey</h1>
+            <p>Understanding depression is the first step toward healing. This guide offers compassionate information, resources, and hope for those affected by depression.</p>
+            <a href="#what-is" class="btn">Begin Your Healing Journey</a>
+        </div>
+    </section>
+
+    <!-- What is Depression Section -->
+    <section id="what-is">
+        <div class="container">
+            <div class="section-title">
+                <h2>Understanding Depression</h2>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3>Depression (Major Depressive Disorder)</h3>
+                </div>
+                <div class="card-body">
+                    <p>Depression is more than just feeling sad - it's a serious mental health condition that affects your thoughts, feelings, and ability to function in daily life. With proper treatment and support, recovery is possible.</p>
+                    
+                    <h4 style="margin-top: 1.5rem; color: var(--primary);">Difference Between Normal Sadness and Clinical Depression</h4>
+                    <div class="comparison-table-container">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Criterion</th>
+                                    <th>Normal Sadness</th>
+                                    <th>Clinical Depression</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Trigger</td>
+                                    <td>Usually linked to an identifiable event (loss, disappointment) and is expected</td>
+                                    <td>May follow an event or arise with no clear trigger; reactions are disproportionate or persistent</td>
+                                </tr>
+                                <tr>
+                                    <td>Duration</td>
+                                    <td>Ebbing and flow; generally improves over weeks to months</td>
+                                    <td>Persistent for ≥2 weeks (often much longer) and does not remit by itself</td>
+                                </tr>
+                                <tr>
+                                    <td>Severity & Functional Impact</td>
+                                    <td>May cause distress but doesn't typically prevent daily functioning</td>
+                                    <td>Causes marked impairment in social, occupational, or other important areas</td>
+                                </tr>
+                                <tr>
+                                    <td>Physical & Cognitive Symptoms</td>
+                                    <td>Limited physical symptoms</td>
+                                    <td>Significant sleep/appetite changes, fatigue, slowed thinking, concentration problems</td>
+                                </tr>
+                                <tr>
+                                    <td>Response to Support</td>
+                                    <td>Usually improves with social support, time, and coping</td>
+                                    <td>May not significantly improve with support alone and often requires psychotherapy/medication</td>
+                                </tr>
+                                <tr>
+                                    <td>Nature of Thoughts</td>
+                                    <td>Thoughts about loss; self-esteem basically intact</td>
+                                    <td>Pervasive negative self-evaluation, hopelessness, recurrent suicidal thoughts possible</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Symptoms Section -->
+    <section id="symptoms" style="background-color: #f0f4f8;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Recognizing the Signs</h2>
+            </div>
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Emotional & Psychological Signs</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Persistent sadness, anxiety, or "empty" mood</li>
+                            <li>Loss of interest or pleasure in activities once enjoyed</li>
+                            <li>Feelings of worthlessness, guilt, or helplessness</li>
+                            <li>Difficulty concentrating, remembering, or making decisions</li>
+                            <li>Thoughts of death or suicide, suicide attempts</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Physical Signs</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Sleep disturbances (insomnia or sleeping too much)</li>
+                            <li>Fatigue, decreased energy, feeling "slowed down"</li>
+                            <li>Appetite and/or weight changes</li>
+                            <li>Unexplained physical pains, headaches, digestive problems</li>
+                            <li>Restlessness or difficulty sitting still</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Behavioral Signs</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Withdrawing from friends, family, and social activities</li>
+                            <li>Difficulty meeting responsibilities or caring for oneself</li>
+                            <li>Changes in work or academic performance</li>
+                            <li>Neglecting personal appearance or hygiene</li>
+                            <li>Increased use of alcohol or other substances</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Causes & Risk Factors Section -->
+    <section id="causes">
+        <div class="container">
+            <div class="section-title">
+                <h2>Understanding the Causes</h2>
+            </div>
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Biological Factors</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Brain chemistry and neurotransmitter imbalances</li>
+                            <li>Genetic predisposition and family history</li>
+                            <li>Hormonal changes (postpartum, menopause, thyroid issues)</li>
+                            <li>Chronic illnesses (diabetes, heart disease, cancer)</li>
+                            <li>Chronic pain conditions</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Psychological Factors</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Trauma or abuse history</li>
+                            <li>Negative thinking patterns and low self-esteem</li>
+                            <li>Personality traits (perfectionism, sensitivity to criticism)</li>
+                            <li>Co-occurring mental health conditions</li>
+                            <li>Difficult childhood experiences</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Environmental & Social Factors</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Social isolation or loneliness</li>
+                            <li>Financial stress or unemployment</li>
+                            <li>Work or academic pressure</li>
+                            <li>Relationship conflicts or loss</li>
+                            <li>Lack of social support system</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Treatment Options Section -->
+    <section id="treatment" style="background-color: #f0f4f8;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Path to Recovery</h2>
+            </div>
+            <div class="treatment-options">
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Therapy & Counseling</h3>
+                    <p>Cognitive Behavioral Therapy (CBT), Interpersonal Therapy (IPT), Mindfulness-based therapies, Psychodynamic therapy</p>
+                </div>
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <h3>Medication Options</h3>
+                    <p>SSRIs, SNRIs, Atypical antidepressants, Tricyclic antidepressants (under medical supervision)</p>
+                </div>
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Lifestyle Approaches</h3>
+                    <p>Regular exercise, Balanced nutrition, Sleep hygiene, Social connection, Stress management</p>
+                </div>
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Additional Support</h3>
+                    <p>Support groups, Peer counseling, Crisis lines, For severe cases: ECT, TMS, Hospitalization</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Self-Help & When to Seek Help Section -->
+    <section id="help">
+        <div class="container">
+            <div class="section-title">
+                <h2>Self-Care & Getting Help</h2>
+            </div>
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Self-Care Strategies</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Practice self-compassion - be kind to yourself</li>
+                            <li>Establish a gentle, consistent daily routine</li>
+                            <li>Connect with supportive people, even when you don't feel like it</li>
+                            <li>Engage in light physical activity, like walking</li>
+                            <li>Practice mindfulness, meditation, or deep breathing</li>
+                            <li>Set small, achievable goals and celebrate progress</li>
+                            <li>Limit time on social media and news</li>
+                            <li>Express yourself through journaling or creative outlets</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>When to Seek Professional Help</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>If symptoms last more than two weeks</li>
+                            <li>If depression interferes with work, school, or relationships</li>
+                            <li>If you experience thoughts of suicide or self-harm</li>
+                            <li>If you're using substances to cope with feelings</li>
+                            <li>If symptoms are getting worse despite your efforts</li>
+                            <li>If you feel overwhelmed and unable to cope</li>
+                            <li>Remember: Seeking help is a sign of strength, not weakness</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Section -->
+    <section class="emergency">
+        <div class="container">
+            <h2>Immediate Support Is Available</h2>
+            <p>If you're having thoughts of suicide or self-harm, please reach out now. You are valuable, and people care about you.</p>
+            <div class="hotline">
+                <i class="fas fa-phone-alt"></i> 988 Suicide & Crisis Lifeline
+            </div>
+            <p>Available 24/7 - Free, confidential support from trained counselors</p>
+            <p style="margin-top: 1.5rem; font-size: 1.1rem;">You can also text HOME to 741741 or go to your nearest emergency room</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Hope & Healing</h3>
+                    <p>A compassionate resource for understanding depression and finding a path toward recovery and wellness.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#what-is">Understanding Depression</a></li>
+                        <li><a href="#symptoms">Recognizing Symptoms</a></li>
+                        <li><a href="#causes">Causes & Factors</a></li>
+                        <li><a href="#treatment">Path to Recovery</a></li>
+                        <li><a href="#help">Getting Help</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Additional Resources</h3>
+                    <ul>
+                        <li><a href="#">Find a Therapist</a></li>
+                        <li><a href="#">Support Groups</a></li>
+                        <li><a href="#">Crisis Resources</a></li>
+                        <li><a href="#">Self-Help Tools</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Hope & Healing. All rights reserved.</p>
+                <p style="margin-top: 10px; font-size: 0.9rem;">You are not alone. Recovery is possible.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card, .treatment-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('animate');
+                        }, 100);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+        // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+    </script>
+</body>
+</html>

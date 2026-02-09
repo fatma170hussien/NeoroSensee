@@ -1,0 +1,1887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yale-Brown Obsessive Compulsive Scale (Y-BOCS)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary-purple: #7B1FA2;
+      --secondary-purple: #9C27B0;
+      --light-purple: #F3E5F5;
+      --accent-teal: #009688;
+      --accent-amber: #FFC107;
+      --accent-red: #E53935;
+      --text-dark: #333333;
+      --text-light: #666666;
+      --border-color: #E0E0E0;
+      --card-bg: #FFFFFF;
+      --section-bg: #FAFAFA;
+      --obsession-color: #673AB7;
+      --compulsion-color: #2196F3;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: var(--section-bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    
+    /* Header Styles */
+    .header {
+      background: linear-gradient(135deg, var(--primary-purple), var(--secondary-purple));
+      color: white;
+      padding: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--accent-amber);
+    }
+    
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .header-info {
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    .header h1 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    
+    .header .subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-bottom: 15px;
+    }
+    
+    .patient-form {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+      min-width: 300px;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+      opacity: 0.9;
+    }
+    
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.9);
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    
+    .form-group input:focus {
+      outline: none;
+      border-color: white;
+    }
+    
+    /* Instructions */
+    .instructions {
+      padding: 30px;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .instructions h3 {
+      color: var(--primary-purple);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .definition-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+    
+    .definition-card {
+      padding: 20px;
+      border-radius: 10px;
+      border-left: 4px solid;
+    }
+    
+    .obsession-def {
+      background: var(--light-purple);
+      border-left-color: var(--obsession-color);
+    }
+    
+    .compulsion-def {
+      background: #E3F2FD;
+      border-left-color: var(--compulsion-color);
+    }
+    
+    .definition-card h4 {
+      color: inherit;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    /* Score Display */
+    .score-display {
+      position: sticky;
+      top: 10px;
+      background: white;
+      padding: 20px;
+      margin: 0 30px 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border: 2px solid var(--primary-purple);
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    
+    .score-section {
+      text-align: center;
+      flex: 1;
+      min-width: 150px;
+    }
+    
+    .score-label {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 5px;
+    }
+    
+    .score-value {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: var(--primary-purple);
+      line-height: 1;
+    }
+    
+    .total-score {
+      background: linear-gradient(135deg, var(--primary-purple), var(--secondary-purple));
+      color: white;
+      padding: 15px 30px;
+      border-radius: 8px;
+    }
+    
+    .total-score .score-value {
+      color: white;
+    }
+    
+    /* Assessment Sections */
+    .assessment-sections {
+      padding: 0 30px 30px;
+    }
+    
+    .section-header {
+      background: var(--light-purple);
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+      border-left: 4px solid var(--obsession-color);
+    }
+    
+    .section-header.compulsion {
+      background: #E3F2FD;
+      border-left-color: var(--compulsion-color);
+    }
+    
+    .section-header h3 {
+      color: var(--text-dark);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .section-indicator {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: var(--obsession-color);
+      color: white;
+      border-radius: 50%;
+      font-weight: bold;
+    }
+    
+    .compulsion .section-indicator {
+      background: var(--compulsion-color);
+    }
+    
+    /* Question Cards */
+    .questions-grid {
+      display: grid;
+      gap: 25px;
+    }
+    
+    .question-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 25px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .question-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .question-card.active {
+      border-color: var(--primary-purple);
+      box-shadow: 0 4px 12px rgba(123, 31, 162, 0.15);
+    }
+    
+    .question-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: var(--light-purple);
+      color: var(--primary-purple);
+      border-radius: 50%;
+      font-weight: bold;
+      margin-bottom: 15px;
+      border: 2px solid var(--primary-purple);
+    }
+    
+    .question-text {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 20px;
+      line-height: 1.5;
+      color: var(--text-dark);
+    }
+    
+    .question-description {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      margin-bottom: 20px;
+      padding-left: 15px;
+      border-left: 3px solid var(--border-color);
+    }
+    
+    /* Response Options */
+    .response-options {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+    
+    @media (max-width: 992px) {
+      .response-options {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .response-options {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .response-option {
+      position: relative;
+    }
+    
+    .option-btn {
+      width: 100%;
+      padding: 15px 10px;
+      text-align: center;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      background: var(--card-bg);
+      color: var(--text-dark);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .option-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .option-btn.selected {
+      border-color: var(--primary-purple);
+      background: var(--light-purple);
+      color: var(--primary-purple);
+    }
+    
+    .option-score {
+      font-size: 1.2rem;
+      font-weight: bold;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--section-bg);
+    }
+    
+    .option-btn.selected .option-score {
+      background: var(--primary-purple);
+      color: white;
+    }
+    
+    .option-label {
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+    
+    .option-desc {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      margin-top: 5px;
+    }
+    
+    .option-btn.selected .option-desc {
+      color: var(--primary-purple);
+    }
+    
+    /* Symptom Checklist */
+    .symptom-checklist {
+      padding: 30px;
+      background: var(--section-bg);
+      border-top: 1px solid var(--border-color);
+    }
+    
+    .checklist-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .checklist-header h3 {
+      color: var(--primary-purple);
+      margin-bottom: 10px;
+    }
+    
+    .checklist-instructions {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+      border-left: 4px solid var(--accent-teal);
+    }
+    
+    .symptom-categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 25px;
+    }
+    
+    .symptom-category {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .category-header {
+      color: var(--primary-purple);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--light-purple);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .symptom-list {
+      list-style: none;
+    }
+    
+    .symptom-item {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .symptom-item:last-child {
+      border-bottom: none;
+    }
+    
+    .symptom-checkboxes {
+      display: flex;
+      gap: 15px;
+      margin-left: auto;
+    }
+    
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .checkbox-group label {
+      font-size: 0.75rem;
+      color: var(--text-light);
+    }
+    
+    .symptom-checkbox {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+    
+    .principal-symptom {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-left: 10px;
+    }
+    
+    .principal-checkbox {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+    
+    /* Results Section */
+    .results-container {
+      padding: 30px;
+      display: none;
+      background: var(--card-bg);
+    }
+    
+    .results-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .results-header h2 {
+      color: var(--primary-purple);
+      margin-bottom: 10px;
+    }
+    
+    .final-scores {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    
+    .final-score-card {
+      padding: 25px;
+      border-radius: 10px;
+      text-align: center;
+      background: linear-gradient(135deg, var(--light-purple), white);
+      border: 2px solid var(--primary-purple);
+    }
+    
+    .final-score-value {
+      font-size: 3rem;
+      font-weight: bold;
+      color: var(--primary-purple);
+      margin: 10px 0;
+    }
+    
+    .score-interpretation {
+      background: var(--light-purple);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 30px 0;
+      border-left: 4px solid var(--primary-purple);
+    }
+    
+    .severity-scale {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin: 30px 0;
+    }
+    
+    .severity-card {
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    
+    .severity-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .severity-range {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    
+    .severity-label {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    
+    .symptom-summary {
+      background: #E8F5E9;
+      padding: 25px;
+      border-radius: 10px;
+      margin: 30px 0;
+      border-left: 4px solid var(--accent-teal);
+    }
+    
+    .symptom-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .symptom-count-card {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    
+    .symptom-count {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--primary-purple);
+      margin-bottom: 5px;
+    }
+    
+    /* Controls */
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      padding: 25px 30px;
+      border-top: 1px solid var(--border-color);
+      background: var(--section-bg);
+    }
+    
+    .control-btn {
+      padding: 14px 28px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+    }
+    
+    .reset-btn {
+      background: var(--light-purple);
+      color: var(--primary-purple);
+    }
+    
+    .reset-btn:hover {
+      background: #E1BEE7;
+    }
+    
+    .submit-btn {
+      background: linear-gradient(135deg, var(--primary-purple), var(--secondary-purple));
+      color: white;
+    }
+    
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(123, 31, 162, 0.3);
+    }
+    
+    .print-btn {
+      background: linear-gradient(135deg, var(--accent-teal), #00796B);
+      color: white;
+    }
+    
+    .print-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 150, 136, 0.3);
+    }
+    
+    /* Footer */
+    .footer {
+      background: var(--light-purple);
+      padding: 25px 30px;
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border-color);
+    }
+    
+    .reference {
+      text-align: left;
+      margin-top: 20px;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      font-size: 0.85rem;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header-top {
+        flex-direction: column;
+      }
+      
+      .score-display {
+        flex-direction: column;
+        text-align: center;
+        margin: 0 15px 20px;
+      }
+      
+      .controls {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .control-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .symptom-categories {
+        grid-template-columns: 1fr;
+      }
+      
+      .symptom-item {
+        flex-wrap: wrap;
+      }
+      
+      .symptom-checkboxes {
+        margin-left: 0;
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+    
+    @media print {
+      .controls,
+      .footer {
+        display: none;
+      }
+      
+      .question-card,
+      .symptom-category {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-top">
+        <div class="header-info">
+          <h1>Yale-Brown Obsessive Compulsive Scale (Y-BOCS)</h1>
+          <div class="subtitle">Comprehensive Assessment of Obsessive-Compulsive Disorder Symptoms</div>
+          <div style="margin-top: 15px; display: flex; gap: 15px; flex-wrap: wrap;">
+            <div style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem;">
+              <i class="fas fa-user-md"></i>
+              <span>Clinical Assessment Tool</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem;">
+              <i class="fas fa-clock"></i>
+              <span>10-15 minutes to complete</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px; font-size: 0.9rem;">
+              <i class="fas fa-chart-line"></i>
+              <span>Validated Severity Measure</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="patient-form">
+          <div class="form-group">
+            <label for="patientName"><i class="fas fa-user"></i> PATIENT NAME</label>
+            <input type="text" id="patientName" placeholder="Enter full name">
+          </div>
+          <div class="form-group">
+            <label for="assessmentDate"><i class="fas fa-calendar-alt"></i> DATE</label>
+            <input type="date" id="assessmentDate" value="<?php echo date('Y-m-d'); ?>">
+          </div>
+          <div class="form-group">
+            <label for="clinicianName"><i class="fas fa-user-md"></i> CLINICIAN (Optional)</label>
+            <input type="text" id="clinicianName" placeholder="Clinician name">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Instructions -->
+    <div class="instructions">
+      <h3><i class="fas fa-info-circle"></i> Assessment Instructions</h3>
+      <p><strong>Please answer each question by selecting the appropriate response.</strong> Consider your experiences over the <strong>past week</strong> when responding to questions 1-10.</p>
+      
+      <div class="definition-cards">
+        <div class="definition-card obsession-def">
+          <h4 style="color: var(--obsession-color);"><i class="fas fa-brain"></i> Understanding OBSESSIONS</h4>
+          <p><strong>Obsessions</strong> are unwanted ideas, images or impulses that intrude on thinking against your wishes. They usually involve themes of harm, risk and danger. Common examples include:</p>
+          <ul style="margin-top: 10px; margin-left: 20px;">
+            <li>Excessive fears of contamination</li>
+            <li>Recurring doubts about danger</li>
+            <li>Extreme concern with order or symmetry</li>
+            <li>Fear of losing important things</li>
+          </ul>
+        </div>
+        
+        <div class="definition-card compulsion-def">
+          <h4 style="color: var(--compulsion-color);"><i class="fas fa-sync-alt"></i> Understanding COMPULSIONS</h4>
+          <p><strong>Compulsions</strong> are repetitive behaviors or mental acts that you feel driven to perform in response to an obsession. Common examples include:</p>
+          <ul style="margin-top: 10px; margin-left: 20px;">
+            <li>Excessive washing or cleaning</li>
+            <li>Repeated checking</li>
+            <li>Counting, ordering, or arranging</li>
+            <li>Mental rituals (repeating words silently)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Score Display -->
+    <div class="score-display" id="scoreDisplay">
+      <div class="score-section">
+        <div class="score-label">OBSESSION SCORE</div>
+        <div class="score-value" id="obsessionScore">0</div>
+        <div class="score-label" id="obsessionLevel">/20</div>
+      </div>
+      
+      <div class="score-section">
+        <div class="score-label">COMPULSION SCORE</div>
+        <div class="score-value" id="compulsionScore">0</div>
+        <div class="score-label" id="compulsionLevel">/20</div>
+      </div>
+      
+      <div class="score-section total-score">
+        <div class="score-label">TOTAL Y-BOCS SCORE</div>
+        <div class="score-value" id="totalScore">0</div>
+        <div class="score-label">/40</div>
+      </div>
+    </div>
+    
+    <!-- Assessment Sections -->
+    <div class="assessment-sections">
+      <!-- Obsessions Section -->
+      <div class="section-header">
+        <h3><span class="section-indicator">1-5</span> PART 1: ASSESSMENT OF OBSESSIVE THOUGHTS</h3>
+        <p>Questions 1 to 5 are about your obsessive thoughts. Consider your experiences over the past week when responding.</p>
+      </div>
+      
+      <div class="questions-grid" id="obsessionsQuestions">
+        <!-- Questions 1-5 will be inserted here dynamically -->
+      </div>
+      
+      <!-- Compulsions Section -->
+      <div class="section-header compulsion">
+        <h3><span class="section-indicator">6-10</span> PART 2: ASSESSMENT OF COMPULSIVE BEHAVIORS</h3>
+        <p>Questions 6 to 10 are about your compulsive behaviors. Consider your experiences over the past week when responding.</p>
+      </div>
+      
+      <div class="questions-grid" id="compulsionsQuestions">
+        <!-- Questions 6-10 will be inserted here dynamically -->
+      </div>
+    </div>
+    
+    <!-- Symptom Checklist -->
+    <div class="symptom-checklist">
+      <div class="checklist-header">
+        <h3><i class="fas fa-clipboard-list"></i> Y-BOCS SYMPTOM CHECKLIST</h3>
+        <p>Check all symptoms that apply. Distinguish between current and past symptoms. Mark principal symptoms with "P".</p>
+      </div>
+      
+      <div class="checklist-instructions">
+        <h4><i class="fas fa-bullseye"></i> Target Symptoms Identification</h4>
+        <p><strong>Instructions:</strong> Generate a Target Symptoms List by checking specific obsessions and compulsions that apply. Items marked with * may or may not be OCD phenomena. Principal symptoms (marked with "P") will form the basis of the Target Symptoms List for treatment planning.</p>
+      </div>
+      
+      <div class="symptom-categories" id="symptomChecklist">
+        <!-- Symptom categories will be inserted here dynamically -->
+      </div>
+    </div>
+    
+    <!-- Results Section -->
+    <div class="results-container" id="resultsContainer">
+      <div class="results-header">
+        <h2><i class="fas fa-file-medical-alt"></i> Y-BOCS ASSESSMENT RESULTS</h2>
+        <p>Yale-Brown Obsessive Compulsive Scale - Severity Assessment</p>
+      </div>
+      
+      <div class="final-scores">
+        <div class="final-score-card" style="border-color: var(--obsession-color);">
+          <div style="font-size: 1.2rem; color: var(--obsession-color); font-weight: 600;">Obsession Severity</div>
+          <div class="final-score-value" id="finalObsessionScore">0</div>
+          <div style="color: var(--text-light);">/20</div>
+        </div>
+        
+        <div class="final-score-card" style="border-color: var(--compulsion-color);">
+          <div style="font-size: 1.2rem; color: var(--compulsion-color); font-weight: 600;">Compulsion Severity</div>
+          <div class="final-score-value" id="finalCompulsionScore">0</div>
+          <div style="color: var(--text-light);">/20</div>
+        </div>
+        
+        <div class="final-score-card" style="background: linear-gradient(135deg, var(--primary-purple), var(--secondary-purple)); color: white; border: none;">
+          <div style="font-size: 1.2rem; font-weight: 600;">Total Y-BOCS Score</div>
+          <div class="final-score-value" style="color: white;" id="finalTotalScore">0</div>
+          <div style="opacity: 0.9;">/40</div>
+        </div>
+      </div>
+      
+      <div class="score-interpretation" id="scoreInterpretation">
+        <!-- Interpretation will be inserted here dynamically -->
+      </div>
+      
+      <h3 style="color: var(--primary-purple); margin: 30px 0 15px 0;"><i class="fas fa-chart-bar"></i> OCD Severity Scale</h3>
+      <div class="severity-scale">
+        <div class="severity-card" style="background: rgba(139, 195, 74, 0.1); border: 2px solid #8BC34A;">
+          <div class="severity-range" style="color: #8BC34A;">0-7</div>
+          <div class="severity-label" style="color: #8BC34A;">Subclinical</div>
+          <div style="font-size: 0.8rem; color: #666; margin-top: 5px;">Minimal symptoms</div>
+        </div>
+        <div class="severity-card" style="background: rgba(255, 193, 7, 0.1); border: 2px solid #FFC107;">
+          <div class="severity-range" style="color: #FFC107;">8-15</div>
+          <div class="severity-label" style="color: #FFC107;">Mild</div>
+          <div style="font-size: 0.8rem; color: #666; margin-top: 5px;">Noticeable but manageable</div>
+        </div>
+        <div class="severity-card" style="background: rgba(255, 152, 0, 0.1); border: 2px solid #FF9800;">
+          <div class="severity-range" style="color: #FF9800;">16-23</div>
+          <div class="severity-label" style="color: #FF9800;">Moderate</div>
+          <div style="font-size: 0.8rem; color: #666; margin-top: 5px;">Substantial interference</div>
+        </div>
+        <div class="severity-card" style="background: rgba(244, 67, 54, 0.1); border: 2px solid #F44336;">
+          <div class="severity-range" style="color: #F44336;">24-31</div>
+          <div class="severity-label" style="color: #F44336;">Severe</div>
+          <div style="font-size: 0.8rem; color: #666; margin-top: 5px;">Major impairment</div>
+        </div>
+        <div class="severity-card" style="background: rgba(183, 28, 28, 0.1); border: 2px solid #B71C1C;">
+          <div class="severity-range" style="color: #B71C1C;">32-40</div>
+          <div class="severity-label" style="color: #B71C1C;">Extreme</div>
+          <div style="font-size: 0.8rem; color: #666; margin-top: 5px;">Incapacitating</div>
+        </div>
+      </div>
+      
+      <div class="symptom-summary" id="symptomSummary">
+        <h3 style="color: var(--accent-teal); margin-bottom: 15px;"><i class="fas fa-chart-pie"></i> Symptom Profile Summary</h3>
+        <div class="symptom-grid" id="symptomGrid">
+          <!-- Symptom counts will be inserted here dynamically -->
+        </div>
+      </div>
+      
+      <div class="checklist-instructions" style="background: #FFF3E0; border-left-color: #FF9800;">
+        <h4 style="color: #F57C00;"><i class="fas fa-clipboard-check"></i> Target Symptoms Identified</h4>
+        <div id="targetSymptomsList">
+          <!-- Target symptoms will be inserted here dynamically -->
+        </div>
+      </div>
+    </div>
+    
+    <!-- Controls -->
+    <div class="controls">
+      <button class="control-btn reset-btn" onclick="resetAssessment()">
+        <i class="fas fa-redo"></i> Reset Assessment
+      </button>
+      
+      <button class="control-btn submit-btn" onclick="submitAssessment()">
+        <i class="fas fa-paper-plane"></i> Submit & View Results
+      </button>
+      
+      <button class="control-btn print-btn" onclick="printReport()" style="display: none;" id="printBtn">
+        <i class="fas fa-print"></i> Print Full Report
+      </button>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+      <p><strong>Yale-Brown Obsessive Compulsive Scale (Y-BOCS)</strong></p>
+      <p>Adapted from Goodman, W.K., Price, L.H., Rasmussen, S.A. et al.: "The Yale-Brown Obsessive Compulsive Scale." Arch Gen Psychiatry 46:1006-1011, 1989</p>
+      
+      <div class="reference">
+        <h4><i class="fas fa-book-medical"></i> Clinical Reference</h4>
+        <p>The Y-BOCS is a clinician-administered scale that measures the severity of obsessive-compulsive symptoms without being biased by the type of obsessions or compulsions present. It assesses obsessions and compulsions separately and provides a total score ranging from 0 to 40.</p>
+        <p style="margin-top: 10px;"><strong>Note:</strong> This is a screening and severity assessment tool. Formal diagnosis should be made by a qualified mental health professional based on comprehensive clinical evaluation.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Y-BOCS Questions Data
+    const ybocsQuestions = {
+      obsessions: [
+        {
+          id: 1,
+          question: "TIME OCCUPIED BY OBSESSIVE THOUGHTS",
+          description: "How much of your time is occupied by obsessive thoughts?",
+          responses: [
+            { score: 0, label: "None", desc: "" },
+            { score: 1, label: "Less than 1 hr/day", desc: "or occasional occurrence" },
+            { score: 2, label: "1 to 3 hrs/day", desc: "or frequent" },
+            { score: 3, label: "Greater than 3-8 hrs/day", desc: "or very frequent" },
+            { score: 4, label: "Greater than 8 hrs/day", desc: "or nearly constant" }
+          ]
+        },
+        {
+          id: 2,
+          question: "INTERFERENCE DUE TO OBSESSIVE THOUGHTS",
+          description: "How much do your obsessive thoughts interfere with your work, school, social, or other important role functioning?",
+          responses: [
+            { score: 0, label: "None", desc: "" },
+            { score: 1, label: "Slight interference", desc: "overall performance not impaired" },
+            { score: 2, label: "Definite interference", desc: "but still manageable" },
+            { score: 3, label: "Substantial impairment", desc: "in social/occupational performance" },
+            { score: 4, label: "Incapacitating", desc: "" }
+          ]
+        },
+        {
+          id: 3,
+          question: "DISTRESS ASSOCIATED WITH OBSESSIVE THOUGHTS",
+          description: "How much distress do your obsessive thoughts cause you?",
+          responses: [
+            { score: 0, label: "None", desc: "" },
+            { score: 1, label: "Not too disturbing", desc: "" },
+            { score: 2, label: "Disturbing", desc: "but still manageable" },
+            { score: 3, label: "Very disturbing", desc: "" },
+            { score: 4, label: "Near constant", desc: "and disabling distress" }
+          ]
+        },
+        {
+          id: 4,
+          question: "RESISTANCE AGAINST OBSESSIONS",
+          description: "How much of an effort do you make to resist the obsessive thoughts?",
+          responses: [
+            { score: 0, label: "Resist all the time", desc: "" },
+            { score: 1, label: "Try to resist", desc: "most of the time" },
+            { score: 2, label: "Some effort to resist", desc: "" },
+            { score: 3, label: "Yield to all", desc: "with some reluctance" },
+            { score: 4, label: "Completely yield", desc: "willingly to all obsessions" }
+          ]
+        },
+        {
+          id: 5,
+          question: "DEGREE OF CONTROL OVER OBSESSIVE THOUGHTS",
+          description: "How much control do you have over your obsessive thoughts?",
+          responses: [
+            { score: 0, label: "Complete control", desc: "" },
+            { score: 1, label: "Usually able to stop", desc: "with some effort" },
+            { score: 2, label: "Sometimes able to stop", desc: "" },
+            { score: 3, label: "Rarely successful", desc: "can only divert with difficulty" },
+            { score: 4, label: "Completely involuntary", desc: "rarely able to alter thinking" }
+          ]
+        }
+      ],
+      compulsions: [
+        {
+          id: 6,
+          question: "TIME SPENT PERFORMING COMPULSIVE BEHAVIORS",
+          description: "How much time do you spend performing compulsive behaviors?",
+          responses: [
+            { score: 0, label: "None", desc: "" },
+            { score: 1, label: "Less than 1 hr/day", desc: "or occasional" },
+            { score: 2, label: "1 to 3 hrs/day", desc: "or frequent" },
+            { score: 3, label: "More than 3-8 hrs/day", desc: "or very frequent" },
+            { score: 4, label: "More than 8 hrs/day", desc: "or near constant" }
+          ]
+        },
+        {
+          id: 7,
+          question: "INTERFERENCE DUE TO COMPULSIVE BEHAVIORS",
+          description: "How much do your compulsive behaviors interfere with your role functioning?",
+          responses: [
+            { score: 0, label: "None", desc: "" },
+            { score: 1, label: "Slight interference", desc: "overall performance not impaired" },
+            { score: 2, label: "Definite interference", desc: "but still manageable" },
+            { score: 3, label: "Substantial impairment", desc: "" },
+            { score: 4, label: "Incapacitating", desc: "" }
+          ]
+        },
+        {
+          id: 8,
+          question: "DISTRESS ASSOCIATED WITH COMPULSIVE BEHAVIOR",
+          description: "How would you feel if prevented from performing your compulsion(s)?",
+          responses: [
+            { score: 0, label: "None", desc: "" },
+            { score: 1, label: "Slightly anxious", desc: "if compulsions prevented" },
+            { score: 2, label: "Anxiety would mount", desc: "but remain manageable" },
+            { score: 3, label: "Prominent anxiety", desc: "very disturbing if interrupted" },
+            { score: 4, label: "Incapacitating anxiety", desc: "from any intervention" }
+          ]
+        },
+        {
+          id: 9,
+          question: "RESISTANCE AGAINST COMPULSIONS",
+          description: "How much of an effort do you make to resist the compulsions?",
+          responses: [
+            { score: 0, label: "Always try to resist", desc: "" },
+            { score: 1, label: "Try to resist", desc: "most of the time" },
+            { score: 2, label: "Some effort to resist", desc: "" },
+            { score: 3, label: "Yield to almost all", desc: "with some reluctance" },
+            { score: 4, label: "Completely yield", desc: "willingly to all compulsions" }
+          ]
+        },
+        {
+          id: 10,
+          question: "DEGREE OF CONTROL OVER COMPULSIVE BEHAVIOR",
+          description: "How strong is the drive to perform the compulsive behavior?",
+          responses: [
+            { score: 0, label: "Complete control", desc: "" },
+            { score: 1, label: "Pressure but usually", desc: "able to exercise control" },
+            { score: 2, label: "Strong pressure", desc: "can control with difficulty" },
+            { score: 3, label: "Very strong drive", desc: "must be carried to completion" },
+            { score: 4, label: "Completely involuntary", desc: "rarely able to delay" }
+          ]
+        }
+      ]
+    };
+
+    // Symptom Checklist Data
+    const symptomChecklist = {
+      compulsions: [
+        {
+          category: "CLEANING/WASHING COMPULSIONS",
+          symptoms: [
+            "Excessive or ritualized handwashing",
+            "Excessive or ritualized showering, bathing, toothbrushing, grooming",
+            "Cleaning of household items or other inanimate objects",
+            "Other measures to prevent contact with contaminants",
+            "Other cleaning/washing compulsions"
+          ]
+        },
+        {
+          category: "CHECKING COMPULSIONS",
+          symptoms: [
+            "Checking locks, stove, appliances, etc.",
+            "Checking that did not/will not harm others",
+            "Checking that did not/will not harm self",
+            "Checking that nothing terrible did/will happen",
+            "Checking that did not make mistake",
+            "Checking tied to somatic obsessions*",
+            "Other checking compulsions"
+          ]
+        },
+        {
+          category: "REPEATING RITUALS",
+          symptoms: [
+            "Rereading or rewriting",
+            "Need to repeat routine activities",
+            "Other repeating rituals"
+          ]
+        },
+        {
+          category: "COUNTING COMPULSIONS",
+          symptoms: [
+            "Counting rituals"
+          ]
+        },
+        {
+          category: "ORDERING/ARRANGING COMPULSIONS",
+          symptoms: [
+            "Ordering/arranging rituals"
+          ]
+        },
+        {
+          category: "HOARDING/COLLECTING COMPULSIONS*",
+          symptoms: [
+            "Hoarding/collecting (distinguish from hobbies)"
+          ]
+        },
+        {
+          category: "MISCELLANEOUS COMPULSIONS",
+          symptoms: [
+            "Mental rituals (other than checking/counting)",
+            "Excessive listmaking",
+            "Need to tell, ask, or confess",
+            "Need to touch, tap, or rub*",
+            "Rituals involving blinking or staring*",
+            "Measures to prevent harm to self/others",
+            "Ritualized eating behaviors*",
+            "Superstitious behaviors",
+            "Trichotillomania*",
+            "Other self-damaging behaviors*",
+            "Other miscellaneous compulsions"
+          ]
+        }
+      ],
+      obsessions: [
+        {
+          category: "CONTAMINATION OBSESSIONS",
+          symptoms: [
+            "Concerns with bodily waste or secretions",
+            "Concern with dirt or germs",
+            "Excessive concern with environmental contaminants",
+            "Excessive concern with household items",
+            "Excessive concern with animals/insects",
+            "Bothered by sticky substances or residues",
+            "Concerned will get ill because of contaminant",
+            "Concerned will get others ill by spreading contaminant",
+            "No concern with consequences other than how it feels",
+            "Other contamination obsessions"
+          ]
+        },
+        {
+          category: "AGGRESSIVE OBSESSIONS",
+          symptoms: [
+            "Fear might harm self",
+            "Fear might harm others",
+            "Violent or horrific images",
+            "Fear of blurting out obscenities or insults",
+            "Fear of doing something else embarrassing*",
+            "Fear will act on unwanted impulses",
+            "Fear will steal things",
+            "Fear will harm others because not careful enough",
+            "Fear will be responsible for something terrible happening",
+            "Other aggressive obsessions"
+          ]
+        },
+        {
+          category: "SEXUAL OBSESSIONS",
+          symptoms: [
+            "Forbidden or perverse sexual thoughts, images, or impulses",
+            "Content involves children or incest",
+            "Content involves homosexuality*",
+            "Sexual behavior towards others (Aggressive)*",
+            "Other sexual obsessions"
+          ]
+        },
+        {
+          category: "HOARDING/SAVING OBSESSIONS*",
+          symptoms: [
+            "Hoarding/saving obsessions"
+          ]
+        },
+        {
+          category: "RELIGIOUS OBSESSIONS (Scrupulosity)",
+          symptoms: [
+            "Concerned with sacrilege and blasphemy",
+            "Excess concern with right/wrong, morality",
+            "Other religious obsessions"
+          ]
+        },
+        {
+          category: "OBSESSION WITH NEED FOR SYMMETRY OR EXACTNESS",
+          symptoms: [
+            "Accompanied by magical thinking",
+            "Not accompanied by magical thinking"
+          ]
+        },
+        {
+          category: "SOMATIC OBSESSIONS*",
+          symptoms: [
+            "Concern with illness or disease*",
+            "Excessive concern with body part or appearance*",
+            "Other somatic obsessions"
+          ]
+        },
+        {
+          category: "MISCELLANEOUS OBSESSIONS",
+          symptoms: [
+            "Need to know or remember",
+            "Fear of saying certain things",
+            "Fear of not saying just the right thing",
+            "Fear of losing things",
+            "Intrusive (nonviolent) images",
+            "Intrusive nonsense sounds, words, or music",
+            "Bothered by certain sounds/noises*",
+            "Lucky/unlucky numbers",
+            "Colors with special significance",
+            "Superstitious fears",
+            "Other miscellaneous obsessions"
+          ]
+        }
+      ]
+    };
+
+    // User responses
+    let userResponses = {
+      obsessions: new Array(ybocsQuestions.obsessions.length).fill(null),
+      compulsions: new Array(ybocsQuestions.compulsions.length).fill(null),
+      symptoms: {
+        current: {},
+        past: {},
+        principal: {}
+      }
+    };
+
+    // Initialize the assessment
+    document.addEventListener('DOMContentLoaded', function() {
+      renderQuestions();
+      renderSymptomChecklist();
+      updateScoreDisplay();
+      
+      // Set today's date
+      document.getElementById('assessmentDate').valueAsDate = new Date();
+      
+      // Auto-save data
+      document.getElementById('patientName').addEventListener('input', saveFormData);
+      document.getElementById('clinicianName').addEventListener('input', saveFormData);
+      
+      // Load saved data
+      loadFormData();
+    });
+
+    // Render Y-BOCS questions
+    function renderQuestions() {
+      renderQuestionSet('obsessions', ybocsQuestions.obsessions, userResponses.obsessions);
+      renderQuestionSet('compulsions', ybocsQuestions.compulsions, userResponses.compulsions);
+    }
+
+    // Render a set of questions
+    function renderQuestionSet(type, questions, responses) {
+      const container = document.getElementById(`${type}Questions`);
+      let html = '';
+      
+      questions.forEach((question, index) => {
+        html += `
+          <div class="question-card" id="question-${type}-${index}">
+            <div class="question-number">${question.id}</div>
+            <div class="question-text">${question.question}</div>
+            <div class="question-description">${question.description}</div>
+            
+            <div class="response-options">
+              ${question.responses.map((response, respIndex) => `
+                <div class="response-option">
+                  <button class="option-btn ${responses[index] === response.score ? 'selected' : ''}"
+                          onclick="selectResponse('${type}', ${index}, ${response.score})"
+                          data-score="${response.score}">
+                    <div class="option-score">${response.score}</div>
+                    <div class="option-label">${response.label}</div>
+                    ${response.desc ? `<div class="option-desc">${response.desc}</div>` : ''}
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      });
+      
+      container.innerHTML = html;
+    }
+
+    // Render symptom checklist
+    function renderSymptomChecklist() {
+      const container = document.getElementById('symptomChecklist');
+      let html = '';
+      
+      // Add compulsions categories
+      symptomChecklist.compulsions.forEach(category => {
+        html += renderSymptomCategory(category, 'compulsion');
+      });
+      
+      // Add obsessions categories
+      symptomChecklist.obsessions.forEach(category => {
+        html += renderSymptomCategory(category, 'obsession');
+      });
+      
+      container.innerHTML = html;
+      
+      // Add event listeners to checkboxes
+      document.querySelectorAll('.symptom-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+          updateSymptomSelections();
+          saveFormData();
+        });
+      });
+      
+      document.querySelectorAll('.principal-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+          updatePrincipalSelections();
+          saveFormData();
+        });
+      });
+    }
+
+    // Render a symptom category
+    function renderSymptomCategory(category, type) {
+      const icon = type === 'obsession' ? 'fa-brain' : 'fa-sync-alt';
+      const color = type === 'obsession' ? 'var(--obsession-color)' : 'var(--compulsion-color)';
+      
+      let html = `
+        <div class="symptom-category">
+          <div class="category-header" style="color: ${color};">
+            <i class="fas ${icon}"></i>
+            <span>${category.category}</span>
+          </div>
+          <ul class="symptom-list">
+      `;
+      
+      category.symptoms.forEach(symptom => {
+        const symptomId = symptom.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        const isStarred = symptom.includes('*');
+        const displaySymptom = isStarred ? symptom : symptom;
+        
+        html += `
+          <li class="symptom-item">
+            <span style="flex: 1;">${displaySymptom}</span>
+            <div class="symptom-checkboxes">
+              <div class="checkbox-group">
+                <input type="checkbox" class="symptom-checkbox" id="${symptomId}-current" data-symptom="${symptomId}" data-type="current">
+                <label for="${symptomId}-current">Current</label>
+              </div>
+              <div class="checkbox-group">
+                <input type="checkbox" class="symptom-checkbox" id="${symptomId}-past" data-symptom="${symptomId}" data-type="past">
+                <label for="${symptomId}-past">Past</label>
+              </div>
+            </div>
+            <div class="principal-symptom">
+              <input type="checkbox" class="principal-checkbox" id="${symptomId}-principal" data-symptom="${symptomId}">
+              <label for="${symptomId}-principal" style="font-size: 0.75rem; color: var(--primary-purple);">P</label>
+            </div>
+          </li>
+        `;
+      });
+      
+      html += `
+          </ul>
+        </div>
+      `;
+      
+      return html;
+    }
+
+    // Select a response for Y-BOCS questions
+    function selectResponse(type, questionIndex, score) {
+      userResponses[type][questionIndex] = score;
+      
+      // Update UI
+      const questionCard = document.getElementById(`question-${type}-${questionIndex}`);
+      const buttons = questionCard.querySelectorAll('.option-btn');
+      buttons.forEach(btn => {
+        const btnScore = parseInt(btn.getAttribute('data-score'));
+        btn.classList.toggle('selected', btnScore === score);
+      });
+      
+      updateScoreDisplay();
+      saveFormData();
+    }
+
+    // Update symptom selections
+    function updateSymptomSelections() {
+      // Reset symptom tracking
+      userResponses.symptoms = {
+        current: {},
+        past: {},
+        principal: {}
+      };
+      
+      // Get all checked symptoms
+      document.querySelectorAll('.symptom-checkbox:checked').forEach(checkbox => {
+        const symptomId = checkbox.getAttribute('data-symptom');
+        const type = checkbox.getAttribute('data-type');
+        
+        if (!userResponses.symptoms[type]) {
+          userResponses.symptoms[type] = {};
+        }
+        
+        userResponses.symptoms[type][symptomId] = true;
+      });
+      
+      // Get principal symptoms
+      document.querySelectorAll('.principal-checkbox:checked').forEach(checkbox => {
+        const symptomId = checkbox.getAttribute('data-symptom');
+        userResponses.symptoms.principal[symptomId] = true;
+      });
+    }
+
+    // Update principal selections
+    function updatePrincipalSelections() {
+      userResponses.symptoms.principal = {};
+      
+      document.querySelectorAll('.principal-checkbox:checked').forEach(checkbox => {
+        const symptomId = checkbox.getAttribute('data-symptom');
+        userResponses.symptoms.principal[symptomId] = true;
+      });
+      
+      // Ensure principal symptoms are also marked as current
+      document.querySelectorAll('.principal-checkbox:checked').forEach(checkbox => {
+        const symptomId = checkbox.getAttribute('data-symptom');
+        const currentCheckbox = document.querySelector(`[data-symptom="${symptomId}"][data-type="current"]`);
+        if (currentCheckbox) {
+          currentCheckbox.checked = true;
+          if (!userResponses.symptoms.current) userResponses.symptoms.current = {};
+          userResponses.symptoms.current[symptomId] = true;
+        }
+      });
+    }
+
+    // Calculate scores
+    function calculateScores() {
+      let obsessionScore = 0;
+      let compulsionScore = 0;
+      
+      // Calculate obsession score (questions 1-5)
+      userResponses.obsessions.forEach(score => {
+        if (score !== null) {
+          obsessionScore += score;
+        }
+      });
+      
+      // Calculate compulsion score (questions 6-10)
+      userResponses.compulsions.forEach(score => {
+        if (score !== null) {
+          compulsionScore += score;
+        }
+      });
+      
+      const totalScore = obsessionScore + compulsionScore;
+      
+      // Count symptoms
+      const currentSymptoms = Object.keys(userResponses.symptoms.current || {}).length;
+      const pastSymptoms = Object.keys(userResponses.symptoms.past || {}).length;
+      const principalSymptoms = Object.keys(userResponses.symptoms.principal || {}).length;
+      
+      return {
+        obsessionScore,
+        compulsionScore,
+        totalScore,
+        currentSymptoms,
+        pastSymptoms,
+        principalSymptoms,
+        totalSymptoms: currentSymptoms + pastSymptoms
+      };
+    }
+
+    // Update score display
+    function updateScoreDisplay() {
+      const scores = calculateScores();
+      
+      document.getElementById('obsessionScore').textContent = scores.obsessionScore;
+      document.getElementById('compulsionScore').textContent = scores.compulsionScore;
+      document.getElementById('totalScore').textContent = scores.totalScore;
+      
+      // Update interpretation labels
+      document.getElementById('obsessionLevel').textContent = getSeverityLabel(scores.obsessionScore, true);
+      document.getElementById('compulsionLevel').textContent = getSeverityLabel(scores.compulsionScore, true);
+    }
+
+    // Get severity interpretation
+    function getSeverityLabel(score, isSubscale = false) {
+      if (isSubscale) {
+        // Subscale scores (0-20)
+        if (score <= 4) return "Mild";
+        if (score <= 10) return "Moderate";
+        if (score <= 16) return "Severe";
+        return "Extreme";
+      } else {
+        // Total score (0-40)
+        if (score <= 7) return "Subclinical";
+        if (score <= 15) return "Mild";
+        if (score <= 23) return "Moderate";
+        if (score <= 31) return "Severe";
+        return "Extreme";
+      }
+    }
+
+    // Get detailed interpretation
+    function getDetailedInterpretation(totalScore, obsessionScore, compulsionScore) {
+      let severity = getSeverityLabel(totalScore, false);
+      let description = '';
+      let recommendations = [];
+      
+      if (totalScore <= 7) {
+        description = `Your total Y-BOCS score of ${totalScore} indicates subclinical symptoms. Obsessive-compulsive symptoms are minimal and unlikely to cause significant impairment.`;
+        recommendations = [
+          "Routine monitoring may be sufficient",
+          "Consider psychoeducation about OCD",
+          "Monitor for any increase in symptoms"
+        ];
+      } else if (totalScore <= 15) {
+        description = `Your total Y-BOCS score of ${totalScore} indicates mild OCD symptoms. Symptoms are noticeable but generally manageable. Obsession score: ${obsessionScore}/20, Compulsion score: ${compulsionScore}/20.`;
+        recommendations = [
+          "Consider cognitive-behavioral therapy (CBT)",
+          "Self-help strategies and stress management",
+          "Regular follow-up to monitor progression"
+        ];
+      } else if (totalScore <= 23) {
+        description = `Your total Y-BOCS score of ${totalScore} indicates moderate OCD symptoms causing substantial interference. Obsession score: ${obsessionScore}/20, Compulsion score: ${compulsionScore}/20.`;
+        recommendations = [
+          "Cognitive-behavioral therapy (CBT) with Exposure and Response Prevention (ERP)",
+          "Consider psychiatric evaluation for medication options",
+          "Structured treatment planning recommended"
+        ];
+      } else if (totalScore <= 31) {
+        description = `Your total Y-BOCS score of ${totalScore} indicates severe OCD symptoms causing major impairment. Obsession score: ${obsessionScore}/20, Compulsion score: ${compulsionScore}/20.`;
+        recommendations = [
+          "Intensive treatment needed - consider higher level of care",
+          "Combination therapy: CBT + medication management",
+          "Regular monitoring and support system essential"
+        ];
+      } else {
+        description = `Your total Y-BOCS score of ${totalScore} indicates extreme, incapacitating OCD symptoms. Obsession score: ${obsessionScore}/20, Compulsion score: ${compulsionScore}/20.`;
+        recommendations = [
+          "Immediate comprehensive treatment evaluation",
+          "Consider intensive outpatient or residential treatment",
+          "Multidisciplinary treatment team recommended",
+          "Safety planning if symptoms include harm-related obsessions"
+        ];
+      }
+      
+      return { severity, description, recommendations };
+    }
+
+    // Submit assessment
+    function submitAssessment() {
+      const patientName = document.getElementById('patientName').value.trim();
+      
+      if (!patientName) {
+        alert("Please enter patient name before submitting the assessment.");
+        document.getElementById('patientName').focus();
+        return;
+      }
+      
+      // Check if Y-BOCS questions are answered
+      const unansweredObsessions = userResponses.obsessions.filter(r => r === null).length;
+      const unansweredCompulsions = userResponses.compulsions.filter(r => r === null).length;
+      
+      if (unansweredObsessions > 0 || unansweredCompulsions > 0) {
+        if (!confirm(`You have ${unansweredObsessions + unansweredCompulsions} unanswered Y-BOCS questions. Would you like to submit anyway?`)) {
+          return;
+        }
+      }
+      
+      const scores = calculateScores();
+      const interpretation = getDetailedInterpretation(
+        scores.totalScore, 
+        scores.obsessionScore, 
+        scores.compulsionScore
+      );
+      
+      // Update results display
+      document.getElementById('finalObsessionScore').textContent = scores.obsessionScore;
+      document.getElementById('finalCompulsionScore').textContent = scores.compulsionScore;
+      document.getElementById('finalTotalScore').textContent = scores.totalScore;
+      
+      // Update interpretation
+      document.getElementById('scoreInterpretation').innerHTML = `
+        <h4 style="color: var(--primary-purple); margin-bottom: 15px;">
+          <i class="fas fa-diagnoses"></i> Clinical Interpretation: ${interpretation.severity} OCD
+        </h4>
+        <p>${interpretation.description}</p>
+        <div style="margin-top: 20px; background: white; padding: 15px; border-radius: 8px;">
+          <strong>Severity Level:</strong> ${interpretation.severity}<br>
+          <strong>Total Y-BOCS Score:</strong> ${scores.totalScore}/40<br>
+          <strong>Obsession Severity:</strong> ${scores.obsessionScore}/20 (${getSeverityLabel(scores.obsessionScore, true)})<br>
+          <strong>Compulsion Severity:</strong> ${scores.compulsionScore}/20 (${getSeverityLabel(scores.compulsionScore, true)})<br>
+          <strong>Assessment Date:</strong> ${new Date().toLocaleDateString()}
+        </div>
+      `;
+      
+      // Update symptom summary
+      document.getElementById('symptomGrid').innerHTML = `
+        <div class="symptom-count-card">
+          <div class="symptom-count">${scores.currentSymptoms}</div>
+          <div class="analysis-label">Current Symptoms</div>
+        </div>
+        <div class="symptom-count-card">
+          <div class="symptom-count">${scores.pastSymptoms}</div>
+          <div class="analysis-label">Past Symptoms</div>
+        </div>
+        <div class="symptom-count-card">
+          <div class="symptom-count">${scores.principalSymptoms}</div>
+          <div class="analysis-label">Principal Symptoms</div>
+        </div>
+        <div class="symptom-count-card">
+          <div class="symptom-count">${scores.totalSymptoms}</div>
+          <div class="analysis-label">Total Symptoms</div>
+        </div>
+      `;
+      
+      // Generate target symptoms list
+      generateTargetSymptomsList();
+      
+      // Show results and hide assessment
+      document.getElementById('assessmentContainer').style.display = 'none';
+      document.getElementById('symptom-checklist').style.display = 'none';
+      document.getElementById('resultsContainer').style.display = 'block';
+      document.getElementById('printBtn').style.display = 'flex';
+      
+      // Scroll to top
+      window.scrollTo(0, 0);
+      
+      // Save results
+      saveAssessmentResults(patientName, scores, interpretation);
+    }
+
+    // Generate target symptoms list
+    function generateTargetSymptomsList() {
+      const container = document.getElementById('targetSymptomsList');
+      let principalSymptoms = [];
+      let currentSymptoms = [];
+      
+      // Get symptom names from checkboxes
+      document.querySelectorAll('.principal-checkbox:checked').forEach(checkbox => {
+        const symptomId = checkbox.getAttribute('data-symptom');
+        const symptomItem = checkbox.closest('.symptom-item');
+        if (symptomItem) {
+          const symptomText = symptomItem.querySelector('span').textContent.trim();
+          principalSymptoms.push(symptomText);
+        }
+      });
+      
+      document.querySelectorAll('[data-type="current"]:checked').forEach(checkbox => {
+        if (!checkbox.classList.contains('principal-checkbox')) {
+          const symptomId = checkbox.getAttribute('data-symptom');
+          const symptomItem = checkbox.closest('.symptom-item');
+          if (symptomItem) {
+            const symptomText = symptomItem.querySelector('span').textContent.trim();
+            currentSymptoms.push(symptomText);
+          }
+        }
+      });
+      
+      let html = '';
+      
+      if (principalSymptoms.length > 0) {
+        html += `<p><strong>Principal Symptoms (Target for Treatment):</strong></p><ul style="margin-left: 20px; margin-top: 10px;">`;
+        principalSymptoms.forEach(symptom => {
+          html += `<li>${symptom}</li>`;
+        });
+        html += `</ul>`;
+      }
+      
+      if (currentSymptoms.length > 0) {
+        html += `<p style="margin-top: 15px;"><strong>Other Current Symptoms:</strong></p><ul style="margin-left: 20px; margin-top: 10px;">`;
+        currentSymptoms.slice(0, 10).forEach(symptom => {
+          html += `<li>${symptom}</li>`;
+        });
+        if (currentSymptoms.length > 10) {
+          html += `<li>...and ${currentSymptoms.length - 10} more symptoms</li>`;
+        }
+        html += `</ul>`;
+      }
+      
+      if (principalSymptoms.length === 0 && currentSymptoms.length === 0) {
+        html = `<p>No specific symptoms identified in the checklist. Consider comprehensive clinical interview for symptom identification.</p>`;
+      }
+      
+      container.innerHTML = html;
+    }
+
+    // Save assessment results
+    function saveAssessmentResults(patientName, scores, interpretation) {
+      // Get all symptom data
+      const symptomData = {};
+      document.querySelectorAll('.symptom-item').forEach(item => {
+        const symptomText = item.querySelector('span').textContent.trim();
+        const symptomId = symptomText.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+        
+        const isCurrent = item.querySelector('[data-type="current"]:checked');
+        const isPast = item.querySelector('[data-type="past"]:checked');
+        const isPrincipal = item.querySelector('.principal-checkbox:checked');
+        
+        symptomData[symptomId] = {
+          symptom: symptomText,
+          current: !!isCurrent,
+          past: !!isPast,
+          principal: !!isPrincipal
+        };
+      });
+      
+      const assessmentData = {
+        test: "Yale-Brown Obsessive Compulsive Scale (Y-BOCS)",
+        date: new Date().toISOString(),
+        patientName: patientName,
+        clinicianName: document.getElementById('clinicianName').value,
+        scores: scores,
+        interpretation: interpretation,
+        symptoms: symptomData,
+        ybocsResponses: {
+          obsessions: ybocsQuestions.obsessions.map((q, i) => ({
+            question: q.question,
+            score: userResponses.obsessions[i]
+          })),
+          compulsions: ybocsQuestions.compulsions.map((q, i) => ({
+            question: q.question,
+            score: userResponses.compulsions[i]
+          }))
+        }
+      };
+      
+      // Save to localStorage
+      const assessments = JSON.parse(localStorage.getItem('ybocsAssessments') || '[]');
+      assessments.push(assessmentData);
+      localStorage.setItem('ybocsAssessments', JSON.stringify(assessments));
+    }
+
+    // Save form data
+    function saveFormData() {
+      updateSymptomSelections();
+      
+      const formData = {
+        patientName: document.getElementById('patientName').value,
+        clinicianName: document.getElementById('clinicianName').value,
+        assessmentDate: document.getElementById('assessmentDate').value,
+        ybocsResponses: userResponses,
+        symptomSelections: userResponses.symptoms
+      };
+      
+      localStorage.setItem('ybocsFormData', JSON.stringify(formData));
+    }
+
+    // Load form data
+    function loadFormData() {
+      const savedData = localStorage.getItem('ybocsFormData');
+      if (savedData) {
+        try {
+          const formData = JSON.parse(savedData);
+          
+          document.getElementById('patientName').value = formData.patientName || '';
+          document.getElementById('clinicianName').value = formData.clinicianName || '';
+          if (formData.assessmentDate) {
+            document.getElementById('assessmentDate').value = formData.assessmentDate;
+          }
+          
+          if (formData.ybocsResponses) {
+            userResponses = formData.ybocsResponses;
+            renderQuestions();
+            updateScoreDisplay();
+          }
+          
+          if (formData.symptomSelections) {
+            // Restore checkbox states
+            setTimeout(() => {
+              Object.keys(formData.symptomSelections.current || {}).forEach(symptomId => {
+                const checkbox = document.querySelector(`[data-symptom="${symptomId}"][data-type="current"]`);
+                if (checkbox) checkbox.checked = true;
+              });
+              
+              Object.keys(formData.symptomSelections.past || {}).forEach(symptomId => {
+                const checkbox = document.querySelector(`[data-symptom="${symptomId}"][data-type="past"]`);
+                if (checkbox) checkbox.checked = true;
+              });
+              
+              Object.keys(formData.symptomSelections.principal || {}).forEach(symptomId => {
+                const checkbox = document.querySelector(`[data-symptom="${symptomId}"].principal-checkbox`);
+                if (checkbox) checkbox.checked = true;
+              });
+              
+              updateSymptomSelections();
+            }, 100);
+          }
+        } catch (e) {
+          console.log('Could not load saved data:', e);
+        }
+      }
+    }
+
+    // Reset assessment
+    function resetAssessment() {
+      if (confirm("Are you sure you want to reset all responses? This action cannot be undone.")) {
+        userResponses = {
+          obsessions: new Array(ybocsQuestions.obsessions.length).fill(null),
+          compulsions: new Array(ybocsQuestions.compulsions.length).fill(null),
+          symptoms: {
+            current: {},
+            past: {},
+            principal: {}
+          }
+        };
+        
+        document.getElementById('patientName').value = '';
+        document.getElementById('clinicianName').value = '';
+        
+        // Uncheck all checkboxes
+        document.querySelectorAll('.symptom-checkbox').forEach(cb => cb.checked = false);
+        document.querySelectorAll('.principal-checkbox').forEach(cb => cb.checked = false);
+        
+        renderQuestions();
+        updateSymptomSelections();
+        updateScoreDisplay();
+        
+        // Show assessment and hide results
+        document.getElementById('assessmentContainer').style.display = 'block';
+        document.getElementById('symptom-checklist').style.display = 'block';
+        document.getElementById('resultsContainer').style.display = 'none';
+        document.getElementById('printBtn').style.display = 'none';
+        
+        // Clear saved form data
+        localStorage.removeItem('ybocsFormData');
+      }
+    }
+
+    // Print report
+    function printReport() {
+      const printContent = document.getElementById('resultsContainer').innerHTML;
+      const originalContent = document.body.innerHTML;
+      const patientName = document.getElementById('patientName').value || "Patient";
+      const assessmentDate = document.getElementById('assessmentDate').value;
+      const clinicianName = document.getElementById('clinicianName').value || "Not specified";
+      
+      document.body.innerHTML = `
+        <div style="padding: 30px; font-family: Arial, sans-serif;">
+          <h1 style="color: #7B1FA2; border-bottom: 2px solid #7B1FA2; padding-bottom: 10px;">
+            Y-BOCS Assessment Report
+          </h1>
+          <div style="margin: 20px 0; padding: 15px; background: #F3E5F5; border-radius: 8px;">
+            <strong>Patient:</strong> ${patientName}<br>
+            <strong>Assessment Date:</strong> ${assessmentDate}<br>
+            <strong>Clinician:</strong> ${clinicianName}<br>
+            <strong>Report Date:</strong> ${new Date().toLocaleDateString()}
+          </div>
+          ${printContent}
+          <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccc; font-size: 0.8rem; color: #666;">
+            <p><strong>Disclaimer:</strong> This report is generated from the Yale-Brown Obsessive Compulsive Scale (Y-BOCS) assessment. It is intended for clinical use and should be interpreted by a qualified mental health professional. Formal diagnosis requires comprehensive clinical evaluation.</p>
+            <p style="margin-top: 10px;">Adapted from Goodman, W.K., Price, L.H., Rasmussen, S.A. et al.: "The Yale-Brown Obsessive Compulsive Scale." Arch Gen Psychiatry 46:1006-1011, 1989</p>
+          </div>
+        </div>
+      `;
+      
+      window.print();
+      document.body.innerHTML = originalContent;
+      location.reload();
+    }
+  </script>
+</body>
+</html>

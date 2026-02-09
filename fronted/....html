@@ -1,0 +1,2404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun & Relax Zone - Kids & Teens</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #a2d2ff, #3f4883, #cdb4db);
+            color: #333;
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+
+        header {
+            text-align: center;
+            padding: 25px 20px;
+            background: linear-gradient(to right, #001f4d, #3a86ff);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.2"/></svg>');
+            background-size: 50px 50px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border: none;
+            border-radius: 30px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #3a86ff;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            background: white;
+            color: #3a86ff;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: #3a86ff;
+            color: white;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-image {
+            height: 160px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #14516f;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            color: #001f4d;
+            font-size: 1.3rem;
+        }
+
+        .card p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .age-range {
+            background: #e9ecef;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            color: #495057;
+        }
+
+        .play-btn {
+            background: #3a86ff;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .play-btn:hover {
+            background: #2667cc;
+        }
+
+        #game-frame {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            padding: 20px;
+            flex-direction: column;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .back-btn {
+            background: #3a86ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #2667cc;
+        }
+
+        .game-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .game-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .api-status {
+            margin-top: 10px;
+            color: white;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .featured-section {
+            margin: 40px 0;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #001f4d;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3a86ff;
+            display: inline-block;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3a86ff;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #001f4d;
+            font-size: 0.9rem;
+        }
+
+        /* Story Writing Styles */
+        .story-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .story-title {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .story-text {
+            width: 100%;
+            height: 300px;
+            padding: 15px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: vertical;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .story-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .story-btn {
+            padding: 10px 20px;
+            background: #3a86ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .story-btn:hover {
+            background: #2667cc;
+        }
+
+        .saved-stories {
+            margin-top: 30px;
+        }
+
+        .story-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #3a86ff;
+        }
+
+        .story-item h4 {
+            margin-bottom: 10px;
+            color: #001f4d;
+        }
+
+        .story-item p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* Tanagers Section */
+        .tanagers-section {
+            background: linear-gradient(135deg, #b1b8c7, #4a5569);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 40px 0;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .tanagers-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .tanagers-text {
+            flex: 1;
+            min-width: 300px;
+            text-align: left;
+        }
+
+        .tanagers-text h2 {
+            color: #001f4d;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        .tanagers-text p {
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .tanagers-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #1a3357;
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .tanagers-btn:hover {
+            background: #174469;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .tanagers-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .tanagers-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-buttons {
+                justify-content: center;
+            }
+            
+            .cards-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .tanagers-content {
+                flex-direction: column;
+            }
+            
+            .tanagers-text {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎮 Fun & Relax Zone 🎨</h1>
+        <p class="subtitle">A safe space for kids and teens to play, learn, and relax with engaging activities</p>
+    </header>
+
+    <div class="container">
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">20+</div>
+                <div class="stat-label">Activities</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">5</div>
+                <div class="stat-label">Categories</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Safe Content</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">4.8</div>
+                <div class="stat-label">User Rating</div>
+            </div>
+        </div>
+
+        <!-- Tanagers Section -->
+        <div class="tanagers-section">
+            <div class="tanagers-content">
+                <div class="tanagers-text">
+                    <h2>Explore the World of Tanagers! 🐦</h2>
+                    <p>Discover amazing facts about these colorful birds, their habitats, and behaviors. Our Tanagers section is filled with interactive content, beautiful images, and fun activities for bird lovers of all ages.</p>
+                    <a href="kids&teens2.html" class="tanagers-btn">
+                        <i class="fas fa-feather-alt"></i> Visit Tanagers Section
+                    </a>
+                </div>
+                <div class="tanagers-image">
+                    <img src="https://images.unsplash.com/photo-1551085254-e96b210db58a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Colorful Tanager Bird">
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="Search for games, activities...">
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="games">Games</button>
+                <button class="filter-btn" data-filter="relaxation">Relaxation</button>
+                <button class="filter-btn" data-filter="learning">Learning</button>
+                <button class="filter-btn" data-filter="stories">Stories</button>
+            </div>
+        </div>
+
+        <div class="featured-section">
+            <h2 class="section-title">Featured Activities</h2>
+            <div class="cards-container" id="cards-container">
+                <!-- Cards will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div id="game-frame">
+        <div class="game-header">
+            <button class="back-btn" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i> Back to Activities
+            </button>
+            <h2 id="game-title">Activity</h2>
+        </div>
+        <div class="game-container">
+            <div id="game-content" class="game-content"></div>
+            <div class="api-status" id="api-status">Game loaded successfully!</div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Fun & Relax Zone &copy; 2023 | Designed for Kids and Teens</p>
+        <p>All activities are carefully selected for safety and age-appropriateness</p>
+    </footer>
+
+    <script>
+        // Sample data for activities with embedded games and improved images
+        const activities = [
+            {
+                id: 1,
+                name: "Memory Game",
+                description: "Boost your memory with this fun matching game. Find all the pairs to win!",
+                category: "games",
+                ageRange: "5-12",
+                image: "https://images.unsplash.com/photo-1592478411213-6153e4ebc696?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                featured: true,
+                embedded: true,
+                gameId: "memory"
+            },
+            {
+                id: 2,
+                name: "Breathing Exercise",
+                description: "Learn calming breathing techniques to help you relax and focus.",
+                category: "relaxation",
+                ageRange: "All Ages",
+                image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                featured: true,
+                embedded: true,
+                gameId: "breathing"
+            },
+            {
+                id: 3,
+                name: "Puzzle Game",
+                description: "Solve fun puzzles and train your brain 🧩",
+                category: "games",
+                ageRange: "6-14",
+                image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                featured: true,
+                embedded: true,
+                gameId: "puzzle"
+            },
+            {
+                id: 4,
+                name: "Coloring Book",
+                description: "Relax with a digital coloring book 🎨",
+                category: "relaxation",
+                ageRange: "3-10",
+                image: "https://images.unsplash.com/photo-1622737133809-d95047b9e673?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                featured: false,
+                embedded: true,
+                gameId: "coloring"
+            },
+            {
+                id: 5,
+                name: "Math Challenge",
+                description: "Fun math games for all ages ➕",
+                category: "learning",
+                ageRange: "6-14",
+                image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                featured: true,
+                embedded: true,
+                gameId: "math"
+            },
+            {
+                id: 6,
+                name: "Typing Game",
+                description: "Improve your typing skills ⌨️",
+                category: "learning",
+                ageRange: "8-16",
+                image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                featured: false,
+                embedded: true,
+                gameId: "typing"
+            },
+            {
+                id: 7,
+                name: "Maze Runner",
+                description: "Navigate through challenging mazes 🌀",
+                category: "games",
+                ageRange: "7-14",
+                image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                featured: false,
+                embedded: true,
+                gameId: "maze"
+            },
+            {
+                id: 8,
+                name: "Music Maker",
+                description: "Create your own music and beats 🎵",
+                category: "relaxation",
+                ageRange: "5-12",
+                image: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                featured: false,
+                embedded: true,
+                gameId: "music"
+            },
+            {
+                id: 9,
+                name: "Word Search",
+                description: "Find hidden words in the puzzle 🔍",
+                category: "learning",
+                ageRange: "8-14",
+                image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                featured: false,
+                embedded: true,
+                gameId: "word"
+            },
+            {
+                id: 10,
+                name: "Drawing Pad",
+                description: "Express your creativity with drawing ✏️",
+                category: "relaxation",
+                ageRange: "4-12",
+                image: "https://images.unsplash.com/photo-1541961017774-22349e4a1262?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                featured: false,
+                embedded: true,
+                gameId: "drawing"
+            },
+            {
+                id: 11,
+                name: "Story Writer",
+                description: "Write your own stories and save them for later 📝",
+                category: "stories",
+                ageRange: "8-16",
+                image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                featured: true,
+                embedded: true,
+                gameId: "storywriter"
+            },
+            {
+                id: 12,
+                name: "Animal Quiz",
+                description: "Test your knowledge about animals 🐾",
+                category: "learning",
+                ageRange: "6-12",
+                image: "https://images.unsplash.com/photo-1550358864-518f202c02ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                featured: false,
+                embedded: true,
+                gameId: "animalquiz"
+            },
+            {
+                id: 13,
+                name: "Emotion Explorer",
+                description: "Learn about emotions and how to manage them 😊",
+                category: "relaxation",
+                ageRange: "5-10",
+                image: "https://images.unsplash.com/photo-1594736797933-d0ea3ff8db41?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                featured: false,
+                embedded: true,
+                gameId: "emotion"
+            },
+            {
+                id: 14,
+                name: "Pattern Game",
+                description: "Complete the patterns and train your brain 🔄",
+                category: "games",
+                ageRange: "4-8",
+                image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                featured: false,
+                embedded: true,
+                gameId: "pattern"
+            },
+            {
+                id: 15,
+                name: "Interactive Story",
+                description: "Choose your own adventure in this interactive story 📖",
+                category: "stories",
+                ageRange: "7-12",
+                image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                featured: true,
+                embedded: true,
+                gameId: "interactivestory"
+            },
+            {
+                id: 16,
+                name: "Shape Sorter",
+                description: "Match shapes and colors in this fun game 🔺🔵",
+                category: "learning",
+                ageRange: "3-6",
+                image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                featured: false,
+                embedded: true,
+                gameId: "shapes"
+            },
+            {
+                id: 17,
+                name: "Yoga for Kids",
+                description: "Simple yoga poses for relaxation and flexibility 🧘",
+                category: "relaxation",
+                ageRange: "5-12",
+                image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                featured: false,
+                embedded: true,
+                gameId: "yoga"
+            },
+            {
+                id: 18,
+                name: "Tic Tac Toe",
+                description: "Classic game of X's and O's ❌⭕",
+                category: "games",
+                ageRange: "6+",
+                image: "https://images.unsplash.com/photo-1592478411213-6153e4ebc696?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                featured: false,
+                embedded: true,
+                gameId: "tictactoe"
+            },
+            {
+                id: 19,
+                name: "Color Mixer",
+                description: "Learn how colors mix together to create new colors 🎨",
+                category: "learning",
+                ageRange: "5-10",
+                image: "https://images.unsplash.com/photo-1622737133809-d95047b9e673?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                featured: false,
+                embedded: true,
+                gameId: "colormixer"
+            },
+            {
+                id: 20,
+                name: "Mindful Moments",
+                description: "Short mindfulness activities for focus and calm 🧠",
+                category: "relaxation",
+                ageRange: "All Ages",
+                image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                featured: true,
+                embedded: true,
+                gameId: "mindful"
+            }
+        ];
+
+        // Game data with actual working games
+        const games = {
+            memory: {
+                title: "Memory Game",
+                html: `
+                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #6a11cb, #2575fc); color: white; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <h1>Memory Game</h1>
+                        <p>Match the pairs of cards!</p>
+                        <div id="memory-board" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; max-width: 500px; margin: 20px auto;"></div>
+                        <div style="margin-top: 20px;">
+                            <button onclick="resetMemoryGame()" style="padding: 10px 20px; background: #ff6b6b; color: white; border: none; border-radius: 5px; cursor: pointer;">Reset Game</button>
+                            <p id="memory-score" style="font-size: 18px; margin-top: 10px;">Matches: 0/8</p>
+                        </div>
+                    </div>
+                `,
+                script: function() {
+                    const memoryBoard = document.getElementById('memory-board');
+                    const memoryScore = document.getElementById('memory-score');
+                    let cards = ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼'];
+                    cards = [...cards, ...cards];
+                    let flippedCards = [];
+                    let matchedPairs = 0;
+                    
+                    // Shuffle cards
+                    cards.sort(() => Math.random() - 0.5);
+                    
+                    // Create card elements
+                    cards.forEach((emoji, index) => {
+                        const card = document.createElement('div');
+                        card.className = 'memory-card';
+                        card.innerHTML = `
+                            <div class="card-front">?</div>
+                            <div class="card-back">${emoji}</div>
+                        `;
+                        card.style.cssText = `
+                            width: 80px; 
+                            height: 80px; 
+                            background: white; 
+                            border-radius: 10px; 
+                            display: flex; 
+                            align-items: center; 
+                            justify-content: center; 
+                            font-size: 24px; 
+                            cursor: pointer;
+                            position: relative;
+                            transform-style: preserve-3d;
+                            transition: transform 0.5s;
+                        `;
+                        
+                        const front = card.querySelector('.card-front');
+                        const back = card.querySelector('.card-back');
+                        
+                        front.style.cssText = back.style.cssText = `
+                            position: absolute;
+                            width: 100%;
+                            height: 100%;
+                            backface-visibility: hidden;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            border-radius: 10px;
+                        `;
+                        
+                        back.style.transform = 'rotateY(180deg)';
+                        
+                        card.addEventListener('click', () => flipCard(card, emoji));
+                        memoryBoard.appendChild(card);
+                    });
+                    
+                    function flipCard(card, emoji) {
+                        if (flippedCards.length < 2 && !card.classList.contains('flipped')) {
+                            card.style.transform = 'rotateY(180deg)';
+                            card.classList.add('flipped');
+                            flippedCards.push({card, emoji});
+                            
+                            if (flippedCards.length === 2) {
+                                checkForMatch();
+                            }
+                        }
+                    }
+                    
+                    function checkForMatch() {
+                        const [card1, card2] = flippedCards;
+                        
+                        if (card1.emoji === card2.emoji) {
+                            // Match found
+                            matchedPairs++;
+                            memoryScore.textContent = `Matches: ${matchedPairs}/8`;
+                            flippedCards = [];
+                            
+                            if (matchedPairs === 8) {
+                                setTimeout(() => {
+                                    alert('Congratulations! You won! 🎉');
+                                }, 500);
+                            }
+                        } else {
+                            // No match
+                            setTimeout(() => {
+                                card1.card.style.transform = 'rotateY(0deg)';
+                                card2.card.style.transform = 'rotateY(0deg)';
+                                card1.card.classList.remove('flipped');
+                                card2.card.classList.remove('flipped');
+                                flippedCards = [];
+                            }, 1000);
+                        }
+                    }
+                    
+                    window.resetMemoryGame = function() {
+                        memoryBoard.innerHTML = '';
+                        flippedCards = [];
+                        matchedPairs = 0;
+                        memoryScore.textContent = 'Matches: 0/8';
+                        cards.sort(() => Math.random() - 0.5);
+                        
+                        cards.forEach((emoji, index) => {
+                            const card = document.createElement('div');
+                            card.className = 'memory-card';
+                            card.innerHTML = `
+                                <div class="card-front">?</div>
+                                <div class="card-back">${emoji}</div>
+                            `;
+                            card.style.cssText = `
+                                width: 80px; 
+                                height: 80px; 
+                                background: white; 
+                                border-radius: 10px; 
+                                display: flex; 
+                                align-items: center; 
+                                justify-content: center; 
+                                font-size: 24px; 
+                                cursor: pointer;
+                                position: relative;
+                                transform-style: preserve-3d;
+                                transition: transform 0.5s;
+                            `;
+                            
+                            const front = card.querySelector('.card-front');
+                            const back = card.querySelector('.card-back');
+                            
+                            front.style.cssText = back.style.cssText = `
+                                position: absolute;
+                                width: 100%;
+                                height: 100%;
+                                backface-visibility: hidden;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                border-radius: 10px;
+                            `;
+                            
+                            back.style.transform = 'rotateY(180deg)';
+                            
+                            card.addEventListener('click', () => flipCard(card, emoji));
+                            memoryBoard.appendChild(card);
+                        });
+                    };
+                }
+            },
+            
+            breathing: {
+                title: "Breathing Exercise",
+                html: `
+                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #00b09b, #96c93d); color: white; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <h1>Breathing Exercise</h1>
+                        <p>Follow the circle to breathe in and out</p>
+                        <div id="breathing-circle" style="width: 200px; height: 200px; border-radius: 50%; background: rgba(255,255,255,0.3); margin: 30px auto; display: flex; align-items: center; justify-content: center; font-size: 24px; transition: all 4s ease-in-out;"></div>
+                        <div style="margin-top: 20px;">
+                            <button onclick="startBreathing()" style="padding: 10px 20px; background: #ff6b6b; color: white; border: none; border-radius: 5px; cursor: pointer;">Start Breathing</button>
+                            <p id="breathing-instruction" style="font-size: 18px; margin-top: 10px;">Click start to begin</p>
+                        </div>
+                    </div>
+                `,
+                script: function() {
+                    const breathingCircle = document.getElementById('breathing-circle');
+                    const breathingInstruction = document.getElementById('breathing-instruction');
+                    let isBreathing = false;
+                    
+                    window.startBreathing = function() {
+                        if (isBreathing) return;
+                        
+                        isBreathing = true;
+                        breathingInstruction.textContent = "Breathe IN...";
+                        breathingCircle.textContent = "INHALE";
+                        breathingCircle.style.transform = "scale(1.5)";
+                        breathingCircle.style.background = "rgba(255,255,255,0.5)";
+                        
+                        setTimeout(() => {
+                            breathingInstruction.textContent = "Hold...";
+                            breathingCircle.textContent = "HOLD";
+                            
+                            setTimeout(() => {
+                                breathingInstruction.textContent = "Breathe OUT...";
+                                breathingCircle.textContent = "EXHALE";
+                                breathingCircle.style.transform = "scale(1)";
+                                breathingCircle.style.background = "rgba(255,255,255,0.3)";
+                                
+                                setTimeout(() => {
+                                    breathingInstruction.textContent = "Ready for next breath";
+                                    breathingCircle.textContent = "";
+                                    isBreathing = false;
+                                }, 4000);
+                            }, 2000);
+                        }, 4000);
+                    };
+                }
+            },
+            
+            puzzle: {
+                title: "Puzzle Game",
+                html: `
+                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #ff9a9e, #fad0c4); color: white; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <h1>Puzzle Game</h1>
+                        <p>Drag and drop the pieces to solve the puzzle</p>
+                        <div id="puzzle-container" style="width: 300px; height: 300px; border: 2px dashed white; margin: 20px auto; position: relative;"></div>
+                        <div style="margin-top: 20px;">
+                            <button onclick="resetPuzzle()" style="padding: 10px 20px; background: #ff6b6b; color: white; border: none; border-radius: 5px; cursor: pointer;">Reset Puzzle</button>
+                        </div>
+                    </div>
+                `,
+                script: function() {
+                    const puzzleContainer = document.getElementById('puzzle-container');
+                    const pieces = ['🔴', '🟢', '🔵', '🟡', '🟣', '🟠'];
+                    
+                    pieces.forEach((piece, index) => {
+                        const puzzlePiece = document.createElement('div');
+                        puzzlePiece.textContent = piece;
+                        puzzlePiece.style.cssText = `
+                            width: 80px; 
+                            height: 80px; 
+                            background: rgba(255,255,255,0.8); 
+                            border-radius: 10px; 
+                            display: flex; 
+                            align-items: center; 
+                            justify-content: center; 
+                            font-size: 40px; 
+                            position: absolute;
+                            cursor: move;
+                            left: ${Math.random() * 200}px;
+                            top: ${Math.random() * 200}px;
+                        `;
+                        
+                        puzzlePiece.draggable = true;
+                        
+                        puzzlePiece.addEventListener('dragstart', (e) => {
+                            e.dataTransfer.setData('text/plain', index);
+                        });
+                        
+                        puzzleContainer.addEventListener('dragover', (e) => {
+                            e.preventDefault();
+                        });
+                        
+                        puzzleContainer.addEventListener('drop', (e) => {
+                            e.preventDefault();
+                            const index = e.dataTransfer.getData('text/plain');
+                            const piece = puzzleContainer.children[index];
+                            piece.style.left = (e.clientX - puzzleContainer.getBoundingClientRect().left - 40) + 'px';
+                            piece.style.top = (e.clientY - puzzleContainer.getBoundingClientRect().top - 40) + 'px';
+                        });
+                        
+                        puzzleContainer.appendChild(puzzlePiece);
+                    });
+                    
+                    window.resetPuzzle = function() {
+                        puzzleContainer.innerHTML = '';
+                        pieces.forEach((piece, index) => {
+                            const puzzlePiece = document.createElement('div');
+                            puzzlePiece.textContent = piece;
+                            puzzlePiece.style.cssText = `
+                                width: 80px; 
+                                height: 80px; 
+                                background: rgba(255,255,255,0.8); 
+                                border-radius: 10px; 
+                                display: flex; 
+                                align-items: center; 
+                                justify-content: center; 
+                                font-size: 40px; 
+                                position: absolute;
+                                cursor: move;
+                                left: ${Math.random() * 200}px;
+                                top: ${Math.random() * 200}px;
+                            `;
+                            
+                            puzzlePiece.draggable = true;
+                            
+                            puzzlePiece.addEventListener('dragstart', (e) => {
+                                e.dataTransfer.setData('text/plain', index);
+                            });
+                            
+                            puzzleContainer.appendChild(puzzlePiece);
+                        });
+                    };
+                }
+            },
+            
+            coloring: {
+                title: "Coloring Book",
+                html: `
+                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #a1c4fd, #c2e9fb); color: #333; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <h1>Coloring Book</h1>
+                        <p>Click on the areas to color them</p>
+                        <div id="coloring-area" style="width: 300px; height: 300px; background: white; border: 2px solid #ccc; margin: 20px auto; display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(10, 1fr);"></div>
+                        <div style="margin-top: 20px;">
+                            <div id="color-palette" style="display: flex; gap: 10px; margin-bottom: 10px; justify-content: center;"></div>
+                            <button onclick="clearColoring()" style="padding: 10px 20px; background: #ff6b6b; color: white; border: none; border-radius: 5px; cursor: pointer;">Clear Drawing</button>
+                            <button onclick="saveColoring()" style="padding: 10px 20px; background: #4ecdc4; color: white; border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;">Save Drawing</button>
+                        </div>
+                    </div>
+                `,
+                script: function() {
+                    const coloringArea = document.getElementById('coloring-area');
+                    const colorPalette = document.getElementById('color-palette');
+                    let selectedColor = '#ff6b6b';
+                    
+                    // Create color palette
+                    const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3', '#54a0ff', '#5f27cd'];
+                    
+                    colors.forEach(color => {
+                        const colorOption = document.createElement('div');
+                        colorOption.style.cssText = `
+                            width: 30px; 
+                            height: 30px; 
+                            background: ${color}; 
+                            border-radius: 50%; 
+                            cursor: pointer;
+                            border: ${color === selectedColor ? '2px solid white' : 'none'};
+                        `;
+                        
+                        colorOption.addEventListener('click', () => {
+                            selectedColor = color;
+                            document.querySelectorAll('#color-palette div').forEach(opt => {
+                                opt.style.border = 'none';
+                            });
+                            colorOption.style.border = '2px solid white';
+                        });
+                        
+                        colorPalette.appendChild(colorOption);
+                    });
+                    
+                    // Create coloring grid
+                    for (let i = 0; i < 100; i++) {
+                        const cell = document.createElement('div');
+                        cell.style.border = '1px solid #f0f0f0';
+                        cell.addEventListener('click', () => {
+                            cell.style.background = selectedColor;
+                        });
+                        
+                        coloringArea.appendChild(cell);
+                    }
+                    
+                    window.clearColoring = function() {
+                        document.querySelectorAll('#coloring-area div').forEach(cell => {
+                            cell.style.background = 'white';
+                        });
+                    };
+                    
+                    window.saveColoring = function() {
+                        alert('Drawing saved successfully! 🎨');
+                    };
+                }
+            },
+            
+            math: {
+                title: "Math Challenge",
+                html: `
+                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <h1>Math Challenge</h1>
+                        <p>Solve the math problems as fast as you can!</p>
+                        <div id="math-problem" style="font-size: 36px; margin: 20px 0;">5 + 3 = ?</div>
+                        <input type="number" id="math-answer" style="font-size: 24px; padding: 10px; width: 100px; text-align: center; margin: 10px;">
+                        <button onclick="checkMathAnswer()" style="padding: 10px 20px; background: #ff6b6b; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 10px;">Check Answer</button>
+                        <p id="math-score" style="font-size: 18px;">Score: 0</p>
+                    </div>
+                `,
+                script: function() {
+                    let score = 0;
+                    let num1, num2, operator, answer;
+                    
+                    function generateProblem() {
+                        num1 = Math.floor(Math.random() * 10) + 1;
+                        num2 = Math.floor(Math.random() * 10) + 1;
+                        operator = '+';
+                        answer = num1 + num2;
+                        
+                        document.getElementById('math-problem').textContent = `${num1} ${operator} ${num2} = ?`;
+                        document.getElementById('math-answer').value = '';
+                    }
+                    
+                    window.checkMathAnswer = function() {
+                        const userAnswer = parseInt(document.getElementById('math-answer').value);
+                        
+                        if (userAnswer === answer) {
+                            score++;
+                            document.getElementById('math-score').textContent = `Score: ${score}`;
+                            alert('Correct! 🎉');
+                        } else {
+                            alert(`Wrong! The correct answer is ${answer}`);
+                        }
+                        
+                        generateProblem();
+                    };
+                    
+                    generateProblem();
+                }
+            },
+            
+            typing: {
+                title: "Typing Game",
+                html: `
+                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #f093fb, #f5576c); color: white; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <h1>Typing Game</h1>
+                        <p>Type the words as they appear!</p>
+                        <div id="typing-word" style="font-size: 36px; margin: 20px 0;">hello</div>
+                        <input type="text" id="typing-input" style="font-size: 24px; padding: 10px; width: 200px; text-align: center; margin: 10px;">
+                        <p id="typing-score" style="font-size: 18px;">Words: 0</p>
+                    </div>
+                `,
+                script: function() {
+                    const words = ['hello', 'world', 'game', 'typing', 'keyboard', 'computer', 'javascript', 'html', 'css', 'fun'];
+                    let wordIndex = 0;
+                    let score = 0;
+                    
+                    document.getElementById('typing-word').textContent = words[wordIndex];
+                    
+                    document.getElementById('typing-input').addEventListener('input', function() {
+                        if (this.value === words[wordIndex]) {
+                            score++;
+                            document.getElementById('typing-score').textContent = `Words: ${score}`;
+                            this.value = '';
+                            wordIndex = (wordIndex + 1) % words.length;
+                            document.getElementById('typing-word').textContent = words[wordIndex];
+                        }
+                    });
+                }
+            },
+            
+            maze: {
+                title: "Maze Runner",
+                html: `
+                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #4facfe, #00f2fe); color: white; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <h1>Maze Runner</h1>
+                        <p>Use arrow keys to navigate the maze</p>
+                        <div id="maze-container" style="width: 300px; height: 300px; background: #1a1a2e; margin: 20px auto; position: relative;"></div>
+                        <p id="maze-message" style="font-size: 18px;">Find the exit! 🏁</p>
+                    </div>
+                `,
+                script: function() {
+                    const mazeContainer = document.getElementById('maze-container');
+                    const player = document.createElement('div');
+                    player.textContent = '😊';
+                    player.style.cssText = `
+                        position: absolute;
+                        top: 10px;
+                        left: 10px;
+                        font-size: 24px;
+                        transition: all 0.2s;
+                    `;
+                    
+                    const exit = document.createElement('div');
+                    exit.textContent = '🏁';
+                    exit.style.cssText = `
+                        position: absolute;
+                        bottom: 10px;
+                        right: 10px;
+                        font-size: 24px;
+                    `;
+                    
+                    mazeContainer.appendChild(player);
+                    mazeContainer.appendChild(exit);
+                    
+                    document.addEventListener('keydown', (e) => {
+                        const playerRect = player.getBoundingClientRect();
+                        const mazeRect = mazeContainer.getBoundingClientRect();
+                        
+                        switch(e.key) {
+                            case 'ArrowUp':
+                                if (playerRect.top > mazeRect.top + 10) {
+                                    player.style.top = (parseInt(player.style.top) - 10) + 'px';
+                                }
+                                break;
+                            case 'ArrowDown':
+                                if (playerRect.bottom < mazeRect.bottom - 10) {
+                                    player.style.top = (parseInt(player.style.top) + 10) + 'px';
+                                }
+                                break;
+                            case 'ArrowLeft':
+                                if (playerRect.left > mazeRect.left + 10) {
+                                    player.style.left = (parseInt(player.style.left) - 10) + 'px';
+                                }
+                                break;
+                            case 'ArrowRight':
+                                if (playerRect.right < mazeRect.right - 10) {
+                                    player.style.left = (parseInt(player.style.left) + 10) + 'px';
+                                }
+                                break;
+                        }
+                        
+                        const playerPos = {
+                            top: parseInt(player.style.top),
+                            left: parseInt(player.style.left)
+                        };
+                        
+                        if (playerPos.top > 250 && playerPos.left > 250) {
+                            document.getElementById('maze-message').textContent = 'Congratulations! You found the exit! 🎉';
+                        }
+                    });
+                }
+            },
+            
+            music: {
+                title: "Music Maker",
+                html: `
+                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #fdbb2d, #22c1c3); color: white; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <h1>Music Maker</h1>
+                        <p>Click the buttons to create music</p>
+                        <div id="music-buttons" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px auto; max-width: 300px;"></div>
+                        <button onclick="stopMusic()" style="padding: 10px 20px; background: #ff6b6b; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 10px;">Stop Music</button>
+                    </div>
+                `,
+                script: function() {
+                    const notes = ['🎵', '🎶', '🎼', '🎹', '🎷', '🎺', '🎸', '🎻', '🥁'];
+                    const musicButtons = document.getElementById('music-buttons');
+                    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    
+                    notes.forEach((note, index) => {
+                        const button = document.createElement('button');
+                        button.textContent = note;
+                        button.style.cssText = `
+                            width: 80px; 
+                            height: 80px; 
+                            background: rgba(255,255,255,0.3); 
+                            border: none; 
+                            border-radius: 10px; 
+                            font-size: 30px; 
+                            cursor: pointer;
+                            transition: all 0.2s;
+                        `;
+                        
+                        button.addEventListener('click', () => playNote(200 + (index * 100)));
+                        button.addEventListener('mousedown', () => {
+                            button.style.transform = 'scale(0.9)';
+                            button.style.background = 'rgba(255,255,255,0.5)';
+                        });
+                        button.addEventListener('mouseup', () => {
+                            button.style.transform = 'scale(1)';
+                            button.style.background = 'rgba(255,255,255,0.3)';
+                        });
+                        
+                        musicButtons.appendChild(button);
+                    });
+                    
+                    function playNote(frequency) {
+                        const oscillator = audioContext.createOscillator();
+                        const gainNode = audioContext.createGain();
+                        
+                        oscillator.connect(gainNode);
+                        gainNode.connect(audioContext.destination);
+                        
+                        oscillator.frequency.value = frequency;
+                        oscillator.type = 'sine';
+                        
+                        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                        
+                        oscillator.start(audioContext.currentTime);
+                        oscillator.stop(audioContext.currentTime + 0.5);
+                    }
+                    
+                    window.stopMusic = function() {
+                        audioContext.close().then(() => {
+                            // Audio context closed
+                        });
+                    };
+                }
+            },
+            
+            word: {
+                title: "Word Search",
+                html: `
+                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <h1>Word Search</h1>
+                        <p>Find the hidden words in the grid</p>
+                        <div id="word-grid" style="display: grid; grid-template-columns: repeat(8, 1fr); gap: 5px; margin: 20px auto; max-width: 400px;"></div>
+                        <div id="word-list" style="margin: 20px 0;">
+                            <p>Find these words: <strong>CAT, DOG, SUN, FUN</strong></p>
+                        </div>
+                        <p id="word-found" style="font-size: 18px;">Words found: 0/4</p>
+                    </div>
+                `,
+                script: function() {
+                    const wordGrid = document.getElementById('word-grid');
+                    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                    const words = ['CAT', 'DOG', 'SUN', 'FUN'];
+                    let foundWords = 0;
+                    
+                    for (let i = 0; i < 64; i++) {
+                        const cell = document.createElement('div');
+                        cell.textContent = letters[Math.floor(Math.random() * letters.length)];
+                        cell.style.cssText = `
+                            width: 40px; 
+                            height: 40px; 
+                            background: rgba(255,255,255,0.2); 
+                            display: flex; 
+                            align-items: center; 
+                            justify-content: center; 
+                            font-size: 18px; 
+                            cursor: pointer;
+                            border-radius: 5px;
+                        `;
+                        
+                        cell.addEventListener('click', () => {
+                            cell.style.background = '#ff6b6b';
+                            const word = prompt('What word did you find?').toUpperCase();
+                            if (words.includes(word)) {
+                                alert(`You found "${word}"!`);
+                                foundWords++;
+                                document.getElementById('word-found').textContent = `Words found: ${foundWords}/4`;
+                                
+                                if (foundWords === 4) {
+                                    alert('Congratulations! You found all the words! 🎉');
+                                }
+                            }
+                        });
+                        
+                        wordGrid.appendChild(cell);
+                    }
+                }
+            },
+            
+            drawing: {
+                title: "Drawing Pad",
+                html: `
+                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #ffecd2, #fcb69f); color: #333; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <h1>Drawing Pad</h1>
+                        <p>Draw anything you like!</p>
+                        <canvas id="drawing-canvas" width="400" height="300" style="border: 2px solid #ccc; background: white; margin: 20px auto; cursor: crosshair;"></canvas>
+                        <div style="margin-top: 20px;">
+                            <div id="drawing-colors" style="display: flex; gap: 10px; margin-bottom: 10px; justify-content: center;"></div>
+                            <button onclick="clearDrawing()" style="padding: 10px 20px; background: #ff6b6b; color: white; border: none; border-radius: 5px; cursor: pointer;">Clear Drawing</button>
+                            <button onclick="saveDrawing()" style="padding: 10px 20px; background: #4ecdc4; color: white; border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;">Save Drawing</button>
+                        </div>
+                    </div>
+                `,
+                script: function() {
+                    const canvas = document.getElementById('drawing-canvas');
+                    const ctx = canvas.getContext('2d');
+                    const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#feca57', '#ff9ff3', '#54a0ff', '#5f27cd', '#000000'];
+                    let currentColor = '#ff6b6b';
+                    let isDrawing = false;
+                    
+                    const colorPalette = document.getElementById('drawing-colors');
+                    colors.forEach(color => {
+                        const colorOption = document.createElement('div');
+                        colorOption.style.cssText = `
+                            width: 30px; 
+                            height: 30px; 
+                            background: ${color}; 
+                            border-radius: 50%; 
+                            cursor: pointer;
+                            border: ${color === currentColor ? '2px solid #333' : 'none'};
+                        `;
+                        
+                        colorOption.addEventListener('click', () => {
+                            currentColor = color;
+                            document.querySelectorAll('#drawing-colors div').forEach(opt => {
+                                opt.style.border = 'none';
+                            });
+                            colorOption.style.border = '2px solid #333';
+                        });
+                        
+                        colorPalette.appendChild(colorOption);
+                    });
+                    
+                    canvas.addEventListener('mousedown', startDrawing);
+                    canvas.addEventListener('mousemove', draw);
+                    canvas.addEventListener('mouseup', stopDrawing);
+                    canvas.addEventListener('mouseout', stopDrawing);
+                    
+                    function startDrawing(e) {
+                        isDrawing = true;
+                        draw(e);
+                    }
+                    
+                    function draw(e) {
+                        if (!isDrawing) return;
+                        
+                        ctx.lineWidth = 5;
+                        ctx.lineCap = 'round';
+                        ctx.strokeStyle = currentColor;
+                        
+                        const rect = canvas.getBoundingClientRect();
+                        const x = e.clientX - rect.left;
+                        const y = e.clientY - rect.top;
+                        
+                        ctx.lineTo(x, y);
+                        ctx.stroke();
+                        ctx.beginPath();
+                        ctx.moveTo(x, y);
+                    }
+                    
+                    function stopDrawing() {
+                        isDrawing = false;
+                        ctx.beginPath();
+                    }
+                    
+                    window.clearDrawing = function() {
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    };
+                    
+                    window.saveDrawing = function() {
+                        alert('Drawing saved successfully! 🎨');
+                    };
+                }
+            },
+            
+            storywriter: {
+                title: "Story Writer",
+                html: `
+                    <div class="story-container">
+                        <h1>Story Writer</h1>
+                        <p>Write your own story and save it for later!</p>
+                        
+                        <input type="text" class="story-title" id="story-title" placeholder="Enter story title...">
+                        <textarea class="story-text" id="story-text" placeholder="Write your story here..."></textarea>
+                        
+                        <div class="story-actions">
+                            <button class="story-btn" onclick="saveStory()">Save Story</button>
+                            <button class="story-btn" onclick="clearStory()" style="background: #ff6b6b;">Clear</button>
+                        </div>
+                        
+                        <div class="saved-stories">
+                            <h3>Your Saved Stories</h3>
+                            <div id="stories-list"></div>
+                        </div>
+                    </div>
+                `,
+                script: function() {
+                    // Load saved stories from localStorage
+                    let savedStories = JSON.parse(localStorage.getItem('savedStories') || '[]');
+                    
+                    function displayStories() {
+                        const storiesList = document.getElementById('stories-list');
+                        storiesList.innerHTML = '';
+                        
+                        if (savedStories.length === 0) {
+                            storiesList.innerHTML = '<p>No stories saved yet. Write your first story!</p>';
+                            return;
+                        }
+                        
+                        savedStories.forEach((story, index) => {
+                            const storyItem = document.createElement('div');
+                            storyItem.className = 'story-item';
+                            storyItem.innerHTML = `
+                                <h4>${story.title}</h4>
+                                <p>${story.text}</p>
+                                <button onclick="deleteStory(${index})" style="padding: 5px 10px; background: #ff6b6b; color: white; border: none; border-radius: 3px; cursor: pointer; margin-top: 10px;">Delete</button>
+                            `;
+                            storiesList.appendChild(storyItem);
+                        });
+                    }
+                    
+                    window.saveStory = function() {
+                        const title = document.getElementById('story-title').value.trim();
+                        const text = document.getElementById('story-text').value.trim();
+                        
+                        if (!title || !text) {
+                            alert('Please enter both title and story text!');
+                            return;
+                        }
+                        
+                        savedStories.push({ title, text });
+                        localStorage.setItem('savedStories', JSON.stringify(savedStories));
+                        
+                        document.getElementById('story-title').value = '';
+                        document.getElementById('story-text').value = '';
+                        
+                        displayStories();
+                        alert('Story saved successfully! 📖');
+                    };
+                    
+                    window.clearStory = function() {
+                        document.getElementById('story-title').value = '';
+                        document.getElementById('story-text').value = '';
+                    };
+                    
+                    window.deleteStory = function(index) {
+                        if (confirm('Are you sure you want to delete this story?')) {
+                            savedStories.splice(index, 1);
+                            localStorage.setItem('savedStories', JSON.stringify(savedStories));
+                            displayStories();
+                        }
+                    };
+                    
+                    // Display saved stories when the game loads
+                    displayStories();
+                }
+            },
+            
+            animalquiz: {
+                title: "Animal Quiz",
+                html: `
+                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #43e97b, #38f9d7); color: white; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <h1>Animal Quiz</h1>
+                        <p>Test your knowledge about animals!</p>
+                        <div id="quiz-container" style="max-width: 500px; margin: 20px auto;">
+                            <div id="quiz-question" style="font-size: 24px; margin: 20px 0;"></div>
+                            <div id="quiz-options" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 20px 0;"></div>
+                            <button id="next-question" onclick="nextQuestion()" style="padding: 10px 20px; background: #ff6b6b; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 10px;">Next Question</button>
+                            <p id="quiz-score" style="font-size: 18px;">Score: 0/0</p>
+                        </div>
+                    </div>
+                `,
+                script: function() {
+                    const questions = [
+                        {
+                            question: "Which animal is known as the 'King of the Jungle'?",
+                            options: ["Lion", "Tiger", "Elephant", "Giraffe"],
+                            answer: 0
+                        },
+                        {
+                            question: "What is the fastest land animal?",
+                            options: ["Cheetah", "Horse", "Kangaroo", "Deer"],
+                            answer: 0
+                        },
+                        {
+                            question: "Which animal can change its color?",
+                            options: ["Chameleon", "Frog", "Butterfly", "Snake"],
+                            answer: 0
+                        },
+                        {
+                            question: "What is the largest mammal in the world?",
+                            options: ["Blue Whale", "Elephant", "Giraffe", "Hippopotamus"],
+                            answer: 0
+                        },
+                        {
+                            question: "Which bird can fly backwards?",
+                            options: ["Hummingbird", "Eagle", "Parrot", "Owl"],
+                            answer: 0
+                        }
+                    ];
+                    
+                    let currentQuestion = 0;
+                    let score = 0;
+                    
+                    function loadQuestion() {
+                        const question = questions[currentQuestion];
+                        document.getElementById('quiz-question').textContent = question.question;
+                        
+                        const optionsContainer = document.getElementById('quiz-options');
+                        optionsContainer.innerHTML = '';
+                        
+                        question.options.forEach((option, index) => {
+                            const button = document.createElement('button');
+                            button.textContent = option;
+                            button.style.cssText = `
+                                padding: 10px;
+                                background: rgba(255,255,255,0.2);
+                                color: white;
+                                border: 2px solid white;
+                                border-radius: 5px;
+                                cursor: pointer;
+                                font-size: 16px;
+                            `;
+                            
+                            button.addEventListener('click', () => checkAnswer(index));
+                            optionsContainer.appendChild(button);
+                        });
+                        
+                        document.getElementById('quiz-score').textContent = `Score: ${score}/${currentQuestion}`;
+                    }
+                    
+                    function checkAnswer(selectedIndex) {
+                        const question = questions[currentQuestion];
+                        const options = document.querySelectorAll('#quiz-options button');
+                        
+                        options.forEach((button, index) => {
+                            if (index === question.answer) {
+                                button.style.background = '#43e97b';
+                            } else if (index === selectedIndex) {
+                                button.style.background = '#ff6b6b';
+                            }
+                            
+                            button.disabled = true;
+                        });
+                        
+                        if (selectedIndex === question.answer) {
+                            score++;
+                        }
+                        
+                        document.getElementById('quiz-score').textContent = `Score: ${score}/${currentQuestion + 1}`;
+                    }
+                    
+                    window.nextQuestion = function() {
+                        currentQuestion++;
+                        if (currentQuestion < questions.length) {
+                            loadQuestion();
+                        } else {
+                            alert(`Quiz completed! Your final score is ${score}/${questions.length}`);
+                            currentQuestion = 0;
+                            score = 0;
+                            loadQuestion();
+                        }
+                    };
+                    
+                    loadQuestion();
+                }
+            },
+            
+            emotion: {
+                title: "Emotion Explorer",
+                html: `
+                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #fa709a, #fee140); color: white; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <h1>Emotion Explorer</h1>
+                        <p>Learn about emotions and how to manage them</p>
+                        <div id="emotion-container" style="max-width: 500px; margin: 20px auto;">
+                            <div id="emotion-display" style="font-size: 80px; margin: 20px 0;">😊</div>
+                            <div id="emotion-info" style="font-size: 18px; margin: 20px 0;">Happiness is a positive emotion that makes us feel good.</div>
+                            <div id="emotion-buttons" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 20px 0;"></div>
+                        </div>
+                    </div>
+                `,
+                script: function() {
+                    const emotions = [
+                        { emoji: "😊", name: "Happy", description: "Happiness is a positive emotion that makes us feel good. Try smiling, thinking about something you enjoy, or spending time with people you like." },
+                        { emoji: "😢", name: "Sad", description: "Sadness is a natural emotion when we experience loss or disappointment. It's okay to feel sad. Talking to someone or doing something you enjoy can help." },
+                        { emoji: "😠", name: "Angry", description: "Anger happens when we feel frustrated or treated unfairly. Taking deep breaths, counting to 10, or walking away can help calm down." },
+                        { emoji: "😨", name: "Scared", description: "Fear helps keep us safe from danger. Talking about what scares you or imagining a safe place can help manage fear." },
+                        { emoji: "😲", name: "Surprised", description: "Surprise happens when something unexpected occurs. It can be pleasant or startling. Taking a moment to process can help." },
+                        { emoji: "😴", name: "Tired", description: "Feeling tired means your body needs rest. Getting enough sleep, taking breaks, and eating healthy can help with tiredness." }
+                    ];
+                    
+                    const emotionButtons = document.getElementById('emotion-buttons');
+                    const emotionDisplay = document.getElementById('emotion-display');
+                    const emotionInfo = document.getElementById('emotion-info');
+                    
+                    emotions.forEach(emotion => {
+                        const button = document.createElement('button');
+                        button.textContent = `${emotion.emoji} ${emotion.name}`;
+                        button.style.cssText = `
+                            padding: 10px 15px;
+                            background: rgba(255,255,255,0.2);
+                            color: white;
+                            border: 2px solid white;
+                            border-radius: 30px;
+                            cursor: pointer;
+                            font-size: 16px;
+                        `;
+                        
+                        button.addEventListener('click', () => {
+                            emotionDisplay.textContent = emotion.emoji;
+                            emotionInfo.textContent = emotion.description;
+                        });
+                        
+                        emotionButtons.appendChild(button);
+                    });
+                }
+            },
+            
+            pattern: {
+                title: "Pattern Game",
+                html: `
+                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #4facfe, #00f2fe); color: white; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <h1>Pattern Game</h1>
+                        <p>Complete the patterns by selecting the correct shape</p>
+                        <div id="pattern-container" style="max-width: 500px; margin: 20px auto;">
+                            <div id="pattern-display" style="display: flex; justify-content: center; gap: 10px; margin: 20px 0; font-size: 40px;"></div>
+                            <div id="pattern-options" style="display: flex; justify-content: center; gap: 10px; margin: 20px 0;"></div>
+                            <button onclick="checkPattern()" style="padding: 10px 20px; background: #ff6b6b; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 10px;">Check Answer</button>
+                            <p id="pattern-result" style="font-size: 18px;"></p>
+                        </div>
+                    </div>
+                `,
+                script: function() {
+                    const shapes = ['🔴', '🟢', '🔵', '🟡', '🟣', '🟠'];
+                    let pattern = [];
+                    let correctAnswer;
+                    
+                    function generatePattern() {
+                        pattern = [];
+                        for (let i = 0; i < 3; i++) {
+                            pattern.push(shapes[Math.floor(Math.random() * shapes.length)]);
+                        }
+                        
+                        // Determine the next shape in the pattern
+                        const lastShape = pattern[pattern.length - 1];
+                        const shapeIndex = shapes.indexOf(lastShape);
+                        correctAnswer = shapes[(shapeIndex + 1) % shapes.length];
+                        
+                        // Display the pattern
+                        const patternDisplay = document.getElementById('pattern-display');
+                        patternDisplay.innerHTML = '';
+                        
+                        pattern.forEach(shape => {
+                            const shapeElement = document.createElement('div');
+                            shapeElement.textContent = shape;
+                            patternDisplay.appendChild(shapeElement);
+                        });
+                        
+                        // Add question mark for the missing shape
+                        const questionMark = document.createElement('div');
+                        questionMark.textContent = '?';
+                        patternDisplay.appendChild(questionMark);
+                        
+                        // Create options
+                        const patternOptions = document.getElementById('pattern-options');
+                        patternOptions.innerHTML = '';
+                        
+                        // Shuffle the options
+                        const options = [...shapes].sort(() => Math.random() - 0.5);
+                        
+                        options.forEach(shape => {
+                            const button = document.createElement('button');
+                            button.textContent = shape;
+                            button.style.cssText = `
+                                padding: 10px;
+                                background: rgba(255,255,255,0.2);
+                                color: white;
+                                border: 2px solid white;
+                                border-radius: 5px;
+                                cursor: pointer;
+                                font-size: 24px;
+                            `;
+                            
+                            button.addEventListener('click', () => {
+                                // Remove selected class from all buttons
+                                document.querySelectorAll('#pattern-options button').forEach(btn => {
+                                    btn.style.background = 'rgba(255,255,255,0.2)';
+                                });
+                                
+                                // Add selected class to clicked button
+                                button.style.background = '#4facfe';
+                                window.selectedShape = shape;
+                            });
+                            
+                            patternOptions.appendChild(button);
+                        });
+                        
+                        document.getElementById('pattern-result').textContent = '';
+                    }
+                    
+                    window.checkPattern = function() {
+                        if (!window.selectedShape) {
+                            alert('Please select a shape!');
+                            return;
+                        }
+                        
+                        if (window.selectedShape === correctAnswer) {
+                            document.getElementById('pattern-result').textContent = 'Correct! 🎉';
+                            document.getElementById('pattern-result').style.color = '#4facfe';
+                        } else {
+                            document.getElementById('pattern-result').textContent = `Wrong! The correct answer was ${correctAnswer}`;
+                            document.getElementById('pattern-result').style.color = '#ff6b6b';
+                        }
+                        
+                        setTimeout(() => {
+                            generatePattern();
+                            window.selectedShape = null;
+                        }, 2000);
+                    };
+                    
+                    generatePattern();
+                }
+            },
+            
+            interactivestory: {
+                title: "Interactive Story",
+                html: `
+                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <h1>Interactive Story</h1>
+                        <p>Choose your own adventure!</p>
+                        <div id="story-container" style="max-width: 600px; margin: 20px auto;">
+                            <div id="story-text" style="font-size: 18px; line-height: 1.6; margin: 20px 0; text-align: left; background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;"></div>
+                            <div id="story-choices" style="display: flex; flex-direction: column; gap: 10px; margin: 20px 0;"></div>
+                        </div>
+                    </div>
+                `,
+                script: function() {
+                    const story = {
+                        start: {
+                            text: "You're walking through a magical forest when you come across a fork in the path. Which way do you go?",
+                            choices: [
+                                { text: "Take the left path", next: "leftPath" },
+                                { text: "Take the right path", next: "rightPath" }
+                            ]
+                        },
+                        leftPath: {
+                            text: "You follow the left path and discover a friendly dragon! The dragon offers to give you a ride. Do you accept?",
+                            choices: [
+                                { text: "Accept the ride", next: "dragonRide" },
+                                { text: "Politely decline and continue walking", next: "continueWalking" }
+                            ]
+                        },
+                        rightPath: {
+                            text: "You take the right path and find a sparkling river with a boat. Do you cross the river?",
+                            choices: [
+                                { text: "Cross the river in the boat", next: "crossRiver" },
+                                { text: "Follow the riverbank", next: "riverbank" }
+                            ]
+                        },
+                        dragonRide: {
+                            text: "The dragon flies you over the forest to a castle in the clouds. You've discovered the Cloud Castle! The adventure continues...",
+                            choices: [
+                                { text: "Start over", next: "start" }
+                            ]
+                        },
+                        continueWalking: {
+                            text: "You continue walking and find a village of friendly forest creatures. They invite you to a feast!",
+                            choices: [
+                                { text: "Start over", next: "start" }
+                            ]
+                        },
+                        crossRiver: {
+                            text: "You cross the river and find a treasure chest on the other side! It's filled with magical gems.",
+                            choices: [
+                                { text: "Start over", next: "start" }
+                            ]
+                        },
+                        riverbank: {
+                            text: "You follow the riverbank and discover a waterfall with a hidden cave behind it. Inside, you find ancient drawings that tell a magical story.",
+                            choices: [
+                                { text: "Start over", next: "start" }
+                            ]
+                        }
+                    };
+                    
+                    let currentScene = "start";
+                    
+                    function loadScene(sceneId) {
+                        const scene = story[sceneId];
+                        document.getElementById('story-text').textContent = scene.text;
+                        
+                        const choicesContainer = document.getElementById('story-choices');
+                        choicesContainer.innerHTML = '';
+                        
+                        scene.choices.forEach(choice => {
+                            const button = document.createElement('button');
+                            button.textContent = choice.text;
+                            button.style.cssText = `
+                                padding: 10px 15px;
+                                background: rgba(255,255,255,0.2);
+                                color: white;
+                                border: 2px solid white;
+                                border-radius: 30px;
+                                cursor: pointer;
+                                font-size: 16px;
+                            `;
+                            
+                            button.addEventListener('click', () => {
+                                currentScene = choice.next;
+                                loadScene(currentScene);
+                            });
+                            
+                            choicesContainer.appendChild(button);
+                        });
+                    }
+                    
+                    loadScene(currentScene);
+                }
+            },
+            
+            shapes: {
+                title: "Shape Sorter",
+                html: `
+                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #ff9a9e, #fad0c4); color: white; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <h1>Shape Sorter</h1>
+                        <p>Drag and drop the shapes into the correct slots</p>
+                        <div id="shape-game" style="max-width: 500px; margin: 20px auto;">
+                            <div id="shape-targets" style="display: flex; justify-content: space-around; margin: 20px 0; padding: 20px; background: rgba(255,255,255,0.2); border-radius: 10px;">
+                                <div class="shape-slot" data-shape="circle" style="width: 80px; height: 80px; border: 2px dashed white; border-radius: 50%;"></div>
+                                <div class="shape-slot" data-shape="square" style="width: 80px; height: 80px; border: 2px dashed white;"></div>
+                                <div class="shape-slot" data-shape="triangle" style="width: 80px; height: 80px; border: 2px dashed white; clip-path: polygon(50% 0%, 0% 100%, 100% 100%);"></div>
+                            </div>
+                            <div id="shape-pieces" style="display: flex; justify-content: space-around; margin: 20px 0;">
+                                <div class="shape-piece" data-shape="circle" draggable="true" style="width: 60px; height: 60px; background: #ff6b6b; border-radius: 50%; cursor: move;"></div>
+                                <div class="shape-piece" data-shape="square" draggable="true" style="width: 60px; height: 60px; background: #4ecdc4; cursor: move;"></div>
+                                <div class="shape-piece" data-shape="triangle" draggable="true" style="width: 60px; height: 60px; background: #45b7d1; clip-path: polygon(50% 0%, 0% 100%, 100% 100%); cursor: move;"></div>
+                            </div>
+                            <p id="shape-message" style="font-size: 18px;">Drag the shapes to the matching slots!</p>
+                        </div>
+                    </div>
+                `,
+                script: function() {
+                    const shapePieces = document.querySelectorAll('.shape-piece');
+                    const shapeSlots = document.querySelectorAll('.shape-slot');
+                    let correctMatches = 0;
+                    
+                    shapePieces.forEach(piece => {
+                        piece.addEventListener('dragstart', (e) => {
+                            e.dataTransfer.setData('text/plain', piece.getAttribute('data-shape'));
+                        });
+                    });
+                    
+                    shapeSlots.forEach(slot => {
+                        slot.addEventListener('dragover', (e) => {
+                            e.preventDefault();
+                        });
+                        
+                        slot.addEventListener('drop', (e) => {
+                            e.preventDefault();
+                            const shapeType = e.dataTransfer.getData('text/plain');
+                            const slotShape = slot.getAttribute('data-shape');
+                            
+                            if (shapeType === slotShape) {
+                                slot.style.background = '#96ceb4';
+                                slot.innerHTML = '';
+                                correctMatches++;
+                                
+                                if (correctMatches === 3) {
+                                    document.getElementById('shape-message').textContent = 'Congratulations! You sorted all the shapes! 🎉';
+                                } else {
+                                    document.getElementById('shape-message').textContent = `Good job! ${correctMatches}/3 shapes sorted`;
+                                }
+                            } else {
+                                document.getElementById('shape-message').textContent = 'Try again! That shape doesn\'t match this slot.';
+                            }
+                        });
+                    });
+                }
+            },
+            
+            yoga: {
+                title: "Yoga for Kids",
+                html: `
+                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #43e97b, #38f9d7); color: white; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <h1>Yoga for Kids</h1>
+                        <p>Simple yoga poses for relaxation and flexibility</p>
+                        <div id="yoga-container" style="max-width: 500px; margin: 20px auto;">
+                            <div id="yoga-pose" style="font-size: 80px; margin: 20px 0;">🧘</div>
+                            <div id="yoga-instruction" style="font-size: 18px; margin: 20px 0;">Mountain Pose: Stand tall with feet together, arms at your sides. Breathe deeply.</div>
+                            <div id="yoga-buttons" style="display: flex; justify-content: center; gap: 10px; margin: 20px 0;"></div>
+                        </div>
+                    </div>
+                `,
+                script: function() {
+                    const poses = [
+                        { emoji: "🧘", name: "Mountain Pose", instruction: "Stand tall with feet together, arms at your sides. Breathe deeply." },
+                        { emoji: "🌳", name: "Tree Pose", instruction: "Stand on one leg, place the other foot on your inner thigh, and bring hands to heart center." },
+                        { emoji: "🐍", name: "Cobra Pose", instruction: "Lie on your stomach, place hands under shoulders, and gently lift your chest." },
+                        { emoji: "🐱", name: "Cat Pose", instruction: "On hands and knees, round your back like a scared cat." },
+                        { emoji: "🐄", name: "Cow Pose", instruction: "On hands and knees, drop your belly and look up." },
+                        { emoji: "🦋", name: "Butterfly Pose", instruction: "Sit with soles of feet together, knees bent out to sides. Flap your legs like butterfly wings." }
+                    ];
+                    
+                    const yogaButtons = document.getElementById('yoga-buttons');
+                    const yogaPose = document.getElementById('yoga-pose');
+                    const yogaInstruction = document.getElementById('yoga-instruction');
+                    
+                    poses.forEach(pose => {
+                        const button = document.createElement('button');
+                        button.textContent = pose.name;
+                        button.style.cssText = `
+                            padding: 10px 15px;
+                            background: rgba(255,255,255,0.2);
+                            color: white;
+                            border: 2px solid white;
+                            border-radius: 30px;
+                            cursor: pointer;
+                            font-size: 16px;
+                        `;
+                        
+                        button.addEventListener('click', () => {
+                            yogaPose.textContent = pose.emoji;
+                            yogaInstruction.textContent = pose.instruction;
+                        });
+                        
+                        yogaButtons.appendChild(button);
+                    });
+                }
+            },
+            
+            tictactoe: {
+                title: "Tic Tac Toe",
+                html: `
+                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <h1>Tic Tac Toe</h1>
+                        <p>Classic game of X's and O's</p>
+                        <div id="tictactoe-container" style="max-width: 300px; margin: 20px auto;">
+                            <div id="tictactoe-board" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin: 20px 0;"></div>
+                            <p id="tictactoe-status" style="font-size: 18px;">Player X's turn</p>
+                            <button onclick="resetTicTacToe()" style="padding: 10px 20px; background: #ff6b6b; color: white; border: none; border-radius: 5px; cursor: pointer;">Reset Game</button>
+                        </div>
+                    </div>
+                `,
+                script: function() {
+                    let currentPlayer = 'X';
+                    let board = ['', '', '', '', '', '', '', '', ''];
+                    let gameActive = true;
+                    
+                    const statusDisplay = document.getElementById('tictactoe-status');
+                    
+                    function initializeBoard() {
+                        const boardElement = document.getElementById('tictactoe-board');
+                        boardElement.innerHTML = '';
+                        
+                        for (let i = 0; i < 9; i++) {
+                            const cell = document.createElement('div');
+                            cell.style.cssText = `
+                                width: 80px;
+                                height: 80px;
+                                background: rgba(255,255,255,0.2);
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                font-size: 40px;
+                                cursor: pointer;
+                            `;
+                            
+                            cell.addEventListener('click', () => handleCellClick(i));
+                            boardElement.appendChild(cell);
+                        }
+                    }
+                    
+                    function handleCellClick(cellIndex) {
+                        if (board[cellIndex] !== '' || !gameActive) return;
+                        
+                        board[cellIndex] = currentPlayer;
+                        document.getElementById('tictactoe-board').children[cellIndex].textContent = currentPlayer;
+                        
+                        if (checkWinner()) {
+                            statusDisplay.textContent = `Player ${currentPlayer} wins! 🎉`;
+                            gameActive = false;
+                            return;
+                        }
+                        
+                        if (board.every(cell => cell !== '')) {
+                            statusDisplay.textContent = "It's a tie!";
+                            gameActive = false;
+                            return;
+                        }
+                        
+                        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                        statusDisplay.textContent = `Player ${currentPlayer}'s turn`;
+                    }
+                    
+                    function checkWinner() {
+                        const winningConditions = [
+                            [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
+                            [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
+                            [0, 4, 8], [2, 4, 6] // diagonals
+                        ];
+                        
+                        return winningConditions.some(condition => {
+                            return condition.every(index => {
+                                return board[index] === currentPlayer;
+                            });
+                        });
+                    }
+                    
+                    window.resetTicTacToe = function() {
+                        currentPlayer = 'X';
+                        board = ['', '', '', '', '', '', '', '', ''];
+                        gameActive = true;
+                        statusDisplay.textContent = "Player X's turn";
+                        initializeBoard();
+                    };
+                    
+                    initializeBoard();
+                }
+            },
+            
+            colormixer: {
+                title: "Color Mixer",
+                html: `
+                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #fa709a, #fee140); color: white; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <h1>Color Mixer</h1>
+                        <p>Learn how colors mix together to create new colors</p>
+                        <div id="color-mixer" style="max-width: 500px; margin: 20px auto;">
+                            <div style="display: flex; justify-content: space-around; margin: 20px 0;">
+                                <div id="color1" style="width: 100px; height: 100px; background: #ff0000; border-radius: 10px;"></div>
+                                <div style="font-size: 40px; display: flex; align-items: center;">+</div>
+                                <div id="color2" style="width: 100px; height: 100px; background: #0000ff; border-radius: 10px;"></div>
+                                <div style="font-size: 40px; display: flex; align-items: center;">=</div>
+                                <div id="color-result" style="width: 100px; height: 100px; background: #800080; border-radius: 10px;"></div>
+                            </div>
+                            <div style="margin: 20px 0;">
+                                <p id="color-info" style="font-size: 18px;">Red + Blue = Purple</p>
+                            </div>
+                            <div id="color-buttons" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 20px 0;"></div>
+                        </div>
+                    </div>
+                `,
+                script: function() {
+                    const colorCombinations = [
+                        { color1: "#ff0000", color2: "#0000ff", result: "#800080", info: "Red + Blue = Purple" },
+                        { color1: "#ff0000", color2: "#ffff00", result: "#ffa500", info: "Red + Yellow = Orange" },
+                        { color1: "#0000ff", color2: "#ffff00", result: "#008000", info: "Blue + Yellow = Green" },
+                        { color1: "#ff0000", color2: "#ffffff", result: "#ff8080", info: "Red + White = Pink" },
+                        { color1: "#000000", color2: "#ffffff", result: "#808080", info: "Black + White = Gray" },
+                        { color1: "#ffff00", color2: "#0000ff", result: "#008000", info: "Yellow + Blue = Green" }
+                    ];
+                    
+                    const colorButtons = document.getElementById('color-buttons');
+                    
+                    colorCombinations.forEach(combo => {
+                        const button = document.createElement('button');
+                        button.textContent = combo.info.split(' = ')[1];
+                        button.style.cssText = `
+                            padding: 10px;
+                            background: rgba(255,255,255,0.2);
+                            color: white;
+                            border: 2px solid white;
+                            border-radius: 5px;
+                            cursor: pointer;
+                            font-size: 16px;
+                        `;
+                        
+                        button.addEventListener('click', () => {
+                            document.getElementById('color1').style.background = combo.color1;
+                            document.getElementById('color2').style.background = combo.color2;
+                            document.getElementById('color-result').style.background = combo.result;
+                            document.getElementById('color-info').textContent = combo.info;
+                        });
+                        
+                        colorButtons.appendChild(button);
+                    });
+                }
+            },
+            
+            mindful: {
+                title: "Mindful Moments",
+                html: `
+                    <div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #4facfe, #00f2fe); color: white; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <h1>Mindful Moments</h1>
+                        <p>Short mindfulness activities for focus and calm</p>
+                        <div id="mindful-container" style="max-width: 500px; margin: 20px auto;">
+                            <div id="mindful-activity" style="font-size: 18px; line-height: 1.6; margin: 20px 0; text-align: left; background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px;">
+                                <p>Take a deep breath in... and slowly breathe out.</p>
+                                <p>Notice how your body feels right now.</p>
+                                <p>Pay attention to the sounds around you.</p>
+                            </div>
+                            <div id="mindful-buttons" style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 20px 0;"></div>
+                        </div>
+                    </div>
+                `,
+                script: function() {
+                    const activities = [
+                        {
+                            title: "Breathing Exercise",
+                            content: "Take a deep breath in through your nose for 4 seconds. Hold your breath for 4 seconds. Slowly breathe out through your mouth for 6 seconds. Repeat 3 times."
+                        },
+                        {
+                            title: "Body Scan",
+                            content: "Close your eyes and bring your attention to your toes. Notice how they feel. Slowly move your attention up through your feet, legs, torso, arms, and head. Notice any sensations without judgment."
+                        },
+                        {
+                            title: "Five Senses",
+                            content: "Name 5 things you can see, 4 things you can touch, 3 things you can hear, 2 things you can smell, and 1 thing you can taste. This helps bring you into the present moment."
+                        },
+                        {
+                            title: "Gratitude Moment",
+                            content: "Think of three things you're grateful for today. They can be big or small - a sunny day, a kind word from someone, or a favorite toy."
+                        },
+                        {
+                            title: "Kindness Wish",
+                            content: "Close your eyes and think of someone you care about. Silently wish them happiness, health, and peace. Now think of yourself and wish yourself the same things."
+                        }
+                    ];
+                    
+                    const mindfulButtons = document.getElementById('mindful-buttons');
+                    const mindfulActivity = document.getElementById('mindful-activity');
+                    
+                    activities.forEach(activity => {
+                        const button = document.createElement('button');
+                        button.textContent = activity.title;
+                        button.style.cssText = `
+                            padding: 10px 15px;
+                            background: rgba(255,255,255,0.2);
+                            color: white;
+                            border: 2px solid white;
+                            border-radius: 30px;
+                            cursor: pointer;
+                            font-size: 16px;
+                        `;
+                        
+                        button.addEventListener('click', () => {
+                            mindfulActivity.innerHTML = `<p>${activity.content}</p>`;
+                        });
+                        
+                        mindfulButtons.appendChild(button);
+                    });
+                }
+            }
+        };
+
+        // DOM elements
+        const cardsContainer = document.getElementById('cards-container');
+        const searchInput = document.getElementById('search-input');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const gameFrame = document.getElementById('game-frame');
+        const gameContent = document.getElementById('game-content');
+        const gameTitle = document.getElementById('game-title');
+        const apiStatus = document.getElementById('api-status');
+
+        // Initialize the app
+        function init() {
+            renderCards(activities);
+            setupEventListeners();
+        }
+
+        // Render activity cards
+        function renderCards(activitiesToRender) {
+            cardsContainer.innerHTML = '';
+            
+            activitiesToRender.forEach(activity => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.setAttribute('data-category', activity.category);
+                
+                card.innerHTML = `
+                    <div class="card-image" style="background-image: url('${activity.image}')">
+                        ${activity.featured ? '<div class="card-badge">Featured</div>' : ''}
+                    </div>
+                    <div class="card-content">
+                        <h3>${activity.name}</h3>
+                        <p>${activity.description}</p>
+                        <div class="card-footer">
+                            <span class="age-range">Age: ${activity.ageRange}</span>
+                            <button class="play-btn" onclick="openActivity(${activity.id})">
+                                <i class="fas fa-play"></i> Play
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                cardsContainer.appendChild(card);
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Search functionality
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const filteredActivities = activities.filter(activity => 
+                    activity.name.toLowerCase().includes(searchTerm) || 
+                    activity.description.toLowerCase().includes(searchTerm)
+                );
+                renderCards(filteredActivities);
+            });
+
+            // Filter functionality
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filter activities
+                    if (filter === 'all') {
+                        renderCards(activities);
+                    } else {
+                        const filteredActivities = activities.filter(activity => 
+                            activity.category === filter
+                        );
+                        renderCards(filteredActivities);
+                    }
+                });
+            });
+        }
+
+        // Open activity
+        function openActivity(id) {
+            const activity = activities.find(a => a.id === id);
+            if (!activity) return;
+            
+            // Update UI
+            gameTitle.textContent = activity.name;
+            gameFrame.style.display = 'flex';
+            
+            // Load embedded game
+            gameContent.innerHTML = games[activity.gameId].html;
+            games[activity.gameId].script();
+            apiStatus.textContent = "Game loaded successfully!";
+        }
+
+        // Go back to main screen
+        function goBack() {
+            gameFrame.style.display = 'none';
+            gameContent.innerHTML = "";
+            apiStatus.textContent = "Game loaded successfully!";
+        }
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+        // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+    </script>
+</body>
+</html>

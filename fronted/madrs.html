@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MADRS - Montgomery-Åsberg Depression Rating Scale</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #4a148c;
+      --secondary-color: #6a1b9a;
+      --accent-color: #8e24aa;
+      --text-color: #333;
+      --light-text: #fff;
+      --card-bg: #fff;
+      --section-bg: #f5f5f5;
+      --border-color: #e0e0e0;
+      --remission: #2e7d32;
+      --mild: #7b1fa2;
+      --moderate: #d32f2f;
+      --severe: #c2185b;
+      --very-severe: #880e4f;
+      --clinical-threshold: #1976d2;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: var(--section-bg);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 25px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #ff9800, #ff5722);
+    }
+    
+    .header h1 {
+      font-size: 2rem;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+    
+    .header .subtitle {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-bottom: 15px;
+    }
+    
+    .header-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .info-card {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 12px;
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+    }
+    
+    .info-card h4 {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      margin-bottom: 5px;
+    }
+    
+    /* Instructions */
+    .instructions {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      border-left: 4px solid var(--accent-color);
+    }
+    
+    .instructions h3 {
+      color: var(--primary-color);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .rating-guidelines {
+      background: #f3e5f5;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 15px;
+      border-left: 4px solid var(--accent-color);
+    }
+    
+    /* Scoring Guide */
+    .scoring-guide {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+    
+    .severity-levels {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .level-card {
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    
+    .level-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .level-score {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .level-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    
+    /* Current Score */
+    .current-score {
+      position: sticky;
+      top: 10px;
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      border: 2px solid var(--primary-color);
+      z-index: 100;
+    }
+    
+    .score-value {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      text-align: center;
+      margin: 5px 0;
+    }
+    
+    .score-label {
+      text-align: center;
+      color: #666;
+      font-size: 0.9rem;
+    }
+    
+    /* Items Container */
+    .items-container {
+      background: white;
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+    
+    .item-section {
+      margin-bottom: 35px;
+      padding-bottom: 25px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .item-section:last-child {
+      border-bottom: none;
+    }
+    
+    .item-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .item-number {
+      background: var(--primary-color);
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+    
+    .item-title {
+      font-size: 1.1rem;
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+    
+    .item-description {
+      color: #555;
+      margin-bottom: 15px;
+      font-style: italic;
+      padding-left: 10px;
+      border-left: 3px solid var(--section-bg);
+    }
+    
+    /* Rating Scale */
+    .rating-scale {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      margin-top: 20px;
+    }
+    
+    @media (max-width: 768px) {
+      .rating-scale {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .rating-scale {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    .rating-point {
+      position: relative;
+    }
+    
+    .rating-btn {
+      width: 100%;
+      padding: 12px 5px;
+      border: 2px solid var(--border-color);
+      border-radius: 6px;
+      background: white;
+      color: var(--text-color);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .rating-btn:hover {
+      border-color: var(--accent-color);
+      transform: translateY(-2px);
+    }
+    
+    .rating-btn.selected {
+      background: var(--accent-color);
+      color: white;
+      border-color: var(--accent-color);
+      box-shadow: 0 4px 12px rgba(142, 36, 170, 0.2);
+    }
+    
+    .point-value {
+      font-size: 1.1rem;
+      font-weight: bold;
+      min-width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: var(--section-bg);
+      color: var(--primary-color);
+    }
+    
+    .rating-btn.selected .point-value {
+      background: white;
+      color: var(--accent-color);
+    }
+    
+    .point-label {
+      font-size: 0.8rem;
+      opacity: 0.8;
+    }
+    
+    .rating-description {
+      margin-top: 15px;
+      padding: 12px;
+      background: #f9f9f9;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      color: #666;
+      display: none;
+    }
+    
+    .rating-description.show {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Critical Items */
+    .critical-item {
+      background: #ffebee;
+      border: 2px solid #ffcdd2;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    
+    /* Controls */
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-color);
+    }
+    
+    .control-btn {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .prev-btn {
+      background: var(--section-bg);
+      color: #666;
+    }
+    
+    .prev-btn:hover {
+      background: #e0e0e0;
+    }
+    
+    .next-btn {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .next-btn:hover {
+      background: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .submit-btn {
+      background: linear-gradient(135deg, #00c853, #64dd17);
+      color: white;
+      padding: 14px 35px;
+      font-size: 1rem;
+    }
+    
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 200, 83, 0.3);
+    }
+    
+    /* Results */
+    .results-container {
+      display: none;
+      background: white;
+      border-radius: 12px;
+      padding: 35px;
+      margin-top: 25px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+    
+    .results-header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+    
+    .final-score-circle {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 25px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    }
+    
+    .score-number {
+      font-size: 2.8rem;
+      font-weight: bold;
+      line-height: 1;
+    }
+    
+    .score-total {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-top: 5px;
+    }
+    
+    .interpretation {
+      background: var(--section-bg);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 25px 0;
+    }
+    
+    .item-analysis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin: 25px 0;
+    }
+    
+    .analysis-card {
+      padding: 15px;
+      border-radius: 8px;
+      background: white;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      border-left: 4px solid var(--border-color);
+    }
+    
+    .analysis-card h5 {
+      color: var(--primary-color);
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .analysis-score {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--accent-color);
+      text-align: center;
+      margin: 10px 0;
+    }
+    
+    .recommendations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 25px;
+    }
+    
+    .recommendation-card {
+      background: white;
+      padding: 18px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border-left: 4px solid var(--primary-color);
+    }
+    
+    .recommendation-card h4 {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+    }
+    
+    /* Actions */
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+    
+    .action-btn {
+      padding: 12px 25px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .retake-btn {
+      background: var(--section-bg);
+      color: #666;
+    }
+    
+    .retake-btn:hover {
+      background: #e0e0e0;
+    }
+    
+    .print-btn {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .print-btn:hover {
+      background: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      .header {
+        padding: 20px;
+      }
+      
+      .header h1 {
+        font-size: 1.7rem;
+      }
+      
+      .header-info {
+        grid-template-columns: 1fr;
+      }
+      
+      .controls {
+        flex-direction: column;
+      }
+      
+      .control-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .actions {
+        flex-direction: column;
+      }
+      
+      .action-btn {
+        width: 100%;
+        text-align: center;
+      }
+      
+      .item-analysis,
+      .recommendations-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>Montgomery-Åsberg Depression Rating Scale (MADRS)</h1>
+      <div class="subtitle">Clinician-Rated Assessment of Depression Severity</div>
+      <div class="header-info">
+        <div class="info-card">
+          <h4>© Stuart Montgomery 1978</h4>
+          <div>Measures of Depression, Fulcrum Press, London</div>
+        </div>
+        <div class="info-card">
+          <h4>Administration</h4>
+          <div>Clinical Interview Based</div>
+        </div>
+        <div class="info-card">
+          <h4>Rating Scale</h4>
+          <div>0-6 (even steps with intermediate points)</div>
+        </div>
+        <div class="info-card">
+          <h4>Items</h4>
+          <div>10 Core Symptoms</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Instructions -->
+    <div class="instructions">
+      <h3><i class="fas fa-clipboard-check"></i> Rating Instructions</h3>
+      <p>The rating is based on a clinical interview. The rater must decide whether the rating lies on the defined scale steps (0, 2, 4, 6) or between them (1, 3, 5).</p>
+      
+      <div class="rating-guidelines">
+        <h4><i class="fas fa-ruler"></i> Rating Guidelines</h4>
+        <ul style="margin-left: 20px; margin-top: 10px;">
+          <li>Rate based on clinical interview and observation</li>
+          <li>Consider intensity, frequency, duration, and functional impact</li>
+          <li>Use even numbers (0, 2, 4, 6) for defined scale steps</li>
+          <li>Use odd numbers (1, 3, 5) for intermediate ratings</li>
+          <li>The scale can be used for any time interval between ratings</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Scoring Guide -->
+    <div class="scoring-guide">
+      <h3 style="color: var(--primary-color); margin-bottom: 15px;"><i class="fas fa-chart-line"></i> Severity Interpretation</h3>
+      <div class="severity-levels">
+        <div class="level-card" style="background: rgba(46, 125, 50, 0.1); border: 2px solid var(--remission);">
+          <div class="level-score" style="color: var(--remission);">0-6</div>
+          <div class="level-label" style="color: var(--remission);">Remission</div>
+        </div>
+        <div class="level-card" style="background: rgba(123, 31, 162, 0.1); border: 2px solid var(--mild);">
+          <div class="level-score" style="color: var(--mild);">7-19</div>
+          <div class="level-label" style="color: var(--mild);">Mild Depression</div>
+        </div>
+        <div class="level-card" style="background: rgba(211, 47, 47, 0.1); border: 2px solid var(--moderate);">
+          <div class="level-score" style="color: var(--moderate);">20-34</div>
+          <div class="level-label" style="color: var(--moderate);">Moderate Depression</div>
+        </div>
+        <div class="level-card" style="background: rgba(194, 24, 91, 0.1); border: 2px solid var(--severe);">
+          <div class="level-score" style="color: var(--severe);">35-60</div>
+          <div class="level-label" style="color: var(--severe);">Severe Depression</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Current Score Display -->
+    <div class="current-score" id="currentScoreDisplay">
+      <div class="score-label">Current Total Score</div>
+      <div class="score-value" id="currentScoreValue">0</div>
+      <div class="score-label" id="currentInterpretation">Remission</div>
+    </div>
+    
+    <!-- Items Container -->
+    <div class="items-container" id="itemsContainer">
+      <!-- Items will be dynamically inserted here -->
+    </div>
+    
+    <!-- Controls -->
+    <div class="controls" id="controls">
+      <button class="control-btn prev-btn" id="prevBtn" onclick="prevItem()">
+        <i class="fas fa-arrow-left"></i> Previous
+      </button>
+      <button class="control-btn next-btn" id="nextBtn" onclick="nextItem()">
+        Next <i class="fas fa-arrow-right"></i>
+      </button>
+      <button class="control-btn submit-btn" id="submitBtn" onclick="submitAssessment()">
+        <i class="fas fa-paper-plane"></i> Complete Assessment
+      </button>
+    </div>
+    
+    <!-- Results -->
+    <div class="results-container" id="resultsContainer">
+      <div class="results-header">
+        <i class="fas fa-clipboard-check" style="font-size: 2.5rem; color: var(--primary-color); margin-bottom: 15px;"></i>
+        <h2>MADRS Assessment Results</h2>
+        <p>Montgomery-Åsberg Depression Rating Scale - Clinical Assessment</p>
+      </div>
+      
+      <div class="final-score-circle" id="finalScoreCircle">
+        <div class="score-number" id="finalScoreNumber">0</div>
+        <div class="score-total">/60</div>
+      </div>
+      
+      <div class="interpretation" id="interpretation">
+        <!-- Will be filled dynamically -->
+      </div>
+      
+      <h3 style="color: var(--primary-color); margin: 25px 0 15px 0;"><i class="fas fa-chart-bar"></i> Symptom Analysis</h3>
+      <div class="item-analysis" id="itemAnalysis">
+        <!-- Will be filled dynamically -->
+      </div>
+      
+      <h3 style="color: var(--primary-color); margin: 25px 0 15px 0;"><i class="fas fa-prescription-bottle-alt"></i> Clinical Recommendations</h3>
+      <div class="recommendations-grid" id="recommendationsGrid">
+        <!-- Will be filled dynamically -->
+      </div>
+      
+      <div class="actions">
+        <button class="action-btn retake-btn" onclick="retakeAssessment()">
+          <i class="fas fa-redo"></i> New Assessment
+        </button>
+        <button class="action-btn print-btn" onclick="printResults()">
+          <i class="fas fa-print"></i> Print Report
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // MADRS Items Data
+    const madrsItems = [
+      {
+        id: 1,
+        title: "Apparent Sadness",
+        description: "Representing despondency, gloom and despair, reflected in speech, facial expression, and posture. Rate by depth and inability to brighten up.",
+        ratings: [
+          { score: 0, label: "0", description: "No sadness" },
+          { score: 1, label: "1", description: "Between 0 and 2" },
+          { score: 2, label: "2", description: "Looks dispirited but does brighten up without difficulty." },
+          { score: 3, label: "3", description: "Between 2 and 4" },
+          { score: 4, label: "4", description: "Appears sad and unhappy most of the time." },
+          { score: 5, label: "5", description: "Between 4 and 6" },
+          { score: 6, label: "6", description: "Looks miserable all the time or extremely despondent." }
+        ]
+      },
+      {
+        id: 2,
+        title: "Reported Sadness",
+        description: "Representing reports of depressed mood. Rate according to intensity, duration and extent mood is influenced by events.",
+        ratings: [
+          { score: 0, label: "0", description: "Occasional sadness in keeping with the circumstances" },
+          { score: 1, label: "1", description: "Between 0 and 2" },
+          { score: 2, label: "2", description: "Sad or low but brightens up without difficulty" },
+          { score: 3, label: "3", description: "Between 2 and 4" },
+          { score: 4, label: "4", description: "Pervasive feelings of sadness or gloominess. Mood still influenced by external circumstances" },
+          { score: 5, label: "5", description: "Between 4 and 6" },
+          { score: 6, label: "6", description: "Continuous or unvarying sadness, misery or despondency" }
+        ]
+      },
+      {
+        id: 3,
+        title: "Inner Tension",
+        description: "Representing feelings of ill-defined discomfort, edginess, inner turmoil, mental tension mounting to panic, dread or anguish.",
+        ratings: [
+          { score: 0, label: "0", description: "Placid. Only fleeting inner tension" },
+          { score: 1, label: "1", description: "Between 0 and 2" },
+          { score: 2, label: "2", description: "Occasional feelings of edginess and ill-defined discomfort" },
+          { score: 3, label: "3", description: "Between 2 and 4" },
+          { score: 4, label: "4", description: "Continuous feelings of inner tension or intermittent panic which patient can only master with some difficulty." },
+          { score: 5, label: "5", description: "Between 4 and 6" },
+          { score: 6, label: "6", description: "Unrelenting dread or anguish or overwhelming panic" }
+        ]
+      },
+      {
+        id: 4,
+        title: "Reduced Sleep",
+        description: "Representing reduced duration or depth of sleep compared to subject's own normal pattern when well.",
+        ratings: [
+          { score: 0, label: "0", description: "Sleeps as usual" },
+          { score: 1, label: "1", description: "Between 0 and 2" },
+          { score: 2, label: "2", description: "Slight difficulty dropping off to sleep or slightly reduced, light or fitful sleep." },
+          { score: 3, label: "3", description: "Between 2 and 4" },
+          { score: 4, label: "4", description: "Sleep reduced or broken by at least two hours." },
+          { score: 5, label: "5", description: "Between 4 and 6" },
+          { score: 6, label: "6", description: "Less than two or three hours sleep." }
+        ]
+      },
+      {
+        id: 5,
+        title: "Reduced Appetite",
+        description: "Representing loss of appetite compared with when well. Rate by loss of desire for food or need to force oneself to eat.",
+        ratings: [
+          { score: 0, label: "0", description: "Normal or increased appetite" },
+          { score: 1, label: "1", description: "Between 0 and 2" },
+          { score: 2, label: "2", description: "Slightly reduced appetite." },
+          { score: 3, label: "3", description: "Between 2 and 4" },
+          { score: 4, label: "4", description: "No appetite or food is tasteless." },
+          { score: 5, label: "5", description: "Between 4 and 6" },
+          { score: 6, label: "6", description: "Needs persuasion to eat at all" }
+        ]
+      },
+      {
+        id: 6,
+        title: "Concentration Difficulties",
+        description: "Representing difficulties in collecting one's thoughts mounting to incapacitating lack of concentration.",
+        ratings: [
+          { score: 0, label: "0", description: "No difficulties in concentrating" },
+          { score: 1, label: "1", description: "Between 0 and 2" },
+          { score: 2, label: "2", description: "Occasional difficulties in collecting one's thoughts." },
+          { score: 3, label: "3", description: "Between 2 and 4" },
+          { score: 4, label: "4", description: "Difficulties in concentrating and sustaining thought which reduces ability to read or hold a conversation." },
+          { score: 5, label: "5", description: "Between 4 and 6" },
+          { score: 6, label: "6", description: "Unable to read or converse without great difficulty" }
+        ]
+      },
+      {
+        id: 7,
+        title: "Lassitude",
+        description: "Representing difficulty getting started or slowness initiating and performing everyday activities.",
+        ratings: [
+          { score: 0, label: "0", description: "Hardly any difficulty in getting started or no sluggishness" },
+          { score: 1, label: "1", description: "Between 0 and 2" },
+          { score: 2, label: "2", description: "Difficulties in starting activities" },
+          { score: 3, label: "3", description: "Between 2 and 4" },
+          { score: 4, label: "4", description: "Difficulties in starting simple routine activities which are carried out with effort" },
+          { score: 5, label: "5", description: "Between 4 and 6" },
+          { score: 6, label: "6", description: "Complete lassitude. Unable to do anything without help" }
+        ]
+      },
+      {
+        id: 8,
+        title: "Inability to Feel",
+        description: "Representing reduced interest in surroundings or activities that normally give pleasure. Reduced ability to react with adequate emotion.",
+        ratings: [
+          { score: 0, label: "0", description: "Normal interest in the surroundings and in other people" },
+          { score: 1, label: "1", description: "Between 0 and 2" },
+          { score: 2, label: "2", description: "Reduced ability to enjoy usual interests" },
+          { score: 3, label: "3", description: "Between 2 and 4" },
+          { score: 4, label: "4", description: "Loss of interest in the surroundings or loss of feelings for friends and acquaintances" },
+          { score: 5, label: "5", description: "Between 4 and 6" },
+          { score: 6, label: "6", description: "Emotionally paralyzed, inability to feel anger, grief or pleasure and complete failure to feel for close relatives." }
+        ]
+      },
+      {
+        id: 9,
+        title: "Pessimistic Thoughts",
+        description: "Representing thoughts of guilt, inferiority, self-reproach, sinfulness, remorse and ruin.",
+        ratings: [
+          { score: 0, label: "0", description: "No pessimistic thoughts" },
+          { score: 1, label: "1", description: "Between 0 and 2" },
+          { score: 2, label: "2", description: "Fluctuating ideas of failure, self-reproach or self depreciation" },
+          { score: 3, label: "3", description: "Between 2 and 4" },
+          { score: 4, label: "4", description: "Persistent self-accusations, or definite but still rational ideas of guilt or sin" },
+          { score: 5, label: "5", description: "Between 4 and 6" },
+          { score: 6, label: "6", description: "Delusions of ruin, remorse or unredeemable sin or absurd and unshakable self-accusations." }
+        ]
+      },
+      {
+        id: 10,
+        title: "Suicidal Thoughts",
+        isCritical: true,
+        description: "Representing feeling that life is not worth living, suicidal thoughts, and preparations for suicide.",
+        ratings: [
+          { score: 0, label: "0", description: "Enjoys life or takes it as it comes" },
+          { score: 1, label: "1", description: "Between 0 and 2" },
+          { score: 2, label: "2", description: "Weary of life or only fleeting suicidal thoughts." },
+          { score: 3, label: "3", description: "Between 2 and 4" },
+          { score: 4, label: "4", description: "Probably better off dead or suicidal thoughts are common, considered as possible solution" },
+          { score: 5, label: "5", description: "Between 4 and 6" },
+          { score: 6, label: "6", description: "Explicit plans for suicide or active preparations for suicide" }
+        ]
+      }
+    ];
+
+    // User responses
+    let userResponses = new Array(madrsItems.length).fill(null);
+    let currentItemIndex = 0;
+    let lastHoveredScore = null;
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      renderCurrentItem();
+      updateScoreDisplay();
+    });
+
+    // Render current item
+    function renderCurrentItem() {
+      const container = document.getElementById('itemsContainer');
+      const item = madrsItems[currentItemIndex];
+      
+      // Create rating buttons
+      const ratingButtons = item.ratings.map(rating => `
+        <div class="rating-point">
+          <button class="rating-btn ${userResponses[currentItemIndex] === rating.score ? 'selected' : ''}"
+                  onclick="selectRating(${rating.score})"
+                  onmouseenter="showRatingDescription(${rating.score})"
+                  onmouseleave="hideRatingDescription()">
+            <div class="point-value">${rating.label}</div>
+            <div class="point-label">${getPointLabel(rating.score)}</div>
+          </button>
+        </div>
+      `).join('');
+      
+      // Special styling for critical items
+      const itemClass = item.isCritical ? 'critical-item' : '';
+      
+      container.innerHTML = `
+        <div class="item-section ${itemClass}">
+          <div class="item-header">
+            <div class="item-number">${item.id}</div>
+            <div class="item-title">${item.title}</div>
+          </div>
+          
+          <div class="item-description">
+            ${item.description}
+          </div>
+          
+          ${item.isCritical ? `
+            <div style="margin: 15px 0; padding: 10px; background: #ffcdd2; border-radius: 6px; border-left: 4px solid #f44336;">
+              <i class="fas fa-exclamation-triangle"></i>
+              <strong> Critical Item:</strong> If score is 4 or higher, immediate safety assessment is required.
+            </div>
+          ` : ''}
+          
+          <div class="rating-scale">
+            ${ratingButtons}
+          </div>
+          
+          <div class="rating-description" id="ratingDescription">
+            <!-- Rating description will appear here -->
+          </div>
+        </div>
+      `;
+      
+      updateNavigation();
+    }
+
+    // Get point label
+    function getPointLabel(score) {
+      if (score === 0) return "Absent";
+      if (score === 1 || score === 3 || score === 5) return "";
+      if (score === 2) return "Mild";
+      if (score === 4) return "Moderate";
+      if (score === 6) return "Severe";
+      return "";
+    }
+
+    // Show rating description
+    function showRatingDescription(score) {
+      const item = madrsItems[currentItemIndex];
+      const rating = item.ratings.find(r => r.score === score);
+      const descriptionDiv = document.getElementById('ratingDescription');
+      
+      if (rating && rating.description) {
+        descriptionDiv.innerHTML = `<strong>Score ${score}:</strong> ${rating.description}`;
+        descriptionDiv.classList.add('show');
+        lastHoveredScore = score;
+      }
+    }
+
+    // Hide rating description
+    function hideRatingDescription() {
+      const descriptionDiv = document.getElementById('ratingDescription');
+      descriptionDiv.classList.remove('show');
+      lastHoveredScore = null;
+    }
+
+    // Select rating
+    function selectRating(score) {
+      userResponses[currentItemIndex] = score;
+      renderCurrentItem();
+      updateScoreDisplay();
+    }
+
+    // Update navigation
+    function updateNavigation() {
+      document.getElementById('prevBtn').style.display = currentItemIndex === 0 ? 'none' : 'flex';
+      document.getElementById('nextBtn').style.display = currentItemIndex === madrsItems.length - 1 ? 'none' : 'flex';
+      document.getElementById('submitBtn').style.display = currentItemIndex === madrsItems.length - 1 ? 'flex' : 'none';
+    }
+
+    // Next item
+    function nextItem() {
+      if (currentItemIndex < madrsItems.length - 1) {
+        currentItemIndex++;
+        renderCurrentItem();
+        updateScoreDisplay();
+      }
+    }
+
+    // Previous item
+    function prevItem() {
+      if (currentItemIndex > 0) {
+        currentItemIndex--;
+        renderCurrentItem();
+        updateScoreDisplay();
+      }
+    }
+
+    // Calculate total score
+    function calculateTotalScore() {
+      return userResponses.reduce((total, score) => {
+        return total + (score !== null ? score : 0);
+      }, 0);
+    }
+
+    // Get interpretation
+    function getInterpretation(score) {
+      if (score <= 6) {
+        return {
+          severity: "Remission / Normal Range",
+          description: "Symptoms are within normal limits or represent minimal depressive symptoms. Patient appears to be in remission or experiencing normal mood fluctuations.",
+          color: "#2e7d32",
+          recommendations: [
+            "Continue routine clinical monitoring",
+            "Maintain current treatment regimen if applicable",
+            "Provide psychoeducation about early warning signs",
+            "Schedule follow-up in 3-6 months"
+          ]
+        };
+      } else if (score <= 19) {
+        return {
+          severity: "Mild Depression",
+          description: "Patient exhibits mild depressive symptoms that may cause some distress but generally allows continued functioning in daily activities.",
+          color: "#7b1fa2",
+          recommendations: [
+            "Consider brief supportive psychotherapy",
+            "Psychoeducation about depression management",
+            "Regular follow-up in 4-8 weeks",
+            "Monitor for symptom progression",
+            "Consider lifestyle interventions"
+          ]
+        };
+      } else if (score <= 34) {
+        return {
+          severity: "Moderate Depression",
+          description: "Significant depressive symptoms affecting daily functioning. Clinical intervention is indicated to prevent progression and reduce functional impairment.",
+          color: "#d32f2f",
+          recommendations: [
+            "Initiate evidence-based psychotherapy (CBT, IPT)",
+            "Consider antidepressant medication",
+            "Bi-weekly to monthly monitoring",
+            "Functional assessment and occupational support",
+            "Consider referral to mental health specialist"
+          ]
+        };
+      } else {
+        return {
+          severity: "Severe Depression",
+          description: "Severe depressive symptoms causing substantial impairment in social, occupational, and personal functioning. Requires intensive treatment and close monitoring.",
+          color: "#c2185b",
+          recommendations: [
+            "Immediate initiation of antidepressant medication",
+            "Combination therapy (medication + psychotherapy)",
+            "Weekly monitoring and safety assessment",
+            "Consider psychiatric consultation",
+            "Assess need for intensive outpatient or inpatient care"
+          ]
+        };
+      }
+    }
+
+    // Get suicide risk assessment
+    function getSuicideAssessment() {
+      const suicideScore = userResponses[9]; // Item 10 (index 9)
+      
+      if (suicideScore === null || suicideScore <= 1) {
+        return {
+          level: "No Significant Risk",
+          description: "No significant suicidal ideation reported during assessment.",
+          critical: false
+        };
+      } else if (suicideScore <= 3) {
+        return {
+          level: "Passive Suicidal Ideation",
+          description: "Patient reports being weary of life or experiencing fleeting suicidal thoughts without intent.",
+          critical: true
+        };
+      } else if (suicideScore === 4) {
+        return {
+          level: "Active Suicidal Ideation",
+          description: "Patient reports frequent suicidal thoughts and considers suicide as a possible solution.",
+          critical: true
+        };
+      } else {
+        return {
+          level: "High Suicide Risk",
+          description: "Patient reports explicit suicide plans or active preparations. Requires immediate safety intervention.",
+          critical: true
+        };
+      }
+    }
+
+    // Update score display
+    function updateScoreDisplay() {
+      const score = calculateTotalScore();
+      const interpretation = getInterpretation(score);
+      
+      document.getElementById('currentScoreValue').textContent = score;
+      document.getElementById('currentInterpretation').textContent = interpretation.severity;
+      document.getElementById('currentInterpretation').style.color = interpretation.color;
+      
+      // Update progress indicator
+      const progress = (score / 60) * 100; // Max possible score is 60
+      document.getElementById('currentScoreDisplay').style.background = `
+        linear-gradient(90deg, 
+          ${interpretation.color}20 ${progress}%, 
+          white ${progress}%
+        )
+      `;
+    }
+
+    // Submit assessment
+    function submitAssessment() {
+      const unanswered = userResponses.filter(r => r === null).length;
+      if (unanswered > 0) {
+        alert(`Please complete all items before submitting. ${unanswered} item(s) remaining.`);
+        return;
+      }
+
+      const totalScore = calculateTotalScore();
+      const interpretation = getInterpretation(totalScore);
+      const suicideAssessment = getSuicideAssessment();
+      
+      // Display final score
+      document.getElementById('finalScoreNumber').textContent = totalScore;
+      document.getElementById('finalScoreCircle').style.background = interpretation.color;
+      
+      // Update interpretation
+      document.getElementById('interpretation').innerHTML = `
+        <h3 style="color: ${interpretation.color}; margin-bottom: 15px;">
+          <i class="fas fa-diagnoses"></i> Clinical Assessment: ${interpretation.severity}
+        </h3>
+        <p>${interpretation.description}</p>
+        <div style="margin-top: 15px; padding: 10px; background: white; border-radius: 6px;">
+          <strong>Total MADRS Score:</strong> ${totalScore}/60
+          <br>
+          <strong>Suicide Risk:</strong> ${suicideAssessment.level}
+        </div>
+      `;
+      
+      // Generate item analysis
+      generateItemAnalysis();
+      
+      // Generate recommendations
+      generateRecommendations(interpretation, suicideAssessment);
+      
+      // Show results
+      document.getElementById('itemsContainer').style.display = 'none';
+      document.getElementById('controls').style.display = 'none';
+      document.getElementById('currentScoreDisplay').style.display = 'none';
+      document.getElementById('resultsContainer').style.display = 'block';
+      
+      // Save results
+      saveAssessmentResults(totalScore, interpretation, suicideAssessment);
+    }
+
+    // Generate item analysis
+    function generateItemAnalysis() {
+      const container = document.getElementById('itemAnalysis');
+      let html = '';
+      
+      madrsItems.forEach((item, index) => {
+        const score = userResponses[index] !== null ? userResponses[index] : 0;
+        const maxScore = 6;
+        const percentage = (score / maxScore) * 100;
+        
+        let severity = "";
+        let color = "#666";
+        
+        if (score <= 1) {
+          severity = "Minimal";
+          color = "#2e7d32";
+        } else if (score <= 3) {
+          severity = "Mild";
+          color = "#7b1fa2";
+        } else if (score <= 5) {
+          severity = "Moderate";
+          color = "#d32f2f";
+        } else {
+          severity = "Severe";
+          color = "#c2185b";
+        }
+        
+        html += `
+          <div class="analysis-card">
+            <h5>${item.id}. ${item.title}</h5>
+            <div class="analysis-score" style="color: ${color};">${score}/6</div>
+            <div style="font-size: 0.85rem; color: #666; text-align: center;">
+              ${severity} • Score: ${score}
+            </div>
+          </div>
+        `;
+      });
+      
+      container.innerHTML = html;
+    }
+
+    // Generate recommendations
+    function generateRecommendations(interpretation, suicideAssessment) {
+      const container = document.getElementById('recommendationsGrid');
+      let recommendations = [...interpretation.recommendations];
+      
+      // Add suicide-specific recommendations if needed
+      if (suicideAssessment.critical) {
+        recommendations.unshift({
+          title: "Safety Assessment Required",
+          icon: "fas fa-shield-alt",
+          description: `<strong>${suicideAssessment.level}:</strong> ${suicideAssessment.description} Conduct immediate safety assessment and develop comprehensive safety plan.`
+        });
+        
+        if (userResponses[9] >= 4) { // Score 4 or higher on suicidal thoughts
+          recommendations.unshift({
+            title: "Immediate Safety Intervention",
+            icon: "fas fa-ambulance",
+            description: "Patient requires immediate psychiatric evaluation and safety planning. Consider emergency department referral or crisis intervention services."
+          });
+        }
+      }
+      
+      // Add general recommendations
+      recommendations.push(
+        {
+          title: "Follow-up Assessment",
+          icon: "fas fa-calendar-check",
+          description: "Re-administer MADRS in 4-6 weeks to monitor treatment response and track symptom changes over time."
+        },
+        {
+          title: "Comprehensive Evaluation",
+          icon: "fas fa-stethoscope",
+          description: "Consider additional assessments for comorbid conditions, functional impairment, and quality of life impact."
+        },
+        {
+          title: "Treatment Monitoring",
+          icon: "fas fa-chart-line",
+          description: "Establish baseline and monitor treatment response using standardized measures at regular intervals."
+        },
+        {
+          title: "Patient Education",
+          icon: "fas fa-book-medical",
+          description: "Provide psychoeducation about depression, treatment options, and self-management strategies."
+        }
+      );
+      
+      // Render recommendations
+      container.innerHTML = recommendations.map(rec => `
+        <div class="recommendation-card">
+          <h4><i class="${rec.icon}"></i> ${rec.title}</h4>
+          <p>${rec.description}</p>
+        </div>
+      `).join('');
+    }
+
+    // Save assessment results
+    function saveAssessmentResults(totalScore, interpretation, suicideAssessment) {
+      const assessmentData = {
+        test: "Montgomery-Åsberg Depression Rating Scale (MADRS)",
+        date: new Date().toISOString(),
+        totalScore: totalScore,
+        maxScore: 60,
+        interpretation: interpretation.severity,
+        suicideRisk: suicideAssessment.level,
+        items: madrsItems.map((item, index) => ({
+          id: item.id,
+          title: item.title,
+          score: userResponses[index],
+          description: item.ratings.find(r => r.score === userResponses[index])?.description
+        })),
+        severityRanges: {
+          remission: "0-6",
+          mild: "7-19",
+          moderate: "20-34",
+          severe: "35-60"
+        }
+      };
+      
+      // Save to localStorage
+      const assessments = JSON.parse(localStorage.getItem('madrsAssessments') || '[]');
+      assessments.push(assessmentData);
+      localStorage.setItem('madrsAssessments', JSON.stringify(assessments));
+    }
+
+    // Retake assessment
+    function retakeAssessment() {
+      userResponses = new Array(madrsItems.length).fill(null);
+      currentItemIndex = 0;
+      
+      document.getElementById('itemsContainer').style.display = 'block';
+      document.getElementById('controls').style.display = 'flex';
+      document.getElementById('currentScoreDisplay').style.display = 'block';
+      document.getElementById('resultsContainer').style.display = 'none';
+      
+      renderCurrentItem();
+      updateScoreDisplay();
+    }
+
+    // Print results
+    function printResults() {
+      const printContent = document.getElementById('resultsContainer').innerHTML;
+      const originalContent = document.body.innerHTML;
+      
+      document.body.innerHTML = `
+        <div style="padding: 30px; font-family: Arial, sans-serif;">
+          <h1 style="color: #4a148c; margin-bottom: 20px; border-bottom: 2px solid #4a148c; padding-bottom: 10px;">
+            Montgomery-Åsberg Depression Rating Scale (MADRS)
+          </h1>
+          <div style="margin-bottom: 20px; color: #666;">
+            Assessment Date: ${new Date().toLocaleDateString('en-US', { 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric',
+              weekday: 'long'
+            })}
+          </div>
+          ${printContent}
+        </div>
+      `;
+      
+      window.print();
+      document.body.innerHTML = originalContent;
+      location.reload();
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'ArrowRight' || event.key === ' ') {
+        event.preventDefault();
+        nextItem();
+      } else if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        prevItem();
+      } else if (event.key >= '0' && event.key <= '6') {
+        event.preventDefault();
+        const score = parseInt(event.key);
+        selectRating(score);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autism Diagnostic Observation Schedule - Second Edition (ADOS-2)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary-blue: #1565C0;
+      --secondary-blue: #0D47A1;
+      --light-blue: #E3F2FD;
+      --accent-orange: #FF9800;
+      --accent-green: #4CAF50;
+      --accent-red: #F44336;
+      --autism-blue: #0277BD;
+      --autism-puzzle: #4FC3F7;
+      --text-dark: #333333;
+      --text-light: #666666;
+      --border-color: #E0E0E0;
+      --card-bg: #FFFFFF;
+      --section-bg: #F5F7FA;
+      --domain-sa: #2196F3;
+      --domain-rrb: #FF9800;
+      --module-1: #4CAF50;
+      --module-2: #2196F3;
+      --module-3: #FF9800;
+      --module-4: #9C27B0;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: var(--section-bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    
+    /* Header Styles */
+    .header {
+      background: linear-gradient(135deg, var(--autism-blue), var(--primary-blue));
+      color: white;
+      padding: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--autism-puzzle);
+    }
+    
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .header-info {
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    .header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    
+    .header .subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-bottom: 15px;
+    }
+    
+    .developers {
+      font-size: 0.9rem;
+      margin-top: 15px;
+      opacity: 0.8;
+    }
+    
+    .wps-logo {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+      text-align: center;
+      min-width: 250px;
+    }
+    
+    .wps-logo h3 {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+    
+    /* Subject Information */
+    .subject-info {
+      padding: 25px;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--light-blue);
+    }
+    
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    
+    .info-card {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .info-card label {
+      font-weight: 600;
+      color: var(--secondary-blue);
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .info-card input,
+    .info-card select {
+      padding: 12px;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    
+    .info-card input:focus,
+    .info-card select:focus {
+      outline: none;
+      border-color: var(--primary-blue);
+    }
+    
+    /* Module Selection */
+    .module-selection {
+      padding: 25px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .module-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+    
+    .module-card {
+      padding: 25px;
+      border-radius: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      border: 2px solid var(--border-color);
+    }
+    
+    .module-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .module-card.selected {
+      border-color: transparent;
+      color: white;
+    }
+    
+    .module-card.m1 { border-color: var(--module-1); }
+    .module-card.m1.selected { background: var(--module-1); }
+    
+    .module-card.m2 { border-color: var(--module-2); }
+    .module-card.m2.selected { background: var(--module-2); }
+    
+    .module-card.m3 { border-color: var(--module-3); }
+    .module-card.m3.selected { background: var(--module-3); }
+    
+    .module-card.m4 { border-color: var(--module-4); }
+    .module-card.m4.selected { background: var(--module-4); }
+    
+    .module-icon {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+    }
+    
+    .module-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    
+    /* Score Display */
+    .score-display {
+      position: sticky;
+      top: 10px;
+      background: white;
+      padding: 20px;
+      margin: 0 25px 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border: 2px solid var(--primary-blue);
+      z-index: 100;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    
+    .score-card {
+      text-align: center;
+      padding: 15px;
+      border-radius: 8px;
+      border: 2px solid;
+    }
+    
+    .score-card.sa { border-color: var(--domain-sa); }
+    .score-card.rrb { border-color: var(--domain-rrb); }
+    .score-card.total { border-color: #607D8B; }
+    .score-card.comparison { border-color: #9C27B0; }
+    
+    .score-label {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 5px;
+    }
+    
+    .score-value {
+      font-size: 2.2rem;
+      font-weight: bold;
+      line-height: 1;
+      margin: 10px 0;
+    }
+    
+    .score-cutoff {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+    
+    .score-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.8rem;
+      margin-top: 5px;
+      padding: 3px 10px;
+      border-radius: 12px;
+    }
+    
+    /* Domain Sections */
+    .domain-sections {
+      padding: 0 25px 25px;
+    }
+    
+    .domain-section {
+      margin-bottom: 40px;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+    }
+    
+    .domain-header {
+      padding: 20px;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .domain-header.sa { background: var(--domain-sa); }
+    .domain-header.rrb { background: var(--domain-rrb); }
+    
+    .domain-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+    
+    /* Items Table */
+    .items-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .items-table th {
+      background: var(--section-bg);
+      padding: 15px;
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-dark);
+      border-bottom: 2px solid var(--border-color);
+    }
+    
+    .items-table td {
+      padding: 15px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .items-table tr:hover {
+      background: #F9F9F9;
+    }
+    
+    .item-number {
+      font-weight: 600;
+      color: var(--primary-blue);
+      width: 60px;
+    }
+    
+    .item-description {
+      flex: 1;
+    }
+    
+    .coding-options {
+      display: flex;
+      gap: 5px;
+      width: 300px;
+    }
+    
+    .coding-btn {
+      width: 45px;
+      height: 45px;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      background: white;
+      color: var(--text-dark);
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .coding-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .coding-btn.selected {
+      border-color: var(--primary-blue);
+      background: var(--light-blue);
+      color: var(--primary-blue);
+    }
+    
+    .coding-btn.na {
+      width: 80px;
+      font-size: 0.9rem;
+    }
+    
+    /* Results Section */
+    .results-section {
+      padding: 30px;
+      background: var(--card-bg);
+      display: none;
+    }
+    
+    .results-section.active {
+      display: block;
+    }
+    
+    .results-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .results-header h2 {
+      color: var(--primary-blue);
+      margin-bottom: 10px;
+    }
+    
+    .diagnostic-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin-bottom: 40px;
+    }
+    
+    .summary-card {
+      padding: 25px;
+      border-radius: 10px;
+      text-align: center;
+      border: 2px solid;
+    }
+    
+    .summary-card.sa { border-color: var(--domain-sa); background: #E3F2FD; }
+    .summary-card.rrb { border-color: var(--domain-rrb); background: #FFF8E1; }
+    .summary-card.total { border-color: #607D8B; background: #ECEFF1; }
+    .summary-card.comparison { border-color: #9C27B0; background: #F3E5F5; }
+    
+    .summary-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+    
+    .summary-score {
+      font-size: 3rem;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+    
+    .summary-cutoff {
+      font-size: 1rem;
+      color: var(--text-light);
+      margin-bottom: 15px;
+    }
+    
+    .summary-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    
+    .classification-box {
+      background: white;
+      border-radius: 10px;
+      padding: 25px;
+      margin: 30px 0;
+      border: 2px solid var(--primary-blue);
+    }
+    
+    .classification-result {
+      font-size: 2rem;
+      font-weight: bold;
+      text-align: center;
+      margin: 20px 0;
+      padding: 20px;
+      border-radius: 10px;
+      background: var(--section-bg);
+    }
+    
+    .autism { color: #C62828; background: #FFEBEE !important; }
+    .autism-spectrum { color: #F57C00; background: #FFF3E0 !important; }
+    .non-spectrum { color: #388E3C; background: #E8F5E9 !important; }
+    
+    /* Summary Table */
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 30px 0;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .summary-table th {
+      background: var(--primary-blue);
+      color: white;
+      padding: 15px;
+      text-align: left;
+      font-weight: 600;
+    }
+    
+    .summary-table td {
+      padding: 15px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .summary-table tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .required-item {
+      color: var(--accent-red);
+      font-weight: bold;
+    }
+    
+    /* Controls */
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      padding: 25px;
+      border-top: 1px solid var(--border-color);
+      background: var(--section-bg);
+    }
+    
+    .control-btn {
+      padding: 14px 28px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+    }
+    
+    .reset-btn {
+      background: var(--light-blue);
+      color: var(--primary-blue);
+    }
+    
+    .reset-btn:hover {
+      background: #BBDEFB;
+    }
+    
+    .save-btn {
+      background: linear-gradient(135deg, var(--accent-green), #45a049);
+      color: white;
+    }
+    
+    .save-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(76, 175, 80, 0.3);
+    }
+    
+    .calculate-btn {
+      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      color: white;
+    }
+    
+    .calculate-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(21, 101, 192, 0.3);
+    }
+    
+    .print-btn {
+      background: linear-gradient(135deg, #FF9800, #F57C00);
+      color: white;
+    }
+    
+    .print-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(255, 152, 0, 0.3);
+    }
+    
+    /* Footer */
+    .footer {
+      background: var(--light-blue);
+      padding: 25px 30px;
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border-color);
+    }
+    
+    .copyright {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.8rem;
+      color: #999;
+    }
+    
+    /* Disclaimer */
+    .disclaimer {
+      background: #FFF8E1;
+      padding: 20px;
+      margin: 20px 25px;
+      border-radius: 10px;
+      border-left: 4px solid var(--accent-orange);
+      font-size: 0.9rem;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header-top {
+        flex-direction: column;
+      }
+      
+      .score-display {
+        grid-template-columns: 1fr;
+        margin: 0 15px 20px;
+      }
+      
+      .controls {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .control-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .module-cards {
+        grid-template-columns: 1fr;
+      }
+      
+      .coding-options {
+        flex-wrap: wrap;
+        width: 200px;
+      }
+      
+      .coding-btn {
+        width: 40px;
+        height: 40px;
+      }
+      
+      .coding-btn.na {
+        width: 100%;
+        margin-top: 5px;
+      }
+    }
+    
+    @media print {
+      .controls,
+      .footer,
+      .module-selection {
+        display: none;
+      }
+      
+      .results-section {
+        display: block !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-top">
+        <div class="header-info">
+          <h1>Autism Diagnostic Observation Schedule - Second Edition (ADOS-2)</h1>
+          <div class="subtitle">A standardized observation for the assessment of autism spectrum disorders</div>
+          <div class="developers">
+            <p><strong>Developed by:</strong> Catherine Lord, Ph.D., Michael Rutter, M.D., FRS, Pamela C. DiLavore, Ph.D., Susan Risi, Ph.D., Katherine Gotham, Ph.D.</p>
+          </div>
+        </div>
+        
+        <div class="wps-logo">
+          <h3>WPS TEST REPORT</h3>
+          <p>Western Psychological Services</p>
+          <p>Copyright ©2012 by WPS</p>
+          <p>Version 1.210</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Subject Information -->
+    <div class="subject-info">
+      <div class="info-grid">
+        <div class="info-card">
+          <label for="subjectName"><i class="fas fa-user"></i> Child Name</label>
+          <input type="text" id="subjectName" placeholder="Enter child's full name">
+        </div>
+        
+        <div class="info-card">
+          <label for="subjectID"><i class="fas fa-id-card"></i> Child ID</label>
+          <input type="text" id="subjectID" placeholder="Enter child ID">
+        </div>
+        
+        <div class="info-card">
+          <label for="dateOfBirth"><i class="fas fa-birthday-cake"></i> Date of Birth</label>
+          <input type="date" id="dateOfBirth">
+        </div>
+        
+        <div class="info-card">
+          <label for="dateOfEvaluation"><i class="fas fa-calendar-alt"></i> Date of Evaluation</label>
+          <input type="date" id="dateOfEvaluation">
+        </div>
+        
+        <div class="info-card">
+          <label for="chronologicalAge"><i class="fas fa-clock"></i> Chronological Age</label>
+          <input type="text" id="chronologicalAge" placeholder="e.g., 4 years 7 months">
+        </div>
+        
+        <div class="info-card">
+          <label for="gender"><i class="fas fa-venus-mars"></i> Gender</label>
+          <select id="gender">
+            <option value="">Select gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        
+        <div class="info-card">
+          <label for="examinerName"><i class="fas fa-user-md"></i> Examiner</label>
+          <input type="text" id="examinerName" placeholder="Examiner name">
+        </div>
+        
+        <div class="info-card">
+          <label for="dateProcessed"><i class="fas fa-calendar-check"></i> Date Processed</label>
+          <input type="date" id="dateProcessed">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+      <h4><i class="fas fa-exclamation-triangle"></i> Important Disclaimer</h4>
+      <p>Users of this WPS TEST REPORT should be familiar with the information presented in the ADOS-2 Manual (WPS Product No. W-605M). As with any assessment tool, no final diagnostic or treatment decisions should be made solely on the basis of the ADOS-2 without confirming information from independent sources.</p>
+    </div>
+    
+    <!-- Module Selection -->
+    <div class="module-selection">
+      <h3><i class="fas fa-clipboard-list"></i> Select ADOS-2 Module</h3>
+      <div class="module-cards">
+        <div class="module-card m1" onclick="selectModule(1)">
+          <div class="module-icon">
+            <i class="fas fa-baby"></i>
+          </div>
+          <div class="module-title">Module 1</div>
+          <p>Few to No Words</p>
+          <p>Ages: 31 months+</p>
+        </div>
+        
+        <div class="module-card m2" onclick="selectModule(2)">
+          <div class="module-icon">
+            <i class="fas fa-child"></i>
+          </div>
+          <div class="module-title">Module 2</div>
+          <p>Phrase Speech</p>
+          <p>Ages: All ages</p>
+        </div>
+        
+        <div class="module-card m3" onclick="selectModule(3)">
+          <div class="module-icon">
+            <i class="fas fa-user-graduate"></i>
+          </div>
+          <div class="module-title">Module 3</div>
+          <p>Younger/Fluent Speech</p>
+          <p>Ages: All ages</p>
+        </div>
+        
+        <div class="module-card m4" onclick="selectModule(4)">
+          <div class="module-icon">
+            <i class="fas fa-user"></i>
+          </div>
+          <div class="module-title">Module 4</div>
+          <p>Adolescent/Adult</p>
+          <p>Ages: 12 years+</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Score Display -->
+    <div class="score-display" id="scoreDisplay" style="display: none;">
+      <div class="score-card sa">
+        <div class="score-label">Social Affect (SA)</div>
+        <div class="score-value" id="saScore">0</div>
+        <div class="score-status" id="saStatus" style="background: #E8F5E9; color: #388E3C;">
+          <i class="fas fa-circle" style="font-size: 0.6rem;"></i>
+          <span>Calculating...</span>
+        </div>
+      </div>
+      
+      <div class="score-card rrb">
+        <div class="score-label">Restricted & Repetitive Behaviors (RRB)</div>
+        <div class="score-value" id="rrbScore">0</div>
+        <div class="score-status" id="rrbStatus" style="background: #E8F5E9; color: #388E3C;">
+          <i class="fas fa-circle" style="font-size: 0.6rem;"></i>
+          <span>Calculating...</span>
+        </div>
+      </div>
+      
+      <div class="score-card total">
+        <div class="score-label">Overall Total (SA + RRB)</div>
+        <div class="score-value" id="totalScore">0</div>
+        <div class="score-status" id="totalStatus" style="background: #E8F5E9; color: #388E3C;">
+          <i class="fas fa-circle" style="font-size: 0.6rem;"></i>
+          <span>Calculating...</span>
+        </div>
+      </div>
+      
+      <div class="score-card comparison">
+        <div class="score-label">Comparison Score</div>
+        <div class="score-value" id="comparisonScore">-</div>
+        <div class="score-status" id="comparisonStatus" style="background: #E8F5E9; color: #388E3C;">
+          <i class="fas fa-circle" style="font-size: 0.6rem;"></i>
+          <span>Not calculated</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Items Sections (Module 1 by default) -->
+    <div class="domain-sections" id="itemsSections">
+      <!-- Social Affect Domain -->
+      <div class="domain-section">
+        <div class="domain-header sa">
+          <i class="fas fa-users"></i>
+          <div class="domain-title">Social Affect (SA) - Communication and Reciprocal Social Interaction</div>
+        </div>
+        
+        <div style="padding: 20px;">
+          <h4 style="margin-bottom: 20px; color: var(--domain-sa);">A. Communication</h4>
+          <table class="items-table" id="saCommunicationTable">
+            <!-- Items will be inserted here dynamically -->
+          </table>
+          
+          <h4 style="margin: 30px 0 20px 0; color: var(--domain-sa);">B. Reciprocal Social Interaction</h4>
+          <table class="items-table" id="saSocialTable">
+            <!-- Items will be inserted here dynamically -->
+          </table>
+        </div>
+      </div>
+      
+      <!-- Restricted & Repetitive Behaviors Domain -->
+      <div class="domain-section">
+        <div class="domain-header rrb">
+          <i class="fas fa-sync-alt"></i>
+          <div class="domain-title">Restricted and Repetitive Behaviors (RRB)</div>
+        </div>
+        
+        <div style="padding: 20px;">
+          <table class="items-table" id="rrbTable">
+            <!-- Items will be inserted here dynamically -->
+          </table>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Results Section -->
+    <div class="results-section" id="resultsSection">
+      <div class="results-header">
+        <h2><i class="fas fa-file-medical-alt"></i> ADOS-2 Diagnostic Algorithm Results</h2>
+        <p id="moduleDescription">Module 1: For Children with Few to No Words</p>
+      </div>
+      
+      <div class="diagnostic-summary">
+        <div class="summary-card sa">
+          <div class="summary-title">Social Affect (SA)</div>
+          <div class="summary-score" id="summarySaScore">0</div>
+          <div class="summary-status" id="summarySaStatus" style="background: #E8F5E9; color: #388E3C;">
+            <i class="fas fa-check-circle"></i>
+            <span>Below cutoff</span>
+          </div>
+        </div>
+        
+        <div class="summary-card rrb">
+          <div class="summary-title">Restricted & Repetitive Behaviors (RRB)</div>
+          <div class="summary-score" id="summaryRrbScore">0</div>
+          <div class="summary-status" id="summaryRrbStatus" style="background: #E8F5E9; color: #388E3C;">
+            <i class="fas fa-check-circle"></i>
+            <span>Below cutoff</span>
+          </div>
+        </div>
+        
+        <div class="summary-card total">
+          <div class="summary-title">Overall Total (SA + RRB)</div>
+          <div class="summary-score" id="summaryTotalScore">0</div>
+          <div class="summary-status" id="summaryTotalStatus" style="background: #E8F5E9; color: #388E3C;">
+            <i class="fas fa-check-circle"></i>
+            <span>Below cutoff</span>
+          </div>
+        </div>
+        
+        <div class="summary-card comparison">
+          <div class="summary-title">Comparison Score</div>
+          <div class="summary-score" id="summaryComparisonScore">-</div>
+          <div class="summary-status" id="summaryComparisonStatus" style="background: #E8F5E9; color: #388E3C;">
+            <i class="fas fa-info-circle"></i>
+            <span>Not calculated</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="classification-box">
+        <h3 style="color: var(--primary-blue); margin-bottom: 20px;">
+          <i class="fas fa-stethoscope"></i> ADOS-2 Classification/Diagnosis
+        </h3>
+        
+        <div class="classification-result" id="classificationResult">
+          Classification pending...
+        </div>
+        
+        <div style="margin-top: 20px;">
+          <label for="overallDiagnosis" style="font-weight: 600; color: var(--text-dark);">Overall Diagnosis:</label>
+          <input type="text" id="overallDiagnosis" placeholder="Enter final diagnosis" style="width: 100%; padding: 12px; margin-top: 10px; border: 2px solid var(--border-color); border-radius: 8px; font-size: 1rem;">
+        </div>
+        
+        <div style="margin-top: 20px; background: #E8F5E9; padding: 15px; border-radius: 8px; border-left: 4px solid #4CAF50;">
+          <h4><i class="fas fa-chart-line"></i> Level of Autism Spectrum-Related Symptoms</h4>
+          <p id="symptomLevel">Associated with this Comparison Score: Not calculated</p>
+        </div>
+      </div>
+      
+      <h3 style="margin: 40px 0 20px 0; color: var(--primary-blue);">
+        <i class="fas fa-list-alt"></i> Summary of Responses
+      </h3>
+      
+      <table class="summary-table" id="summaryResponsesTable">
+        <!-- Summary will be inserted here dynamically -->
+      </table>
+      
+      <div style="margin-top: 30px; padding: 20px; background: #FFF3E0; border-radius: 8px; border-left: 4px solid #FF9800;">
+        <h4><i class="fas fa-key"></i> Key</h4>
+        <p><span class="required-item">*</span> = required items for algorithm</p>
+        <p><strong>-</strong> = not answered</p>
+        <p id="missingResponses">Missing responses: 0</p>
+        <p id="missingRequired">Missing required responses: 0</p>
+      </div>
+    </div>
+    
+    <!-- Controls -->
+    <div class="controls">
+      <button class="control-btn reset-btn" onclick="resetAssessment()">
+        <i class="fas fa-redo"></i> Reset Assessment
+      </button>
+      
+      <button class="control-btn save-btn" onclick="saveAssessment()">
+        <i class="fas fa-save"></i> Save Progress
+      </button>
+      
+      <button class="control-btn calculate-btn" onclick="calculateScores()">
+        <i class="fas fa-calculator"></i> Calculate Scores
+      </button>
+      
+      <button class="control-btn print-btn" onclick="printReport()">
+        <i class="fas fa-print"></i> Print Report
+      </button>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+      <p><strong>Autism Diagnostic Observation Schedule - Second Edition (ADOS-2)</strong></p>
+      <p>Developed by Catherine Lord, Michael Rutter, Pamela DiLavore, Susan Risi, and Katherine Gotham</p>
+      
+      <div class="copyright">
+        <p>Copyright ©2012 by Western Psychological Services</p>
+        <p>12031 Wilshire Blvd., Los Angeles, California 90025-1251</p>
+        <p>wpspublish.com</p>
+        <p>Version 1.210</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ADOS-2 Items Data Structure for Module 1 (Few to No Words)
+    const adosItems = {
+      module1: {
+        description: "Module 1: For Children with Few to No Words (31 months+)",
+        algorithm: {
+          saCutoff: 13,
+          rrbCutoff: 4,
+          totalCutoff: 17
+        },
+        socialAffect: {
+          communication: [
+            {
+              id: "A2",
+              description: "Frequency of Spontaneous Vocalization Directed to Others",
+              coding: "0-3",
+              required: true,
+              options: [
+                { code: 0, label: "0", desc: "Varied, spontaneous vocalizations" },
+                { code: 1, label: "1", desc: "Some spontaneous vocalizations" },
+                { code: 2, label: "2", desc: "Few spontaneous vocalizations" },
+                { code: 3, label: "3", desc: "No spontaneous vocalizations" }
+              ]
+            },
+            {
+              id: "A8",
+              description: "Gestures",
+              coding: "0-3",
+              required: true,
+              options: [
+                { code: 0, label: "0", desc: "Regular, varied gestures" },
+                { code: 1, label: "1", desc: "Some conventional gestures" },
+                { code: 2, label: "2", desc: "Few conventional gestures" },
+                { code: 3, label: "3", desc: "No conventional gestures" }
+              ]
+            }
+          ],
+          socialInteraction: [
+            {
+              id: "B1",
+              description: "Unusual Eye Contact",
+              coding: "0-2",
+              required: true,
+              options: [
+                { code: 0, label: "0", desc: "Appropriate eye contact" },
+                { code: 1, label: "1", desc: "Occasional unusual eye contact" },
+                { code: 2, label: "2", desc: "Markedly unusual eye contact" }
+              ]
+            },
+            {
+              id: "B3",
+              description: "Facial Expressions Directed to Others",
+              coding: "0-2",
+              required: true,
+              options: [
+                { code: 0, label: "0", desc: "Appropriate facial expressions" },
+                { code: 1, label: "1", desc: "Somewhat limited expressions" },
+                { code: 2, label: "2", desc: "Markedly limited expressions" }
+              ]
+            },
+            {
+              id: "B4",
+              description: "Integration of Gaze and Other Behaviors During Social Overtures",
+              coding: "0-3",
+              required: true,
+              options: [
+                { code: 0, label: "0", desc: "Good integration" },
+                { code: 1, label: "1", desc: "Somewhat limited integration" },
+                { code: 2, label: "2", desc: "Poor integration" },
+                { code: 3, label: "3", desc: "No integration" }
+              ]
+            },
+            {
+              id: "B5",
+              description: "Shared Enjoyment in Interaction",
+              coding: "0-2",
+              required: true,
+              options: [
+                { code: 0, label: "0", desc: "Clear shared enjoyment" },
+                { code: 1, label: "1", desc: "Some shared enjoyment" },
+                { code: 2, label: "2", desc: "No shared enjoyment" }
+              ]
+            },
+            {
+              id: "B9",
+              description: "Showing",
+              coding: "0-2",
+              required: true,
+              options: [
+                { code: 0, label: "0", desc: "Spontaneous showing" },
+                { code: 1, label: "1", desc: "Some showing" },
+                { code: 2, label: "2", desc: "No showing" }
+              ]
+            },
+            {
+              id: "B10",
+              description: "Spontaneous Initiation of Joint Attention",
+              coding: "0-2",
+              required: true,
+              options: [
+                { code: 0, label: "0", desc: "Frequent initiation" },
+                { code: 1, label: "1", desc: "Some initiation" },
+                { code: 2, label: "2", desc: "No initiation" }
+              ]
+            },
+            {
+              id: "B11",
+              description: "Response to Joint Attention",
+              coding: "0-2",
+              required: true,
+              options: [
+                { code: 0, label: "0", desc: "Consistent response" },
+                { code: 1, label: "1", desc: "Inconsistent response" },
+                { code: 2, label: "2", desc: "No response" }
+              ]
+            },
+            {
+              id: "B12",
+              description: "Quality of Social Overtures",
+              coding: "0-3",
+              required: true,
+              options: [
+                { code: 0, label: "0", desc: "Appropriate overtures" },
+                { code: 1, label: "1", desc: "Somewhat odd overtures" },
+                { code: 2, label: "2", desc: "Odd overtures" },
+                { code: 3, label: "3", desc: "Very odd or no overtures" }
+              ]
+            }
+          ]
+        },
+        restrictedRepetitive: [
+          {
+            id: "A3",
+            description: "Intonation of Vocalizations or Verbalizations",
+            coding: "0-2",
+            required: true,
+            options: [
+              { code: 0, label: "0", desc: "Normal intonation" },
+              { code: 1, label: "1", desc: "Somewhat unusual intonation" },
+              { code: 2, label: "2", desc: "Markedly unusual intonation" }
+            ]
+          },
+          {
+            id: "D1",
+            description: "Unusual Sensory Interest in Play Material/Person",
+            coding: "0-3",
+            required: true,
+            options: [
+              { code: 0, label: "0", desc: "No unusual interest" },
+              { code: 1, label: "1", desc: "Mild unusual interest" },
+              { code: 2, label: "2", desc: "Moderate unusual interest" },
+              { code: 3, label: "3", desc: "Marked unusual interest" }
+            ]
+          },
+          {
+            id: "D2",
+            description: "Hand and Finger and Other Complex Mannerisms",
+            coding: "0-3",
+            required: true,
+            options: [
+              { code: 0, label: "0", desc: "No mannerisms" },
+              { code: 1, label: "1", desc: "Mild mannerisms" },
+              { code: 2, label: "2", desc: "Moderate mannerisms" },
+              { code: 3, label: "3", desc: "Marked mannerisms" }
+            ]
+          },
+          {
+            id: "D4",
+            description: "Unusually Repetitive Interests or Stereotyped Behaviors",
+            coding: "0-2",
+            required: true,
+            options: [
+              { code: 0, label: "0", desc: "Not repetitive" },
+              { code: 1, label: "1", desc: "Somewhat repetitive" },
+              { code: 2, label: "2", desc: "Highly repetitive" }
+            ]
+          }
+        ],
+        otherItems: [
+          { id: "A1", description: "Overall Level of Non-echoed Spoken Language", coding: "0-8" },
+          { id: "A4", description: "Immediate Echolalia", coding: "0-8" },
+          { id: "A5", description: "Stereotyped/Idiosyncratic Use of Words or Phrases", coding: "0-8" },
+          { id: "A6", description: "Conversation", coding: "0-8" },
+          { id: "A7", description: "Reporting of Events", coding: "0-8" },
+          { id: "B2", description: "Responsive Social Smile", coding: "0-2" },
+          { id: "B6", description: "Range of Facial Expressions Used to Communicate", coding: "0-2" },
+          { id: "B7", description: "Quality of Social Response", coding: "0-3" },
+          { id: "B8", description: "Amount of Social Overtures, Maintenance of Attention", coding: "0-3" },
+          { id: "B13a", description: "Responses to Approaches of Others", coding: "0-3" },
+          { id: "B13b", description: "Quality of Social Response", coding: "0-3" },
+          { id: "B14", description: "Amount of Reciprocal Social Communication", coding: "0-3" },
+          { id: "B15", description: "Overall Quality of Rapport", coding: "0-3" },
+          { id: "B16", description: "Anxiety", coding: "0-3" },
+          { id: "C1", description: "Functional Play with Objects", coding: "0-3" },
+          { id: "C2", description: "Imagination/Creativity", coding: "0-3" },
+          { id: "D3", description: "Self-injurious Behavior", coding: "0-3" },
+          { id: "E1", description: "Overactivity", coding: "0-3" },
+          { id: "E2", description: "Tantrums, Aggression, or Negative or Disruptive Behavior", coding: "0-3" },
+          { id: "E3", description: "Anxiety", coding: "0-3" }
+        ]
+      }
+    };
+
+    // User responses storage
+    let userResponses = {};
+    let selectedModule = 1;
+    let allItems = [];
+
+    // Initialize the assessment
+    document.addEventListener('DOMContentLoaded', function() {
+      // Set dates to today
+      const today = new Date();
+      const formattedDate = today.toISOString().split('T')[0];
+      document.getElementById('dateOfEvaluation').value = formattedDate;
+      document.getElementById('dateProcessed').value = formattedDate;
+      
+      // Select Module 1 by default
+      selectModule(1);
+      
+      // Load saved data
+      loadFormData();
+    });
+
+    // Select module
+    function selectModule(moduleNumber) {
+      selectedModule = moduleNumber;
+      
+      // Update module selection UI
+      document.querySelectorAll('.module-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      document.querySelector(`.module-card.m${moduleNumber}`).classList.add('selected');
+      
+      // Update module description
+      document.getElementById('moduleDescription').textContent = 
+        adosItems.module1.description;
+      
+      // Show score display
+      document.getElementById('scoreDisplay').style.display = 'grid';
+      
+      // Load items for selected module
+      loadModuleItems(moduleNumber);
+    }
+
+    // Load module items
+    function loadModuleItems(moduleNumber) {
+      const module = adosItems.module1;
+      allItems = [];
+      
+      // Load Social Affect - Communication items
+      renderItemsTable('saCommunicationTable', module.socialAffect.communication);
+      allItems.push(...module.socialAffect.communication);
+      
+      // Load Social Affect - Social Interaction items
+      renderItemsTable('saSocialTable', module.socialAffect.socialInteraction);
+      allItems.push(...module.socialAffect.socialInteraction);
+      
+      // Load Restricted & Repetitive Behaviors items
+      renderItemsTable('rrbTable', module.restrictedRepetitive);
+      allItems.push(...module.restrictedRepetitive);
+      
+      // Add other items to summary list
+      allItems.push(...module.otherItems);
+      
+      // Update scores
+      updateScoreDisplay();
+    }
+
+    // Render items table
+    function renderItemsTable(tableId, items) {
+      const table = document.getElementById(tableId);
+      let html = `
+        <thead>
+          <tr>
+            <th style="width: 80px;">Item</th>
+            <th>Description</th>
+            <th style="width: 100px;">Coding</th>
+            <th style="width: 350px;">Score</th>
+          </tr>
+        </thead>
+        <tbody>
+      `;
+      
+      items.forEach(item => {
+        const response = userResponses[item.id] !== undefined ? userResponses[item.id] : null;
+        
+        html += `
+          <tr>
+            <td class="item-number">
+              ${item.required ? '<span class="required-item">*</span>' : ''} ${item.id}
+            </td>
+            <td class="item-description">${item.description}</td>
+            <td>${item.coding}</td>
+            <td>
+              <div class="coding-options">
+        `;
+        
+        // Add coding buttons
+        if (item.options) {
+          item.options.forEach(option => {
+            html += `
+              <button class="coding-btn ${response === option.code ? 'selected' : ''}"
+                      onclick="selectResponse('${item.id}', ${option.code})"
+                      data-code="${option.code}"
+                      title="${option.desc}">
+                ${option.label}
+              </button>
+            `;
+          });
+        } else {
+          // For non-algorithm items, create generic coding buttons
+          const maxCode = parseInt(item.coding.split('-')[1]) || 3;
+          for (let code = 0; code <= maxCode; code++) {
+            html += `
+              <button class="coding-btn ${response === code ? 'selected' : ''}"
+                      onclick="selectResponse('${item.id}', ${code})"
+                      data-code="${code}">
+                ${code}
+              </button>
+            `;
+          }
+        }
+        
+        // Add N/A button
+        html += `
+                <button class="coding-btn na ${response === 'N/A' ? 'selected' : ''}"
+                        onclick="selectResponse('${item.id}', 'N/A')"
+                        data-code="N/A">
+                  N/A
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      });
+      
+      html += '</tbody>';
+      table.innerHTML = html;
+    }
+
+    // Select response
+    function selectResponse(itemId, code) {
+      userResponses[itemId] = code;
+      
+      // Update UI
+      const buttons = document.querySelectorAll(`[onclick="selectResponse('${itemId}', ${typeof code === 'string' ? "'" + code + "'" : code})"]`);
+      buttons.forEach(btn => {
+        const btnCode = btn.getAttribute('data-code');
+        btn.classList.toggle('selected', btnCode === code.toString());
+      });
+      
+      updateScoreDisplay();
+      saveFormData();
+    }
+
+    // Calculate scores
+    function calculateScores() {
+      const scores = calculateAllScores();
+      
+      // Update summary display
+      document.getElementById('summarySaScore').textContent = scores.saTotal;
+      document.getElementById('summaryRrbScore').textContent = scores.rrbTotal;
+      document.getElementById('summaryTotalScore').textContent = scores.overallTotal;
+      
+      // Calculate comparison score
+      const comparisonScore = calculateComparisonScore(scores.overallTotal, selectedModule);
+      document.getElementById('summaryComparisonScore').textContent = comparisonScore;
+      
+      // Update classification
+      updateClassification(scores, comparisonScore);
+      
+      // Update summary status indicators
+      updateSummaryStatus('summarySaStatus', scores.saTotal, adosItems.module1.algorithm.saCutoff);
+      updateSummaryStatus('summaryRrbStatus', scores.rrbTotal, adosItems.module1.algorithm.rrbCutoff);
+      updateSummaryStatus('summaryTotalStatus', scores.overallTotal, adosItems.module1.algorithm.totalCutoff);
+      
+      // Update comparison status
+      updateComparisonStatus(comparisonScore);
+      
+      // Generate summary of responses
+      generateSummaryTable();
+      
+      // Show results section
+      document.getElementById('itemsSections').style.display = 'none';
+      document.getElementById('resultsSection').classList.add('active');
+      document.getElementById('scoreDisplay').style.display = 'none';
+      
+      // Scroll to results
+      document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Calculate all scores
+    function calculateAllScores() {
+      const module = adosItems.module1;
+      let saTotal = 0;
+      let rrbTotal = 0;
+      
+      // Calculate Social Affect score
+      module.socialAffect.communication.forEach(item => {
+        const response = userResponses[item.id];
+        if (response !== undefined && response !== null && response !== 'N/A' && item.required) {
+          saTotal += parseInt(response);
+        }
+      });
+      
+      module.socialAffect.socialInteraction.forEach(item => {
+        const response = userResponses[item.id];
+        if (response !== undefined && response !== null && response !== 'N/A' && item.required) {
+          saTotal += parseInt(response);
+        }
+      });
+      
+      // Calculate Restricted & Repetitive Behaviors score
+      module.restrictedRepetitive.forEach(item => {
+        const response = userResponses[item.id];
+        if (response !== undefined && response !== null && response !== 'N/A' && item.required) {
+          rrbTotal += parseInt(response);
+        }
+      });
+      
+      const overallTotal = saTotal + rrbTotal;
+      
+      return {
+        saTotal,
+        rrbTotal,
+        overallTotal
+      };
+    }
+
+    // Calculate comparison score (simplified version)
+    function calculateComparisonScore(totalScore, module) {
+      // Simplified comparison score calculation
+      // In real ADOS-2, this is based on age and module-specific tables
+      if (totalScore <= 7) return 1;
+      if (totalScore <= 10) return 2;
+      if (totalScore <= 14) return 3;
+      if (totalScore <= 17) return 4;
+      if (totalScore <= 20) return 5;
+      if (totalScore <= 22) return 6;
+      if (totalScore <= 24) return 7;
+      if (totalScore <= 26) return 8;
+      if (totalScore <= 28) return 9;
+      return 10;
+    }
+
+    // Update classification
+    function updateClassification(scores, comparisonScore) {
+      const saCutoff = adosItems.module1.algorithm.saCutoff;
+      const rrbCutoff = adosItems.module1.algorithm.rrbCutoff;
+      const totalCutoff = adosItems.module1.algorithm.totalCutoff;
+      
+      let classification = '';
+      let classificationClass = '';
+      let symptomLevel = '';
+      
+      if (scores.saTotal >= saCutoff && scores.rrbTotal >= rrbCutoff) {
+        classification = 'autism';
+        classificationClass = 'autism';
+        symptomLevel = 'High';
+      } else if (scores.overallTotal >= totalCutoff) {
+        classification = 'autism spectrum';
+        classificationClass = 'autism-spectrum';
+        symptomLevel = 'Moderate';
+      } else {
+        classification = 'non-spectrum';
+        classificationClass = 'non-spectrum';
+        symptomLevel = 'Low';
+      }
+      
+      document.getElementById('classificationResult').textContent = 
+        `ADOS-2 Classification: ${classification}`;
+      document.getElementById('classificationResult').className = 
+        `classification-result ${classificationClass}`;
+      
+      document.getElementById('symptomLevel').textContent = 
+        `Level of autism spectrum-related symptoms associated with this Comparison Score: ${symptomLevel}`;
+    }
+
+    // Update score display
+    function updateScoreDisplay() {
+      const scores = calculateAllScores();
+      
+      document.getElementById('saScore').textContent = scores.saTotal;
+      document.getElementById('rrbScore').textContent = scores.rrbTotal;
+      document.getElementById('totalScore').textContent = scores.overallTotal;
+      
+      const comparisonScore = calculateComparisonScore(scores.overallTotal, selectedModule);
+      document.getElementById('comparisonScore').textContent = comparisonScore;
+      
+      // Update status indicators
+      updateStatusIndicator('saStatus', scores.saTotal, adosItems.module1.algorithm.saCutoff);
+      updateStatusIndicator('rrbStatus', scores.rrbTotal, adosItems.module1.algorithm.rrbCutoff);
+      updateStatusIndicator('totalStatus', scores.overallTotal, adosItems.module1.algorithm.totalCutoff);
+      updateComparisonDisplay(comparisonScore);
+    }
+
+    // Update status indicator
+    function updateStatusIndicator(elementId, score, cutoff) {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      
+      if (score >= cutoff) {
+        element.innerHTML = '<i class="fas fa-circle" style="font-size: 0.6rem;"></i><span>Meets cutoff</span>';
+        element.style.background = '#FFEBEE';
+        element.style.color = '#C62828';
+      } else {
+        element.innerHTML = '<i class="fas fa-circle" style="font-size: 0.6rem;"></i><span>Below cutoff</span>';
+        element.style.background = '#E8F5E9';
+        element.style.color = '#388E3C';
+      }
+    }
+
+    // Update summary status
+    function updateSummaryStatus(elementId, score, cutoff) {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      
+      if (score >= cutoff) {
+        element.innerHTML = '<i class="fas fa-exclamation-circle"></i><span>Meets cutoff</span>';
+        element.style.background = '#FFEBEE';
+        element.style.color = '#C62828';
+      } else {
+        element.innerHTML = '<i class="fas fa-check-circle"></i><span>Below cutoff</span>';
+        element.style.background = '#E8F5E9';
+        element.style.color = '#388E3C';
+      }
+    }
+
+    // Update comparison display
+    function updateComparisonDisplay(comparisonScore) {
+      const element = document.getElementById('comparisonStatus');
+      if (!element) return;
+      
+      if (comparisonScore >= 7) {
+        element.innerHTML = '<i class="fas fa-circle" style="font-size: 0.6rem;"></i><span>High level</span>';
+        element.style.background = '#FFEBEE';
+        element.style.color = '#C62828';
+      } else if (comparisonScore >= 4) {
+        element.innerHTML = '<i class="fas fa-circle" style="font-size: 0.6rem;"></i><span>Moderate level</span>';
+        element.style.background = '#FFF3E0';
+        element.style.color = '#F57C00';
+      } else {
+        element.innerHTML = '<i class="fas fa-circle" style="font-size: 0.6rem;"></i><span>Low level</span>';
+        element.style.background = '#E8F5E9';
+        element.style.color = '#388E3C';
+      }
+    }
+
+    // Update comparison status
+    function updateComparisonStatus(comparisonScore) {
+      const element = document.getElementById('summaryComparisonStatus');
+      if (!element) return;
+      
+      if (comparisonScore >= 7) {
+        element.innerHTML = '<i class="fas fa-exclamation-circle"></i><span>High level</span>';
+        element.style.background = '#FFEBEE';
+        element.style.color = '#C62828';
+      } else if (comparisonScore >= 4) {
+        element.innerHTML = '<i class="fas fa-info-circle"></i><span>Moderate level</span>';
+        element.style.background = '#FFF3E0';
+        element.style.color = '#F57C00';
+      } else {
+        element.innerHTML = '<i class="fas fa-check-circle"></i><span>Low level</span>';
+        element.style.background = '#E8F5E9';
+        element.style.color = '#388E3C';
+      }
+    }
+
+    // Generate summary table
+    function generateSummaryTable() {
+      const table = document.getElementById('summaryResponsesTable');
+      let html = `
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Response</th>
+            <th>Item</th>
+            <th>Response</th>
+          </tr>
+        </thead>
+        <tbody>
+      `;
+      
+      // Group items by category
+      const categories = {
+        'A. Language and Communication': [],
+        'B. Reciprocal Social Interaction': [],
+        'C. Play': [],
+        'D. Stereotyped Behaviors and Restricted Interests': [],
+        'E. Other Abnormal Behaviors': []
+      };
+      
+      allItems.forEach(item => {
+        const category = getItemCategory(item.id);
+        if (category && categories[category]) {
+          categories[category].push(item);
+        }
+      });
+      
+      // Generate rows
+      let rowHtml = '';
+      Object.keys(categories).forEach(category => {
+        const items = categories[category];
+        if (items.length > 0) {
+          rowHtml += `<tr><td colspan="4" style="background: #F5F7FA; font-weight: bold;">${category}</td></tr>`;
+          
+          for (let i = 0; i < items.length; i += 2) {
+            const item1 = items[i];
+            const item2 = items[i + 1];
+            
+            const response1 = userResponses[item1.id] !== undefined ? userResponses[item1.id] : '-';
+            const required1 = item1.required ? '<span class="required-item">*</span>' : '';
+            
+            rowHtml += '<tr>';
+            rowHtml += `<td>${required1} ${item1.id}.</td>`;
+            rowHtml += `<td>${response1}</td>`;
+            
+            if (item2) {
+              const response2 = userResponses[item2.id] !== undefined ? userResponses[item2.id] : '-';
+              const required2 = item2.required ? '<span class="required-item">*</span>' : '';
+              rowHtml += `<td>${required2} ${item2.id}.</td>`;
+              rowHtml += `<td>${response2}</td>`;
+            } else {
+              rowHtml += '<td></td><td></td>';
+            }
+            rowHtml += '</tr>';
+          }
+        }
+      });
+      
+      html += rowHtml + '</tbody>';
+      table.innerHTML = html;
+      
+      // Calculate missing responses
+      calculateMissingResponses();
+    }
+
+    // Get item category
+    function getItemCategory(itemId) {
+      if (itemId.startsWith('A') && !['A2', 'A3', 'A8'].includes(itemId)) {
+        return 'A. Language and Communication';
+      } else if (itemId.startsWith('B')) {
+        return 'B. Reciprocal Social Interaction';
+      } else if (itemId.startsWith('C')) {
+        return 'C. Play';
+      } else if (itemId.startsWith('D')) {
+        return 'D. Stereotyped Behaviors and Restricted Interests';
+      } else if (itemId.startsWith('E')) {
+        return 'E. Other Abnormal Behaviors';
+      }
+      return null;
+    }
+
+    // Calculate missing responses
+    function calculateMissingResponses() {
+      let missingResponses = 0;
+      let missingRequired = 0;
+      
+      allItems.forEach(item => {
+        if (userResponses[item.id] === undefined || userResponses[item.id] === null) {
+          missingResponses++;
+          if (item.required) {
+            missingRequired++;
+          }
+        }
+      });
+      
+      document.getElementById('missingResponses').textContent = 
+        `Missing responses: ${missingResponses}`;
+      document.getElementById('missingRequired').textContent = 
+        `Missing required responses: ${missingRequired}`;
+    }
+
+    // Save assessment
+    function saveAssessment() {
+      const subjectData = {
+        subjectName: document.getElementById('subjectName').value,
+        subjectID: document.getElementById('subjectID').value,
+        dateOfBirth: document.getElementById('dateOfBirth').value,
+        dateOfEvaluation: document.getElementById('dateOfEvaluation').value,
+        chronologicalAge: document.getElementById('chronologicalAge').value,
+        gender: document.getElementById('gender').value,
+        examinerName: document.getElementById('examinerName').value,
+        dateProcessed: document.getElementById('dateProcessed').value,
+        selectedModule: selectedModule,
+        responses: userResponses,
+        scores: calculateAllScores(),
+        lastSaved: new Date().toISOString()
+      };
+      
+      localStorage.setItem('adosAssessment', JSON.stringify(subjectData));
+      
+      // Show success message
+      alert('Assessment progress saved successfully!');
+    }
+
+    // Save form data
+    function saveFormData() {
+      const formData = {
+        subjectName: document.getElementById('subjectName').value,
+        subjectID: document.getElementById('subjectID').value,
+        dateOfBirth: document.getElementById('dateOfBirth').value,
+        dateOfEvaluation: document.getElementById('dateOfEvaluation').value,
+        chronologicalAge: document.getElementById('chronologicalAge').value,
+        gender: document.getElementById('gender').value,
+        examinerName: document.getElementById('examinerName').value,
+        dateProcessed: document.getElementById('dateProcessed').value,
+        selectedModule: selectedModule,
+        responses: userResponses
+      };
+      
+      localStorage.setItem('adosFormData', JSON.stringify(formData));
+    }
+
+    // Load form data
+    function loadFormData() {
+      const savedData = localStorage.getItem('adosFormData');
+      if (savedData) {
+        try {
+          const formData = JSON.parse(savedData);
+          
+          document.getElementById('subjectName').value = formData.subjectName || '';
+          document.getElementById('subjectID').value = formData.subjectID || '';
+          document.getElementById('dateOfBirth').value = formData.dateOfBirth || '';
+          document.getElementById('dateOfEvaluation').value = formData.dateOfEvaluation || '';
+          document.getElementById('chronologicalAge').value = formData.chronologicalAge || '';
+          document.getElementById('gender').value = formData.gender || '';
+          document.getElementById('examinerName').value = formData.examinerName || '';
+          document.getElementById('dateProcessed').value = formData.dateProcessed || '';
+          
+          if (formData.selectedModule) {
+            selectModule(formData.selectedModule);
+          }
+          
+          if (formData.responses) {
+            userResponses = formData.responses;
+            loadModuleItems(selectedModule);
+            updateScoreDisplay();
+          }
+        } catch (e) {
+          console.log('Could not load saved data:', e);
+        }
+      }
+    }
+
+    // Reset assessment
+    function resetAssessment() {
+      if (confirm("Are you sure you want to reset all responses? This action cannot be undone.")) {
+        userResponses = {};
+        
+        document.getElementById('subjectName').value = '';
+        document.getElementById('subjectID').value = '';
+        document.getElementById('dateOfBirth').value = '';
+        document.getElementById('dateOfEvaluation').value = '';
+        document.getElementById('chronologicalAge').value = '';
+        document.getElementById('gender').value = '';
+        document.getElementById('examinerName').value = '';
+        document.getElementById('dateProcessed').value = '';
+        document.getElementById('overallDiagnosis').value = '';
+        
+        selectModule(1);
+        
+        // Show items sections
+        document.getElementById('itemsSections').style.display = 'block';
+        document.getElementById('resultsSection').classList.remove('active');
+        document.getElementById('scoreDisplay').style.display = 'grid';
+        
+        // Clear saved data
+        localStorage.removeItem('adosFormData');
+      }
+    }
+
+    // Print report
+    function printReport() {
+      const scores = calculateAllScores();
+      const comparisonScore = calculateComparisonScore(scores.overallTotal, selectedModule);
+      const subjectData = {
+        name: document.getElementById('subjectName').value || 'Not Entered',
+        id: document.getElementById('subjectID').value || 'Not Entered',
+        dob: document.getElementById('dateOfBirth').value || 'Not Entered',
+        evaluationDate: document.getElementById('dateOfEvaluation').value,
+        age: document.getElementById('chronologicalAge').value || 'Not Entered',
+        gender: document.getElementById('gender').value || 'Not Entered',
+        examiner: document.getElementById('examinerName').value || 'Not Entered',
+        processedDate: document.getElementById('dateProcessed').value
+      };
+      
+      // Create print content
+      const printContent = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>ADOS-2 Test Report</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 30px; }
+            h1 { color: #1565C0; border-bottom: 2px solid #1565C0; padding-bottom: 10px; }
+            .info-box { margin: 20px 0; padding: 15px; background: #E3F2FD; border-radius: 8px; }
+            .score-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 20px 0; }
+            .score-box { padding: 20px; border: 2px solid; border-radius: 8px; text-align: center; }
+            .disclaimer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccc; font-size: 0.8rem; color: #666; }
+            .algorithm-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+            .algorithm-table th, .algorithm-table td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            .algorithm-table th { background-color: #f2f2f2; }
+            .required { color: red; font-weight: bold; }
+            .summary-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+            .summary-table td { padding: 5px; border-bottom: 1px solid #eee; }
+          </style>
+        </head>
+        <body>
+          <h1>ADOS-2 Test Report</h1>
+          
+          <div class="info-box">
+            <h3>Subject Information</h3>
+            <p><strong>Child Name:</strong> ${subjectData.name}</p>
+            <p><strong>Child ID:</strong> ${subjectData.id}</p>
+            <p><strong>Date of Birth:</strong> ${subjectData.dob}</p>
+            <p><strong>Date of Evaluation:</strong> ${subjectData.evaluationDate}</p>
+            <p><strong>Chronological Age:</strong> ${subjectData.age}</p>
+            <p><strong>Gender:</strong> ${subjectData.gender}</p>
+            <p><strong>Examiner:</strong> ${subjectData.examiner}</p>
+            <p><strong>Date Processed:</strong> ${subjectData.processedDate}</p>
+          </div>
+          
+          <h3>ADOS-2 Algorithm Results - Module 1</h3>
+          <table class="algorithm-table">
+            <thead>
+              <tr>
+                <th>Domain</th>
+                <th>Code</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colspan="3" style="font-weight: bold; background: #E3F2FD;">SOCIAL AFFECT (SA)</td>
+              </tr>
+              <tr>
+                <td>Frequency of Spontaneous Vocalization Directed to Others (A-2)</td>
+                <td>${userResponses['A2'] || '-'}</td>
+                <td>${userResponses['A2'] || '0'}</td>
+              </tr>
+              <tr>
+                <td>Gestures (A-8)</td>
+                <td>${userResponses['A8'] || '-'}</td>
+                <td>${userResponses['A8'] || '0'}</td>
+              </tr>
+              <tr>
+                <td colspan="3" style="font-weight: bold; background: #E3F2FD;">Reciprocal Social Interaction</td>
+              </tr>
+              ${adosItems.module1.socialAffect.socialInteraction.map(item => `
+                <tr>
+                  <td>${item.description} (${item.id})</td>
+                  <td>${userResponses[item.id] || '-'}</td>
+                  <td>${userResponses[item.id] || '0'}</td>
+                </tr>
+              `).join('')}
+              <tr>
+                <td style="font-weight: bold;">SA Total</td>
+                <td></td>
+                <td style="font-weight: bold;">${scores.saTotal}</td>
+              </tr>
+              <tr>
+                <td colspan="3" style="font-weight: bold; background: #FFF8E1;">RESTRICTED AND REPETITIVE BEHAVIOR (RRB)</td>
+              </tr>
+              ${adosItems.module1.restrictedRepetitive.map(item => `
+                <tr>
+                  <td>${item.description} (${item.id})</td>
+                  <td>${userResponses[item.id] || '-'}</td>
+                  <td>${userResponses[item.id] || '0'}</td>
+                </tr>
+              `).join('')}
+              <tr>
+                <td style="font-weight: bold;">RRB Total</td>
+                <td></td>
+                <td style="font-weight: bold;">${scores.rrbTotal}</td>
+              </tr>
+              <tr>
+                <td style="font-weight: bold;">Overall Total (SA + RRB)</td>
+                <td></td>
+                <td style="font-weight: bold;">${scores.overallTotal}</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <h3>Classification/Diagnosis</h3>
+          <div style="padding: 20px; border: 2px solid #1565C0; border-radius: 8px; margin: 20px 0;">
+            <p style="font-size: 1.5rem; font-weight: bold; text-align: center;">
+              ADOS-2 Classification: ${scores.saTotal >= 13 && scores.rrbTotal >= 4 ? 'autism' : scores.overallTotal >= 17 ? 'autism spectrum' : 'non-spectrum'}
+            </p>
+            <p><strong>Overall Diagnosis:</strong> ${document.getElementById('overallDiagnosis').value || '_________________________________________________'}</p>
+            <p><strong>ADOS-2 Comparison Score:</strong> ${comparisonScore}</p>
+            <p><strong>Level of autism spectrum-related symptoms associated with this Comparison Score:</strong> 
+              ${comparisonScore >= 7 ? 'High' : comparisonScore >= 4 ? 'Moderate' : 'Low'}</p>
+          </div>
+          
+          <div class="disclaimer">
+            <p><strong>Disclaimer:</strong> This report is generated from the ADOS-2 interactive version. For formal diagnosis, the complete standardized observation should be administered by a trained clinician.</p>
+            <p style="margin-top: 10px;">Copyright ©2012 by Western Psychological Services. Version 1.210</p>
+          </div>
+        </body>
+        </html>
+      `;
+      
+      // Open print window
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(printContent);
+      printWindow.document.close();
+      printWindow.focus();
+      
+      setTimeout(() => {
+        printWindow.print();
+      }, 250);
+    }
+  </script>
+</body>
+</html>

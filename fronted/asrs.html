@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adult ADHD Self-Report Scale (ASRS-v1.1)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary-blue: #2196F3;
+      --secondary-blue: #1976D2;
+      --light-blue: #E3F2FD;
+      --accent-orange: #FF9800;
+      --accent-green: #4CAF50;
+      --accent-red: #F44336;
+      --text-dark: #333333;
+      --text-light: #666666;
+      --border-color: #E0E0E0;
+      --card-bg: #FFFFFF;
+      --section-bg: #F5F7FA;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: var(--section-bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    
+    /* Header Styles */
+    .header {
+      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      color: white;
+      padding: 30px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--accent-orange);
+    }
+    
+    .header h1 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    
+    .header .subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-bottom: 20px;
+    }
+    
+    .header-badges {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    
+    .badge {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      backdrop-filter: blur(10px);
+    }
+    
+    /* Patient Information */
+    .patient-info {
+      padding: 25px;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--light-blue);
+    }
+    
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    
+    .info-card {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .info-card label {
+      font-weight: 600;
+      color: var(--secondary-blue);
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .info-card input,
+    .info-card textarea {
+      padding: 12px;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    
+    .info-card input:focus,
+    .info-card textarea:focus {
+      outline: none;
+      border-color: var(--primary-blue);
+    }
+    
+    /* Instructions */
+    .instructions {
+      padding: 30px;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .instructions h3 {
+      color: var(--secondary-blue);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .instructions-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin-top: 20px;
+    }
+    
+    .instruction-card {
+      padding: 20px;
+      border-radius: 10px;
+      background: var(--section-bg);
+      border-left: 4px solid var(--primary-blue);
+    }
+    
+    .instruction-card h4 {
+      color: var(--secondary-blue);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .timeline-note {
+      background: #FFF8E1;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+      border-left: 4px solid var(--accent-orange);
+    }
+    
+    /* Assessment Container */
+    .assessment-container {
+      padding: 30px;
+    }
+    
+    /* Score Display */
+    .score-display {
+      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    
+    .score-value {
+      text-align: center;
+    }
+    
+    .score-number {
+      font-size: 3rem;
+      font-weight: bold;
+      line-height: 1;
+    }
+    
+    .score-label {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+    
+    .part-a-score {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 8px;
+      min-width: 200px;
+    }
+    
+    /* Questions Grid */
+    .questions-grid {
+      display: grid;
+      gap: 20px;
+    }
+    
+    .part-header {
+      background: var(--light-blue);
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      border-left: 4px solid var(--primary-blue);
+    }
+    
+    .part-header h3 {
+      color: var(--secondary-blue);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .part-indicator {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      background: var(--primary-blue);
+      color: white;
+      border-radius: 50%;
+      font-weight: bold;
+    }
+    
+    /* Question Cards */
+    .question-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 25px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .question-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .question-card.active {
+      border-color: var(--primary-blue);
+      box-shadow: 0 4px 12px rgba(33, 150, 243, 0.15);
+    }
+    
+    .question-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      background: var(--light-blue);
+      color: var(--secondary-blue);
+      border-radius: 50%;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    
+    .question-text {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 20px;
+      line-height: 1.5;
+      color: var(--text-dark);
+    }
+    
+    /* Response Options */
+    .response-options {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+    
+    @media (max-width: 768px) {
+      .response-options {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    .response-option {
+      position: relative;
+    }
+    
+    .option-btn {
+      width: 100%;
+      padding: 14px 10px;
+      text-align: center;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      background: var(--card-bg);
+      color: var(--text-dark);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .option-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .option-btn.selected {
+      border-color: var(--primary-blue);
+      background: var(--light-blue);
+      color: var(--secondary-blue);
+    }
+    
+    .option-label {
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+    
+    .option-frequency {
+      font-size: 0.75rem;
+      color: var(--text-light);
+    }
+    
+    .option-btn.selected .option-frequency {
+      color: var(--secondary-blue);
+    }
+    
+    /* Results Section */
+    .results-container {
+      padding: 30px;
+      display: none;
+      background: var(--card-bg);
+    }
+    
+    .results-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .results-header h2 {
+      color: var(--secondary-blue);
+      margin-bottom: 10px;
+    }
+    
+    .final-score-circle {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 30px;
+      box-shadow: 0 8px 25px rgba(33, 150, 243, 0.3);
+    }
+    
+    .final-score {
+      font-size: 3.5rem;
+      font-weight: bold;
+      line-height: 1;
+    }
+    
+    .final-label {
+      font-size: 1rem;
+      opacity: 0.9;
+      margin-top: 5px;
+    }
+    
+    /* Interpretation Cards */
+    .interpretation-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+    
+    .interpretation-card {
+      padding: 25px;
+      border-radius: 10px;
+      background: var(--section-bg);
+      text-align: center;
+    }
+    
+    .interpretation-card.active {
+      background: var(--light-blue);
+      border: 2px solid var(--primary-blue);
+    }
+    
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: var(--secondary-blue);
+    }
+    
+    .card-description {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      margin-bottom: 15px;
+    }
+    
+    .card-score-range {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--primary-blue);
+      padding: 8px 15px;
+      background: white;
+      border-radius: 20px;
+      display: inline-block;
+    }
+    
+    /* Symptom Analysis */
+    .symptom-analysis {
+      background: var(--light-blue);
+      padding: 25px;
+      border-radius: 10px;
+      margin: 30px 0;
+    }
+    
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    
+    .analysis-item {
+      background: white;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    
+    .analysis-value {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--primary-blue);
+      margin-bottom: 5px;
+    }
+    
+    .analysis-label {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+    
+    /* Recommendations */
+    .recommendations {
+      background: #E8F5E9;
+      padding: 25px;
+      border-radius: 10px;
+      margin: 30px 0;
+      border-left: 4px solid var(--accent-green);
+    }
+    
+    .recommendations h3 {
+      color: #388E3C;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .recommendations-list {
+      list-style: none;
+    }
+    
+    .recommendations-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    
+    .recommendations-list li:last-child {
+      border-bottom: none;
+    }
+    
+    .recommendations-list i {
+      color: var(--accent-green);
+      margin-top: 3px;
+    }
+    
+    /* Controls */
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      padding: 25px;
+      border-top: 1px solid var(--border-color);
+      background: var(--section-bg);
+    }
+    
+    .control-btn {
+      padding: 14px 28px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+    }
+    
+    .reset-btn {
+      background: var(--light-blue);
+      color: var(--secondary-blue);
+    }
+    
+    .reset-btn:hover {
+      background: #BBDEFB;
+    }
+    
+    .submit-btn {
+      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      color: white;
+    }
+    
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(33, 150, 243, 0.3);
+    }
+    
+    .print-btn {
+      background: linear-gradient(135deg, var(--accent-green), #45a049);
+      color: white;
+    }
+    
+    .print-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(76, 175, 80, 0.3);
+    }
+    
+    /* Footer */
+    .footer {
+      background: var(--light-blue);
+      padding: 25px;
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border-color);
+    }
+    
+    .references {
+      text-align: left;
+      margin-top: 20px;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+    }
+    
+    .references h4 {
+      color: var(--secondary-blue);
+      margin-bottom: 10px;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .score-display {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .controls {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .control-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .response-options {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media print {
+      .controls,
+      .footer {
+        display: none;
+      }
+      
+      .question-card {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>Adult ADHD Self-Report Scale (ASRS-v1.1)</h1>
+      <div class="subtitle">Symptom Checklist - Developed with the World Health Organization</div>
+      
+      <div class="header-badges">
+        <div class="badge">
+          <i class="fas fa-clock"></i>
+          <span>Takes 5 minutes to complete</span>
+        </div>
+        <div class="badge">
+          <i class="fas fa-stethoscope"></i>
+          <span>Based on DSM-IV-TR criteria</span>
+        </div>
+        <div class="badge">
+          <i class="fas fa-user-md"></i>
+          <span>Clinical screening tool</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Patient Information -->
+    <div class="patient-info">
+      <div class="info-grid">
+        <div class="info-card">
+          <label for="patientName"><i class="fas fa-user"></i> Patient Name</label>
+          <input type="text" id="patientName" placeholder="Enter your full name">
+        </div>
+        
+        <div class="info-card">
+          <label for="assessmentDate"><i class="fas fa-calendar-alt"></i> Today's Date</label>
+          <input type="date" id="assessmentDate" value="<?php echo date('Y-m-d'); ?>">
+        </div>
+        
+        <div class="info-card">
+          <label for="clinicianName"><i class="fas fa-user-md"></i> Clinician Name (Optional)</label>
+          <input type="text" id="clinicianName" placeholder="Healthcare professional name">
+        </div>
+        
+        <div class="info-card" style="grid-column: 1 / -1;">
+          <label for="clinicalNotes"><i class="fas fa-notes-medical"></i> Clinical Notes</label>
+          <textarea id="clinicalNotes" rows="3" placeholder="Any relevant observations or context..."></textarea>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Instructions -->
+    <div class="instructions">
+      <h3><i class="fas fa-info-circle"></i> Assessment Instructions</h3>
+      <p>Please answer the questions below, rating yourself on each of the criteria shown. As you answer each question, select the response that best describes how you have felt and conducted yourself over the <strong>past 6 months</strong>.</p>
+      
+      <div class="instructions-content">
+        <div class="instruction-card">
+          <h4><i class="fas fa-list-check"></i> Scoring Instructions</h4>
+          <p>Part A contains the 6 most predictive questions for ADHD screening. <strong>If 4 or more responses in Part A are in the "Often" or "Very Often" categories, further investigation is warranted.</strong></p>
+        </div>
+        
+        <div class="instruction-card">
+          <h4><i class="fas fa-chart-bar"></i> Response Scale</h4>
+          <p><strong>Never:</strong> The symptom does not occur at all<br>
+          <strong>Rarely:</strong> The symptom occurs occasionally<br>
+          <strong>Sometimes:</strong> The symptom occurs with some frequency<br>
+          <strong>Often:</strong> The symptom occurs frequently<br>
+          <strong>Very Often:</strong> The symptom occurs very frequently</p>
+        </div>
+        
+        <div class="instruction-card">
+          <h4><i class="fas fa-history"></i> Time Frame</h4>
+          <p>Consider your experiences over the <strong>past 6 months</strong>, not just recent days or weeks. Think about how these symptoms have affected your work, social life, and daily functioning.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-note">
+        <h4><i class="fas fa-clock"></i> Important Note</h4>
+        <p>This scale screens for current ADHD symptoms in adults. For a formal diagnosis, a comprehensive clinical evaluation including childhood history is required.</p>
+      </div>
+    </div>
+    
+    <!-- Assessment Container -->
+    <div class="assessment-container" id="assessmentContainer">
+      <!-- Score Display -->
+      <div class="score-display">
+        <div class="score-value">
+          <div class="score-number" id="totalScore">0</div>
+          <div class="score-label">Total Score</div>
+        </div>
+        
+        <div class="part-a-score">
+          <div class="score-number" id="partAScore">0</div>
+          <div class="score-label">Part A Score (Critical Items)</div>
+          <div class="score-label" id="partAIndicator" style="margin-top: 5px; font-size: 0.8rem;">
+            <i class="fas fa-circle" style="color: #4CAF50; font-size: 0.7rem;"></i>
+            <span>0 of 4 threshold symptoms</span>
+          </div>
+        </div>
+        
+        <div style="text-align: center;">
+          <div style="font-size: 1.2rem; font-weight: bold; margin-bottom: 5px;">Screening Threshold</div>
+          <div style="font-size: 0.9rem;">4+ symptoms in Part A suggest further evaluation</div>
+        </div>
+      </div>
+      
+      <!-- Part A Questions -->
+      <div class="part-header">
+        <h3><span class="part-indicator">A</span> Part A - Most Predictive Symptoms (Questions 1-6)</h3>
+        <p>These 6 questions are the most predictive of ADHD symptoms. Four or more marks in "Often" or "Very Often" suggest ADHD symptoms requiring further investigation.</p>
+      </div>
+      
+      <div class="questions-grid" id="partAQuestions">
+        <!-- Part A questions will be inserted here dynamically -->
+      </div>
+      
+      <!-- Part B Questions -->
+      <div class="part-header" style="margin-top: 40px;">
+        <h3><span class="part-indicator">B</span> Part B - Additional Symptoms (Questions 7-18)</h3>
+        <p>These 12 questions provide additional clinical information. They are useful for comprehensive assessment but are not used in the initial screening score.</p>
+      </div>
+      
+      <div class="questions-grid" id="partBQuestions">
+        <!-- Part B questions will be inserted here dynamically -->
+      </div>
+    </div>
+    
+    <!-- Results Container -->
+    <div class="results-container" id="resultsContainer">
+      <div class="results-header">
+        <h2><i class="fas fa-file-medical-alt"></i> ASRS-v1.1 Assessment Results</h2>
+        <p>Adult ADHD Self-Report Scale - Screening Results</p>
+      </div>
+      
+      <div class="final-score-circle">
+        <div class="final-score" id="finalPartAScore">0</div>
+        <div class="final-label">Symptoms in Part A</div>
+      </div>
+      
+      <div class="interpretation-cards">
+        <div class="interpretation-card" id="interpretationNegative">
+          <div class="card-title">Negative Screen</div>
+          <div class="card-description">Fewer than 4 symptoms in Part A. ADHD is less likely but not ruled out.</div>
+          <div class="card-score-range">0-3 Symptoms</div>
+        </div>
+        
+        <div class="interpretation-card" id="interpretationPositive">
+          <div class="card-title">Positive Screen</div>
+          <div class="card-description">4 or more symptoms in Part A. Further clinical evaluation recommended.</div>
+          <div class="card-score-range">4-6 Symptoms</div>
+        </div>
+        
+        <div class="interpretation-card" id="interpretationStrong">
+          <div class="card-title">Strong Positive</div>
+          <div class="card-description">5-6 symptoms in Part A. High likelihood of ADHD requiring comprehensive evaluation.</div>
+          <div class="card-score-range">5-6 Symptoms</div>
+        </div>
+      </div>
+      
+      <div class="symptom-analysis">
+        <h3><i class="fas fa-chart-pie"></i> Symptom Analysis</h3>
+        <div class="analysis-grid">
+          <div class="analysis-item">
+            <div class="analysis-value" id="totalSymptoms">0</div>
+            <div class="analysis-label">Total Symptoms</div>
+          </div>
+          <div class="analysis-item">
+            <div class="analysis-value" id="partASymptoms">0</div>
+            <div class="analysis-label">Part A Symptoms</div>
+          </div>
+          <div class="analysis-item">
+            <div class="analysis-value" id="partBSymptoms">0</div>
+            <div class="analysis-label">Part B Symptoms</div>
+          </div>
+          <div class="analysis-item">
+            <div class="analysis-value" id="severeSymptoms">0</div>
+            <div class="analysis-label">Severe Symptoms</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="recommendations" id="recommendationsSection">
+        <h3><i class="fas fa-heartbeat"></i> Clinical Recommendations</h3>
+        <ul class="recommendations-list" id="recommendationsList">
+          <!-- Recommendations will be inserted here dynamically -->
+        </ul>
+      </div>
+      
+      <div class="timeline-note" style="margin: 30px 0;">
+        <h4><i class="fas fa-exclamation-circle"></i> Important Clinical Note</h4>
+        <p>This screening tool is not a diagnostic instrument. A positive screen indicates the need for comprehensive clinical evaluation including:</p>
+        <ul style="margin-top: 10px; margin-left: 20px;">
+          <li>Detailed clinical interview</li>
+          <li>Assessment of childhood symptoms</li>
+          <li>Evaluation of functional impairment</li>
+          <li>Rule out of other conditions</li>
+          <li>Collateral information from family or significant others</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Controls -->
+    <div class="controls">
+      <button class="control-btn reset-btn" onclick="resetAssessment()">
+        <i class="fas fa-redo"></i> Reset Assessment
+      </button>
+      
+      <button class="control-btn submit-btn" onclick="submitAssessment()">
+        <i class="fas fa-paper-plane"></i> Submit & View Results
+      </button>
+      
+      <button class="control-btn print-btn" onclick="printReport()" style="display: none;" id="printBtn">
+        <i class="fas fa-print"></i> Print Report
+      </button>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+      <p><strong>Adult ADHD Self-Report Scale (ASRS-v1.1) Symptom Checklist</strong></p>
+      <p>Developed in conjunction with the World Health Organization and the Workgroup on Adult ADHD</p>
+      
+      <div class="references">
+        <h4><i class="fas fa-book-medical"></i> References</h4>
+        <p>1. Adler LA, et al. Validity of pilot Adult ADHD Self-Report Scale (ASRS) to rate adult ADHD symptoms. Ann Clin Psychiatry. 2006;18:145-148.</p>
+        <p>2. Kessler RC, et al. The World Health Organization Adult ADHD Self-Report Scale (ASRS): a short screening scale for use in the general population. Psychol Med. 2005;35:245-256.</p>
+        <p>3. American Psychiatric Association. Diagnostic and Statistical Manual of Mental Disorders, Fourth Edition, Text Revision. Washington, DC: American Psychiatric Association; 2000.</p>
+      </div>
+      
+      <p style="margin-top: 20px; font-size: 0.8rem; color: #999;">
+        <i class="fas fa-exclamation-triangle"></i> For clinical use only. This tool assists in screening but does not provide diagnosis.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    // ASRS-v1.1 Questions Data
+    const asrsQuestions = {
+      partA: [
+        {
+          id: 1,
+          text: "How often do you have trouble wrapping up the final details of a project, once the challenging parts have been done?",
+          critical: true
+        },
+        {
+          id: 2,
+          text: "How often do you have difficulty getting things in order when you have to do a task that requires organization?",
+          critical: true
+        },
+        {
+          id: 3,
+          text: "How often do you have problems remembering appointments or obligations?",
+          critical: true
+        },
+        {
+          id: 4,
+          text: "When you have a task that requires a lot of thought, how often do you avoid or delay getting started?",
+          critical: true
+        },
+        {
+          id: 5,
+          text: "How often do you fidget or squirm with your hands or feet when you have to sit down for a long time?",
+          critical: true
+        },
+        {
+          id: 6,
+          text: "How often do you feel overly active and compelled to do things, like you were driven by a motor?",
+          critical: true
+        }
+      ],
+      partB: [
+        {
+          id: 7,
+          text: "How often do you make careless mistakes when you have to work on a boring or difficult project?"
+        },
+        {
+          id: 8,
+          text: "How often do you have difficulty keeping your attention when you are doing boring or repetitive work?"
+        },
+        {
+          id: 9,
+          text: "How often do you have difficulty concentrating on what people say to you, even when they are speaking to you directly?"
+        },
+        {
+          id: 10,
+          text: "How often do you misplace or have difficulty finding things at home or at work?"
+        },
+        {
+          id: 11,
+          text: "How often are you distracted by activity or noise around you?"
+        },
+        {
+          id: 12,
+          text: "How often do you leave your seat in meetings or other situations in which you are expected to remain seated?"
+        },
+        {
+          id: 13,
+          text: "How often do you feel restless or fidgety?"
+        },
+        {
+          id: 14,
+          text: "How often do you have difficulty unwinding and relaxing when you have time to yourself?"
+        },
+        {
+          id: 15,
+          text: "How often do you find yourself talking too much when you are in social situations?"
+        },
+        {
+          id: 16,
+          text: "When you're in a conversation, how often do you find yourself finishing the sentences of the people you are talking to, before they can finish them themselves?"
+        },
+        {
+          id: 17,
+          text: "How often do you have difficulty waiting your turn in situations when turn taking is required?"
+        },
+        {
+          id: 18,
+          text: "How often do you interrupt others when they are busy?"
+        }
+      ]
+    };
+
+    // Response options
+    const responseOptions = [
+      { value: 0, label: "Never", frequency: "Does not occur" },
+      { value: 1, label: "Rarely", frequency: "Occurs occasionally" },
+      { value: 2, label: "Sometimes", frequency: "Occurs some of the time" },
+      { value: 3, label: "Often", frequency: "Occurs frequently" },
+      { value: 4, label: "Very Often", frequency: "Occurs very frequently" }
+    ];
+
+    // User responses
+    let userResponses = {
+      partA: new Array(asrsQuestions.partA.length).fill(null),
+      partB: new Array(asrsQuestions.partB.length).fill(null)
+    };
+
+    // Initialize the assessment
+    document.addEventListener('DOMContentLoaded', function() {
+      renderQuestions();
+      updateScoreDisplay();
+      
+      // Set today's date
+      document.getElementById('assessmentDate').valueAsDate = new Date();
+      
+      // Auto-save data
+      document.getElementById('patientName').addEventListener('input', saveFormData);
+      document.getElementById('clinicalNotes').addEventListener('input', saveFormData);
+      
+      // Load saved data
+      loadFormData();
+    });
+
+    // Render all questions
+    function renderQuestions() {
+      renderPartQuestions('partA', asrsQuestions.partA, userResponses.partA);
+      renderPartQuestions('partB', asrsQuestions.partB, userResponses.partB);
+    }
+
+    // Render questions for a specific part
+    function renderPartQuestions(partId, questions, responses) {
+      const container = document.getElementById(`${partId}Questions`);
+      let html = '';
+      
+      questions.forEach((question, index) => {
+        const questionNumber = partId === 'partA' ? index + 1 : index + 7;
+        const isCritical = question.critical || false;
+        
+        html += `
+          <div class="question-card" id="question-${partId}-${index}">
+            <div class="question-number">${questionNumber}</div>
+            <div class="question-text">${question.text}</div>
+            
+            <div class="response-options">
+              ${responseOptions.map((option, optIndex) => `
+                <div class="response-option">
+                  <button class="option-btn ${responses[index] === option.value ? 'selected' : ''}"
+                          onclick="selectResponse('${partId}', ${index}, ${option.value})"
+                          data-value="${option.value}">
+                    <div class="option-label">${option.label}</div>
+                    <div class="option-frequency">${option.frequency}</div>
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+            
+            ${isCritical ? `
+              <div style="margin-top: 15px; padding: 8px; background: #FFF3E0; border-radius: 6px; font-size: 0.85rem; color: #F57C00;">
+                <i class="fas fa-exclamation-circle"></i> <strong>Critical Item:</strong> This question is part of the 6 most predictive symptoms for ADHD screening.
+              </div>
+            ` : ''}
+          </div>
+        `;
+      });
+      
+      container.innerHTML = html;
+    }
+
+    // Select a response
+    function selectResponse(part, questionIndex, value) {
+      userResponses[part][questionIndex] = value;
+      
+      // Update UI
+      const questionCard = document.getElementById(`question-${part}-${questionIndex}`);
+      const buttons = questionCard.querySelectorAll('.option-btn');
+      buttons.forEach(btn => {
+        const btnValue = parseInt(btn.getAttribute('data-value'));
+        btn.classList.toggle('selected', btnValue === value);
+      });
+      
+      updateScoreDisplay();
+      saveFormData();
+    }
+
+    // Calculate scores
+    function calculateScores() {
+      let totalScore = 0;
+      let partAScore = 0;
+      let partBScore = 0;
+      
+      // Count symptoms in Part A (score 3 or 4 = symptom present)
+      userResponses.partA.forEach(response => {
+        if (response !== null) {
+          totalScore += response;
+          if (response >= 3) {
+            partAScore++;
+          }
+        }
+      });
+      
+      // Count symptoms in Part B
+      userResponses.partB.forEach(response => {
+        if (response !== null) {
+          totalScore += response;
+          if (response >= 3) {
+            partBScore++;
+          }
+        }
+      });
+      
+      return {
+        totalScore,
+        partAScore,
+        partBScore,
+        totalSymptoms: partAScore + partBScore,
+        severeSymptoms: countSevereSymptoms()
+      };
+    }
+
+    // Count severe symptoms (score = 4)
+    function countSevereSymptoms() {
+      let count = 0;
+      
+      userResponses.partA.forEach(response => {
+        if (response === 4) count++;
+      });
+      
+      userResponses.partB.forEach(response => {
+        if (response === 4) count++;
+      });
+      
+      return count;
+    }
+
+    // Update score display
+    function updateScoreDisplay() {
+      const scores = calculateScores();
+      
+      document.getElementById('totalScore').textContent = scores.totalScore;
+      document.getElementById('partAScore').textContent = scores.partAScore;
+      
+      // Update Part A indicator
+      const indicator = document.getElementById('partAIndicator');
+      if (scores.partAScore >= 4) {
+        indicator.innerHTML = `
+          <i class="fas fa-circle" style="color: #F44336; font-size: 0.7rem;"></i>
+          <span style="color: #F44336; font-weight: bold;">${scores.partAScore} of 4 threshold symptoms - Further evaluation suggested</span>
+        `;
+      } else {
+        indicator.innerHTML = `
+          <i class="fas fa-circle" style="color: #4CAF50; font-size: 0.7rem;"></i>
+          <span>${scores.partAScore} of 4 threshold symptoms</span>
+        `;
+      }
+    }
+
+    // Submit assessment
+    function submitAssessment() {
+      const patientName = document.getElementById('patientName').value.trim();
+      
+      if (!patientName) {
+        alert("Please enter your name before submitting the assessment.");
+        document.getElementById('patientName').focus();
+        return;
+      }
+      
+      // Check if all questions are answered
+      const unansweredPartA = userResponses.partA.filter(r => r === null).length;
+      const unansweredPartB = userResponses.partB.filter(r => r === null).length;
+      
+      if (unansweredPartA > 0 || unansweredPartB > 0) {
+        if (!confirm(`You have ${unansweredPartA + unansweredPartB} unanswered questions. Would you like to submit anyway?`)) {
+          return;
+        }
+      }
+      
+      const scores = calculateScores();
+      
+      // Update results display
+      document.getElementById('finalPartAScore').textContent = scores.partAScore;
+      document.getElementById('totalSymptoms').textContent = scores.totalSymptoms;
+      document.getElementById('partASymptoms').textContent = scores.partAScore;
+      document.getElementById('partBSymptoms').textContent = scores.partBScore;
+      document.getElementById('severeSymptoms').textContent = scores.severeSymptoms;
+      
+      // Update interpretation cards
+      const interpretationCards = document.querySelectorAll('.interpretation-card');
+      interpretationCards.forEach(card => card.classList.remove('active'));
+      
+      if (scores.partAScore >= 5) {
+        document.getElementById('interpretationStrong').classList.add('active');
+      } else if (scores.partAScore >= 4) {
+        document.getElementById('interpretationPositive').classList.add('active');
+      } else {
+        document.getElementById('interpretationNegative').classList.add('active');
+      }
+      
+      // Generate recommendations
+      generateRecommendations(scores);
+      
+      // Show results and hide assessment
+      document.getElementById('assessmentContainer').style.display = 'none';
+      document.getElementById('resultsContainer').style.display = 'block';
+      document.getElementById('printBtn').style.display = 'flex';
+      
+      // Scroll to top
+      window.scrollTo(0, 0);
+      
+      // Save results
+      saveAssessmentResults(patientName, scores);
+    }
+
+    // Generate recommendations based on scores
+    function generateRecommendations(scores) {
+      const list = document.getElementById('recommendationsList');
+      let recommendations = [];
+      
+      if (scores.partAScore >= 4) {
+        recommendations = [
+          "Schedule a comprehensive clinical evaluation with a mental health professional specializing in adult ADHD",
+          "Consider obtaining collateral information from family members or significant others about symptom presentation",
+          "Complete a thorough developmental history assessment focusing on childhood symptoms",
+          "Rule out other conditions that may mimic ADHD symptoms (e.g., anxiety, depression, sleep disorders)",
+          "Consider referral for neuropsychological testing if diagnostic uncertainty remains",
+          "Discuss potential treatment options including behavioral strategies and medication if diagnosis is confirmed"
+        ];
+      } else {
+        recommendations = [
+          "ADHD is less likely based on this screening, but not completely ruled out",
+          "Monitor symptoms over time, especially if experiencing functional impairment",
+          "Consider re-assessment if symptoms worsen or new concerns arise",
+          "Explore other potential causes for reported difficulties (e.g., stress, other mental health conditions)",
+          "Implement organizational and time management strategies to address specific concerns"
+        ];
+      }
+      
+      // Add general recommendations
+      recommendations.push(
+        "This screening result should be discussed with a qualified healthcare provider",
+        "Keep a symptom diary to track patterns and triggers over several weeks",
+        "Consider lifestyle modifications including regular exercise, adequate sleep, and stress management"
+      );
+      
+      list.innerHTML = recommendations.map(rec => `
+        <li>
+          <i class="fas fa-check-circle"></i>
+          <span>${rec}</span>
+        </li>
+      `).join('');
+    }
+
+    // Save assessment results
+    function saveAssessmentResults(patientName, scores) {
+      const assessmentData = {
+        test: "Adult ADHD Self-Report Scale (ASRS-v1.1)",
+        date: new Date().toISOString(),
+        patientName: patientName,
+        clinicianName: document.getElementById('clinicianName').value,
+        clinicalNotes: document.getElementById('clinicalNotes').value,
+        scores: scores,
+        responses: {
+          partA: userResponses.partA.map((response, index) => ({
+            question: asrsQuestions.partA[index].text,
+            response: response !== null ? responseOptions[response].label : 'Not answered',
+            value: response
+          })),
+          partB: userResponses.partB.map((response, index) => ({
+            question: asrsQuestions.partB[index].text,
+            response: response !== null ? responseOptions[response].label : 'Not answered',
+            value: response
+          }))
+        },
+        interpretation: scores.partAScore >= 4 ? 
+          "Positive screen - Further evaluation recommended" : 
+          "Negative screen - ADHD less likely"
+      };
+      
+      // Save to localStorage
+      const assessments = JSON.parse(localStorage.getItem('asrsAssessments') || '[]');
+      assessments.push(assessmentData);
+      localStorage.setItem('asrsAssessments', JSON.stringify(assessments));
+    }
+
+    // Save form data
+    function saveFormData() {
+      const formData = {
+        patientName: document.getElementById('patientName').value,
+        clinicianName: document.getElementById('clinicianName').value,
+        clinicalNotes: document.getElementById('clinicalNotes').value,
+        responses: userResponses
+      };
+      
+      localStorage.setItem('asrsFormData', JSON.stringify(formData));
+    }
+
+    // Load form data
+    function loadFormData() {
+      const savedData = localStorage.getItem('asrsFormData');
+      if (savedData) {
+        try {
+          const formData = JSON.parse(savedData);
+          
+          document.getElementById('patientName').value = formData.patientName || '';
+          document.getElementById('clinicianName').value = formData.clinicianName || '';
+          document.getElementById('clinicalNotes').value = formData.clinicalNotes || '';
+          
+          if (formData.responses) {
+            userResponses = formData.responses;
+            renderQuestions();
+            updateScoreDisplay();
+          }
+        } catch (e) {
+          console.log('Could not load saved data:', e);
+        }
+      }
+    }
+
+    // Reset assessment
+    function resetAssessment() {
+      if (confirm("Are you sure you want to reset all responses? This action cannot be undone.")) {
+        userResponses = {
+          partA: new Array(asrsQuestions.partA.length).fill(null),
+          partB: new Array(asrsQuestions.partB.length).fill(null)
+        };
+        
+        document.getElementById('patientName').value = '';
+        document.getElementById('clinicianName').value = '';
+        document.getElementById('clinicalNotes').value = '';
+        
+        renderQuestions();
+        updateScoreDisplay();
+        
+        // Show assessment and hide results
+        document.getElementById('assessmentContainer').style.display = 'block';
+        document.getElementById('resultsContainer').style.display = 'none';
+        document.getElementById('printBtn').style.display = 'none';
+        
+        // Clear saved form data
+        localStorage.removeItem('asrsFormData');
+      }
+    }
+
+    // Print report
+    function printReport() {
+      const printContent = document.getElementById('resultsContainer').innerHTML;
+      const originalContent = document.body.innerHTML;
+      const patientName = document.getElementById('patientName').value || "Patient";
+      const assessmentDate = document.getElementById('assessmentDate').value;
+      
+      document.body.innerHTML = `
+        <div style="padding: 30px; font-family: Arial, sans-serif;">
+          <h1 style="color: #1976D2; border-bottom: 2px solid #1976D2; padding-bottom: 10px;">
+            ASRS-v1.1 Assessment Report
+          </h1>
+          <div style="margin: 20px 0; padding: 15px; background: #E3F2FD; border-radius: 8px;">
+            <strong>Patient:</strong> ${patientName}<br>
+            <strong>Assessment Date:</strong> ${assessmentDate}<br>
+            <strong>Clinician:</strong> ${document.getElementById('clinicianName').value || 'Not specified'}
+          </div>
+          ${printContent}
+        </div>
+      `;
+      
+      window.print();
+      document.body.innerHTML = originalContent;
+      location.reload();
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(event) {
+      // Number keys 1-5 for response selection
+      if (event.key >= '1' && event.key <= '5') {
+        event.preventDefault();
+        const value = parseInt(event.key) - 1;
+        
+        // Find the currently focused question
+        const activeElement = document.activeElement;
+        if (activeElement && activeElement.classList.contains('option-btn')) {
+          // Get the question index from the button's onclick attribute
+          const onclick = activeElement.getAttribute('onclick');
+          if (onclick) {
+            const match = onclick.match(/selectResponse\('(\w+)', (\d+), (\d+)\)/);
+            if (match) {
+              selectResponse(match[1], parseInt(match[2]), value);
+            }
+          }
+        }
+      }
+      
+      // Enter key to submit
+      if (event.key === 'Enter' && !document.getElementById('resultsContainer').style.display) {
+        event.preventDefault();
+        submitAssessment();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meditation App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2c5aa0;
+            --primary-light: #4a7bc8;
+            --primary-dark: #1a3a6e;
+            --secondary: #5d8bd8;
+            --light: #f0f5ff;
+            --dark: #1e2a4a;
+            --text: #3a4a6b;
+            --success: #4cd97b;
+            --warning: #ffb347;
+            --danger: #ff6b6b;
+            --gray: #d1ddf0;
+            --nav-blue: #566a87;
+            --nav-blue-dark: #566987;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f0f5ff 0%, #374156 100%);
+            color: var(--text);
+            line-height: 1.6;
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Navigation Bar Styles */
+        .navbar {
+            background: linear-gradient(135deg, var(--nav-blue) 0%, #d9e8ff 100%);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(44, 90, 160, 0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 20px;
+        }
+        
+        .logo {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 0.5px;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-left: 35px;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 8px 16px;
+            border-radius: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary);
+            background-color: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+        }
+        
+        .nav-link.active {
+            color: white;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            box-shadow: 0 4px 15px rgba(44, 90, 160, 0.3);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-link.active::after {
+            display: none;
+        }
+        
+        /* Main Content Styles */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeIn 1s ease;
+        }
+        
+        .welcome-title {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .welcome-subtitle {
+            font-size: 18px;
+            color: var(--text);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+        
+        /* Progress Tracker */
+        .progress-tracker {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: var(--transition);
+            animation: slideUp 0.8s ease;
+        }
+        
+        .progress-tracker:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            transform: translateY(-5px);
+        }
+        
+        .section-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 30px;
+            font-family: 'Playfair Display', serif;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+        
+        /* Section Cards */
+        .section {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: var(--transition);
+            animation: slideUp 0.8s ease;
+        }
+        
+        .section:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            transform: translateY(-5px);
+        }
+        
+        .section h2 {
+            color: var(--dark);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin: -30px -30px 30px -30px;
+            font-size: 22px;
+            cursor: pointer;
+            box-sizing: border-box;
+            color: white;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+        
+        .section h2:hover {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+        }
+        
+        .section h2::after {
+            content: '▼';
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .section.active h2::after {
+            transform: rotate(180deg);
+        }
+        
+        .section-content {
+            display: none;
+            padding-top: 15px;
+        }
+        
+        .section-content.active {
+            display: block;
+        }
+        
+        /* Exercise Cards */
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .exercise-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+            transition: var(--transition);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .exercise-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+        
+        .exercise-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        .exercise-card h3 {
+            color: var(--dark);
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .exercise-card p {
+            color: var(--text);
+            margin-bottom: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        button {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(44, 90, 160, 0.3);
+            font-family: 'Poppins', sans-serif;
+            width: 100%;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(44, 90, 160, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        /* Meditation Prompt */
+        .meditation-prompt {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            font-size: 24px;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+            z-index: 2000;
+            background-size: cover;
+            background-position: center;
+            border: none;
+            background-color: var(--dark);
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .timer {
+            font-size: 28px;
+            color: white;
+            margin: 20px 0;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            font-weight: 600;
+        }
+        
+        .questions {
+            display: none;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .questions input, .questions select {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: 1px solid var(--gray);
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            background: white;
+        }
+        
+        .advice {
+            display: none;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            border: 1px solid var(--gray);
+            font-size: 16px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-item {
+            margin: 10px 0;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+            font-size: 14px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                padding: 15px;
+            }
+            
+            .nav-menu {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-item {
+                margin: 5px 10px;
+            }
+            
+            .welcome-title {
+                font-size: 32px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .section h2 {
+                margin: -20px -20px 20px -20px;
+                padding: 15px;
+            }
+            
+            .exercise-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .progress-tracker {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">Mindful Moments</div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="J.html" class="nav-link">Journal</a></li>
+                <li class="nav-item"><a href="4th.ex.html" class="nav-link">MindSpace</a></li>
+                <li class="nav-item"><a href="mindful.html" class="nav-link">Meditation</a></li>
+                <li class="nav-item"><a href="ex.ther.html" class="nav-link active">Exercises</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <section class="welcome-section">
+            <h1 class="welcome-title">Meditation Exercises</h1>
+            <p class="welcome-subtitle">Explore various meditation techniques to improve your mental wellbeing, focus, and relaxation.</p>
+        </section>
+
+        <div class="progress-tracker">
+            <h2 class="section-title">Progress Tracker</h2>
+            <p>Monitor your meditation journey. Completed sessions are logged here.</p>
+            <div id="progress-list"></div>
+            <button onclick="clearProgress()" style="margin-top: 20px; width: auto;">Clear Progress</button>
+        </div>
+
+        <!-- Relaxation Meditations -->
+        <div class="section">
+            <h2 onclick="toggleSection('relax')">Relaxation Meditations</h2>
+            <div id="relax-content" class="section-content">
+                <p>Short sessions to unwind, each with a 2-minute meditation, questions, and advice.</p>
+                <div class="exercise-grid">
+                    <div class="exercise-card">
+                        <h3>Beach Visualization</h3>
+                        <p>Imagine a peaceful beach. Hear gentle waves, feel warm sand, breathe deeply.</p>
+                        <button onclick="startMeditation('relax1')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Forest Walk</h3>
+                        <p>Walk through a lush forest. Smell fresh air, hear birds, relax with each step.</p>
+                        <button onclick="startMeditation('relax2')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Cloud Watching</h3>
+                        <p>Watch clouds drift in a blue sky. Let your worries float away.</p>
+                        <button onclick="startMeditation('relax3')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Gentle Rain</h3>
+                        <p>Listen to soft rain. Feel it wash away your stress.</p>
+                        <button onclick="startMeditation('relax4')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Sunset Glow</h3>
+                        <p>Watch a glowing sunset. Let its colors bring peace.</p>
+                        <button onclick="startMeditation('relax5')">Start Session (2 min)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Focus Meditations -->
+        <div class="section">
+            <h2 onclick="toggleSection('focus')">Focus Meditations</h2>
+            <div id="focus-content" class="section-content">
+                <p>Boost your focus with these exercises, including timers and advice.</p>
+                <div class="exercise-grid">
+                    <div class="exercise-card">
+                        <h3>Breath Counting</h3>
+                        <p>Count each breath to 10, then repeat.</p>
+                        <button onclick="startMeditation('focus1')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Object Focus</h3>
+                        <p>Study an object's details: shape, color, texture.</p>
+                        <button onclick="startMeditation('focus2')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Mantra Repetition</h3>
+                        <p>Repeat 'focus now' silently in your mind.</p>
+                        <button onclick="startMeditation('focus3')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Sound Concentration</h3>
+                        <p>Listen to a single sound, like a clock ticking.</p>
+                        <button onclick="startMeditation('focus4')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Body Scan</h3>
+                        <p>Scan your body from toes to head, noting sensations.</p>
+                        <button onclick="startMeditation('focus5')">Start Session (2 min)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Better Sleep Meditations -->
+        <div class="section">
+            <h2 onclick="toggleSection('sleep')">Better Sleep Meditations</h2>
+            <div id="sleep-content" class="section-content">
+                <p>Calming exercises for restful sleep. Many daily options.</p>
+                <div class="exercise-grid">
+                    <div class="exercise-card">
+                        <h3>Progressive Relaxation</h3>
+                        <p>Tense and relax muscles from toes to head.</p>
+                        <button onclick="startMeditation('sleep1')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Gratitude Reflection</h3>
+                        <p>Think of three things you're grateful for today.</p>
+                        <button onclick="startMeditation('sleep2')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Starry Night</h3>
+                        <p>Imagine a starry sky, count the stars.</p>
+                        <button onclick="startMeditation('sleep3')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Warm Blanket</h3>
+                        <p>Feel a warm blanket wrapping you, cozy and safe.</p>
+                        <button onclick="startMeditation('sleep4')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Dream Preparation</h3>
+                        <p>Visualize a peaceful dream for tonight.</p>
+                        <button onclick="startMeditation('sleep5')">Start Session (2 min)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mindfulness Meditations -->
+        <div class="section">
+            <h2 onclick="toggleSection('mindful')">Mindfulness Meditations</h2>
+            <div id="mindful-content" class="section-content">
+                <p>Stay present and aware with these mindfulness exercises.</p>
+                <div class="exercise-grid">
+                    <div class="exercise-card">
+                        <h3>Present Moment</h3>
+                        <p>Focus on the present moment, noticing your surroundings.</p>
+                        <button onclick="startMeditation('mindful1')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Observing Thoughts</h3>
+                        <p>Observe your thoughts without judgment, like clouds passing.</p>
+                        <button onclick="startMeditation('mindful2')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Sensory Awareness</h3>
+                        <p>Notice the sounds, smells, and sensations around you.</p>
+                        <button onclick="startMeditation('mindful3')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Mindful Breathing</h3>
+                        <p>Focus on the rhythm of your breath, in and out.</p>
+                        <button onclick="startMeditation('mindful4')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Walking Meditation</h3>
+                        <p>Walk slowly, feeling each step and your connection to the ground.</p>
+                        <button onclick="startMeditation('mindful5')">Start Session (2 min)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gratitude Meditations -->
+        <div class="section">
+            <h2 onclick="toggleSection('gratitude')">Gratitude Meditations</h2>
+            <div id="gratitude-content" class="section-content">
+                <p>Cultivate a sense of gratitude with these reflective exercises.</p>
+                <div class="exercise-grid">
+                    <div class="exercise-card">
+                        <h3>Daily Gratitude</h3>
+                        <p>Reflect on three things that brought you joy today.</p>
+                        <button onclick="startMeditation('gratitude1')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Self Gratitude</h3>
+                        <p>Appreciate three things about yourself today.</p>
+                        <button onclick="startMeditation('gratitude2')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Gratitude for Nature</h3>
+                        <p>Think of three aspects of nature you're thankful for.</p>
+                        <button onclick="startMeditation('gratitude3')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Gratitude for Relationships</h3>
+                        <p>Reflect on three people you're grateful for.</p>
+                        <button onclick="startMeditation('gratitude4')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Future Gratitude</h3>
+                        <p>Imagine three things you'll be grateful for in the future.</p>
+                        <button onclick="startMeditation('gratitude5')">Start Session (2 min)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Energy Boost Meditations -->
+        <div class="section">
+            <h2 onclick="toggleSection('energy')">Energy Boost Meditations</h2>
+            <div id="energy-content" class="section-content">
+                <p>Energize your mind and body with these uplifting exercises.</p>
+                <div class="exercise-grid">
+                    <div class="exercise-card">
+                        <h3>Morning Energizer</h3>
+                        <p>Visualize a bright sunrise filling you with energy.</p>
+                        <button onclick="startMeditation('energy1')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Breath of Fire</h3>
+                        <p>Practice rapid, rhythmic breathing to boost energy.</p>
+                        <button onclick="startMeditation('energy2')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Light Visualization</h3>
+                        <p>Imagine a warm light filling your body with vitality.</p>
+                        <button onclick="startMeditation('energy3')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Power Pose</h3>
+                        <p>Stand tall and imagine yourself full of strength.</p>
+                        <button onclick="startMeditation('energy4')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Affirmations</h3>
+                        <p>Repeat positive affirmations like 'I am strong'.</p>
+                        <button onclick="startMeditation('energy5')">Start Session (2 min)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Clarity Meditations -->
+        <div class="section">
+            <h2 onclick="toggleSection('clarity')">Clarity Meditations</h2>
+            <div id="clarity-content" class="section-content">
+                <p>Clear your mind and gain insight with these exercises.</p>
+                <div class="exercise-grid">
+                    <div class="exercise-card">
+                        <h3>Clear Mind</h3>
+                        <p>Imagine a clear, calm lake reflecting your thoughts.</p>
+                        <button onclick="startMeditation('clarity1')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Thought Release</h3>
+                        <p>Let go of thoughts like leaves floating down a stream.</p>
+                        <button onclick="startMeditation('clarity2')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Focus Anchor</h3>
+                        <p>Anchor your mind to a single point, like a candle flame.</p>
+                        <button onclick="startMeditation('clarity3')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Open Awareness</h3>
+                        <p>Open your mind to all sensations without focusing on one.</p>
+                        <button onclick="startMeditation('clarity4')">Start Session (2 min)</button>
+                    </div>
+                    <div class="exercise-card">
+                        <h3>Insight Meditation</h3>
+                        <p>Reflect on a question: What brings me clarity?</p>
+                        <button onclick="startMeditation('clarity5')">Start Session (2 min)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Meditation Prompt -->
+    <div id="relax1-prompt" class="meditation-prompt">Imagine a peaceful beach. Hear gentle waves, feel warm sand, breathe deeply.</div>
+    <div id="relax2-prompt" class="meditation-prompt">Walk through a lush forest. Smell fresh air, hear birds, relax with each step.</div>
+    <div id="relax3-prompt" class="meditation-prompt">Watch clouds drift in a blue sky. Let your worries float away.</div>
+    <div id="relax4-prompt" class="meditation-prompt">Listen to soft rain. Feel it wash away your stress.</div>
+    <div id="relax5-prompt" class="meditation-prompt">Watch a glowing sunset. Let its colors bring peace.</div>
+    
+    <div id="focus1-prompt" class="meditation-prompt">Count each breath to 10, then repeat.</div>
+    <div id="focus2-prompt" class="meditation-prompt">Study an object's details: shape, color, texture.</div>
+    <div id="focus3-prompt" class="meditation-prompt">Repeat 'focus now' silently in your mind.</div>
+    <div id="focus4-prompt" class="meditation-prompt">Listen to a single sound, like a clock ticking.</div>
+    <div id="focus5-prompt" class="meditation-prompt">Scan your body from toes to head, noting sensations.</div>
+    
+    <!-- Add more prompts for other categories as needed -->
+
+    <script>
+        // Progress management
+        let progress = JSON.parse(localStorage.getItem('meditationProgress')) || [];
+
+        function updateProgress() {
+            const list = document.getElementById('progress-list');
+            list.innerHTML = '';
+            
+            if (progress.length === 0) {
+                const emptyMessage = document.createElement('div');
+                emptyMessage.className = 'progress-item';
+                emptyMessage.textContent = 'No sessions completed yet. Start your journey!';
+                list.appendChild(emptyMessage);
+                return;
+            }
+            
+            progress.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'progress-item';
+                div.innerHTML = `<strong>${item.exercise}</strong> completed on ${item.date}`;
+                list.appendChild(div);
+            });
+        }
+
+        function addToProgress(exercise) {
+            const date = new Date().toLocaleString();
+            progress.push({ exercise, date });
+            localStorage.setItem('meditationProgress', JSON.stringify(progress));
+            updateProgress();
+        }
+
+        function clearProgress() {
+            if (confirm('Are you sure you want to clear all progress?')) {
+                progress = [];
+                localStorage.removeItem('meditationProgress');
+                updateProgress();
+            }
+        }
+
+        // Initialize progress display
+        updateProgress();
+
+        // Toggle section visibility
+        function toggleSection(id) {
+            const content = document.getElementById(`${id}-content`);
+            const section = content.parentElement;
+            const isActive = content.classList.contains('active');
+            
+            // Toggle current section
+            if (!isActive) {
+                content.classList.add('active');
+                section.classList.add('active');
+            } else {
+                content.classList.remove('active');
+                section.classList.remove('active');
+            }
+        }
+
+        // Start meditation session
+        function startMeditation(id) {
+            // Hide all prompts and questions
+            document.querySelectorAll('.meditation-prompt').forEach(prompt => {
+                prompt.style.display = 'none';
+            });
+            document.querySelectorAll('.questions').forEach(questions => {
+                questions.style.display = 'none';
+            });
+            document.querySelectorAll('.advice').forEach(advice => {
+                advice.style.display = 'none';
+            });
+
+            // Show selected prompt
+            const prompt = document.getElementById(`${id}-prompt`);
+            const timerElem = document.createElement('div');
+            timerElem.className = 'timer';
+            prompt.appendChild(timerElem);
+            
+            const questions = document.createElement('div');
+            questions.className = 'questions';
+            questions.innerHTML = `
+                <p>How relaxed do you feel? (1-10)</p>
+                <input type="number" id="${id}-q1" min="1" max="10">
+                <p>Any distracting thoughts?</p>
+                <select id="${id}-q2">
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+                <button onclick="submitAnswers('${id}')">Submit</button>
+            `;
+            prompt.appendChild(questions);
+            
+            const advice = document.createElement('div');
+            advice.className = 'advice';
+            advice.id = `${id}-advice`;
+            prompt.appendChild(advice);
+            
+            prompt.style.display = 'flex';
+            questions.style.display = 'none';
+
+            // Initialize timer (2 minutes = 120 seconds)
+            let timeLeft = 120;
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElem.textContent = `Time left: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            // Start countdown
+            const timer = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                
+                timerElem.textContent = `Time left: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    // End session
+                    timerElem.textContent = 'Session Complete!';
+                    questions.style.display = 'block';
+                    
+                    // Add to progress
+                    const exerciseTitle = document.querySelector(`[onclick="startMeditation('${id}')"]`).parentElement.querySelector('h3').textContent;
+                    addToProgress(exerciseTitle);
+                }
+            }, 1000);
+        }
+
+        // Submit answers and generate advice
+        function submitAnswers(id) {
+            const q1 = document.getElementById(`${id}-q1`).value;
+            const q2 = document.getElementById(`${id}-q2`).value;
+            const adviceElem = document.getElementById(`${id}-advice`);
+            const questions = document.querySelector(`#${id}-prompt .questions`);
+            const prompt = document.getElementById(`${id}-prompt`);
+            
+            if (!q1 || !q2) {
+                alert('Please answer both questions before submitting.');
+                return;
+            }
+
+            let advice = '';
+            
+            // Generate advice based on category and answers
+            if (id.startsWith('relax')) {
+                if (q1 >= 7 && q2 === 'no') {
+                    advice = 'Wonderful! You seem very relaxed. Keep practicing daily.';
+                } else if (q1 < 5 || q2 === 'yes') {
+                    advice = 'Distractions are normal. Try a quieter space next time.';
+                } else {
+                    advice = 'Good progress! Focus on deeper breaths.';
+                }
+            } else if (id.startsWith('focus')) {
+                if (q1 >= 7 && q2 === 'no') {
+                    advice = 'Great focus! You\'re building strong concentration.';
+                } else if (q1 < 5 || q2 === 'yes') {
+                    advice = 'Keep practicing, try shorter sessions if needed.';
+                } else {
+                    advice = 'Nice effort! Minimize distractions around you.';
+                }
+            } else if (id.startsWith('sleep')) {
+                if (q1 >= 7 && q2 === 'no') {
+                    advice = 'Ready for sleep! Sweet dreams.';
+                } else if (q1 < 5 || q2 === 'yes') {
+                    advice = 'Write down worries before bed to clear your mind.';
+                } else {
+                    advice = 'Great start! Use dim lighting for better sleep.';
+                }
+            } else if (id.startsWith('mindful')) {
+                if (q1 >= 7 && q2 === 'no') {
+                    advice = 'You\'re very present! Keep practicing mindfulness daily.';
+                } else if (q1 < 5 || q2 === 'yes') {
+                    advice = 'Wandering thoughts are normal. Gently return to the present.';
+                } else {
+                    advice = 'Good effort! Try focusing on one sense at a time.';
+                }
+            } else if (id.startsWith('gratitude')) {
+                if (q1 >= 7 && q2 === 'no') {
+                    advice = 'Your gratitude shines! Keep reflecting daily.';
+                } else if (q1 < 5 || q2 === 'yes') {
+                    advice = 'Challenges are okay. Try noting small joys.';
+                } else {
+                    advice = 'Nice work! Deepen your practice with journaling.';
+                }
+            } else if (id.startsWith('energy')) {
+                if (q1 >= 7 && q2 === 'no') {
+                    advice = 'You\'re energized! Keep this vibrant practice going.';
+                } else if (q1 < 5 || q2 === 'yes') {
+                    advice = 'Fatigue is normal. Try shorter, frequent sessions.';
+                } else {
+                    advice = 'Great start! Pair with light movement for more energy.';
+                }
+            } else if (id.startsWith('clarity')) {
+                if (q1 >= 7 && q2 === 'no') {
+                    advice = 'Your mind is clear! Continue this practice for insight.';
+                } else if (q1 < 5 || q2 === 'yes') {
+                    advice = 'Mental fog is normal. Try a quiet space to focus.';
+                } else {
+                    advice = 'Good progress! Use a single focus point to enhance clarity.';
+                }
+            }
+
+            // Display advice
+            adviceElem.textContent = advice;
+            adviceElem.style.display = 'block';
+            questions.style.display = 'none';
+
+            // Reset form
+            document.getElementById(`${id}-q1`).value = '';
+            document.getElementById(`${id}-q2`).value = '';
+            
+            // Close prompt after 5 seconds
+            setTimeout(() => {
+                prompt.style.display = 'none';
+                // Remove dynamically added elements
+                prompt.querySelector('.timer').remove();
+                prompt.querySelector('.questions').remove();
+                prompt.querySelector('.advice').remove();
+            }, 5000);
+        }
+
+        // Add keyboard support for better accessibility
+        document.addEventListener('keydown', (e) => {
+            // Escape key to close prompts
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.meditation-prompt').forEach(prompt => {
+                    prompt.style.display = 'none';
+                    // Remove dynamically added elements
+                    const timer = prompt.querySelector('.timer');
+                    const questions = prompt.querySelector('.questions');
+                    const advice = prompt.querySelector('.advice');
+                    if (timer) timer.remove();
+                    if (questions) questions.remove();
+                    if (advice) advice.remove();
+                });
+            }
+            
+            // Enter key to submit forms
+            if (e.key === 'Enter' && e.target.tagName === 'BUTTON') {
+                e.target.click();
+            }
+        });
+
+        // Add click outside to close prompts
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('meditation-prompt')) {
+                e.target.style.display = 'none';
+                // Remove dynamically added elements
+                const timer = e.target.querySelector('.timer');
+                const questions = e.target.querySelector('.questions');
+                const advice = e.target.querySelector('.advice');
+                if (timer) timer.remove();
+                if (questions) questions.remove();
+                if (advice) advice.remove();
+            }
+        });
+
+        console.log('Meditation App initialized successfully!');
+        // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+    </script>
+</body>
+</html>

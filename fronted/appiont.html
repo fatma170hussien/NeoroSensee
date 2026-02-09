@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroSense AI | Daily Activity Tracking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #dbeafe;
+            --secondary: #059669;
+            --secondary-light: #d1fae5;
+            --accent: #7c3aed;
+            --accent-light: #ede9fe;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gray-light: #e2e8f0;
+            --danger: #dc2626;
+            --warning: #d97706;
+            --success: #059669;
+            --border-radius: 12px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, var(--primary) 0%, #1e40af 100%);
+            color: white;
+            padding: 24px 0;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            padding: 0 24px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 24px;
+        }
+
+        .logo i {
+            font-size: 28px;
+            margin-right: 12px;
+            color: #93c5fd;
+        }
+
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0 16px;
+        }
+
+        .nav-links li {
+            margin-bottom: 8px;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            padding: 14px 16px;
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .nav-links i {
+            margin-right: 12px;
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .header h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        /* AI Status Card */
+        .ai-status-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            border-radius: var(--border-radius);
+            padding: 24px;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-status-content h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .ai-status-content p {
+            opacity: 0.9;
+            margin-bottom: 16px;
+            max-width: 600px;
+        }
+
+        .ai-pulse {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .pulse-dot {
+            width: 12px;
+            height: 12px;
+            background-color: #10b981;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.7; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.7; }
+        }
+
+        /* Main Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        /* Daily Activity Section */
+        .daily-activity {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        .ai-analysis-box {
+            background: var(--primary-light);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .analysis-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .confidence-meter {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .confidence-value {
+            font-weight: 600;
+            color: var(--success);
+        }
+
+        .symptoms-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .symptom-tag {
+            background: var(--primary-light);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .symptom-tag i {
+            color: var(--primary);
+            font-size: 12px;
+        }
+
+        .ai-recommendation {
+            background: var(--secondary-light);
+            border-left: 4px solid var(--secondary);
+            padding: 16px;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+            margin-top: 16px;
+        }
+
+        /* Progress Tracking */
+        .progress-tracking {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .plan-stages {
+            display: flex;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .plan-stages::before {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gray-light);
+            z-index: 1;
+        }
+
+        .stage {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stage-indicator {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-weight: 600;
+        }
+
+        .stage.active .stage-indicator {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .stage.completed .stage-indicator {
+            background: var(--success);
+            color: white;
+            border-color: var(--success);
+        }
+
+        .stage-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* Daily Progress */
+        .daily-progress {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .date-selector {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .date-nav {
+            display: flex;
+            gap: 8px;
+        }
+
+        .date-nav button {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gray-light);
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .date-nav button:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .progress-form {
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-success:hover {
+            background: #047857;
+        }
+
+        /* Progress History */
+        .progress-history {
+            margin-top: 24px;
+        }
+
+        .history-item {
+            background: var(--light);
+            border-radius: var(--border-radius);
+            padding: 16px;
+            margin-bottom: 16px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .history-date {
+            font-weight: 600;
+        }
+
+        .history-content {
+            color: var(--gray);
+        }
+
+        /* Right Sidebar */
+        .right-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .stats-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+        }
+
+        .stats-card h3 {
+            font-size: 18px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stats-card h3 i {
+            color: var(--primary);
+        }
+
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .stat:last-child {
+            border-bottom: none;
+        }
+
+        .stat-value {
+            font-weight: 600;
+        }
+
+        .ai-insights {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+        }
+
+        .insight-item {
+            padding: 16px;
+            background: var(--primary-light);
+            border-radius: var(--border-radius);
+            margin-bottom: 16px;
+        }
+
+        .insight-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .insight-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .insight-header i {
+            color: var(--primary);
+        }
+
+        /* Progress Bar */
+        .progress-bar-container {
+            margin: 20px 0;
+        }
+
+        .progress-bar {
+            height: 12px;
+            background-color: var(--gray-light);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--success);
+            border-radius: 6px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+            }
+            
+            .nav-links {
+                display: flex;
+                overflow-x: auto;
+                padding-bottom: 16px;
+            }
+            
+            .nav-links li {
+                margin-bottom: 0;
+                margin-right: 8px;
+            }
+            
+            .plan-stages {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .plan-stages::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <h1>NeuroSense AI</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-stethoscope"></i> Activity Tracking</a></li>
+                <li><a href="#"><i class="fas fa-pills"></i> Progress Plan</a></li>
+                <li><a href="#"><i class="fas fa-chart-line"></i> Progress Tracking</a></li>
+                <li><a href="#"><i class="fas fa-file-medical"></i> Activity History</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h2>Daily Activity & Progress Tracking</h2>
+                <div class="user-info">
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="user-avatar">JD</div>
+                </div>
+            </div>
+
+            <!-- AI Status Card -->
+            <div class="ai-status-card">
+                <div class="ai-status-content">
+                    <h3>Activity Tracker Active</h3>
+                    <p>Track your daily activities and progress to build a comprehensive record of your wellness journey.</p>
+                    <div class="ai-pulse">
+                        <div class="pulse-dot"></div>
+                        <span>Ready to track your activities</span>
+                    </div>
+                </div>
+                <div class="ai-status-icon">
+                    <i class="fas fa-robot fa-3x"></i>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <!-- Left Column -->
+                <div class="left-column">
+                    <!-- Daily Activity Section -->
+                    <div class="daily-activity">
+                        <div class="section-header">
+                            <h3 class="section-title"><i class="fas fa-tasks"></i> Daily Activity Tracking</h3>
+                            <div class="confidence-meter">
+                                <span>Consistency:</span>
+                                <span class="confidence-value" id="consistency-value">75%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="ai-analysis-box">
+                            <div class="analysis-header">
+                                <h4>Activity Analysis</h4>
+                                <span class="analysis-date" id="current-date">Today, October 30, 2025</span>
+                            </div>
+                            <p>Track your daily activities to monitor your progress over time. Your data is stored securely in your browser and never deleted.</p>
+                            
+                            <div class="symptoms-list">
+                                <div class="symptom-tag"><i class="fas fa-check-circle"></i> Physical Activity</div>
+                                <div class="symptom-tag"><i class="fas fa-check-circle"></i> Mental Wellness</div>
+                                <div class="symptom-tag"><i class="fas fa-check-circle"></i> Nutrition</div>
+                                <div class="symptom-tag"><i class="fas fa-check-circle"></i> Sleep Quality</div>
+                            </div>
+                            
+                            <div class="ai-recommendation">
+                                <h4><i class="fas fa-robot"></i> Tracking Tip</h4>
+                                <p>Be consistent with your daily entries. The more data you provide, the better insights you'll gain about your progress patterns.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Progress Tracking -->
+                    <div class="progress-tracking">
+                        <div class="section-header">
+                            <h3 class="section-title"><i class="fas fa-map-marked-alt"></i> Your Progress Journey</h3>
+                            <div class="progress-indicator">
+                                <span id="overall-progress">Progress: 60%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-bar-container">
+                            <div class="progress-bar">
+                                <div class="progress-bar-fill" id="progress-fill" style="width: 60%"></div>
+                            </div>
+                            <div class="progress-text">
+                                <span>Start</span>
+                                <span id="progress-percentage">60%</span>
+                                <span>Goal</span>
+                            </div>
+                        </div>
+                        
+                        <div class="plan-stages">
+                            <div class="stage completed">
+                                <div class="stage-indicator">1</div>
+                                <div class="stage-title">Getting Started</div>
+                            </div>
+                            <div class="stage completed">
+                                <div class="stage-indicator">2</div>
+                                <div class="stage-title">Building Habits</div>
+                            </div>
+                            <div class="stage active">
+                                <div class="stage-indicator">3</div>
+                                <div class="stage-title">Consistent Tracking</div>
+                            </div>
+                            <div class="stage">
+                                <div class="stage-indicator">4</div>
+                                <div class="stage-title">Advanced Insights</div>
+                            </div>
+                            <div class="stage">
+                                <div class="stage-indicator">5</div>
+                                <div class="stage-title">Mastery</div>
+                            </div>
+                        </div>
+                        
+                        <div class="current-focus">
+                            <h4>Current Focus: Consistent Daily Tracking</h4>
+                            <p>Your current progress phase focuses on building the habit of daily activity tracking to establish a comprehensive record of your wellness journey.</p>
+                            <ul>
+                                <li>Log your activities daily</li>
+                                <li>Note any challenges or successes</li>
+                                <li>Track your mood and energy levels</li>
+                                <li>Review your progress weekly</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Daily Progress -->
+                    <div class="daily-progress">
+                        <div class="progress-header">
+                            <h3 class="section-title"><i class="fas fa-calendar-day"></i> Today's Activity Log</h3>
+                            <div class="date-selector">
+                                <div class="date-nav">
+                                    <button id="prev-day"><i class="fas fa-chevron-left"></i></button>
+                                    <button id="next-day"><i class="fas fa-chevron-right"></i></button>
+                                </div>
+                                <span id="display-date">October 30, 2025</span>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-form">
+                            <div class="form-group">
+                                <label for="activities">Today's Activities</label>
+                                <textarea class="form-control" id="activities" placeholder="Describe what you did today, exercises, work, hobbies, etc..."></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="achievements">Achievements & Challenges</label>
+                                <input type="text" class="form-control" id="achievements" placeholder="What went well? What was challenging?">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="mood">Mood & Energy Level</label>
+                                <select class="form-control" id="mood">
+                                    <option value="">Select your overall mood today</option>
+                                    <option value="excellent">Excellent - High energy, positive mood</option>
+                                    <option value="good">Good - Normal energy, stable mood</option>
+                                    <option value="fair">Fair - Low energy, some challenges</option>
+                                    <option value="poor">Poor - Very low energy, difficult day</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="notes">Additional Notes</label>
+                                <textarea class="form-control" id="notes" placeholder="Any other observations, insights, or goals for tomorrow..."></textarea>
+                            </div>
+                            
+                            <button class="btn btn-success btn-block" id="save-progress"><i class="fas fa-save"></i> Save Today's Activities</button>
+                        </div>
+                        
+                        <div class="progress-history">
+                            <h4>Recent Activity Logs</h4>
+                            <div id="history-container">
+                                <!-- History items will be dynamically added here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar -->
+                <div class="right-sidebar">
+                    <div class="stats-card">
+                        <h3><i class="fas fa-chart-bar"></i> Activity Statistics</h3>
+                        <div class="stat">
+                            <span>Tracking Consistency</span>
+                            <span class="stat-value" id="tracking-consistency">75%</span>
+                        </div>
+                        <div class="stat">
+                            <span>Days Tracked</span>
+                            <span class="stat-value" id="days-tracked">18/30</span>
+                        </div>
+                        <div class="stat">
+                            <span>Positive Days</span>
+                            <span class="stat-value" id="positive-days">65%</span>
+                        </div>
+                        <div class="stat">
+                            <span>Total Entries</span>
+                            <span class="stat-value" id="total-entries">64</span>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-insights">
+                        <h3><i class="fas fa-lightbulb"></i> Activity Insights</h3>
+                        <div class="insight-item">
+                            <div class="insight-header">
+                                <i class="fas fa-clock"></i>
+                                <h4>Consistency Pattern</h4>
+                            </div>
+                            <p>You're most consistent with tracking on weekdays. Try setting a reminder for weekends to maintain your streak.</p>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-header">
+                                <i class="fas fa-utensils"></i>
+                                <h4>Activity Correlation</h4>
+                            </div>
+                            <p>Days with physical activity in the morning show 40% higher energy levels throughout the day.</p>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-header">
+                                <i class="fas fa-running"></i>
+                                <h4>Positive Trend</h4>
+                            </div>
+                            <p>Your activity consistency has improved by 25% over the last month. Keep up the good work!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Activity Tracking System
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize date
+            let currentDate = new Date();
+            let viewingDate = new Date();
+            
+            // DOM Elements
+            const saveButton = document.getElementById('save-progress');
+            const prevButton = document.getElementById('prev-day');
+            const nextButton = document.getElementById('next-day');
+            const displayDate = document.getElementById('display-date');
+            const currentDateElement = document.getElementById('current-date');
+            const historyContainer = document.getElementById('history-container');
+            
+            // Statistics elements
+            const trackingConsistency = document.getElementById('tracking-consistency');
+            const daysTracked = document.getElementById('days-tracked');
+            const positiveDays = document.getElementById('positive-days');
+            const totalEntries = document.getElementById('total-entries');
+            const consistencyValue = document.getElementById('consistency-value');
+            const overallProgress = document.getElementById('overall-progress');
+            const progressPercentage = document.getElementById('progress-percentage');
+            const progressFill = document.getElementById('progress-fill');
+            
+            // Format date as string
+            function formatDate(date) {
+                return date.toLocaleDateString('en-US', { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                });
+            }
+            
+            // Format date as key for storage
+            function formatDateKey(date) {
+                return date.toISOString().split('T')[0];
+            }
+            
+            // Update displayed date
+            function updateDisplayDate() {
+                displayDate.textContent = formatDate(viewingDate);
+                currentDateElement.textContent = `Today, ${formatDate(currentDate)}`;
+                
+                // Load data for the currently viewed date
+                loadDateData();
+            }
+            
+            // Load activity data for the current viewing date
+            function loadDateData() {
+                const dateKey = formatDateKey(viewingDate);
+                const activitiesData = getStoredData();
+                
+                if (activitiesData[dateKey]) {
+                    document.getElementById('activities').value = activitiesData[dateKey].activities || '';
+                    document.getElementById('achievements').value = activitiesData[dateKey].achievements || '';
+                    document.getElementById('mood').value = activitiesData[dateKey].mood || '';
+                    document.getElementById('notes').value = activitiesData[dateKey].notes || '';
+                } else {
+                    // Clear form if no data for this date
+                    document.getElementById('activities').value = '';
+                    document.getElementById('achievements').value = '';
+                    document.getElementById('mood').value = '';
+                    document.getElementById('notes').value = '';
+                }
+                
+                // Update history display
+                updateHistoryDisplay();
+                
+                // Update statistics
+                updateStatistics();
+            }
+            
+            // Get all stored data from localStorage
+            function getStoredData() {
+                const storedData = localStorage.getItem('neuroSenseActivities');
+                return storedData ? JSON.parse(storedData) : {};
+            }
+            
+            // Save data to localStorage
+            function saveData(data) {
+                localStorage.setItem('neuroSenseActivities', JSON.stringify(data));
+            }
+            
+            // Save progress for current date
+            function saveProgress() {
+                const dateKey = formatDateKey(viewingDate);
+                const activities = document.getElementById('activities').value;
+                const achievements = document.getElementById('achievements').value;
+                const mood = document.getElementById('mood').value;
+                const notes = document.getElementById('notes').value;
+                
+                if (!activities && !achievements && !mood && !notes) {
+                    alert('Please fill in at least one field before saving.');
+                    return;
+                }
+                
+                const activitiesData = getStoredData();
+                
+                activitiesData[dateKey] = {
+                    activities,
+                    achievements,
+                    mood,
+                    notes,
+                    timestamp: new Date().toISOString()
+                };
+                
+                saveData(activitiesData);
+                
+                alert('Your activities have been saved! This entry is stored permanently in your browser.');
+                
+                // Update statistics and history
+                updateStatistics();
+                updateHistoryDisplay();
+            }
+            
+            // Update the history display
+            function updateHistoryDisplay() {
+                const activitiesData = getStoredData();
+                const dates = Object.keys(activitiesData).sort().reverse().slice(0, 5);
+                
+                historyContainer.innerHTML = '';
+                
+                if (dates.length === 0) {
+                    historyContainer.innerHTML = '<p>No activity history yet. Start tracking your daily activities!</p>';
+                    return;
+                }
+                
+                dates.forEach(date => {
+                    const entry = activitiesData[date];
+                    const entryDate = new Date(date);
+                    const historyItem = document.createElement('div');
+                    historyItem.className = 'history-item';
+                    
+                    let moodText = '';
+                    if (entry.mood === 'excellent') moodText = 'Mood: Excellent';
+                    else if (entry.mood === 'good') moodText = 'Mood: Good';
+                    else if (entry.mood === 'fair') moodText = 'Mood: Fair';
+                    else if (entry.mood === 'poor') moodText = 'Mood: Poor';
+                    
+                    historyItem.innerHTML = `
+                        <div class="history-header">
+                            <span class="history-date">${formatDate(entryDate)}</span>
+                            <span class="history-mood">${moodText}</span>
+                        </div>
+                        <div class="history-content">
+                            <p>${entry.activities || 'No activities recorded'}</p>
+                            ${entry.achievements ? `<p><strong>Achievements:</strong> ${entry.achievements}</p>` : ''}
+                        </div>
+                    `;
+                    
+                    historyContainer.appendChild(historyItem);
+                });
+            }
+            
+            // Update statistics
+            function updateStatistics() {
+                const activitiesData = getStoredData();
+                const dates = Object.keys(activitiesData);
+                const totalDays = dates.length;
+                
+                // Calculate days in current month
+                const now = new Date();
+                const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+                const daysSoFar = now.getDate();
+                
+                // Calculate tracking consistency (percentage of days tracked this month)
+                const thisMonthEntries = dates.filter(date => {
+                    const entryDate = new Date(date);
+                    return entryDate.getMonth() === now.getMonth() && 
+                           entryDate.getFullYear() === now.getFullYear();
+                }).length;
+                
+                const consistency = Math.round((thisMonthEntries / daysSoFar) * 100);
+                
+                // Calculate positive days (days with good or excellent mood)
+                let positiveCount = 0;
+                dates.forEach(date => {
+                    const entry = activitiesData[date];
+                    if (entry.mood === 'good' || entry.mood === 'excellent') {
+                        positiveCount++;
+                    }
+                });
+                
+                const positivePercentage = totalDays > 0 ? Math.round((positiveCount / totalDays) * 100) : 0;
+                
+                // Update UI with statistics
+                trackingConsistency.textContent = `${consistency}%`;
+                daysTracked.textContent = `${thisMonthEntries}/${daysSoFar}`;
+                positiveDays.textContent = `${positivePercentage}%`;
+                totalEntries.textContent = totalDays;
+                consistencyValue.textContent = `${consistency}%`;
+                
+                // Update progress
+                const progress = Math.min(consistency, 100);
+                overallProgress.textContent = `Progress: ${progress}%`;
+                progressPercentage.textContent = `${progress}%`;
+                progressFill.style.width = `${progress}%`;
+            }
+            
+            // Event Listeners
+            saveButton.addEventListener('click', saveProgress);
+            
+            prevButton.addEventListener('click', function() {
+                viewingDate.setDate(viewingDate.getDate() - 1);
+                updateDisplayDate();
+            });
+            
+            nextButton.addEventListener('click', function() {
+                viewingDate.setDate(viewingDate.getDate() + 1);
+                // Don't allow navigating to future dates
+                if (viewingDate > currentDate) {
+                    viewingDate = new Date(currentDate);
+                }
+                updateDisplayDate();
+            });
+            
+            // Initialize the dashboard
+            updateDisplayDate();
+        });
+        // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+    </script>
+</body>
+</html>

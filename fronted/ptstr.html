@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PTSD Research: Understanding Post-Traumatic Stress Disorder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      line-height: 1.8;
+      background: #f5f5f5;
+      color: #333;
+      overflow-x: hidden;
+      font-size: 18px;
+      background-image: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      background-color: white;
+      box-shadow: 0 0 30px rgba(0,0,0,0.1);
+      border-radius: 5px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: #2c3e50;
+      text-align: center;
+      margin: 40px 0;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #e74c3c;
+      position: relative;
+    }
+
+    h1:after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: #3498db;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: #2c3e50;
+      margin: 40px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: #2c3e50;
+      margin: 30px 0 15px;
+    }
+
+    h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: #2c3e50;
+      margin: 25px 0 15px;
+    }
+
+    .article-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-bottom: 60px;
+      align-items: flex-start;
+    }
+
+    .article-section:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .text {
+      flex: 2;
+      min-width: 300px;
+      padding: 20px;
+    }
+
+    p {
+      margin-bottom: 25px;
+      color: #555;
+      font-size: 1.1rem;
+      text-align: justify;
+    }
+
+    ul, ol {
+      margin-left: 40px;
+      margin-bottom: 25px;
+    }
+
+    li {
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    .abstract {
+      background-color: #f8f9fa;
+      padding: 25px;
+      border-radius: 8px;
+      margin-bottom: 40px;
+      border-left: 5px solid #3498db;
+    }
+
+    .abstract h2 {
+      margin-top: 0;
+      color: #3498db;
+    }
+
+    .author {
+      margin-top: 60px;
+      font-weight: 600;
+      text-align: right;
+      color: #2c3e50;
+      font-size: 1.2rem;
+      font-style: italic;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+
+    .caption {
+      text-align: center;
+      margin-top: 10px;
+      color: #7f8c8d;
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    /* نظام الصور المحدث - نفس نظام كود الاكتئاب */
+    .image-container {
+      flex: 1;
+      min-width: 300px;
+      max-width: 500px;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.5s ease;
+      opacity: 0;
+      transform: translateY(30px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .image-container.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .image-container:hover {
+      transform: scale(1.02) translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+
+    .image-container img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .research-highlights {
+      background-color: #e8f4f8;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 30px 0;
+      border-left: 5px solid #2c3e50;
+    }
+
+    .research-highlights h3 {
+      color: #2c3e50;
+      margin-top: 0;
+    }
+
+    .treatment-section {
+      background-color: #f0f8f0;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 30px 0;
+      border-left: 5px solid #27ae60;
+    }
+
+    .treatment-section h3 {
+      color: #27ae60;
+      margin-top: 0;
+    }
+
+    .symptoms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .symptom-category {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #e74c3c;
+    }
+
+    .symptom-category h4 {
+      margin-top: 0;
+      color: #e74c3c;
+    }
+
+    .statistics-box {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 25px 0;
+      text-align: center;
+    }
+
+    .statistics-box h3 {
+      color: white;
+      margin-top: 0;
+    }
+
+    .stat-item {
+      margin: 15px 0;
+      font-size: 1.1rem;
+    }
+
+    @media(max-width: 768px) {
+      .article-section, 
+      .article-section:nth-child(even) {
+        flex-direction: column;
+      }
+      
+      .image-container {
+        max-width: 100%;
+      }
+      
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      h2 {
+        font-size: 1.8rem;
+      }
+      
+      .symptoms-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Floating image effect */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .floating-img {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .specifier-list {
+      columns: 2;
+      column-gap: 40px;
+    }
+
+    .specifier-list li {
+      break-inside: avoid;
+    }
+
+    @media(max-width: 768px) {
+      .specifier-list {
+        columns: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>PTSD: Understanding Post-Traumatic Stress Disorder</h1>
+
+    <div class="abstract">
+      <h2>Overview</h2>
+      <p>Post-traumatic stress disorder (PTSD) is a common mental health condition that can develop after a traumatic event. It involves symptoms like flashbacks, anxiety, negative thoughts and beliefs, hypervigilance and more. The main treatment for PTSD is psychotherapy (talk therapy).</p>
+      <p>PTSD (post-traumatic stress disorder) is a mental health condition that some people develop after they experience or witness a traumatic event. The traumatic event may be life-threatening or pose a significant threat to your physical, emotional or spiritual well-being. PTSD affects people of all ages.</p>
+    </div>
+
+    <h2>Introduction to PTSD</h2>
+
+    <div class="article-section">
+      <div class="text">
+        <h3>What is PTSD?</h3>
+        <p>People with PTSD have intense and intrusive thoughts and feelings related to the experience that lasted long after the event. PTSD involves stress responses like anxiety, depressed mood, or feelings of guilt or shame, flashbacks or nightmares, and avoiding situations, places and activities related to the traumatic event. These symptoms cause distress and interfere with your daily functioning.</p>
+        <p>Posttraumatic stress disorder (PTSD) is a mental health problem. PTSD can only develop after you go through or see a life-threatening event. It's normal to have stress reactions to these types of events, and most people start to feel better after a few weeks. If symptoms last longer than a month and are causing problems in your life, it could be PTSD.</p>
+      </div>
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="PTSD Brain Activity">
+        </div>
+        <div class="caption">Figure 1: Neural correlates of PTSD showing altered brain activity patterns</div>
+      </div>
+    </div>
+
+    <div class="article-section">
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Trauma Response">
+        </div>
+        <div class="caption">Figure 2: Normal vs. pathological response to traumatic events</div>
+      </div>
+      <div class="text">
+        <h3>Normal Response vs. PTSD</h3>
+        <p>It's normal to have upsetting memories, feel on edge, or have trouble sleeping after a traumatic event (also called "trauma"). At first, it may be hard to do daily activities you are used to doing. Going to work or school, even spending time with people you care about, can feel difficult right after a traumatic event. But most people start to feel better after a few weeks. For some people, PTSD symptoms may start later, or they may come and go over time.</p>
+        <p>If it's been longer than a month and thoughts and feelings from the trauma are upsetting you or causing problems in your life, you may have PTSD. Anyone can develop PTSD at any age.</p>
+      </div>
+    </div>
+
+    <div class="statistics-box">
+      <h3>Global PTSD Statistics</h3>
+      <div class="stat-item">Around 70% of people globally will experience a potentially traumatic event during their lifetime</div>
+      <div class="stat-item">Only 5.6% will go on to develop PTSD</div>
+      <div class="stat-item">An estimated 3.9% of the world population has experienced PTSD at some point</div>
+      <div class="stat-item">PTSD rates are more than three times higher (15.3%) among people exposed to violent conflict or war</div>
+      <div class="stat-item">Up to 40% of people with PTSD recover within one year</div>
+    </div>
+
+    <h2>Types of PTSD</h2>
+
+    <div class="article-section">
+      <div class="text">
+        <h3>Standard PTSD (Typical PTSD)</h3>
+        <p>This is the form that occurs after exposure to a sudden, single traumatic event, such as a car accident, an assault, a natural disaster, or an isolated act of violence. After the event, the person begins to experience symptoms as described previously, usually within an expected time frame. Trauma or PTSD symptoms can result from many different types of distressing experiences, including military combat, childhood neglect or abuse, racism, an accident, natural disaster, personal tragedy, or violence.</p>
+        
+        <h3>Complex PTSD (C-PTSD)</h3>
+        <p>Complex PTSD, also known as C-PTSD, is a mental health condition that can develop if you experience chronic (long-term) trauma. Examples of chronic trauma include long-term child physical or sexual abuse, long-term domestic violence, and war.</p>
+        <p>In this type, in addition to the traditional PTSD symptoms, deeper problems may appear, such as difficulty in regulating emotions, a persistent feeling of shame or guilt, identity disturbances, and constant struggles in relationships. People with C-PTSD typically have PTSD symptoms in addition to extensive issues with emotion regulation, sense of self, and relationships.</p>
+      </div>
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="PTSD Types Comparison">
+        </div>
+        <div class="caption">Figure 3: Comparison between standard PTSD and complex PTSD</div>
+      </div>
+    </div>
+
+    <h3>Acute Stress Disorder (ASD)</h3>
+    
+    <div class="article-section">
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Acute Stress Disorder">
+        </div>
+        <div class="caption">Figure 4: Timeline of Acute Stress Disorder development</div>
+      </div>
+      <div class="text">
+        <p>Sometimes considered a related condition, Acute Stress Disorder (ASD) is a short-term mental health condition that can occur within the first month after experiencing a traumatic event. If symptoms last longer than four weeks, the condition may meet the criteria for PTSD.</p>
+        <p>According to John W. Barnhill, MD, New York-Presbyterian Hospital, and Mark Zimmerman, MD, South County Psychiatry, acute stress disorder is a brief period of intrusive recollections occurring within 4 weeks of witnessing or experiencing an overwhelming traumatic event. Diagnosis is based on clinical criteria. Treatment focuses on self-care and psychotherapy.</p>
+        <p>Acute stress disorder (ASD) involves acute stress reactions that develop within 1 month of exposure to a traumatic event. These stress reactions include intrusive recollections of the trauma, avoidance of stimuli that reminds the patient of the trauma, negative mood, dissociative symptoms (including derealization and amnesia), avoidance of reminders, and increased arousal. If significant symptoms last more than 1 month, a diagnosis of posttraumatic stress disorder (PTSD) should be considered.</p>
+      </div>
+    </div>
+
+    <h2>Symptoms of PTSD</h2>
+
+    <div class="symptoms-grid">
+      <div class="symptom-category">
+        <h4>Re-Experiencing Symptoms</h4>
+        <ul>
+          <li>Intrusive, distressing memories or flashbacks</li>
+          <li>Nightmares related to trauma</li>
+          <li>Severe emotional distress when reminded of trauma</li>
+          <li>Physical reactions (pounding heart, nausea, sweating)</li>
+          <li>Feeling as if the event is happening again</li>
+        </ul>
+      </div>
+      
+      <div class="symptom-category">
+        <h4>Avoidance and Emotional Numbing</h4>
+        <ul>
+          <li>Avoiding activities, places, or thoughts related to trauma</li>
+          <li>Suppressing painful memories</li>
+          <li>Emotional detachment from surroundings and relationships</li>
+          <li>Loss of interest in previously enjoyed activities</li>
+          <li>Diminished ability to feel positive emotions</li>
+        </ul>
+      </div>
+      
+      <div class="symptom-category">
+        <h4>Negative Changes in Thinking and Mood</h4>
+        <ul>
+          <li>Persistent negative thoughts about self, others, or world</li>
+          <li>Feelings of guilt, shame, fear, or anger</li>
+          <li>Difficulty trusting others</li>
+          <li>Memory problems, especially about the trauma</li>
+          <li>Depression, hopelessness, and alienation</li>
+        </ul>
+      </div>
+
+      <div class="symptom-category">
+        <h4>Hyperarousal (Increased Reactivity)</h4>
+        <ul>
+          <li>Difficulty falling or staying asleep</li>
+          <li>Irritability and anger outbursts</li>
+          <li>Difficulty concentrating</li>
+          <li>Hypervigilance (constant alertness)</li>
+          <li>Exaggerated startle response</li>
+          <li>Reckless or self-destructive behaviors</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>PTSD in Children and Adolescents</h3>
+    
+    <div class="article-section">
+      <div class="text">
+        <p>Children and adolescents may exhibit PTSD symptoms differently from adults. Younger children might reenact the traumatic event through play, drawings, or stories. They may develop new phobias, lose previously acquired skills like toilet training, or have persistent fears of separation from parents.</p>
+        <p>Nightmares and sleep problems are frequent, and some children experience physical symptoms such as stomachaches or headaches without a medical cause. Older children may show irritability, aggression, or avoid behaviors similar to adults. Because these symptoms can resemble attention-deficit/hyperactivity disorder (ADHD), a specialist evaluation is essential for accurate diagnosis.</p>
+      </div>
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Childhood PTSD">
+        </div>
+        <div class="caption">Figure 5: Manifestation of PTSD symptoms in children and adolescents</div>
+      </div>
+    </div>
+
+    <h2>Causes and Risk Factors</h2>
+
+    <div class="article-section">
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Brain Changes in PTSD">
+        </div>
+        <div class="caption">Figure 6: Neurobiological changes associated with PTSD</div>
+      </div>
+      <div class="text">
+        <h3>Biological Factors</h3>
+        <p>Approximately 61% to 80% of people experience a traumatic event in their lifetime, and about 5% to 10% develop PTSD. The exact reason some individuals develop PTSD while others do not remain unclear, but research has identified biological differences in brain structure and chemistry.</p>
+        <p>People with PTSD often have abnormal levels of neurotransmitters and hormones—specifically, lower cortisol and higher corticotropin-releasing factor (CRF)—which activate the body's "fight or flight" response, increasing heart rate, blood pressure, and alertness.</p>
+        <p>Brain imaging studies show that individuals with PTSD often have a smaller hippocampus, a brain region that regulates memory and emotion. The amygdala, responsible for fear responses, becomes overactive, while the medial prefrontal cortex, which normally helps control the amygdala, becomes less responsive. These changes contribute to persistent fear, emotional dysregulation, and difficulty distinguishing safe from threatening situations.</p>
+      </div>
+    </div>
+
+    <h3>Risk Factors for Developing PTSD</h3>
+    <p>Several factors increase the likelihood of developing PTSD after trauma:</p>
+    <ul>
+      <li>Events that involve severe threats to life or personal safety (rape, assault, torture, war)</li>
+      <li>Previous traumatic experiences, especially during childhood</li>
+      <li>History of depression, anxiety, or substance abuse</li>
+      <li>Limited social support</li>
+      <li>Poor coping skills or high daily stress levels</li>
+      <li>Genetic predisposition</li>
+    </ul>
+
+    <h2>Treatment Approaches</h2>
+
+    <div class="treatment-section">
+      <h3>Psychotherapy</h3>
+      <p><strong>Trauma-focused cognitive-behavioral therapy (CBT)</strong> is the most evidence-based treatment for ASD and for preventing PTSD. This psychotherapy includes three key components:</p>
+      <ul>
+        <li><strong>Patient education:</strong> Normalization and explanation of the stress response and reassurance that symptoms should improve</li>
+        <li><strong>Cognitive restructuring:</strong> Correcting maladaptive thoughts about the trauma or personal responses to it</li>
+        <li><strong>Exposure therapy:</strong> Gradual re-exposure to traumatic memories or safe reminders to help the patient emotionally process overwhelming material</li>
+      </ul>
+      <p>Trauma-focused CBT is generally delayed for at least two weeks after trauma to allow initial crises to stabilize.</p>
+    </div>
+
+    <div class="article-section">
+      <div class="text">
+        <h3>Other Therapeutic Approaches</h3>
+        
+        <h4>EMDR (Eye Movement Desensitization and Reprocessing)</h4>
+        <p>EMDR incorporates elements of cognitive-behavioral therapy with eye movements or other forms of rhythmic, left-right stimulation, such as hand taps or sounds. It works by "unfreezing" the brain's information processing system, which is interrupted in times of extreme stress.</p>
+        
+        <h4>Family Therapy</h4>
+        <p>Family therapy can help your loved ones understand what you're going through and help you work through relationship problems together as a family.</p>
+        
+        <h4>Medication</h4>
+        <p>Medication is sometimes prescribed to people with PTSD to relieve secondary symptoms of depression or anxiety, although they do not treat the causes of PTSD.</p>
+      </div>
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="PTSD Treatments">
+        </div>
+        <div class="caption">Figure 7: Various therapeutic approaches for PTSD treatment</div>
+      </div>
+    </div>
+
+    <h3>Self-Care and Safety</h3>
+    <p>Safety and self-care are important for successful recovery from acute stress disorder (ASD) and PTSD. Self-care can be divided into three components:</p>
+    
+    <div class="symptoms-grid">
+      <div class="symptom-category">
+        <h4>Personal Safety</h4>
+        <p>After a traumatic episode, people are better able to process the experience when they know that they and their loved ones are safe. During ongoing crises (e.g., domestic abuse, war, pandemic), people should seek expert guidance to maintain safety.</p>
+      </div>
+      
+      <div class="symptom-category">
+        <h4>Physical Health</h4>
+        <p>Maintaining a healthy diet, sleeping, and exercise is essential. Sedating or intoxicating substances (e.g., benzodiazepines, alcohol) should be used sparingly, if at all. Practical support includes housing, legal, insurance, and logistical assistance.</p>
+      </div>
+      
+      <div class="symptom-category">
+        <h4>Mindfulness</h4>
+        <p>A mindful approach helps reduce stress, boredom, anger, sadness, and isolation. Following a normal daily schedule, engaging in hobbies, drawing, watching movies, cooking, stretching, and exercise can help. Techniques like counting breaths, meditating, or self-hypnosis are also beneficial.</p>
+      </div>
+    </div>
+
+    <h2>How to Help Someone with PTSD</h2>
+    
+    <div class="article-section">
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Supporting PTSD Recovery">
+        </div>
+        <div class="caption">Figure 8: Strategies for supporting individuals with PTSD</div>
+      </div>
+      <div class="text">
+        <p>If a loved one has post-traumatic stress disorder, it can take a heavy toll on your relationship and family life. It can be hard to understand why your loved one won't open to you why they are less affectionate and more volatile. The symptoms of PTSD can also result in job loss, substance abuse, and other stressful problems.</p>
+        <p>No matter how distant, irritable, or closed off your loved one seems, try not to take the symptoms of PTSD personally. Remember that this likely has nothing to do with you or your relationship. Instead, there are steps you can take to help someone with PTSD move on from the trauma, take back control of their life, and enable your relationship to return to normal.</p>
+        <ul>
+          <li>Educate yourself about PTSD</li>
+          <li>Be patient and understanding</li>
+          <li>Offer emotional support without pressure</li>
+          <li>Encourage professional treatment</li>
+          <li>Take care of your own mental health</li>
+          <li>Create a safe and predictable environment</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="research-highlights">
+      <h3>Key Research Findings</h3>
+      <p><strong>Brain Changes:</strong> Individuals with PTSD show structural and functional changes in key brain regions including the hippocampus (memory), amygdala (fear response), and prefrontal cortex (emotional regulation).</p>
+      <p><strong>Treatment Efficacy:</strong> Trauma-focused cognitive behavioral therapy and EMDR have shown the highest efficacy rates for PTSD treatment.</p>
+      <p><strong>Recovery Rates:</strong> Up to 40% of people with PTSD recover within one year with appropriate treatment, though many face barriers to accessing care.</p>
+      <p><strong>Global Impact:</strong> PTSD represents a significant global mental health concern, with higher prevalence in areas affected by conflict and violence.</p>
+    </div>
+
+    <div class="author">Research compiled by: Clinical Psychology Research Team</div>
+  </div>
+
+  <script>
+    const images = document.querySelectorAll('.image-container');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    });
+
+    images.forEach(img => observer.observe(img));
+    // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+  </script>
+</body> 
+</html>

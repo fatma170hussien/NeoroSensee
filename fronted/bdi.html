@@ -1,0 +1,1591 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beck's Depression Inventory - NeuroSense</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #6a11cb;
+      --secondary-color: #2575fc;
+      --accent-color: #4a00e0;
+      --text-color: #333;
+      --light-text: #fff;
+      --card-bg: #fff;
+      --section-bg: #f4f6f9;
+      --normal: #4CAF50;
+      --mild-disturbance: #8BC34A;
+      --borderline: #FFC107;
+      --moderate: #FF9800;
+      --severe: #F44336;
+      --extreme: #D32F2F;
+      --suicide-risk: #B71C1C;
+      --progress-color: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: var(--section-bg);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+    
+    .test-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .test-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 30px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+    
+    .test-header h1 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+    
+    .test-header p {
+      opacity: 0.9;
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .test-info {
+      display: flex;
+      justify-content: space-between;
+      background: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .info-item i {
+      color: var(--primary-color);
+      font-size: 1.2rem;
+    }
+    
+    .progress-bar {
+      height: 8px;
+      background: #e0e0e0;
+      border-radius: 4px;
+      margin-bottom: 30px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: var(--progress-color);
+      width: 0%;
+      transition: width 0.3s ease;
+      border-radius: 4px;
+    }
+    
+    .instructions-box {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 25px;
+      border-left: 4px solid var(--primary-color);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .instructions-box h3 {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .suicide-warning {
+      background: #FFEBEE;
+      border-left: 4px solid var(--suicide-risk);
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    
+    .suicide-warning h4 {
+      color: var(--suicide-risk);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .crisis-hotline {
+      background: #FFF3E0;
+      border: 2px solid #FF9800;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 15px;
+      text-align: center;
+    }
+    
+    .questions-container {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+    
+    .question-item {
+      margin-bottom: 30px;
+      padding-bottom: 25px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .question-item:last-child {
+      border-bottom: none;
+    }
+    
+    .question-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 35px;
+      height: 35px;
+      background: var(--section-bg);
+      color: var(--primary-color);
+      border-radius: 50%;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    
+    .question-text {
+      font-size: 1.1rem;
+      margin-bottom: 25px;
+      color: #444;
+      line-height: 1.5;
+      font-weight: 500;
+      padding-left: 10px;
+      border-left: 3px solid var(--primary-color);
+    }
+    
+    .response-options {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    @media (max-width: 768px) {
+      .response-options {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+    }
+    
+    .response-option {
+      text-align: left;
+    }
+    
+    .option-btn {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #E0E0E0;
+      border-radius: 8px;
+      background: white;
+      color: #555;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      text-align: left;
+      position: relative;
+      padding-left: 45px;
+    }
+    
+    .option-btn:hover {
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .option-btn.selected {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+      box-shadow: 0 5px 15px rgba(106, 17, 203, 0.2);
+    }
+    
+    .option-number {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+      height: 24px;
+      background: #F5F5F5;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: #666;
+    }
+    
+    .option-btn.selected .option-number {
+      background: white;
+      color: var(--primary-color);
+    }
+    
+    /* Special styling for question 9 (suicide risk) */
+    .question-9 {
+      background: #FFF3F3;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+      border: 2px solid #FFCDD2;
+    }
+    
+    .question-9 .question-number {
+      background: #FFEBEE;
+      color: var(--suicide-risk);
+    }
+    
+    .test-controls {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+    
+    .control-btn {
+      padding: 12px 30px;
+      border: none;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .prev-btn {
+      background: #f5f5f5;
+      color: #666;
+    }
+    
+    .prev-btn:hover {
+      background: #e0e0e0;
+    }
+    
+    .next-btn {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .next-btn:hover {
+      background: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .submit-btn {
+      background: linear-gradient(135deg, #00b09b, #96c93d);
+      color: white;
+      padding: 15px 40px;
+      font-size: 1.1rem;
+    }
+    
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(0, 176, 155, 0.3);
+    }
+    
+    /* Results Section */
+    .results-container {
+      display: none;
+      background: white;
+      border-radius: 15px;
+      padding: 40px;
+      margin-top: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      text-align: center;
+    }
+    
+    .score-display {
+      font-size: 4rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      margin: 20px 0;
+    }
+    
+    .score-circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 30px;
+      font-size: 3.5rem;
+      font-weight: bold;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .interpretation-box {
+      background: var(--section-bg);
+      padding: 25px;
+      border-radius: 10px;
+      margin: 30px 0;
+      text-align: left;
+    }
+    
+    .interpretation-box h3 {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .severity-scale {
+      display: flex;
+      flex-direction: column;
+      margin: 30px 0;
+      position: relative;
+    }
+    
+    .scale-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    
+    .scale-item:hover {
+      transform: translateX(5px);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .scale-level {
+      font-weight: bold;
+      flex: 1;
+    }
+    
+    .scale-range {
+      font-weight: 600;
+      min-width: 80px;
+      text-align: right;
+    }
+    
+    .scale-indicator {
+      position: absolute;
+      right: 10px;
+      font-size: 1.5rem;
+      color: var(--primary-color);
+    }
+    
+    .score-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+    
+    .detail-card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      border-left: 4px solid var(--primary-color);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      text-align: left;
+    }
+    
+    .detail-card h4 {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .suicide-assessment {
+      background: #FFEBEE;
+      border-left: 4px solid var(--suicide-risk);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 25px 0;
+      text-align: left;
+    }
+    
+    .suicide-assessment h4 {
+      color: var(--suicide-risk);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .category-breakdown {
+      background: #E3F2FD;
+      border-left: 4px solid #2196F3;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 25px 0;
+      text-align: left;
+    }
+    
+    .category-breakdown h4 {
+      color: #1565C0;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .category-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #BBDEFB;
+    }
+    
+    .recommendations {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    
+    .recommendation-card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      border-left: 4px solid var(--primary-color);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      text-align: left;
+    }
+    
+    .recommendation-card h4 {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 40px;
+    }
+    
+    .action-btn {
+      padding: 12px 25px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    
+    .retake-btn {
+      background: #f5f5f5;
+      color: #666;
+    }
+    
+    .retake-btn:hover {
+      background: #e0e0e0;
+    }
+    
+    .dashboard-btn {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .dashboard-btn:hover {
+      background: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Name Input Modal */
+    .name-modal {
+      display: flex;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 15px;
+      padding: 40px;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-content h2 {
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+
+    .modal-content p {
+      color: #666;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .name-input {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      margin-bottom: 25px;
+      transition: all 0.3s;
+    }
+
+    .name-input:focus {
+      border-color: var(--primary-color);
+      outline: none;
+    }
+
+    .modal-btn {
+      padding: 12px 30px;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1rem;
+    }
+
+    .modal-btn:hover {
+      background: var(--secondary-color);
+      transform: translateY(-2px);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .test-container {
+        padding: 15px;
+      }
+      
+      .test-header {
+        padding: 20px;
+      }
+      
+      .test-header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .test-info {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .test-controls {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .control-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .actions {
+        flex-direction: column;
+      }
+      
+      .action-btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      .modal-content {
+        padding: 25px;
+        margin: 20px;
+      }
+      
+      .severity-scale {
+        gap: 8px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .questions-container {
+        padding: 20px;
+      }
+      
+      .question-text {
+        font-size: 1rem;
+      }
+      
+      .option-btn {
+        padding: 12px 12px 12px 40px;
+        font-size: 0.9rem;
+      }
+      
+      .score-circle {
+        width: 120px;
+        height: 120px;
+        font-size: 2.5rem;
+      }
+      
+      .recommendations, .score-details {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Name Input Modal -->
+  <div class="name-modal" id="nameModal">
+    <div class="modal-content">
+      <h2><i class="fas fa-file-medical-alt"></i> Beck's Depression Inventory (BDI)</h2>
+      <p>A comprehensive 21-item self-report assessment of depression severity. This is one of the most widely used depression inventories in clinical practice and research.</p>
+      <input type="text" class="name-input" id="userNameInput" placeholder="Enter your name or nickname" maxlength="30">
+      <button class="modal-btn" onclick="startTest()">
+        <i class="fas fa-play-circle"></i> Start Assessment
+      </button>
+    </div>
+  </div>
+
+  <div class="test-container" id="mainContent" style="display: none;">
+    <!-- Test Header -->
+    <div class="test-header">
+      <h1>Beck's Depression Inventory (BDI)</h1>
+      <p>21-item comprehensive assessment of depression severity. Select the statement that best describes how you have been feeling.</p>
+    </div>
+    
+    <!-- Test Information -->
+    <div class="test-info">
+      <div class="info-item">
+        <i class="fas fa-user"></i>
+        <div>
+          <div class="info-label">Name</div>
+          <div id="userNameDisplay">Guest</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <i class="fas fa-calendar-alt"></i>
+        <div>
+          <div class="info-label">Date</div>
+          <div id="currentDateDisplay">Loading...</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <i class="fas fa-chart-line"></i>
+        <div>
+          <div class="info-label">Progress</div>
+          <div><span id="currentQuestionDisplay">1</span>/21</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    
+    <!-- Instructions -->
+    <div class="instructions-box">
+      <h3><i class="fas fa-info-circle"></i> Instructions</h3>
+      <p>Read each group of statements carefully. Select the <strong>ONE</strong> statement in each group that best describes the way you have been feeling during the <strong>PAST TWO WEEKS</strong>, including today.</p>
+      
+      <!-- Suicide Risk Warning for Question 9 -->
+      <div class="suicide-warning">
+        <h4><i class="fas fa-exclamation-triangle"></i> Important Note</h4>
+        <p><strong>Question 9 addresses thoughts about suicide.</strong> If you are experiencing these thoughts, please reach out to a mental health professional or crisis service immediately.</p>
+        <div class="crisis-hotline">
+          <strong>24/7 Crisis Support:</strong> National Suicide Prevention Lifeline: <strong>1-800-273-8255</strong>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Questions Container -->
+    <div class="questions-container" id="questionsContainer">
+      <!-- Questions will be dynamically inserted here -->
+    </div>
+    
+    <!-- Test Controls -->
+    <div class="test-controls" id="testControls">
+      <button class="control-btn prev-btn" id="prevBtn" onclick="prevQuestion()">
+        <i class="fas fa-arrow-left"></i> Previous
+      </button>
+      <button class="control-btn next-btn" id="nextBtn" onclick="nextQuestion()">
+        Next <i class="fas fa-arrow-right"></i>
+      </button>
+      <button class="control-btn submit-btn" id="submitBtn" onclick="submitTest()" style="display: none;">
+        <i class="fas fa-paper-plane"></i> Get Results
+      </button>
+    </div>
+    
+    <!-- Results Section -->
+    <div class="results-container" id="resultsContainer">
+      <i class="fas fa-chart-bar" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 20px;"></i>
+      <h2>Beck's Depression Inventory Results</h2>
+      <p>Comprehensive assessment of depression severity across multiple symptom domains</p>
+      
+      <div class="score-circle" id="scoreCircle">0</div>
+      
+      <div class="score-display">
+        Score: <span id="finalScore">0</span>/63
+      </div>
+      
+      <div class="interpretation-box">
+        <h3><i class="fas fa-clipboard-check"></i> Interpretation</h3>
+        <p id="interpretationText">Based on your responses, your depression severity has been assessed across 21 different symptom areas. The BDI is one of the most widely used and validated depression inventories in clinical practice.</p>
+      </div>
+      
+      <!-- Severity Scale -->
+      <div class="severity-scale">
+        <div class="scale-item" style="background: rgba(76, 175, 80, 0.1); border-left: 4px solid var(--normal);">
+          <div class="scale-level" style="color: var(--normal);">Normal Mood Fluctuations</div>
+          <div class="scale-range">1-10</div>
+          <div class="scale-indicator">→</div>
+        </div>
+        
+        <div class="scale-item" style="background: rgba(139, 195, 74, 0.1); border-left: 4px solid var(--mild-disturbance);">
+          <div class="scale-level" style="color: var(--mild-disturbance);">Mild Mood Disturbance</div>
+          <div class="scale-range">11-16</div>
+          <div class="scale-indicator">→</div>
+        </div>
+        
+        <div class="scale-item" style="background: rgba(255, 193, 7, 0.1); border-left: 4px solid var(--borderline);">
+          <div class="scale-level" style="color: var(--borderline);">Borderline Clinical Depression</div>
+          <div class="scale-range">17-20</div>
+          <div class="scale-indicator">→</div>
+        </div>
+        
+        <div class="scale-item" style="background: rgba(255, 152, 0, 0.1); border-left: 4px solid var(--moderate);">
+          <div class="scale-level" style="color: var(--moderate);">Moderate Depression</div>
+          <div class="scale-range">21-30</div>
+          <div class="scale-indicator">→</div>
+        </div>
+        
+        <div class="scale-item" style="background: rgba(244, 67, 54, 0.1); border-left: 4px solid var(--severe);">
+          <div class="scale-level" style="color: var(--severe);">Severe Depression</div>
+          <div class="scale-range">31-40</div>
+          <div class="scale-indicator">→</div>
+        </div>
+        
+        <div class="scale-item" style="background: rgba(211, 47, 47, 0.1); border-left: 4px solid var(--extreme);">
+          <div class="scale-level" style="color: var(--extreme);">Extreme Depression</div>
+          <div class="scale-range">41-63</div>
+          <div class="scale-indicator">→</div>
+        </div>
+      </div>
+      
+      <!-- Score Details -->
+      <div class="score-details">
+        <div class="detail-card">
+          <h4><i class="fas fa-history"></i> Historical Significance</h4>
+          <p>Developed by Aaron T. Beck in 1961, the BDI is one of the most extensively researched depression inventories with decades of validation across diverse populations.</p>
+        </div>
+        
+        <div class="detail-card">
+          <h4><i class="fas fa-bullseye"></i> Clinical Significance</h4>
+          <p>Scores of <strong>17+</strong> suggest clinical depression that may benefit from professional evaluation and intervention.</p>
+          <p>Scores of <strong>30+</strong> indicate moderate to severe depression requiring clinical attention.</p>
+        </div>
+        
+        <div class="detail-card">
+          <h4><i class="fas fa-shield-alt"></i> Comprehensive Assessment</h4>
+          <p>The BDI assesses 21 different symptom areas including mood, cognitive, physical, and behavioral symptoms of depression.</p>
+        </div>
+      </div>
+      
+      <!-- Category Breakdown -->
+      <div class="category-breakdown" id="categoryBreakdown">
+        <h4><i class="fas fa-chart-pie"></i> Symptom Category Analysis</h4>
+        <!-- Will be dynamically filled -->
+      </div>
+      
+      <!-- Suicide Risk Assessment -->
+      <div class="suicide-assessment" id="suicideAssessment">
+        <!-- Will be dynamically filled -->
+      </div>
+      
+      <!-- Recommendations -->
+      <div class="interpretation-box">
+        <h3><i class="fas fa-lightbulb"></i> Recommendations</h3>
+        <div class="recommendations" id="recommendations">
+          <!-- Recommendations will be dynamically inserted -->
+        </div>
+      </div>
+      
+      <!-- Actions -->
+      <div class="actions">
+        <button class="action-btn retake-btn" onclick="retakeTest()">
+          <i class="fas fa-redo"></i> Retake Test
+        </button>
+        <a href="dashboard.html" class="action-btn dashboard-btn">
+          <i class="fas fa-chart-line"></i> View Dashboard
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // BDI Questions Data (21 items with 4 options each)
+    const questions = [
+      {
+        id: 1,
+        text: "Sadness",
+        options: [
+          { value: 0, text: "I do not feel sad." },
+          { value: 1, text: "I feel sad" },
+          { value: 2, text: "I am sad all the time and I can't snap out of it." },
+          { value: 3, text: "I am so sad and unhappy that I can't stand it." }
+        ]
+      },
+      {
+        id: 2,
+        text: "Pessimism",
+        options: [
+          { value: 0, text: "I am not particularly discouraged about the future." },
+          { value: 1, text: "I feel discouraged about the future." },
+          { value: 2, text: "I feel I have nothing to look forward to." },
+          { value: 3, text: "I feel the future is hopeless and that things cannot improve." }
+        ]
+      },
+      {
+        id: 3,
+        text: "Past Failure",
+        options: [
+          { value: 0, text: "I do not feel like a failure." },
+          { value: 1, text: "I feel I have failed more than the average person." },
+          { value: 2, text: "As I look back on my life, all I can see is a lot of failures." },
+          { value: 3, text: "I feel I am a complete failure as a person." }
+        ]
+      },
+      {
+        id: 4,
+        text: "Loss of Pleasure",
+        options: [
+          { value: 0, text: "I get as much satisfaction out of things as I used to." },
+          { value: 1, text: "I don't enjoy things the way I used to." },
+          { value: 2, text: "I don't get real satisfaction out of anything anymore." },
+          { value: 3, text: "I am dissatisfied or bored with everything." }
+        ]
+      },
+      {
+        id: 5,
+        text: "Guilty Feelings",
+        options: [
+          { value: 0, text: "I don't feel particularly guilty" },
+          { value: 1, text: "I feel guilty a good part of the time." },
+          { value: 2, text: "I feel quite guilty most of the time." },
+          { value: 3, text: "I feel guilty all of the time." }
+        ]
+      },
+      {
+        id: 6,
+        text: "Punishment Feelings",
+        options: [
+          { value: 0, text: "I don't feel I am being punished." },
+          { value: 1, text: "I feel I may be punished." },
+          { value: 2, text: "I expect to be punished." },
+          { value: 3, text: "I feel I am being punished." }
+        ]
+      },
+      {
+        id: 7,
+        text: "Self-Dislike",
+        options: [
+          { value: 0, text: "I don't feel disappointed in myself." },
+          { value: 1, text: "I am disappointed in myself." },
+          { value: 2, text: "I am disgusted with myself." },
+          { value: 3, text: "I hate myself." }
+        ]
+      },
+      {
+        id: 8,
+        text: "Self-Criticalness",
+        options: [
+          { value: 0, text: "I don't feel I am any worse than anybody else." },
+          { value: 1, text: "I am critical of myself for my weaknesses or mistakes." },
+          { value: 2, text: "I blame myself all the time for my faults." },
+          { value: 3, text: "I blame myself for everything bad that happens." }
+        ]
+      },
+      {
+        id: 9,
+        text: "Suicidal Thoughts",
+        isSuicideItem: true,
+        options: [
+          { value: 0, text: "I don't have any thoughts of killing myself." },
+          { value: 1, text: "I have thoughts of killing myself, but I would not carry them out." },
+          { value: 2, text: "I would like to kill myself." },
+          { value: 3, text: "I would kill myself if I had the chance." }
+        ]
+      },
+      {
+        id: 10,
+        text: "Crying",
+        options: [
+          { value: 0, text: "I don't cry any more than usual." },
+          { value: 1, text: "I cry more now than I used to." },
+          { value: 2, text: "I cry all the time now." },
+          { value: 3, text: "I used to be able to cry, but now I can't cry even though I want to." }
+        ]
+      },
+      {
+        id: 11,
+        text: "Agitation",
+        options: [
+          { value: 0, text: "I am no more irritated by things than I ever was." },
+          { value: 1, text: "I am slightly more irritated now than usual." },
+          { value: 2, text: "I am quite annoyed or irritated a good deal of the time." },
+          { value: 3, text: "I feel irritated all the time." }
+        ]
+      },
+      {
+        id: 12,
+        text: "Loss of Interest",
+        options: [
+          { value: 0, text: "I have not lost interest in other people." },
+          { value: 1, text: "I am less interested in other people than I used to be." },
+          { value: 2, text: "I have lost most of my interest in other people." },
+          { value: 3, text: "I have lost all of my interest in other people." }
+        ]
+      },
+      {
+        id: 13,
+        text: "Indecisiveness",
+        options: [
+          { value: 0, text: "I make decisions about as well as I ever could." },
+          { value: 1, text: "I put off making decisions more than I used to." },
+          { value: 2, text: "I have greater difficulty in making decisions more than I used to." },
+          { value: 3, text: "I can't make decisions at all anymore." }
+        ]
+      },
+      {
+        id: 14,
+        text: "Worthlessness",
+        options: [
+          { value: 0, text: "I don't feel that I look any worse than I used to." },
+          { value: 1, text: "I am worried that I am looking old or unattractive." },
+          { value: 2, text: "I feel there are permanent changes in my appearance that make me look unattractive" },
+          { value: 3, text: "I believe that I look ugly." }
+        ]
+      },
+      {
+        id: 15,
+        text: "Work Difficulty",
+        options: [
+          { value: 0, text: "I can work about as well as before." },
+          { value: 1, text: "It takes an extra effort to get started at doing something." },
+          { value: 2, text: "I have to push myself very hard to do anything." },
+          { value: 3, text: "I can't do any work at all." }
+        ]
+      },
+      {
+        id: 16,
+        text: "Sleep Pattern",
+        options: [
+          { value: 0, text: "I can sleep as well as usual." },
+          { value: 1, text: "I don't sleep as well as I used to." },
+          { value: 2, text: "I wake up 1-2 hours earlier than usual and find it hard to get back to sleep." },
+          { value: 3, text: "I wake up several hours earlier than I used to and cannot get back to sleep." }
+        ]
+      },
+      {
+        id: 17,
+        text: "Fatigability",
+        options: [
+          { value: 0, text: "I don't get more tired than usual." },
+          { value: 1, text: "I get tired more easily than I used to." },
+          { value: 2, text: "I get tired from doing almost anything." },
+          { value: 3, text: "I am too tired to do anything." }
+        ]
+      },
+      {
+        id: 18,
+        text: "Loss of Appetite",
+        options: [
+          { value: 0, text: "My appetite is no worse than usual." },
+          { value: 1, text: "My appetite is not as good as it used to be." },
+          { value: 2, text: "My appetite is much worse now." },
+          { value: 3, text: "I have no appetite at all anymore." }
+        ]
+      },
+      {
+        id: 19,
+        text: "Weight Loss",
+        options: [
+          { value: 0, text: "I haven't lost much weight, if any, lately." },
+          { value: 1, text: "I have lost more than five pounds." },
+          { value: 2, text: "I have lost more than ten pounds." },
+          { value: 3, text: "I have lost more than fifteen pounds." }
+        ]
+      },
+      {
+        id: 20,
+        text: "Somatic Preoccupation",
+        options: [
+          { value: 0, text: "I am no more worried about my health than usual." },
+          { value: 1, text: "I am worried about physical problems like aches, pains, upset stomach, or constipation." },
+          { value: 2, text: "I am very worried about physical problems and it's hard to think of much else." },
+          { value: 3, text: "I am so worried about my physical problems that I cannot think of anything else." }
+        ]
+      },
+      {
+        id: 21,
+        text: "Loss of Libido",
+        options: [
+          { value: 0, text: "I have not noticed any recent change in my interest in sex." },
+          { value: 1, text: "I am less interested in sex than I used to be." },
+          { value: 2, text: "I have almost no interest in sex." },
+          { value: 3, text: "I have lost interest in sex completely." }
+        ]
+      }
+    ];
+
+    // User data and responses
+    let userName = "";
+    let userResponses = new Array(questions.length).fill(null);
+    let currentQuestionIndex = 0;
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      // Focus on input field
+      document.getElementById('userNameInput').focus();
+      
+      // Enter key to start test
+      document.getElementById('userNameInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          startTest();
+        }
+      });
+    });
+
+    // Start test
+    function startTest() {
+      const nameInput = document.getElementById('userNameInput').value.trim();
+      
+      if (nameInput === "") {
+        alert("Please enter your name to continue.");
+        document.getElementById('userNameInput').focus();
+        return;
+      }
+      
+      // Set user name (use first 20 characters)
+      userName = nameInput.substring(0, 20);
+      document.getElementById('userNameDisplay').textContent = userName;
+      
+      // Set current date dynamically
+      updateCurrentDate();
+      
+      // Hide modal and show test
+      document.getElementById('nameModal').style.display = 'none';
+      document.getElementById('mainContent').style.display = 'block';
+      
+      // Render first question
+      renderQuestion();
+      updateProgress();
+    }
+
+    // Update current date dynamically
+    function updateCurrentDate() {
+      const now = new Date();
+      const formattedDate = now.toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      document.getElementById('currentDateDisplay').textContent = formattedDate;
+    }
+
+    // Render current question
+    function renderQuestion() {
+      const container = document.getElementById('questionsContainer');
+      const question = questions[currentQuestionIndex];
+      
+      // Create options HTML
+      const optionsHTML = question.options.map(option => `
+        <div class="response-option">
+          <button class="option-btn ${userResponses[currentQuestionIndex] === option.value ? 'selected' : ''}" 
+                  onclick="selectResponse(${option.value})">
+            <span class="option-number">${option.value}</span>
+            ${option.text}
+          </button>
+        </div>
+      `).join('');
+      
+      // Check if this is question 9 (suicide risk)
+      const questionClass = question.isSuicideItem ? 'question-9' : '';
+      
+      container.innerHTML = `
+        <div class="question-item ${questionClass}">
+          <div class="question-number">${question.id}</div>
+          <div class="question-text">${question.text}</div>
+          <div class="response-options">
+            ${optionsHTML}
+          </div>
+          ${question.isSuicideItem ? `
+            <div style="margin-top: 15px; padding: 10px; background: #FFEBEE; border-radius: 5px; font-size: 0.9rem;">
+              <i class="fas fa-exclamation-triangle" style="color: #D32F2F;"></i>
+              <strong>If you selected option 1, 2, or 3, please seek immediate support.</strong>
+            </div>
+          ` : ''}
+        </div>
+      `;
+
+      // Update displays
+      document.getElementById('currentQuestionDisplay').textContent = question.id;
+      document.getElementById('prevBtn').style.display = currentQuestionIndex === 0 ? 'none' : 'flex';
+      document.getElementById('nextBtn').style.display = currentQuestionIndex === questions.length - 1 ? 'none' : 'flex';
+      document.getElementById('submitBtn').style.display = currentQuestionIndex === questions.length - 1 ? 'flex' : 'none';
+    }
+
+    // Select response
+    function selectResponse(value) {
+      userResponses[currentQuestionIndex] = value;
+      renderQuestion();
+      
+      // Auto-advance if not last question
+      if (currentQuestionIndex < questions.length - 1) {
+        setTimeout(() => {
+          nextQuestion();
+        }, 300);
+      }
+    }
+
+    // Next question
+    function nextQuestion() {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        renderQuestion();
+        updateProgress();
+      }
+    }
+
+    // Previous question
+    function prevQuestion() {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderQuestion();
+        updateProgress();
+      }
+    }
+
+    // Update progress
+    function updateProgress() {
+      const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+      document.getElementById('progressFill').style.width = `${progress}%`;
+      
+      // Check if all questions are answered
+      const answered = userResponses.filter(r => r !== null).length;
+      if (answered === questions.length) {
+        document.getElementById('submitBtn').style.backgroundColor = 'linear-gradient(135deg, #00b09b, #96c93d)';
+      }
+    }
+
+    // Calculate total score
+    function calculateScore() {
+      let score = 0;
+      userResponses.forEach(response => {
+        if (response !== null) {
+          score += response;
+        }
+      });
+      return score;
+    }
+
+    // Get interpretation based on BDI scoring guidelines
+    function getInterpretation(score) {
+      if (score <= 10) {
+        return {
+          level: "Normal Mood Fluctuations",
+          description: "Your score falls within the normal range of mood fluctuations. These ups and downs are considered typical and not indicative of clinical depression.",
+          color: "#4CAF50",
+          position: "8%"
+        };
+      } else if (score <= 16) {
+        return {
+          level: "Mild Mood Disturbance",
+          description: "You show mild symptoms of depression. These may represent a temporary mood disturbance that could benefit from self-care and monitoring.",
+          color: "#8BC34A",
+          position: "21%"
+        };
+      } else if (score <= 20) {
+        return {
+          level: "Borderline Clinical Depression",
+          description: "Your score suggests borderline clinical depression. Professional evaluation may help determine if clinical intervention is needed.",
+          color: "#FFC107",
+          position: "29%"
+        };
+      } else if (score <= 30) {
+        return {
+          level: "Moderate Depression",
+          description: "You show moderate symptoms of depression that likely affect your daily functioning. Professional evaluation and treatment are recommended.",
+          color: "#FF9800",
+          position: "40%"
+        };
+      } else if (score <= 40) {
+        return {
+          level: "Severe Depression",
+          description: "You show severe symptoms of depression that substantially impair daily functioning. Professional treatment is strongly recommended.",
+          color: "#F44336",
+          position: "56%"
+        };
+      } else {
+        return {
+          level: "Extreme Depression",
+          description: "You show extreme symptoms of depression requiring immediate professional attention and comprehensive treatment planning.",
+          color: "#D32F2F",
+          position: "75%"
+        };
+      }
+    }
+
+    // Get suicide risk assessment
+    function getSuicideAssessment() {
+      const suicideResponse = userResponses[8]; // Question 9 is index 8
+      
+      if (suicideResponse === null) {
+        return { level: "Not Assessed", description: "Suicidal ideation was not assessed.", value: -1 };
+      }
+      
+      if (suicideResponse === 0) {
+        return { 
+          level: "No Suicidal Ideation", 
+          description: "You reported no thoughts of suicide.", 
+          value: 0 
+        };
+      } else if (suicideResponse === 1) {
+        return { 
+          level: "Passive Suicidal Thoughts", 
+          description: "You reported thoughts of suicide without intent to act. It's important to monitor these thoughts and seek support if they persist.", 
+          value: 1 
+        };
+      } else if (suicideResponse === 2) {
+        return { 
+          level: "Active Suicidal Desire", 
+          description: "You reported a desire to kill yourself. <strong>Professional evaluation is strongly recommended.</strong>", 
+          value: 2 
+        };
+      } else {
+        return { 
+          level: "Active Suicidal Intent", 
+          description: "You reported active intent to kill yourself. <strong>Please seek immediate professional help or contact a crisis line now.</strong>", 
+          value: 3 
+        };
+      }
+    }
+
+    // Get category breakdown
+    function getCategoryBreakdown() {
+      const categories = {
+        "Cognitive Symptoms": [2, 3, 5, 6, 7, 8, 9, 13, 14], // pessimism, failure, guilt, punishment, self-dislike, self-criticalness, suicide, indecisiveness, worthlessness
+        "Emotional Symptoms": [1, 4, 10, 11, 12], // sadness, loss of pleasure, crying, agitation, loss of interest
+        "Physical Symptoms": [15, 16, 17, 18, 19, 20, 21] // work difficulty, sleep, fatigue, appetite, weight, somatic, libido
+      };
+      
+      let breakdownHTML = '';
+      
+      for (const [category, indices] of Object.entries(categories)) {
+        let categoryScore = 0;
+        indices.forEach(index => {
+          if (userResponses[index] !== null) {
+            categoryScore += userResponses[index];
+          }
+        });
+        
+        const maxScore = indices.length * 3;
+        const percentage = (categoryScore / maxScore) * 100;
+        
+        let severity = "";
+        let color = "";
+        
+        if (percentage < 25) {
+          severity = "Minimal";
+          color = "#4CAF50";
+        } else if (percentage < 50) {
+          severity = "Mild";
+          color = "#8BC34A";
+        } else if (percentage < 75) {
+          severity = "Moderate";
+          color = "#FFC107";
+        } else {
+          severity = "Severe";
+          color = "#F44336";
+        }
+        
+        breakdownHTML += `
+          <div class="category-item">
+            <div><strong>${category}:</strong> ${severity}</div>
+            <div style="color: ${color}; font-weight: bold;">${categoryScore}/${maxScore}</div>
+          </div>
+        `;
+      }
+      
+      return breakdownHTML;
+    }
+
+    // Get recommendations based on score
+    function getRecommendations(score, suicideRisk) {
+      const recommendations = [];
+      
+      if (score <= 10) {
+        recommendations.push(
+          {
+            title: "Maintain Mental Wellness",
+            text: "Continue with healthy lifestyle habits including regular exercise, social connection, and stress management techniques.",
+            icon: "fas fa-heartbeat"
+          },
+          {
+            title: "Regular Self-Monitoring",
+            text: "Consider periodic self-assessment to monitor your mood and catch any changes early.",
+            icon: "fas fa-chart-line"
+          }
+        );
+      } else if (score <= 16) {
+        recommendations.push(
+          {
+            title: "Enhanced Self-Care",
+            text: "Increase self-care activities, maintain regular routines, and practice stress reduction techniques.",
+            icon: "fas fa-spa"
+          },
+          {
+            title: "Social Support",
+            text: "Stay connected with supportive friends and family members who can provide emotional support.",
+            icon: "fas fa-users"
+          }
+        );
+      } else if (score <= 20) {
+        recommendations.push(
+          {
+            title: "Professional Consultation",
+            text: "Consider consulting with a mental health professional for evaluation and guidance.",
+            icon: "fas fa-user-md"
+          },
+          {
+            title: "Cognitive Strategies",
+            text: "Practice cognitive restructuring techniques to challenge negative thought patterns.",
+            icon: "fas fa-brain"
+          }
+        );
+      } else if (score <= 30) {
+        recommendations.push(
+          {
+            title: "Professional Evaluation",
+            text: "Seek evaluation by a mental health professional for comprehensive assessment and treatment planning.",
+            icon: "fas fa-stethoscope"
+          },
+          {
+            title: "Evidence-Based Therapy",
+            text: "Consider Cognitive Behavioral Therapy (CBT) or other evidence-based treatments for depression.",
+            icon: "fas fa-comments"
+          }
+        );
+      } else if (score <= 40) {
+        recommendations.push(
+          {
+            title: "Comprehensive Treatment",
+            text: "Seek immediate professional evaluation for comprehensive treatment including therapy and possibly medication.",
+            icon: "fas fa-hospital"
+          },
+          {
+            title: "Support System",
+            text: "Engage your support system and consider joining a depression support group.",
+            icon: "fas fa-hands-helping"
+          }
+        );
+      } else {
+        recommendations.push(
+          {
+            title: "Immediate Professional Help",
+            text: "Seek immediate evaluation and treatment by a mental health professional for severe depression.",
+            icon: "fas fa-ambulance"
+          },
+          {
+            title: "Intensive Treatment",
+            text: "Consider intensive treatment options including medication management and regular therapy sessions.",
+            icon: "fas fa-clinic-medical"
+          }
+        );
+      }
+      
+      // Suicide risk recommendations
+      if (suicideRisk.value > 0) {
+        recommendations.push({
+          title: "Safety Planning",
+          text: "Develop a safety plan with a professional and have crisis numbers readily available.",
+          icon: "fas fa-shield-alt"
+        });
+        
+        if (suicideRisk.value >= 2) {
+          recommendations.push({
+            title: "Immediate Crisis Support",
+            text: "Contact a crisis line immediately or go to the nearest emergency room.",
+            icon: "fas fa-phone-alt"
+          });
+        }
+      }
+      
+      // General recommendation
+      recommendations.push({
+        title: "Follow-up Assessment",
+        text: "Retake this inventory in 2-4 weeks to track changes in your symptoms.",
+        icon: "fas fa-calendar-check"
+      });
+      
+      return recommendations;
+    }
+
+    // Submit test
+    function submitTest() {
+      const unanswered = userResponses.filter(r => r === null).length;
+      if (unanswered > 0) {
+        alert(`Please answer all questions before submitting. You have ${unanswered} unanswered questions.`);
+        return;
+      }
+
+      // Calculate score
+      const score = calculateScore();
+      const interpretation = getInterpretation(score);
+      const suicideAssessment = getSuicideAssessment();
+      const categoryBreakdown = getCategoryBreakdown();
+      const recommendations = getRecommendations(score, suicideAssessment);
+
+      // Display results
+      document.getElementById('finalScore').textContent = score;
+      document.getElementById('scoreCircle').textContent = score;
+      document.getElementById('scoreCircle').style.background = `linear-gradient(135deg, ${interpretation.color}, ${interpretation.color}99)`;
+      document.getElementById('interpretationText').innerHTML = `
+        <strong>${interpretation.level}:</strong> ${interpretation.description}
+      `;
+
+      // Display category breakdown
+      document.getElementById('categoryBreakdown').innerHTML += categoryBreakdown;
+
+      // Display suicide assessment
+      document.getElementById('suicideAssessment').innerHTML = `
+        <h4><i class="fas fa-heartbeat"></i> Suicide Risk Assessment (Question 9)</h4>
+        <p><strong>${suicideAssessment.level}:</strong> ${suicideAssessment.description}</p>
+        ${suicideAssessment.value >= 2 ? `
+          <div style="margin-top: 15px; padding: 10px; background: #FFCDD2; border-radius: 5px;">
+            <strong><i class="fas fa-exclamation-circle"></i> Crisis Support:</strong> National Suicide Prevention Lifeline: <strong>1-800-273-8255</strong>
+          </div>
+        ` : ''}
+      `;
+
+      // Display recommendations
+      const recContainer = document.getElementById('recommendations');
+      recContainer.innerHTML = recommendations.map(rec => `
+        <div class="recommendation-card">
+          <h4><i class="${rec.icon}"></i> ${rec.title}</h4>
+          <p>${rec.text}</p>
+        </div>
+      `).join('');
+
+      // Show results
+      document.getElementById('questionsContainer').style.display = 'none';
+      document.getElementById('testControls').style.display = 'none';
+      document.getElementById('resultsContainer').style.display = 'block';
+
+      // Save to localStorage for dashboard
+      const testResult = {
+        test: "Beck's Depression Inventory (BDI)",
+        name: userName,
+        score: score,
+        maxScore: 63,
+        date: new Date().toISOString(),
+        interpretation: interpretation.level,
+        suicideRisk: suicideAssessment.level,
+        clinicalNote: score >= 17 ? "Consider clinical evaluation" : "Within normal limits",
+        categories: {
+          cognitive: userResponses.slice(1, 9).reduce((a, b) => a + b, 0),
+          emotional: userResponses.slice(0, 1).concat(userResponses.slice(9, 13)).reduce((a, b) => a + b, 0),
+          physical: userResponses.slice(14, 21).reduce((a, b) => a + b, 0)
+        }
+      };
+      
+      const testHistory = JSON.parse(localStorage.getItem('testHistory')) || [];
+      testHistory.push(testResult);
+      localStorage.setItem('testHistory', JSON.stringify(testHistory));
+    }
+
+    // Retake test
+    function retakeTest() {
+      // Reset responses but keep name
+      userResponses = new Array(questions.length).fill(null);
+      currentQuestionIndex = 0;
+      
+      document.getElementById('questionsContainer').style.display = 'block';
+      document.getElementById('testControls').style.display = 'flex';
+      document.getElementById('resultsContainer').style.display = 'none';
+      
+      // Update date again in case day changed
+      updateCurrentDate();
+      
+      renderQuestion();
+      updateProgress();
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(event) {
+      // Only handle keyboard navigation if test is visible
+      if (document.getElementById('mainContent').style.display !== 'none') {
+        if (event.key === 'ArrowRight' || event.key === ' ') {
+          event.preventDefault();
+          if (currentQuestionIndex < questions.length - 1) {
+            nextQuestion();
+          }
+        } else if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          if (currentQuestionIndex > 0) {
+            prevQuestion();
+          }
+        } else if (event.key >= '0' && event.key <= '3') {
+          event.preventDefault();
+          selectResponse(parseInt(event.key));
+        } else if (event.key === 'Enter' && currentQuestionIndex === questions.length - 1) {
+          event.preventDefault();
+          submitTest();
+        }
+      }
+    });
+  </script>
+</body>
+</html>

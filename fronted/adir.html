@@ -1,0 +1,2290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autism Diagnostic Interview-Revised (ADI-R)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary-blue: #1565C0;
+      --secondary-blue: #0D47A1;
+      --light-blue: #E3F2FD;
+      --accent-orange: #FF9800;
+      --accent-green: #4CAF50;
+      --accent-red: #F44336;
+      --autism-blue: #0277BD;
+      --autism-puzzle: #4FC3F7;
+      --text-dark: #333333;
+      --text-light: #666666;
+      --border-color: #E0E0E0;
+      --card-bg: #FFFFFF;
+      --section-bg: #F5F7FA;
+      --domain-a: #2196F3;
+      --domain-b: #4CAF50;
+      --domain-c: #FF9800;
+      --domain-d: #9C27B0;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: var(--section-bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    
+    /* Header Styles */
+    .header {
+      background: linear-gradient(135deg, var(--autism-blue), var(--primary-blue));
+      color: white;
+      padding: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--autism-puzzle);
+    }
+    
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .header-info {
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    .header h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    
+    .header .subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-bottom: 15px;
+    }
+    
+    .developers {
+      font-size: 0.9rem;
+      margin-top: 15px;
+      opacity: 0.8;
+    }
+    
+    .wps-logo {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+      text-align: center;
+      min-width: 250px;
+    }
+    
+    .wps-logo h3 {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+    
+    /* Subject Information */
+    .subject-info {
+      padding: 25px;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--light-blue);
+    }
+    
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    
+    .info-card {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .info-card label {
+      font-weight: 600;
+      color: var(--secondary-blue);
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .info-card input,
+    .info-card select {
+      padding: 12px;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    
+    .info-card input:focus,
+    .info-card select:focus {
+      outline: none;
+      border-color: var(--primary-blue);
+    }
+    
+    /* Instructions */
+    .instructions {
+      padding: 25px;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .instructions h3 {
+      color: var(--secondary-blue);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .coding-guidelines {
+      background: #FFF8E1;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      border-left: 4px solid var(--accent-orange);
+    }
+    
+    .guideline-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .guideline-item {
+      padding: 15px;
+      background: white;
+      border-radius: 8px;
+      text-align: center;
+    }
+    
+    .guideline-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    /* Domain Navigation */
+    .domain-navigation {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 20px 25px;
+      background: var(--section-bg);
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .domain-btn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 25px;
+      background: white;
+      color: var(--text-dark);
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid var(--border-color);
+    }
+    
+    .domain-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .domain-btn.active {
+      color: white;
+      border-color: transparent;
+    }
+    
+    .domain-btn.a { background: var(--domain-a); }
+    .domain-btn.b { background: var(--domain-b); }
+    .domain-btn.c { background: var(--domain-c); }
+    .domain-btn.d { background: var(--domain-d); }
+    .domain-btn.summary { background: #607D8B; }
+    
+    /* Score Display */
+    .score-display {
+      position: sticky;
+      top: 10px;
+      background: white;
+      padding: 20px;
+      margin: 0 25px 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border: 2px solid var(--primary-blue);
+      z-index: 100;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+    
+    .score-card {
+      text-align: center;
+      padding: 15px;
+      border-radius: 8px;
+      border: 2px solid;
+    }
+    
+    .score-card.a { border-color: var(--domain-a); }
+    .score-card.b { border-color: var(--domain-b); }
+    .score-card.c { border-color: var(--domain-c); }
+    .score-card.d { border-color: var(--domain-d); }
+    
+    .score-label {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 5px;
+    }
+    
+    .score-value {
+      font-size: 2.2rem;
+      font-weight: bold;
+      line-height: 1;
+      margin: 10px 0;
+    }
+    
+    .score-cutoff {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+    
+    .score-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.8rem;
+      margin-top: 5px;
+      padding: 3px 10px;
+      border-radius: 12px;
+    }
+    
+    /* Domain Containers */
+    .domain-container {
+      display: none;
+      padding: 0 25px 25px;
+    }
+    
+    .domain-container.active {
+      display: block;
+    }
+    
+    .domain-header {
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+      border-left: 4px solid;
+    }
+    
+    .domain-header.a { background: #E3F2FD; border-left-color: var(--domain-a); }
+    .domain-header.b { background: #E8F5E9; border-left-color: var(--domain-b); }
+    .domain-header.c { background: #FFF8E1; border-left-color: var(--domain-c); }
+    .domain-header.d { background: #F3E5F5; border-left-color: var(--domain-d); }
+    
+    .domain-header h3 {
+      color: inherit;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    /* Subdomain Sections */
+    .subdomain-section {
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--section-bg);
+    }
+    
+    .subdomain-section:last-child {
+      border-bottom: none;
+    }
+    
+    .subdomain-title {
+      color: var(--primary-blue);
+      margin-bottom: 20px;
+      padding-left: 15px;
+      border-left: 4px solid;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+    
+    .subdomain-title.a { border-left-color: var(--domain-a); }
+    .subdomain-title.b { border-left-color: var(--domain-b); }
+    .subdomain-title.c { border-left-color: var(--domain-c); }
+    .subdomain-title.d { border-left-color: var(--domain-d); }
+    
+    /* Items Grid */
+    .items-grid {
+      display: grid;
+      gap: 20px;
+    }
+    
+    .item-card {
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 25px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .item-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    
+    .item-title {
+      flex: 1;
+      font-size: 1.1rem;
+      font-weight: 500;
+      line-height: 1.5;
+      color: var(--text-dark);
+    }
+    
+    .item-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 40px;
+      height: 40px;
+      background: var(--light-blue);
+      color: var(--primary-blue);
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1rem;
+      border: 2px solid var(--border-color);
+    }
+    
+    .item-description {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      margin-bottom: 20px;
+      padding-left: 15px;
+      border-left: 3px solid var(--border-color);
+    }
+    
+    /* Coding Options */
+    .coding-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+    }
+    
+    .coding-option {
+      position: relative;
+    }
+    
+    .coding-btn {
+      width: 100%;
+      padding: 15px 10px;
+      text-align: center;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      background: white;
+      color: var(--text-dark);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .coding-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .coding-btn.selected {
+      border-color: var(--primary-blue);
+      background: var(--light-blue);
+      color: var(--primary-blue);
+    }
+    
+    .code-value {
+      font-size: 1.2rem;
+      font-weight: bold;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--section-bg);
+    }
+    
+    .coding-btn.selected .code-value {
+      background: var(--primary-blue);
+      color: white;
+    }
+    
+    .code-label {
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+    
+    .code-desc {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      margin-top: 5px;
+      text-align: center;
+    }
+    
+    /* Age Inputs */
+    .age-inputs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .age-input-group {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .age-input-group label {
+      font-weight: 600;
+      color: var(--text-light);
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .age-input {
+      padding: 12px;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    
+    .age-input:focus {
+      outline: none;
+      border-color: var(--primary-blue);
+    }
+    
+    /* Results Section */
+    .results-container {
+      padding: 30px;
+      display: none;
+      background: var(--card-bg);
+    }
+    
+    .results-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .results-header h2 {
+      color: var(--primary-blue);
+      margin-bottom: 10px;
+    }
+    
+    .diagnostic-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin-bottom: 40px;
+    }
+    
+    .summary-card {
+      padding: 25px;
+      border-radius: 10px;
+      text-align: center;
+      border: 2px solid;
+    }
+    
+    .summary-card.a { border-color: var(--domain-a); background: #E3F2FD; }
+    .summary-card.b { border-color: var(--domain-b); background: #E8F5E9; }
+    .summary-card.c { border-color: var(--domain-c); background: #FFF8E1; }
+    .summary-card.d { border-color: var(--domain-d); background: #F3E5F5; }
+    
+    .summary-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+    
+    .summary-score {
+      font-size: 3rem;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+    
+    .summary-cutoff {
+      font-size: 1rem;
+      color: var(--text-light);
+      margin-bottom: 15px;
+    }
+    
+    .summary-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+    
+    /* Controls */
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      padding: 25px;
+      border-top: 1px solid var(--border-color);
+      background: var(--section-bg);
+    }
+    
+    .control-btn {
+      padding: 14px 28px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+    }
+    
+    .reset-btn {
+      background: var(--light-blue);
+      color: var(--primary-blue);
+    }
+    
+    .reset-btn:hover {
+      background: #BBDEFB;
+    }
+    
+    .save-btn {
+      background: linear-gradient(135deg, var(--accent-green), #45a049);
+      color: white;
+    }
+    
+    .save-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(76, 175, 80, 0.3);
+    }
+    
+    .calculate-btn {
+      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      color: white;
+    }
+    
+    .calculate-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(21, 101, 192, 0.3);
+    }
+    
+    .print-btn {
+      background: linear-gradient(135deg, #FF9800, #F57C00);
+      color: white;
+    }
+    
+    .print-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(255, 152, 0, 0.3);
+    }
+    
+    /* Footer */
+    .footer {
+      background: var(--light-blue);
+      padding: 25px 30px;
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border-color);
+    }
+    
+    .copyright {
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid var(--border-color);
+      font-size: 0.8rem;
+      color: #999;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header-top {
+        flex-direction: column;
+      }
+      
+      .score-display {
+        grid-template-columns: 1fr;
+        margin: 0 15px 20px;
+      }
+      
+      .controls {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .control-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .domain-navigation {
+        flex-direction: column;
+      }
+      
+      .domain-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .coding-options {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media print {
+      .controls,
+      .footer,
+      .domain-navigation {
+        display: none;
+      }
+      
+      .item-card {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-top">
+        <div class="header-info">
+          <h1>Autism Diagnostic Interview-Revised (ADI-R)</h1>
+          <div class="subtitle">A standardized diagnostic interview for the assessment of autism spectrum disorders</div>
+          <div class="developers">
+            <p><strong>Developed by:</strong> Ann Le Couteur, M.B.B.S., Catherine Lord, Ph.D., Michael Rutter, M.D., F.R.S.</p>
+          </div>
+        </div>
+        
+        <div class="wps-logo">
+          <h3>WPS TEST REPORT</h3>
+          <p>Western Psychological Services</p>
+          <p>Copyright ©2006 by WPS</p>
+          <p>Version 1.210</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Subject Information -->
+    <div class="subject-info">
+      <div class="info-grid">
+        <div class="info-card">
+          <label for="subjectName"><i class="fas fa-user"></i> Name of Subject</label>
+          <input type="text" id="subjectName" placeholder="Enter subject's full name">
+        </div>
+        
+        <div class="info-card">
+          <label for="subjectID"><i class="fas fa-id-card"></i> Subject ID</label>
+          <input type="text" id="subjectID" placeholder="Enter subject ID">
+        </div>
+        
+        <div class="info-card">
+          <label for="dateOfBirth"><i class="fas fa-birthday-cake"></i> Date of Birth</label>
+          <input type="date" id="dateOfBirth">
+        </div>
+        
+        <div class="info-card">
+          <label for="dateOfInterview"><i class="fas fa-calendar-alt"></i> Date of Interview</label>
+          <input type="date" id="dateOfInterview">
+        </div>
+        
+        <div class="info-card">
+          <label for="chronologicalAge"><i class="fas fa-clock"></i> Chronological Age</label>
+          <input type="text" id="chronologicalAge" placeholder="e.g., 12 years 0 months">
+        </div>
+        
+        <div class="info-card">
+          <label for="gender"><i class="fas fa-venus-mars"></i> Gender</label>
+          <select id="gender">
+            <option value="">Select gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        
+        <div class="info-card">
+          <label for="respondentName"><i class="fas fa-users"></i> Name of Respondent</label>
+          <input type="text" id="respondentName" placeholder="Person being interviewed">
+        </div>
+        
+        <div class="info-card">
+          <label for="relationToSubject"><i class="fas fa-user-friends"></i> Relation to Subject</label>
+          <input type="text" id="relationToSubject" placeholder="e.g., Parent, Guardian">
+        </div>
+        
+        <div class="info-card">
+          <label for="clinicianName"><i class="fas fa-user-md"></i> Clinician Name</label>
+          <input type="text" id="clinicianName" placeholder="Clinician administering interview">
+        </div>
+        
+        <div class="info-card">
+          <label for="schoolClinic"><i class="fas fa-hospital"></i> School/Clinic</label>
+          <input type="text" id="schoolClinic" placeholder="Institution name">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Instructions -->
+    <div class="instructions">
+      <h3><i class="fas fa-info-circle"></i> ADI-R Administration Guidelines</h3>
+      <p>The ADI-R is a structured interview conducted with a parent or caregiver who is familiar with the developmental history and current behavior of the individual being assessed.</p>
+      
+      <div class="coding-guidelines">
+        <h4><i class="fas fa-ruler"></i> Coding Guidelines</h4>
+        <div class="guideline-grid">
+          <div class="guideline-item">
+            <div class="guideline-value">0</div>
+            <div class="guideline-label">No abnormality</div>
+          </div>
+          <div class="guideline-item">
+            <div class="guideline-value">1</div>
+            <div class="guideline-label">Questionable abnormality</div>
+          </div>
+          <div class="guideline-item">
+            <div class="guideline-value">2</div>
+            <div class="guideline-label">Definite abnormality</div>
+          </div>
+          <div class="guideline-item">
+            <div class="guideline-value">3</div>
+            <div class="guideline-label">Marked abnormality</div>
+          </div>
+          <div class="guideline-item">
+            <div class="guideline-value">N/A</div>
+            <div class="guideline-label">Not applicable</div>
+          </div>
+        </div>
+      </div>
+      
+      <div style="margin-top: 20px; background: #E8F5E9; padding: 15px; border-radius: 8px; border-left: 4px solid #4CAF50;">
+        <h4><i class="fas fa-exclamation-circle"></i> Important Note</h4>
+        <p>This interactive version is for training and familiarization purposes. The actual ADI-R should be administered by a trained clinician following the standardized protocol.</p>
+      </div>
+    </div>
+    
+    <!-- Score Display -->
+    <div class="score-display" id="scoreDisplay">
+      <div class="score-card a">
+        <div class="score-label">Domain A</div>
+        <div class="score-value" id="domainAScore">0</div>
+        <div class="score-cutoff">Cutoff: 10</div>
+        <div class="score-status" id="domainAStatus" style="background: #E8F5E9; color: #388E3C;">
+          <i class="fas fa-circle" style="font-size: 0.6rem;"></i>
+          <span>Below cutoff</span>
+        </div>
+      </div>
+      
+      <div class="score-card b">
+        <div class="score-label">Domain B</div>
+        <div class="score-value" id="domainBScore">0</div>
+        <div class="score-cutoff">Cutoff: 8</div>
+        <div class="score-status" id="domainBStatus" style="background: #E8F5E9; color: #388E3C;">
+          <i class="fas fa-circle" style="font-size: 0.6rem;"></i>
+          <span>Below cutoff</span>
+        </div>
+      </div>
+      
+      <div class="score-card c">
+        <div class="score-label">Domain C</div>
+        <div class="score-value" id="domainCScore">0</div>
+        <div class="score-cutoff">Cutoff: 3</div>
+        <div class="score-status" id="domainCStatus" style="background: #E8F5E9; color: #388E3C;">
+          <i class="fas fa-circle" style="font-size: 0.6rem;"></i>
+          <span>Below cutoff</span>
+        </div>
+      </div>
+      
+      <div class="score-card d">
+        <div class="score-label">Domain D</div>
+        <div class="score-value" id="domainDScore">0</div>
+        <div class="score-cutoff">Cutoff: 1</div>
+        <div class="score-status" id="domainDStatus" style="background: #E8F5E9; color: #388E3C;">
+          <i class="fas fa-circle" style="font-size: 0.6rem;"></i>
+          <span>Below cutoff</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Domain Navigation -->
+    <div class="domain-navigation">
+      <button class="domain-btn a active" onclick="showDomain('A')">
+        <i class="fas fa-users"></i> Domain A: Social Interaction
+      </button>
+      <button class="domain-btn b" onclick="showDomain('B')">
+        <i class="fas fa-comments"></i> Domain B: Communication
+      </button>
+      <button class="domain-btn c" onclick="showDomain('C')">
+        <i class="fas fa-sync-alt"></i> Domain C: Restricted Behaviors
+      </button>
+      <button class="domain-btn d" onclick="showDomain('D')">
+        <i class="fas fa-calendar"></i> Domain D: Developmental Onset
+      </button>
+      <button class="domain-btn summary" onclick="showDomain('summary')">
+        <i class="fas fa-chart-bar"></i> Diagnostic Summary
+      </button>
+    </div>
+    
+    <!-- Domain Containers -->
+    
+    <!-- Domain A: Social Interaction -->
+    <div class="domain-container active" id="domainAContainer">
+      <div class="domain-header a">
+        <h3 style="color: var(--domain-a);"><i class="fas fa-users"></i> Domain A: Qualitative Abnormalities in Reciprocal Social Interaction</h3>
+        <p>Codes are "Most Abnormal 4.0-5.0" for all items in A1 to A4 (except items 31, 58, and 65).</p>
+      </div>
+      
+      <!-- A1: Nonverbal Behaviors -->
+      <div class="subdomain-section">
+        <div class="subdomain-title a">A1: Failure to use nonverbal behaviors to regulate social interaction</div>
+        <div class="items-grid" id="domainA1Items">
+          <!-- Items will be inserted here dynamically -->
+        </div>
+      </div>
+      
+      <!-- A2: Peer Relationships -->
+      <div class="subdomain-section">
+        <div class="subdomain-title a">A2: Failure to develop peer relationships</div>
+        <div class="items-grid" id="domainA2Items">
+          <!-- Items will be inserted here dynamically -->
+        </div>
+      </div>
+      
+      <!-- A3: Shared Enjoyment -->
+      <div class="subdomain-section">
+        <div class="subdomain-title a">A3: Lack of shared enjoyment</div>
+        <div class="items-grid" id="domainA3Items">
+          <!-- Items will be inserted here dynamically -->
+        </div>
+      </div>
+      
+      <!-- A4: Socioemotional Reciprocity -->
+      <div class="subdomain-section">
+        <div class="subdomain-title a">A4: Lack of socioemotional reciprocity</div>
+        <div class="items-grid" id="domainA4Items">
+          <!-- Items will be inserted here dynamically -->
+        </div>
+      </div>
+    </div>
+    
+    <!-- Domain B: Communication -->
+    <div class="domain-container" id="domainBContainer">
+      <div class="domain-header b">
+        <h3 style="color: var(--domain-b);"><i class="fas fa-comments"></i> Domain B: Qualitative Abnormalities in Communication</h3>
+        <p>Codes are "Most Abnormal 4.0-5.0" for items in B1 and B4. B2(V) and B3(V) codes apply only for verbal subjects using "Ever" codes.</p>
+      </div>
+      
+      <!-- B1: Language Delay -->
+      <div class="subdomain-section">
+        <div class="subdomain-title b">B1: Lack of, or delay in, spoken language and failure to compensate through gesture</div>
+        <div class="items-grid" id="domainB1Items">
+          <!-- Items will be inserted here dynamically -->
+        </div>
+      </div>
+      
+      <!-- B4: Imaginative Play -->
+      <div class="subdomain-section">
+        <div class="subdomain-title b">B4: Lack of varied spontaneous make-believe or social imitative play</div>
+        <div class="items-grid" id="domainB4Items">
+          <!-- Items will be inserted here dynamically -->
+        </div>
+      </div>
+      
+      <!-- Verbal Subjects Only -->
+      <div class="subdomain-section" id="verbalSubjectsSection" style="display: none;">
+        <div class="subdomain-title b" style="border-left-color: #2E7D32;">Verbal Subjects Only (Item 30 = 0)</div>
+        
+        <!-- B2(V): Conversation -->
+        <div style="margin-bottom: 30px;">
+          <div style="font-weight: 600; color: #2E7D32; margin-bottom: 15px;">B2(V): Relative failure to initiate or sustain conversational interchange</div>
+          <div class="items-grid" id="domainB2VItems">
+            <!-- Items will be inserted here dynamically -->
+          </div>
+        </div>
+        
+        <!-- B3(V): Speech Patterns -->
+        <div>
+          <div style="font-weight: 600; color: #2E7D32; margin-bottom: 15px;">B3(V): Stereotyped, repetitive or idiosyncratic speech</div>
+          <div class="items-grid" id="domainB3VItems">
+            <!-- Items will be inserted here dynamically -->
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Domain C: Restricted Behaviors -->
+    <div class="domain-container" id="domainCContainer">
+      <div class="domain-header c">
+        <h3 style="color: var(--domain-c);"><i class="fas fa-sync-alt"></i> Domain C: Restricted, Repetitive, and Stereotyped Patterns of Behavior</h3>
+        <p>Codes are "Ever" for all items in C1 to C4.</p>
+      </div>
+      
+      <!-- C1: Preoccupations -->
+      <div class="subdomain-section">
+        <div class="subdomain-title c">C1: Encompassing preoccupation or circumscribed pattern of interest</div>
+        <div class="items-grid" id="domainC1Items">
+          <!-- Items will be inserted here dynamically -->
+        </div>
+      </div>
+      
+      <!-- C2: Rituals -->
+      <div class="subdomain-section">
+        <div class="subdomain-title c">C2: Apparently compulsive adherence to nonfunctional routines or rituals</div>
+        <div class="items-grid" id="domainC2Items">
+          <!-- Items will be inserted here dynamically -->
+        </div>
+      </div>
+      
+      <!-- C3: Motor Mannerisms -->
+      <div class="subdomain-section">
+        <div class="subdomain-title c">C3: Stereotyped and repetitive motor mannerisms</div>
+        <div class="items-grid" id="domainC3Items">
+          <!-- Items will be inserted here dynamically -->
+        </div>
+      </div>
+      
+      <!-- C4: Object Preoccupations -->
+      <div class="subdomain-section">
+        <div class="subdomain-title c">C4: Preoccupations with part of objects or non-functional elements of material</div>
+        <div class="items-grid" id="domainC4Items">
+          <!-- Items will be inserted here dynamically -->
+        </div>
+      </div>
+    </div>
+    
+    <!-- Domain D: Developmental Onset -->
+    <div class="domain-container" id="domainDContainer">
+      <div class="domain-header d">
+        <h3 style="color: var(--domain-d);"><i class="fas fa-calendar"></i> Domain D: Abnormality of Development Evident at or Before 36 Months</h3>
+        <p>Age-based items with specific coding thresholds.</p>
+      </div>
+      
+      <div class="items-grid" id="domainDItems">
+        <!-- Age-based items will be inserted here dynamically -->
+      </div>
+    </div>
+    
+    <!-- Summary Results -->
+    <div class="domain-container" id="summaryContainer">
+      <div class="results-container">
+        <div class="results-header">
+          <h2><i class="fas fa-file-medical-alt"></i> ADI-R Diagnostic Algorithm Results</h2>
+          <p>Subjects Aged 4 Years, 0 months or more</p>
+        </div>
+        
+        <div class="diagnostic-summary">
+          <div class="summary-card a">
+            <div class="summary-title">Domain A: Social Interaction</div>
+            <div class="summary-score" id="summaryDomainAScore">0</div>
+            <div class="summary-cutoff">Cutoff: 10</div>
+            <div class="summary-status" id="summaryDomainAStatus" style="background: #E8F5E9; color: #388E3C;">
+              <i class="fas fa-check-circle"></i>
+              <span>Below cutoff</span>
+            </div>
+          </div>
+          
+          <div class="summary-card b">
+            <div class="summary-title">Domain B: Communication</div>
+            <div class="summary-score" id="summaryDomainBScore">0</div>
+            <div class="summary-cutoff">Cutoff: 8</div>
+            <div class="summary-status" id="summaryDomainBStatus" style="background: #E8F5E9; color: #388E3C;">
+              <i class="fas fa-check-circle"></i>
+              <span>Below cutoff</span>
+            </div>
+          </div>
+          
+          <div class="summary-card c">
+            <div class="summary-title">Domain C: Restricted Behaviors</div>
+            <div class="summary-score" id="summaryDomainCScore">0</div>
+            <div class="summary-cutoff">Cutoff: 3</div>
+            <div class="summary-status" id="summaryDomainCStatus" style="background: #E8F5E9; color: #388E3C;">
+              <i class="fas fa-check-circle"></i>
+              <span>Below cutoff</span>
+            </div>
+          </div>
+          
+          <div class="summary-card d">
+            <div class="summary-title">Domain D: Developmental Onset</div>
+            <div class="summary-score" id="summaryDomainDScore">0</div>
+            <div class="summary-cutoff">Cutoff: 1</div>
+            <div class="summary-status" id="summaryDomainDStatus" style="background: #E8F5E9; color: #388E3C;">
+              <i class="fas fa-check-circle"></i>
+              <span>Below cutoff</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="score-interpretation" id="summaryInterpretation">
+          <!-- Interpretation will be inserted here dynamically -->
+        </div>
+        
+        <div class="coding-guidelines" style="background: #E3F2FD; border-left-color: #2196F3;">
+          <h4><i class="fas fa-clipboard-list"></i> ADI-R Diagnostic Criteria</h4>
+          <p>For a diagnosis of autism spectrum disorder using the ADI-R algorithm:</p>
+          <ul style="margin-top: 10px; margin-left: 20px;">
+            <li>Domain A (Social Interaction) score must meet or exceed cutoff of 10</li>
+            <li>Domain B (Communication) score must meet or exceed cutoff of 8 (verbal) or 7 (nonverbal)</li>
+            <li>Domain C (Restricted Behaviors) score must meet or exceed cutoff of 3</li>
+            <li>Domain D (Developmental Onset) must show abnormalities before 36 months (cutoff ≥ 1)</li>
+          </ul>
+          <p style="margin-top: 15px; font-style: italic;">Note: This interactive version is for training purposes. Formal diagnosis should be made by a qualified clinician using the complete standardized interview.</p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Controls -->
+    <div class="controls">
+      <button class="control-btn reset-btn" onclick="resetAssessment()">
+        <i class="fas fa-redo"></i> Reset Assessment
+      </button>
+      
+      <button class="control-btn save-btn" onclick="saveAssessment()">
+        <i class="fas fa-save"></i> Save Progress
+      </button>
+      
+      <button class="control-btn calculate-btn" onclick="showSummary()">
+        <i class="fas fa-calculator"></i> Calculate Scores
+      </button>
+      
+      <button class="control-btn print-btn" onclick="printReport()">
+        <i class="fas fa-print"></i> Print Report
+      </button>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+      <p><strong>Autism Diagnostic Interview-Revised (ADI-R)</strong></p>
+      <p>Developed by Ann Le Couteur, Catherine Lord, and Michael Rutter</p>
+      
+      <div class="copyright">
+        <p>Copyright ©2006 by Western Psychological Services</p>
+        <p>12031 Wilshire Blvd., Los Angeles, California 90025-1251</p>
+        <p>Version 1.210</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ADI-R Items Data Structure
+    const adirItems = {
+      // Domain A: Social Interaction
+      A1: [
+        {
+          id: 50,
+          title: "Direct Gaze",
+          description: "Abnormalities in the use of eye contact to regulate social interaction",
+          coding: "Most Abnormal 4.0-5.0",
+          options: [
+            { code: 0, label: "Normal", desc: "Age-appropriate eye contact" },
+            { code: 1, label: "Questionable", desc: "Occasional abnormalities" },
+            { code: 2, label: "Definite", desc: "Clear abnormalities in gaze" },
+            { code: 3, label: "Marked", desc: "Severe lack of eye contact" }
+          ]
+        },
+        {
+          id: 51,
+          title: "Social Smiling",
+          description: "Use of smiling in social contexts",
+          coding: "Most Abnormal 4.0-5.0",
+          options: [
+            { code: 0, label: "Normal", desc: "Age-appropriate social smiling" },
+            { code: 1, label: "Questionable", desc: "Mild abnormalities" },
+            { code: 2, label: "Definite", desc: "Clear lack of social smiling" },
+            { code: 3, label: "Marked", desc: "Severe deficit in social smiling" }
+          ]
+        },
+        {
+          id: 57,
+          title: "Range of Facial Expressions",
+          description: "Variety and appropriateness of facial expressions used to communicate",
+          coding: "Most Abnormal 4.0-5.0",
+          options: [
+            { code: 0, label: "Normal", desc: "Age-appropriate range" },
+            { code: 1, label: "Questionable", desc: "Slightly limited range" },
+            { code: 2, label: "Definite", desc: "Clearly limited range" },
+            { code: 3, label: "Marked", desc: "Very limited range" }
+          ]
+        }
+      ],
+      A2: [
+        {
+          id: 49,
+          title: "Imaginative Play With Peers",
+          description: "Ability to engage in imaginative play with other children",
+          coding: "Most Abnormal 4.0-5.0",
+          options: [
+            { code: 0, label: "Normal", desc: "Age-appropriate play" },
+            { code: 1, label: "Questionable", desc: "Mild abnormalities" },
+            { code: 2, label: "Definite", desc: "Clear deficits" },
+            { code: 3, label: "Marked", desc: "Severe deficits" }
+          ]
+        },
+        {
+          id: 62,
+          title: "Interest in Children",
+          description: "General interest in other children",
+          coding: "Most Abnormal 4.0-5.0",
+          options: [
+            { code: 0, label: "Normal", desc: "Age-appropriate interest" },
+            { code: 1, label: "Questionable", desc: "Mild lack of interest" },
+            { code: 2, label: "Definite", desc: "Clear lack of interest" },
+            { code: 3, label: "Marked", desc: "Severe lack of interest" }
+          ]
+        },
+        {
+          id: 63,
+          title: "Response to Approaches of Other Children",
+          description: "How the child responds when other children initiate interaction",
+          coding: "Most Abnormal 4.0-5.0",
+          options: [
+            { code: 0, label: "Normal", desc: "Age-appropriate responses" },
+            { code: 1, label: "Questionable", desc: "Occasional inappropriate responses" },
+            { code: 2, label: "Definite", desc: "Clear abnormalities" },
+            { code: 3, label: "Marked", desc: "Severe abnormalities" }
+          ]
+        }
+      ],
+      A3: [
+        {
+          id: 52,
+          title: "Showing and Directing Attention",
+          description: "Showing objects or directing others' attention to objects of interest",
+          coding: "Most Abnormal 4.0-5.0",
+          options: [
+            { code: 0, label: "Normal", desc: "Age-appropriate showing" },
+            { code: 1, label: "Questionable", desc: "Mild deficits" },
+            { code: 2, label: "Definite", desc: "Clear deficits" },
+            { code: 3, label: "Marked", desc: "Severe deficits" }
+          ]
+        },
+        {
+          id: 53,
+          title: "Offering to Share",
+          description: "Offering objects to share enjoyment with others",
+          coding: "Most Abnormal 4.0-5.0",
+          options: [
+            { code: 0, label: "Normal", desc: "Age-appropriate sharing" },
+            { code: 1, label: "Questionable", desc: "Occasional sharing" },
+            { code: 2, label: "Definite", desc: "Rare sharing" },
+            { code: 3, label: "Marked", desc: "Never shares" }
+          ]
+        },
+        {
+          id: 54,
+          title: "Seeking to Share Enjoyment With Others",
+          description: "Actively seeking to share enjoyment of activities with others",
+          coding: "Most Abnormal 4.0-5.0",
+          options: [
+            { code: 0, label: "Normal", desc: "Frequent sharing" },
+            { code: 1, label: "Questionable", desc: "Occasional sharing" },
+            { code: 2, label: "Definite", desc: "Rare sharing" },
+            { code: 3, label: "Marked", desc: "Never seeks to share" }
+          ]
+        }
+      ],
+      A4: [
+        {
+          id: 31,
+          title: "Use of Other's Body to Communicate",
+          description: "Using another person's body as a tool (e.g., leading by the hand)",
+          coding: "Ever",
+          options: [
+            { code: 0, label: "Never", desc: "No such behavior" },
+            { code: 1, label: "Questionable", desc: "Occasional use" },
+            { code: 2, label: "Definite", desc: "Frequent use" },
+            { code: 3, label: "Marked", desc: "Excessive use" }
+          ]
+        },
+        {
+          id: 55,
+          title: "Offering Comfort",
+          description: "Offering comfort to others in distress",
+          coding: "Most Abnormal 4.0-5.0",
+          options: [
+            { code: 0, label: "Normal", desc: "Age-appropriate comforting" },
+            { code: 1, label: "Questionable", desc: "Mild deficits" },
+            { code: 2, label: "Definite", desc: "Clear deficits" },
+            { code: 3, label: "Marked", desc: "Severe deficits" }
+          ]
+        },
+        {
+          id: 56,
+          title: "Quality of Social Overtures",
+          description: "Appropriateness and quality of social initiations",
+          coding: "Most Abnormal 4.0-5.0",
+          options: [
+            { code: 0, label: "Normal", desc: "Age-appropriate overtures" },
+            { code: 1, label: "Questionable", desc: "Mild abnormalities" },
+            { code: 2, label: "Definite", desc: "Clear abnormalities" },
+            { code: 3, label: "Marked", desc: "Severe abnormalities" }
+          ]
+        }
+      ],
+      // Domain B: Communication
+      B1: [
+        {
+          id: 42,
+          title: "Pointing to Express Interest",
+          description: "Use of pointing to show objects of interest",
+          coding: "Most Abnormal 4.0-5.0",
+          options: [
+            { code: 0, label: "Normal", desc: "Age-appropriate pointing" },
+            { code: 1, label: "Questionable", desc: "Mild deficits" },
+            { code: 2, label: "Definite", desc: "Clear deficits" },
+            { code: 3, label: "Marked", desc: "Severe deficits" }
+          ]
+        },
+        {
+          id: 43,
+          title: "Nodding",
+          description: "Use of nodding for yes/agreement",
+          coding: "Most Abnormal 4.0-5.0",
+          options: [
+            { code: 0, label: "Normal", desc: "Age-appropriate use" },
+            { code: 1, label: "Questionable", desc: "Mild deficits" },
+            { code: 2, label: "Definite", desc: "Clear deficits" },
+            { code: 3, label: "Marked", desc: "Severe deficits" }
+          ]
+        },
+        {
+          id: 44,
+          title: "Head Shaking",
+          description: "Use of head shaking for no/disagreement",
+          coding: "Most Abnormal 4.0-5.0",
+          options: [
+            { code: 0, label: "Normal", desc: "Age-appropriate use" },
+            { code: 1, label: "Questionable", desc: "Mild deficits" },
+            { code: 2, label: "Definite", desc: "Clear deficits" },
+            { code: 3, label: "Marked", desc: "Severe deficits" }
+          ]
+        }
+      ],
+      B4: [
+        {
+          id: 47,
+          title: "Spontaneous Imitation of Actions",
+          description: "Imitation of others' actions in play",
+          coding: "Most Abnormal 4.0-5.0",
+          options: [
+            { code: 0, label: "Normal", desc: "Age-appropriate imitation" },
+            { code: 1, label: "Questionable", desc: "Mild deficits" },
+            { code: 2, label: "Definite", desc: "Clear deficits" },
+            { code: 3, label: "Marked", desc: "Severe deficits" }
+          ]
+        },
+        {
+          id: 48,
+          title: "Imaginative Play",
+          description: "Engagement in imaginative or pretend play",
+          coding: "Most Abnormal 4.0-5.0",
+          options: [
+            { code: 0, label: "Normal", desc: "Age-appropriate play" },
+            { code: 1, label: "Questionable", desc: "Mild deficits" },
+            { code: 2, label: "Definite", desc: "Clear deficits" },
+            { code: 3, label: "Marked", desc: "Severe deficits" }
+          ]
+        },
+        {
+          id: 61,
+          title: "Imitative Social Play",
+          description: "Imitation in social play contexts",
+          coding: "Most Abnormal 4.0-5.0",
+          options: [
+            { code: 0, label: "Normal", desc: "Age-appropriate play" },
+            { code: 1, label: "Questionable", desc: "Mild deficits" },
+            { code: 2, label: "Definite", desc: "Clear deficits" },
+            { code: 3, label: "Marked", desc: "Severe deficits" }
+          ]
+        }
+      ],
+      // Verbal subjects only
+      B2V: [
+        {
+          id: 34,
+          title: "Social Verbalization/Chat",
+          description: "Social chit-chat and conversation",
+          coding: "Ever",
+          options: [
+            { code: 0, label: "Normal", desc: "Age-appropriate chat" },
+            { code: 1, label: "Questionable", desc: "Mild abnormalities" },
+            { code: 2, label: "Definite", desc: "Clear abnormalities" },
+            { code: 3, label: "Marked", desc: "Severe abnormalities" }
+          ]
+        },
+        {
+          id: 35,
+          title: "Reciprocal Conversation",
+          description: "Ability to engage in back-and-forth conversation",
+          coding: "Ever",
+          options: [
+            { code: 0, label: "Normal", desc: "Age-appropriate conversation" },
+            { code: 1, label: "Questionable", desc: "Mild deficits" },
+            { code: 2, label: "Definite", desc: "Clear deficits" },
+            { code: 3, label: "Marked", desc: "Severe deficits" }
+          ]
+        }
+      ],
+      B3V: [
+        {
+          id: 33,
+          title: "Stereotyped Utterances and Delayed Echolalia",
+          description: "Repetitive phrases or delayed echoing",
+          coding: "Ever",
+          options: [
+            { code: 0, label: "Never", desc: "No such utterances" },
+            { code: 1, label: "Questionable", desc: "Occasional" },
+            { code: 2, label: "Definite", desc: "Frequent" },
+            { code: 3, label: "Marked", desc: "Excessive" }
+          ]
+        },
+        {
+          id: 36,
+          title: "Inappropriate Questions or Statements",
+          description: "Socially inappropriate questions or statements",
+          coding: "Ever",
+          options: [
+            { code: 0, label: "Never", desc: "No inappropriate statements" },
+            { code: 1, label: "Questionable", desc: "Occasional" },
+            { code: 2, label: "Definite", desc: "Frequent" },
+            { code: 3, label: "Marked", desc: "Excessive" }
+          ]
+        }
+      ],
+      // Domain C: Restricted Behaviors
+      C1: [
+        {
+          id: 67,
+          title: "Unusual Preoccupations",
+          description: "Unusual or intense preoccupations",
+          coding: "Ever",
+          options: [
+            { code: 0, label: "Never", desc: "No unusual preoccupations" },
+            { code: 1, label: "Questionable", desc: "Mild preoccupations" },
+            { code: 2, label: "Definite", desc: "Clear preoccupations" },
+            { code: 3, label: "Marked", desc: "Severe preoccupations" }
+          ]
+        },
+        {
+          id: 68,
+          title: "Circumscribed Interests",
+          description: "Narrow, intense interests",
+          coding: "Ever",
+          options: [
+            { code: 0, label: "Never", desc: "No circumscribed interests" },
+            { code: 1, label: "Questionable", desc: "Mild interests" },
+            { code: 2, label: "Definite", desc: "Clear interests" },
+            { code: 3, label: "Marked", desc: "Severe interests" }
+          ]
+        }
+      ],
+      C2: [
+        {
+          id: 39,
+          title: "Verbal Rituals",
+          description: "Repetitive verbal routines or rituals",
+          coding: "Ever",
+          options: [
+            { code: 0, label: "Never", desc: "No verbal rituals" },
+            { code: 1, label: "Questionable", desc: "Occasional rituals" },
+            { code: 2, label: "Definite", desc: "Frequent rituals" },
+            { code: 3, label: "Marked", desc: "Excessive rituals" }
+          ]
+        },
+        {
+          id: 70,
+          title: "Compulsions/Rituals",
+          description: "Compulsive behaviors or rituals",
+          coding: "Ever",
+          options: [
+            { code: 0, label: "Never", desc: "No compulsions" },
+            { code: 1, label: "Questionable", desc: "Occasional" },
+            { code: 2, label: "Definite", desc: "Frequent" },
+            { code: 3, label: "Marked", desc: "Excessive" }
+          ]
+        }
+      ],
+      C3: [
+        {
+          id: 77,
+          title: "Hand and Finger Mannerisms",
+          description: "Repetitive hand or finger movements",
+          coding: "Ever",
+          options: [
+            { code: 0, label: "Never", desc: "No hand mannerisms" },
+            { code: 1, label: "Questionable", desc: "Occasional" },
+            { code: 2, label: "Definite", desc: "Frequent" },
+            { code: 3, label: "Marked", desc: "Excessive" }
+          ]
+        }
+      ],
+      C4: [
+        {
+          id: 69,
+          title: "Repetitive Use of Objects",
+          description: "Repetitive manipulation of objects",
+          coding: "Ever",
+          options: [
+            { code: 0, label: "Never", desc: "No repetitive use" },
+            { code: 1, label: "Questionable", desc: "Occasional" },
+            { code: 2, label: "Definite", desc: "Frequent" },
+            { code: 3, label: "Marked", desc: "Excessive" }
+          ]
+        },
+        {
+          id: 71,
+          title: "Unusual Sensory Interests",
+          description: "Unusual interest in sensory aspects of objects",
+          coding: "Ever",
+          options: [
+            { code: 0, label: "Never", desc: "No unusual interests" },
+            { code: 1, label: "Questionable", desc: "Occasional" },
+            { code: 2, label: "Definite", desc: "Frequent" },
+            { code: 3, label: "Marked", desc: "Excessive" }
+          ]
+        }
+      ],
+      // Domain D: Developmental Onset
+      D: [
+        {
+          id: 2,
+          title: "Age Parents First Noticed",
+          description: "Age in months when parents first noticed something unusual",
+          type: "age",
+          cutoff: 36,
+          scoring: "0 = ≥ 36 months, 1 = < 36 months"
+        },
+        {
+          id: 9,
+          title: "Age of First Single Words",
+          description: "Age in months when first single words appeared",
+          type: "age",
+          cutoff: 24,
+          scoring: "0 = ≤ 24 months, 1 = > 24 months"
+        },
+        {
+          id: 10,
+          title: "Age of First Phrases",
+          description: "Age in months when first phrases appeared",
+          type: "age",
+          cutoff: 33,
+          scoring: "0 = ≤ 33 months, 1 = > 33 months"
+        },
+        {
+          id: 86,
+          title: "Age When Abnormality First Evident",
+          description: "Age in months when abnormality was first evident",
+          type: "age",
+          cutoff: 36,
+          scoring: "0 = ≥ 36 months, 1 = < 36 months"
+        }
+      ]
+    };
+
+    // User responses storage
+    let userResponses = {};
+
+    // Initialize the assessment
+    document.addEventListener('DOMContentLoaded', function() {
+      renderAllItems();
+      updateScoreDisplay();
+      
+      // Set interview date to today
+      const today = new Date();
+      const formattedDate = today.toISOString().split('T')[0];
+      document.getElementById('dateOfInterview').value = formattedDate;
+      
+      // Calculate chronological age if DOB provided
+      document.getElementById('dateOfBirth').addEventListener('change', calculateAge);
+      
+      // Auto-save data
+      document.getElementById('subjectName').addEventListener('input', saveFormData);
+      
+      // Load saved data
+      loadFormData();
+    });
+
+    // Calculate age from date of birth
+    function calculateAge() {
+      const dob = document.getElementById('dateOfBirth').value;
+      if (!dob) return;
+      
+      const birthDate = new Date(dob);
+      const today = new Date();
+      
+      let years = today.getFullYear() - birthDate.getFullYear();
+      let months = today.getMonth() - birthDate.getMonth();
+      
+      if (months < 0) {
+        years--;
+        months += 12;
+      }
+      
+      document.getElementById('chronologicalAge').value = `${years} year(s) ${months} month(s)`;
+    }
+
+    // Show domain
+    function showDomain(domain) {
+      // Hide all domains
+      document.querySelectorAll('.domain-container').forEach(el => {
+        el.classList.remove('active');
+      });
+      
+      // Update navigation buttons
+      document.querySelectorAll('.domain-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      // Show selected domain
+      const container = document.getElementById(`${domain}Container`);
+      if (container) {
+        container.classList.add('active');
+      }
+      
+      // Activate corresponding nav button
+      document.querySelectorAll('.domain-btn').forEach(btn => {
+        if ((domain === 'A' && btn.classList.contains('a')) ||
+            (domain === 'B' && btn.classList.contains('b')) ||
+            (domain === 'C' && btn.classList.contains('c')) ||
+            (domain === 'D' && btn.classList.contains('d')) ||
+            (domain === 'summary' && btn.classList.contains('summary'))) {
+          btn.classList.add('active');
+        }
+      });
+    }
+
+    // Render all items
+    function renderAllItems() {
+      // Render Domain A items
+      renderDomainItems('A1', adirItems.A1);
+      renderDomainItems('A2', adirItems.A2);
+      renderDomainItems('A3', adirItems.A3);
+      renderDomainItems('A4', adirItems.A4);
+      
+      // Render Domain B items
+      renderDomainItems('B1', adirItems.B1);
+      renderDomainItems('B4', adirItems.B4);
+      renderDomainItems('B2V', adirItems.B2V);
+      renderDomainItems('B3V', adirItems.B3V);
+      
+      // Render Domain C items
+      renderDomainItems('C1', adirItems.C1);
+      renderDomainItems('C2', adirItems.C2);
+      renderDomainItems('C3', adirItems.C3);
+      renderDomainItems('C4', adirItems.C4);
+      
+      // Render Domain D items
+      renderDomainDItems();
+    }
+
+    // Render domain items
+    function renderDomainItems(domainId, items) {
+      const container = document.getElementById(`domain${domainId}Items`);
+      if (!container) return;
+      
+      let html = '';
+      
+      items.forEach(item => {
+        const response = userResponses[item.id] !== undefined ? userResponses[item.id] : null;
+        
+        html += `
+          <div class="item-card" id="item-${item.id}">
+            <div class="item-header">
+              <div class="item-number">${item.id}</div>
+              <div class="item-title">${item.title}</div>
+            </div>
+            
+            <div class="item-description">
+              <strong>Description:</strong> ${item.description}<br>
+              <strong>Coding:</strong> ${item.coding}
+            </div>
+            
+            <div class="coding-options">
+              ${item.options.map(option => `
+                <div class="coding-option">
+                  <button class="coding-btn ${response === option.code ? 'selected' : ''}"
+                          onclick="selectResponse(${item.id}, ${option.code})"
+                          data-code="${option.code}">
+                    <div class="code-value">${option.code}</div>
+                    <div class="code-label">${option.label}</div>
+                    <div class="code-desc">${option.desc}</div>
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      });
+      
+      container.innerHTML = html;
+    }
+
+    // Render Domain D (age-based items)
+    function renderDomainDItems() {
+      const container = document.getElementById('domainDItems');
+      let html = '';
+      
+      adirItems.D.forEach(item => {
+        const response = userResponses[item.id] !== undefined ? userResponses[item.id] : null;
+        const score = calculateAgeScore(response, item.cutoff, item.id);
+        
+        html += `
+          <div class="item-card" id="item-${item.id}">
+            <div class="item-header">
+              <div class="item-number">${item.id}</div>
+              <div class="item-title">${item.title}</div>
+            </div>
+            
+            <div class="item-description">
+              <strong>Description:</strong> ${item.description}<br>
+              <strong>Scoring:</strong> ${item.scoring}<br>
+              <strong>Cutoff:</strong> ${item.cutoff} months
+            </div>
+            
+            <div class="age-inputs">
+              <div class="age-input-group">
+                <label for="age-${item.id}">Age in months:</label>
+                <input type="number" id="age-${item.id}" class="age-input" 
+                       min="0" max="999" 
+                       value="${response !== null ? response : ''}"
+                       onchange="selectAgeResponse(${item.id}, this.value, ${item.cutoff})"
+                       placeholder="Enter age in months">
+              </div>
+              
+              <div style="display: flex; align-items: center; gap: 15px; margin-top: 20px;">
+                <div style="font-weight: 600; color: var(--text-light);">Algorithm Score:</div>
+                <div id="score-${item.id}" style="font-size: 1.5rem; font-weight: bold; color: var(--domain-d);">
+                  ${score}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+      
+      container.innerHTML = html;
+    }
+
+    // Calculate age-based score
+    function calculateAgeScore(age, cutoff, itemId) {
+      if (age === null || age === '' || age === undefined) return '-';
+      const numericAge = parseInt(age);
+      
+      if (isNaN(numericAge)) return '-';
+      
+      // Different scoring for different items
+      if (itemId == 9) { // First words
+        return numericAge <= 24 ? 0 : 1;
+      } else if (itemId == 10) { // First phrases
+        return numericAge <= 33 ? 0 : 1;
+      } else { // Other items
+        return numericAge >= cutoff ? 0 : 1;
+      }
+    }
+
+    // Select response for coded items
+    function selectResponse(itemId, code) {
+      userResponses[itemId] = code;
+      
+      // Update UI
+      const itemCard = document.getElementById(`item-${itemId}`);
+      if (itemCard) {
+        const buttons = itemCard.querySelectorAll('.coding-btn');
+        buttons.forEach(btn => {
+          const btnCode = parseInt(btn.getAttribute('data-code'));
+          btn.classList.toggle('selected', btnCode === code);
+        });
+      }
+      
+      updateScoreDisplay();
+      saveFormData();
+    }
+
+    // Select response for age-based items
+    function selectAgeResponse(itemId, age, cutoff) {
+      if (age === '') {
+        userResponses[itemId] = null;
+      } else {
+        userResponses[itemId] = parseInt(age);
+      }
+      
+      // Update score display
+      const scoreElement = document.getElementById(`score-${itemId}`);
+      if (scoreElement) {
+        scoreElement.textContent = calculateAgeScore(age, cutoff, itemId);
+      }
+      
+      updateScoreDisplay();
+      saveFormData();
+    }
+
+    // Calculate Domain scores
+    function calculateDomainScores() {
+      // Calculate Domain A scores
+      const domainAScores = calculateDomainAScores();
+      
+      // Calculate Domain B scores
+      const domainBScores = calculateDomainBScores();
+      
+      // Calculate Domain C scores
+      const domainCScores = calculateDomainCScores();
+      
+      // Calculate Domain D scores
+      const domainDScores = calculateDomainDScores();
+      
+      return {
+        A: domainAScores,
+        B: domainBScores,
+        C: domainCScores,
+        D: domainDScores
+      };
+    }
+
+    // Calculate Domain A scores
+    function calculateDomainAScores() {
+      let total = 0;
+      const subdomainTotals = {};
+      
+      ['A1', 'A2', 'A3', 'A4'].forEach(subdomain => {
+        let subdomainTotal = 0;
+        const items = adirItems[subdomain];
+        
+        if (items) {
+          items.forEach(item => {
+            if (userResponses[item.id] !== undefined && userResponses[item.id] !== null) {
+              subdomainTotal += userResponses[item.id];
+            }
+          });
+        }
+        
+        subdomainTotals[subdomain] = subdomainTotal;
+        total += subdomainTotal;
+      });
+      
+      return { total, subdomainTotals };
+    }
+
+    // Calculate Domain B scores
+    function calculateDomainBScores() {
+      const b1Scores = calculateSubdomainScore(adirItems.B1);
+      const b4Scores = calculateSubdomainScore(adirItems.B4);
+      
+      // Check if subject is verbal
+      const verbalStatus = checkVerbalStatus();
+      const isVerbal = verbalStatus.isVerbal;
+      
+      let verbalTotal = 0;
+      if (isVerbal) {
+        const b2vScores = calculateSubdomainScore(adirItems.B2V);
+        const b3vScores = calculateSubdomainScore(adirItems.B3V);
+        verbalTotal = b1Scores + b2vScores + b3vScores + b4Scores;
+      }
+      
+      const nonverbalTotal = b1Scores + b4Scores;
+      const total = isVerbal ? verbalTotal : nonverbalTotal;
+      const cutoff = isVerbal ? 8 : 7;
+      
+      return {
+        total,
+        verbalTotal,
+        nonverbalTotal,
+        isVerbal,
+        cutoff,
+        b1Scores,
+        b4Scores
+      };
+    }
+
+    // Calculate subdomain score
+    function calculateSubdomainScore(items) {
+      let total = 0;
+      if (items) {
+        items.forEach(item => {
+          if (userResponses[item.id] !== undefined && userResponses[item.id] !== null) {
+            total += userResponses[item.id];
+          }
+        });
+      }
+      return total;
+    }
+
+    // Check verbal status
+    function checkVerbalStatus() {
+      // In real ADI-R, this is based on Item 30
+      // For this demo, we'll check if there are responses to verbal items
+      let hasVerbalResponses = false;
+      
+      // Check B2V items
+      if (adirItems.B2V) {
+        hasVerbalResponses = adirItems.B2V.some(item => userResponses[item.id] !== undefined);
+      }
+      
+      // Check B3V items
+      if (!hasVerbalResponses && adirItems.B3V) {
+        hasVerbalResponses = adirItems.B3V.some(item => userResponses[item.id] !== undefined);
+      }
+      
+      return {
+        isVerbal: hasVerbalResponses,
+        item30: userResponses[30] || 0
+      };
+    }
+
+    // Calculate Domain C scores
+    function calculateDomainCScores() {
+      let total = 0;
+      const subdomainTotals = {};
+      
+      ['C1', 'C2', 'C3', 'C4'].forEach(subdomain => {
+        let subdomainTotal = 0;
+        const items = adirItems[subdomain];
+        
+        if (items) {
+          items.forEach(item => {
+            if (userResponses[item.id] !== undefined && userResponses[item.id] !== null) {
+              subdomainTotal += userResponses[item.id];
+            }
+          });
+        }
+        
+        subdomainTotals[subdomain] = subdomainTotal;
+        total += subdomainTotal;
+      });
+      
+      return { total, subdomainTotals };
+    }
+
+    // Calculate Domain D scores
+    function calculateDomainDScores() {
+      let total = 0;
+      
+      adirItems.D.forEach(item => {
+        const age = userResponses[item.id];
+        if (age !== undefined && age !== null) {
+          let score = 0;
+          
+          if (item.id == 9) { // First words
+            score = age > 24 ? 1 : 0;
+          } else if (item.id == 10) { // First phrases
+            score = age > 33 ? 1 : 0;
+          } else { // Other items
+            score = age < item.cutoff ? 1 : 0;
+          }
+          
+          total += score;
+        }
+      });
+      
+      return total;
+    }
+
+    // Update score display
+    function updateScoreDisplay() {
+      const scores = calculateDomainScores();
+      
+      // Update Domain A
+      document.getElementById('domainAScore').textContent = scores.A.total;
+      updateStatusIndicator('domainAStatus', scores.A.total, 10);
+      
+      // Update Domain B
+      const domainBScore = scores.B.total;
+      const domainBCutoff = scores.B.cutoff;
+      document.getElementById('domainBScore').textContent = domainBScore;
+      updateStatusIndicator('domainBStatus', domainBScore, domainBCutoff);
+      
+      // Update Domain C
+      document.getElementById('domainCScore').textContent = scores.C.total;
+      updateStatusIndicator('domainCStatus', scores.C.total, 3);
+      
+      // Update Domain D
+      document.getElementById('domainDScore').textContent = scores.D;
+      updateStatusIndicator('domainDStatus', scores.D, 1);
+      
+      // Show/hide verbal subjects section
+      const verbalSection = document.getElementById('verbalSubjectsSection');
+      if (scores.B.isVerbal) {
+        verbalSection.style.display = 'block';
+      } else {
+        verbalSection.style.display = 'none';
+      }
+    }
+
+    // Update status indicator
+    function updateStatusIndicator(elementId, score, cutoff) {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      
+      if (score >= cutoff) {
+        element.innerHTML = '<i class="fas fa-circle" style="font-size: 0.6rem;"></i><span>Meets cutoff</span>';
+        element.style.background = '#FFEBEE';
+        element.style.color = '#C62828';
+      } else {
+        element.innerHTML = '<i class="fas fa-circle" style="font-size: 0.6rem;"></i><span>Below cutoff</span>';
+        element.style.background = '#E8F5E9';
+        element.style.color = '#388E3C';
+      }
+    }
+
+    // Show summary
+    function showSummary() {
+      const scores = calculateDomainScores();
+      
+      // Update summary display
+      document.getElementById('summaryDomainAScore').textContent = scores.A.total;
+      document.getElementById('summaryDomainBScore').textContent = scores.B.total;
+      document.getElementById('summaryDomainCScore').textContent = scores.C.total;
+      document.getElementById('summaryDomainDScore').textContent = scores.D;
+      
+      // Update summary status indicators
+      updateSummaryStatus('summaryDomainAStatus', scores.A.total, 10);
+      updateSummaryStatus('summaryDomainBStatus', scores.B.total, scores.B.cutoff);
+      updateSummaryStatus('summaryDomainCStatus', scores.C.total, 3);
+      updateSummaryStatus('summaryDomainDStatus', scores.D, 1);
+      
+      // Update interpretation
+      updateInterpretation(scores);
+      
+      // Show summary
+      showDomain('summary');
+    }
+
+    // Update summary status
+    function updateSummaryStatus(elementId, score, cutoff) {
+      const element = document.getElementById(elementId);
+      if (!element) return;
+      
+      if (score >= cutoff) {
+        element.innerHTML = '<i class="fas fa-exclamation-circle"></i><span>Meets cutoff</span>';
+        element.style.background = '#FFEBEE';
+        element.style.color = '#C62828';
+      } else {
+        element.innerHTML = '<i class="fas fa-check-circle"></i><span>Below cutoff</span>';
+        element.style.background = '#E8F5E9';
+        element.style.color = '#388E3C';
+      }
+    }
+
+    // Update interpretation
+    function updateInterpretation(scores) {
+      const container = document.getElementById('summaryInterpretation');
+      
+      // Check diagnostic criteria
+      const meetsA = scores.A.total >= 10;
+      const meetsB = scores.B.total >= scores.B.cutoff;
+      const meetsC = scores.C.total >= 3;
+      const meetsD = scores.D >= 1;
+      
+      const meetsAllCriteria = meetsA && meetsB && meetsC && meetsD;
+      
+      let interpretation = '';
+      
+      if (meetsAllCriteria) {
+        interpretation = `
+          <h4 style="color: #F44336; margin-bottom: 15px;">
+            <i class="fas fa-exclamation-triangle"></i> ADI-R Algorithm: POSITIVE for Autism Spectrum Disorder
+          </h4>
+          <p>All four algorithm domains meet or exceed cutoff scores, consistent with a diagnosis of autism spectrum disorder.</p>
+          <div style="margin-top: 15px; padding: 15px; background: white; border-radius: 8px;">
+            <strong>Domain A (Social Interaction):</strong> ${scores.A.total}/10+ (cutoff: 10)<br>
+            <strong>Domain B (Communication):</strong> ${scores.B.total}/${scores.B.cutoff}+ (cutoff: ${scores.B.cutoff})<br>
+            <strong>Domain C (Restricted Behaviors):</strong> ${scores.C.total}/3+ (cutoff: 3)<br>
+            <strong>Domain D (Developmental Onset):</strong> ${scores.D}/1+ (cutoff: 1)<br>
+            <strong>Verbal Status:</strong> ${scores.B.isVerbal ? 'Verbal' : 'Nonverbal'}<br>
+            <strong>Assessment Date:</strong> ${new Date().toLocaleDateString()}
+          </div>
+        `;
+      } else {
+        interpretation = `
+          <h4 style="color: #4CAF50; margin-bottom: 15px;">
+            <i class="fas fa-info-circle"></i> ADI-R Algorithm: Does Not Meet Full Criteria
+          </h4>
+          <p>Not all algorithm domains meet cutoff scores for autism spectrum disorder diagnosis.</p>
+          <div style="margin-top: 15px; padding: 15px; background: white; border-radius: 8px;">
+            <strong>Domain A (Social Interaction):</strong> ${scores.A.total}/10 (cutoff: 10) ${meetsA ? '✓' : '✗'}<br>
+            <strong>Domain B (Communication):</strong> ${scores.B.total}/${scores.B.cutoff} (cutoff: ${scores.B.cutoff}) ${meetsB ? '✓' : '✗'}<br>
+            <strong>Domain C (Restricted Behaviors):</strong> ${scores.C.total}/3 (cutoff: 3) ${meetsC ? '✓' : '✗'}<br>
+            <strong>Domain D (Developmental Onset):</strong> ${scores.D}/1 (cutoff: 1) ${meetsD ? '✓' : '✗'}<br>
+            <strong>Verbal Status:</strong> ${scores.B.isVerbal ? 'Verbal' : 'Nonverbal'}<br>
+            <strong>Assessment Date:</strong> ${new Date().toLocaleDateString()}
+          </div>
+        `;
+      }
+      
+      // Add clinical notes
+      interpretation += `
+        <div style="margin-top: 20px;">
+          <h5 style="color: var(--primary-blue); margin-bottom: 10px;"><i class="fas fa-stethoscope"></i> Clinical Notes</h5>
+          <ul style="margin-left: 20px;">
+            <li>The ADI-R algorithm is one component of a comprehensive diagnostic assessment</li>
+            <li>Clinical judgment should consider the complete developmental history and current presentation</li>
+            <li>Some individuals may meet criteria for other autism spectrum conditions even if they don't meet all ADI-R cutoffs</li>
+            <li>Consider administration of the ADOS-2 for direct observation assessment</li>
+            <li>Review of educational and medical records is recommended</li>
+          </ul>
+        </div>
+      `;
+      
+      container.innerHTML = interpretation;
+    }
+
+    // Save assessment
+    function saveAssessment() {
+      const subjectData = {
+        subjectName: document.getElementById('subjectName').value,
+        subjectID: document.getElementById('subjectID').value,
+        dateOfBirth: document.getElementById('dateOfBirth').value,
+        dateOfInterview: document.getElementById('dateOfInterview').value,
+        chronologicalAge: document.getElementById('chronologicalAge').value,
+        gender: document.getElementById('gender').value,
+        respondentName: document.getElementById('respondentName').value,
+        relationToSubject: document.getElementById('relationToSubject').value,
+        clinicianName: document.getElementById('clinicianName').value,
+        schoolClinic: document.getElementById('schoolClinic').value,
+        responses: userResponses,
+        scores: calculateDomainScores(),
+        lastSaved: new Date().toISOString()
+      };
+      
+      localStorage.setItem('adirAssessment', JSON.stringify(subjectData));
+      
+      // Show success message
+      alert('Assessment progress saved successfully!');
+    }
+
+    // Save form data
+    function saveFormData() {
+      const formData = {
+        subjectName: document.getElementById('subjectName').value,
+        subjectID: document.getElementById('subjectID').value,
+        dateOfBirth: document.getElementById('dateOfBirth').value,
+        dateOfInterview: document.getElementById('dateOfInterview').value,
+        chronologicalAge: document.getElementById('chronologicalAge').value,
+        gender: document.getElementById('gender').value,
+        respondentName: document.getElementById('respondentName').value,
+        relationToSubject: document.getElementById('relationToSubject').value,
+        clinicianName: document.getElementById('clinicianName').value,
+        schoolClinic: document.getElementById('schoolClinic').value,
+        responses: userResponses
+      };
+      
+      localStorage.setItem('adirFormData', JSON.stringify(formData));
+    }
+
+    // Load form data
+    function loadFormData() {
+      const savedData = localStorage.getItem('adirFormData');
+      if (savedData) {
+        try {
+          const formData = JSON.parse(savedData);
+          
+          document.getElementById('subjectName').value = formData.subjectName || '';
+          document.getElementById('subjectID').value = formData.subjectID || '';
+          document.getElementById('dateOfBirth').value = formData.dateOfBirth || '';
+          document.getElementById('dateOfInterview').value = formData.dateOfInterview || '';
+          document.getElementById('chronologicalAge').value = formData.chronologicalAge || '';
+          document.getElementById('gender').value = formData.gender || '';
+          document.getElementById('respondentName').value = formData.respondentName || '';
+          document.getElementById('relationToSubject').value = formData.relationToSubject || '';
+          document.getElementById('clinicianName').value = formData.clinicianName || '';
+          document.getElementById('schoolClinic').value = formData.schoolClinic || '';
+          
+          if (formData.responses) {
+            userResponses = formData.responses;
+            renderAllItems();
+            updateScoreDisplay();
+          }
+        } catch (e) {
+          console.log('Could not load saved data:', e);
+        }
+      }
+    }
+
+    // Reset assessment
+    function resetAssessment() {
+      if (confirm("Are you sure you want to reset all responses? This action cannot be undone.")) {
+        userResponses = {};
+        
+        document.getElementById('subjectName').value = '';
+        document.getElementById('subjectID').value = '';
+        document.getElementById('dateOfBirth').value = '';
+        document.getElementById('dateOfInterview').value = '';
+        document.getElementById('chronologicalAge').value = '';
+        document.getElementById('gender').value = '';
+        document.getElementById('respondentName').value = '';
+        document.getElementById('relationToSubject').value = '';
+        document.getElementById('clinicianName').value = '';
+        document.getElementById('schoolClinic').value = '';
+        
+        renderAllItems();
+        updateScoreDisplay();
+        
+        // Show Domain A
+        showDomain('A');
+        
+        // Clear saved data
+        localStorage.removeItem('adirFormData');
+      }
+    }
+
+    // Print report
+    function printReport() {
+      const scores = calculateDomainScores();
+      const subjectData = {
+        name: document.getElementById('subjectName').value || 'Not Entered',
+        id: document.getElementById('subjectID').value || 'Not Entered',
+        dob: document.getElementById('dateOfBirth').value || 'Not Entered',
+        interviewDate: document.getElementById('dateOfInterview').value,
+        age: document.getElementById('chronologicalAge').value || 'Not Entered',
+        gender: document.getElementById('gender').value || 'Not Entered',
+        respondent: document.getElementById('respondentName').value || 'Not Entered',
+        relation: document.getElementById('relationToSubject').value || 'Not Entered',
+        clinician: document.getElementById('clinicianName').value || 'Not Entered',
+        school: document.getElementById('schoolClinic').value || 'Not Entered'
+      };
+      
+      // Create print content
+      const printContent = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>ADI-R Test Report</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 30px; }
+            h1 { color: #1565C0; border-bottom: 2px solid #1565C0; padding-bottom: 10px; }
+            .info-box { margin: 20px 0; padding: 15px; background: #E3F2FD; border-radius: 8px; }
+            .score-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin: 20px 0; }
+            .score-box { padding: 20px; border: 2px solid; border-radius: 8px; text-align: center; }
+            .disclaimer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccc; font-size: 0.8rem; color: #666; }
+          </style>
+        </head>
+        <body>
+          <h1>ADI-R Test Report</h1>
+          
+          <div class="info-box">
+            <h3>Subject Information</h3>
+            <p><strong>Name of Subject:</strong> ${subjectData.name}</p>
+            <p><strong>Subject ID:</strong> ${subjectData.id}</p>
+            <p><strong>Date of Birth:</strong> ${subjectData.dob}</p>
+            <p><strong>Date of Interview:</strong> ${subjectData.interviewDate}</p>
+            <p><strong>Chronological Age:</strong> ${subjectData.age}</p>
+            <p><strong>Gender:</strong> ${subjectData.gender}</p>
+            <p><strong>Name of Respondent:</strong> ${subjectData.respondent}</p>
+            <p><strong>Relation to Subject:</strong> ${subjectData.relation}</p>
+            <p><strong>Clinician Name:</strong> ${subjectData.clinician}</p>
+            <p><strong>School/Clinic:</strong> ${subjectData.school}</p>
+            <p><strong>Date Processed:</strong> ${new Date().toLocaleDateString()}</p>
+          </div>
+          
+          <h3>Diagnostic Algorithm Results</h3>
+          <div class="score-grid">
+            <div class="score-box" style="border-color: #2196F3;">
+              <h4 style="color: #2196F3;">Domain A: Social Interaction</h4>
+              <div style="font-size: 2.5rem; font-weight: bold; color: #2196F3;">${scores.A.total}</div>
+              <p>Cutoff: 10</p>
+              <p style="color: ${scores.A.total >= 10 ? '#C62828' : '#388E3C'};">
+                ${scores.A.total >= 10 ? 'Meets cutoff' : 'Below cutoff'}
+              </p>
+            </div>
+            
+            <div class="score-box" style="border-color: #4CAF50;">
+              <h4 style="color: #4CAF50;">Domain B: Communication</h4>
+              <div style="font-size: 2.5rem; font-weight: bold; color: #4CAF50;">${scores.B.total}</div>
+              <p>Cutoff: ${scores.B.cutoff} (${scores.B.isVerbal ? 'Verbal' : 'Nonverbal'})</p>
+              <p style="color: ${scores.B.total >= scores.B.cutoff ? '#C62828' : '#388E3C'};">
+                ${scores.B.total >= scores.B.cutoff ? 'Meets cutoff' : 'Below cutoff'}
+              </p>
+            </div>
+            
+            <div class="score-box" style="border-color: #FF9800;">
+              <h4 style="color: #FF9800;">Domain C: Restricted Behaviors</h4>
+              <div style="font-size: 2.5rem; font-weight: bold; color: #FF9800;">${scores.C.total}</div>
+              <p>Cutoff: 3</p>
+              <p style="color: ${scores.C.total >= 3 ? '#C62828' : '#388E3C'};">
+                ${scores.C.total >= 3 ? 'Meets cutoff' : 'Below cutoff'}
+              </p>
+            </div>
+            
+            <div class="score-box" style="border-color: #9C27B0;">
+              <h4 style="color: #9C27B0;">Domain D: Developmental Onset</h4>
+              <div style="font-size: 2.5rem; font-weight: bold; color: #9C27B0;">${scores.D}</div>
+              <p>Cutoff: 1</p>
+              <p style="color: ${scores.D >= 1 ? '#C62828' : '#388E3C'};">
+                ${scores.D >= 1 ? 'Meets cutoff' : 'Below cutoff'}
+              </p>
+            </div>
+          </div>
+          
+          <div class="disclaimer">
+            <p><strong>Disclaimer:</strong> This report is generated from the Autism Diagnostic Interview-Revised (ADI-R) interactive version. For formal diagnosis, the complete standardized interview should be administered by a trained clinician.</p>
+            <p style="margin-top: 10px;">Copyright ©2006 by Western Psychological Services. Version 1.210</p>
+          </div>
+        </body>
+        </html>
+      `;
+      
+      // Open print window
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(printContent);
+      printWindow.document.close();
+      printWindow.focus();
+      
+      setTimeout(() => {
+        printWindow.print();
+      }, 250);
+    }
+  </script>
+</body>
+</html>

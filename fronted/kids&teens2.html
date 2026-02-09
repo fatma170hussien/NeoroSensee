@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun & Relax Zone - Kids & Teens</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #a2d2ff, #254674, #cdb4db);
+            color: #333;
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+
+        header {
+            text-align: center;
+            padding: 25px 20px;
+            background: linear-gradient(to right, #001f4d, #3a86ff);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.2"/></svg>');
+            background-size: 50px 50px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border: none;
+            border-radius: 30px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #3a86ff;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            background: white;
+            color: #3a86ff;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: #3a86ff;
+            color: white;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-image {
+            height: 160px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .card-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff006e;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            color: #001f4d;
+            font-size: 1.3rem;
+        }
+
+        .card p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .age-range {
+            background: #e9ecef;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            color: #495057;
+        }
+
+        .play-btn {
+            background: #3a86ff;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .play-btn:hover {
+            background: #2667cc;
+        }
+
+        #game-frame {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            padding: 20px;
+            flex-direction: column;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .back-btn {
+            background: #3a86ff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #2667cc;
+        }
+
+        .game-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-iframe {
+            flex: 1;
+            border: none;
+            border-radius: 10px;
+            background: white;
+        }
+
+        .api-status {
+            margin-top: 10px;
+            color: white;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .featured-section {
+            margin: 40px 0;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #001f4d;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3a86ff;
+            display: inline-block;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #3a86ff;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #001f4d;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filter-buttons {
+                justify-content: center;
+            }
+            
+            .cards-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎮 Fun & Relax Zone 🎨</h1>
+        <p class="subtitle">A safe space for kids and teens to play, learn, and relax with engaging activities</p>
+    </header>
+
+    <div class="container">
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Activities</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">5</div>
+                <div class="stat-label">Categories</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Safe Content</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">4.8</div>
+                <div class="stat-label">User Rating</div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="Search for games, activities...">
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="games">Games</button>
+                <button class="filter-btn" data-filter="relaxation">Relaxation</button>
+                <button class="filter-btn" data-filter="learning">Learning</button>
+                <button class="filter-btn" data-filter="stories">Stories</button>
+            </div>
+        </div>
+
+        <div class="featured-section">
+            <h2 class="section-title">Featured Activities</h2>
+            <div class="cards-container" id="cards-container">
+                <!-- Cards will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <div id="game-frame">
+        <div class="game-header">
+            <button class="back-btn" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i> Back to Activities
+            </button>
+            <h2 id="game-title">Activity</h2>
+        </div>
+        <div class="game-container">
+            <iframe id="frame-content" class="game-iframe"></iframe>
+            <div class="api-status" id="api-status">Loading content...</div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Fun & Relax Zone &copy; 2023 | Designed for Kids and Teens</p>
+        <p>All activities are carefully selected for safety and age-appropriateness</p>
+    </footer>
+
+    <script>
+      
+
+        // Sample data for activities with real APIs
+        const activities = [
+            {
+    id: 1,
+    name: "Memory Game",
+    description: "Boost your memory with this fun matching game. Find all the pairs to win!",
+    category: "games",
+    ageRange: "5-12",
+   image: "https://cdn-icons-png.flaticon.com/512/1169/1169608.png",
+    icon: "https://cdn-icons-png.flaticon.com/512/1169/1169608.png",
+   url: "https://www.memozor.com/memory-games/for-kids/animals",
+    featured: true
+  },
+            {
+                id: 2,
+                name: "Breathing Exercise",
+                description: "Learn calming breathing techniques to help you relax and focus.",
+                category: "relaxation",
+                ageRange: "All Ages",
+                image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                url: "https://www.breathingexercise.com/kids",
+                apiUrl: "https://api.calming-api.com/exercises",
+                featured: true
+            },
+            {
+    id: 3,
+    name: "Bored Games",
+    description: "Find fun and engaging activities/games for ages 10-18 to build resilience.",
+    category: "games",
+    ageRange: "10-18",
+    image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80",
+    url: "https://bored-api.appbrewery.com",   
+    apiUrl: "https://bored-api.appbrewery.com/random",  
+    featured: true
+},
+{
+    id: 4,
+    name: "Calm Kids",
+    description: "Cute dog pictures to make kids smile and relax before bedtime.",
+    category: "relaxation",
+    ageRange: "3-10",
+    image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=600&q=80",
+    url: "https://dog.ceo/dog-api/",
+    apiUrl: "https://dog.ceo/api/breeds/image/random",
+    featured: false
+}
+,
+            {
+                id: 5,
+                name: "Storyly Adventures",
+                description: "Interactive stories where you make choices that change the outcome.",
+                category: "stories",
+                ageRange: "6-14",
+                image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                url: "https://storyly.io",
+                apiUrl: "https://api.storyly.io/v1/stories",
+                featured: true
+            },
+            {
+                id: 6,
+                name: "Mightier",
+                description: "Train emotional strength through engaging games that help manage feelings.",
+                category: "games",
+                ageRange: "6-14",
+                image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                url: "https://mightier.com",
+                apiUrl: "https://api.mightier.com/games",
+                featured: false
+            },
+            {
+                id: 7,
+                name: "Mindful Powers",
+                description: "Care for your creature and learn mindfulness skills to stay calm.",
+                category: "relaxation",
+                ageRange: "5-10",
+                image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                url: "https://mindfulpowersforkids.com",
+                apiUrl: "https://api.mindfulness-app.com/exercises",
+                featured: true
+            },
+            {
+                id: 8,
+                name: "The Story Pot",
+                description: "Stories to explore feelings, kindness, and important life lessons.",
+                category: "stories",
+                ageRange: "4-8",
+                image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                url: "https://www.thestorypot.com",
+                apiUrl: "https://api.childrens-stories.com/v1/stories",
+                featured: false
+            },
+           
+
+            {
+                id: 10,
+                name: "Math Adventure",
+                description: "Fun math games that make learning numbers and operations exciting.",
+                category: "learning",
+                ageRange: "6-12",
+                image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80",
+                url: "https://mathgames.com",
+                apiUrl: "https://api.educational-games.com/v1/math",
+                featured: false
+            }
+        ];
+
+        // DOM elements
+        const cardsContainer = document.getElementById('cards-container');
+        const searchInput = document.getElementById('search-input');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const gameFrame = document.getElementById('game-frame');
+        const frameContent = document.getElementById('frame-content');
+        const gameTitle = document.getElementById('game-title');
+        const apiStatus = document.getElementById('api-status');
+
+        // Initialize the app
+        function init() {
+            renderCards(activities);
+            setupEventListeners();
+        }
+
+        // Render activity cards
+        function renderCards(activitiesToRender) {
+            cardsContainer.innerHTML = '';
+            
+            activitiesToRender.forEach(activity => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.setAttribute('data-category', activity.category);
+                
+                card.innerHTML = `
+                    <div class="card-image" style="background-image: url('${activity.image}')">
+                        ${activity.featured ? '<div class="card-badge">Featured</div>' : ''}
+                    </div>
+                    <div class="card-content">
+                        <h3>${activity.name}</h3>
+                        <p>${activity.description}</p>
+                        <div class="card-footer">
+                            <span class="age-range">Age: ${activity.ageRange}</span>
+                            <button class="play-btn" onclick="openActivity(${activity.id})">
+                                <i class="fas fa-play"></i> Play
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                cardsContainer.appendChild(card);
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Search functionality
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                const filteredActivities = activities.filter(activity => 
+                    activity.name.toLowerCase().includes(searchTerm) || 
+                    activity.description.toLowerCase().includes(searchTerm)
+                );
+                renderCards(filteredActivities);
+            });
+
+            // Filter functionality
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Filter activities
+                    if (filter === 'all') {
+                        renderCards(activities);
+                    } else {
+                        const filteredActivities = activities.filter(activity => 
+                            activity.category === filter
+                        );
+                        renderCards(filteredActivities);
+                    }
+                });
+            });
+        }
+
+        // Open activity in iframe
+        function openActivity(id) {
+            const activity = activities.find(a => a.id === id);
+            if (!activity) return;
+            
+            // Update UI
+            gameTitle.textContent = activity.name;
+            frameContent.src = activity.url;
+            gameFrame.style.display = 'flex';
+            
+            // Simulate API call
+            apiStatus.textContent = "Connecting to activity...";
+            
+            // In a real app, you would fetch from the API URL
+            setTimeout(() => {
+                apiStatus.textContent = "Activity loaded successfully!";
+            }, 1500);
+        }
+
+        // Go back to main screen
+        function goBack() {
+            gameFrame.style.display = 'none';
+            frameContent.src = "";
+            apiStatus.textContent = "Loading content...";
+        }
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+        // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+    </script>
+</body>
+</html>

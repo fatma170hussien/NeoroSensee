@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OCD Research: Understanding Obsessive-Compulsive Disorder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      line-height: 1.8;
+      background: #f5f5f5;
+      color: #333;
+      overflow-x: hidden;
+      font-size: 18px;
+      background-image: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      background-color: white;
+      box-shadow: 0 0 30px rgba(0,0,0,0.1);
+      border-radius: 5px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: #2c3e50;
+      text-align: center;
+      margin: 40px 0;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #e74c3c;
+      position: relative;
+    }
+
+    h1:after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: #3498db;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: #2c3e50;
+      margin: 40px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: #2c3e50;
+      margin: 30px 0 15px;
+    }
+
+    h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: #2c3e50;
+      margin: 25px 0 15px;
+    }
+
+    .article-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-bottom: 60px;
+      align-items: flex-start;
+    }
+
+    .article-section:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .text {
+      flex: 2;
+      min-width: 300px;
+      padding: 20px;
+    }
+
+    p {
+      margin-bottom: 25px;
+      color: #555;
+      font-size: 1.1rem;
+      text-align: justify;
+    }
+
+    ul, ol {
+      margin-left: 40px;
+      margin-bottom: 25px;
+    }
+
+    li {
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    .abstract {
+      background-color: #f8f9fa;
+      padding: 25px;
+      border-radius: 8px;
+      margin-bottom: 40px;
+      border-left: 5px solid #3498db;
+    }
+
+    .abstract h2 {
+      margin-top: 0;
+      color: #3498db;
+    }
+
+    .author {
+      margin-top: 60px;
+      font-weight: 600;
+      text-align: right;
+      color: #2c3e50;
+      font-size: 1.2rem;
+      font-style: italic;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+
+    .caption {
+      text-align: center;
+      margin-top: 10px;
+      color: #7f8c8d;
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    /* نظام الصور المحدث - نفس نظام كود الاكتئاب */
+    .image-container {
+      flex: 1;
+      min-width: 300px;
+      max-width: 500px;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.5s ease;
+      opacity: 0;
+      transform: translateY(30px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .image-container.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .image-container:hover {
+      transform: scale(1.02) translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+
+    .image-container img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .research-highlights {
+      background-color: #e8f4f8;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 30px 0;
+      border-left: 5px solid #2c3e50;
+    }
+
+    .research-highlights h3 {
+      color: #2c3e50;
+      margin-top: 0;
+    }
+
+    .treatment-section {
+      background-color: #f0f8f0;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 30px 0;
+      border-left: 5px solid #27ae60;
+    }
+
+    .treatment-section h3 {
+      color: #27ae60;
+      margin-top: 0;
+    }
+
+    .symptoms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .symptom-category {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #e74c3c;
+    }
+
+    .symptom-category h4 {
+      margin-top: 0;
+      color: #e74c3c;
+    }
+
+    .ocd-types-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .ocd-type {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #9b59b6;
+    }
+
+    .ocd-type h4 {
+      margin-top: 0;
+      color: #9b59b6;
+    }
+
+    .statistics-box {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 25px 0;
+      text-align: center;
+    }
+
+    .statistics-box h3 {
+      color: white;
+      margin-top: 0;
+    }
+
+    .stat-item {
+      margin: 15px 0;
+      font-size: 1.1rem;
+    }
+
+    @media(max-width: 768px) {
+      .article-section, 
+      .article-section:nth-child(even) {
+        flex-direction: column;
+      }
+      
+      .image-container {
+        max-width: 100%;
+      }
+      
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      h2 {
+        font-size: 1.8rem;
+      }
+      
+      .symptoms-grid,
+      .ocd-types-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Floating image effect */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .floating-img {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .specifier-list {
+      columns: 2;
+      column-gap: 40px;
+    }
+
+    .specifier-list li {
+      break-inside: avoid;
+    }
+
+    @media(max-width: 768px) {
+      .specifier-list {
+        columns: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>OCD: Understanding Obsessive-Compulsive Disorder</h1>
+
+    <div class="abstract">
+      <h2>Overview</h2>
+      <p>Obsessive-compulsive disorder (OCD) is a condition in which you have frequent unwanted thoughts and sensations (obsessions) that cause you to perform repetitive behaviors (compulsions). Repetitive behaviors can significantly interfere with social interactions and performing daily tasks. OCD is usually a life-long (chronic) condition, but symptoms can come and go over time.</p>
+      <p>It is a long-lasting disorder in which a person experiences uncontrollable and recurring thoughts (obsessions), engages in repetitive behaviors (compulsions), or both. People with OCD have time-consuming symptoms that can cause significant distress or interfere with daily life. However, treatment is available to help people manage their symptoms and improve their quality of life.</p>
+    </div>
+
+    <h2>Introduction to OCD</h2>
+
+    <div class="article-section">
+      <div class="text">
+        <h3>The OCD Cycle</h3>
+        <p>OCD is characterized by a pattern of unwanted thoughts and fears known as obsessions. These obsessions lead to repetitive behaviors, also called compulsions. These obsessions and compulsions interfere with daily activities and cause significant distress. Ultimately, individuals feel driven to do compulsive acts to ease their stress.</p>
+        <p>Even if you try to ignore or get rid of bothersome thoughts or urges, they keep coming back. This leads to acting based on ritual, creating the vicious cycle of OCD.</p>
+        <p>OCD often centers around certain themes, such as being overly fearful of getting contaminated by germs. To ease contamination fears, you may wash your hands repeatedly until they're sore and chapped. If you have OCD, you may feel ashamed, embarrassed and frustrated about the condition.</p>
+      </div>
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="OCD Brain Activity">
+        </div>
+        <div class="caption">Figure 1: Neural correlates of OCD showing altered brain activity patterns</div>
+      </div>
+    </div>
+
+    <div class="article-section">
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="OCD Cycle Diagram">
+        </div>
+        <div class="caption">Figure 2: The obsessive-compulsive cycle showing how obsessions lead to compulsions</div>
+      </div>
+      <div class="text">
+        <h3>Normal Behaviors vs. OCD</h3>
+        <p>Everyone experiences obsessions and compulsions at some point. For example, it's common to occasionally double-check the stove or the locks. People also often use the phrases "obsessing" and "obsessed" very casually in everyday conversations. But OCD is more extreme.</p>
+        <p>OCD can take up hours of a person's day. It interferes with normal life and activities. Obsessions in OCD are unwanted, and people with OCD don't enjoy performing compulsive behaviors.</p>
+        <p>Obsessive-compulsive disorder (OCD) is a chronic mental health disorder characterized by recurrent, intrusive thoughts (obsessions) - unwanted thoughts, images, or impulses that recur often accompanied by repetitive behaviors (compulsions) that the person performs in an attempt to relieve the anxiety caused by obsessions.</p>
+      </div>
+    </div>
+
+    <h2>Symptoms of OCD</h2>
+
+    <div class="symptoms-grid">
+      <div class="symptom-category">
+        <h4>Obsessions</h4>
+        <p>Recurring, unwanted thoughts, urges, or mental images that cause anxiety or distress:</p>
+        <ul>
+          <li>Fear of contamination or germs</li>
+          <li>Persistent suspicion about safety (doors, appliances)</li>
+          <li>Need for order, symmetry, or perfection</li>
+          <li>Unwanted aggressive, religious, or sexual thoughts</li>
+          <li>Fear of causing harm to oneself or others</li>
+          <li>Excessive concern with morality</li>
+          <li>Feelings of doubt or disgust</li>
+          <li>Need for constant reassurance</li>
+        </ul>
+      </div>
+      
+      <div class="symptom-category">
+        <h4>Compulsions</h4>
+        <p>Mental actions or rituals performed in response to obsessions:</p>
+        <ul>
+          <li>Excessive handwashing or cleaning</li>
+          <li>Repeatedly checking doors or appliances</li>
+          <li>Ordering or arranging things specifically</li>
+          <li>Counting or repeating words/phrases</li>
+          <li>Collecting or hoarding items</li>
+          <li>Following strict routines</li>
+          <li>Seeking constant reassurance</li>
+          <li>Avoiding triggering situations</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Severity and Development</h3>
+    
+    <div class="article-section">
+      <div class="text">
+        <p>The severity of OCD symptoms can vary. OCD usually begins in the teen or young adult years but can start in childhood. Symptoms tend to develop gradually and vary in seriousness over time. They often worsen during periods of stress, such as major life transitions or changes.</p>
+        <p>A person may spend more than an hour a day engaging in or thinking about obsessions and compulsions, which can negatively affect their ability to get to work or prepare for bed on time. Many people with OCD are aware that their symptoms are problematic but feel unable to stop them.</p>
+        <p>Symptoms can come and go, ease temporarily, or worsen over time. During stressful periods, symptoms often intensify, and the types of obsessions and compulsions may change as well.</p>
+      </div>
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="OCD Severity Spectrum">
+        </div>
+        <div class="caption">Figure 3: Spectrum of OCD severity from mild to severe impairment</div>
+      </div>
+    </div>
+
+    <h2>Types of OCD</h2>
+
+    <div class="ocd-types-grid">
+      <div class="ocd-type">
+        <h4>Contamination OCD</h4>
+        <p>Overwhelming fear of germs or getting sick from objects or people. Leads to excessive hand washing, avoiding touching things, worrying about cleaning products, or frequently changing clothes. Can include emotional contamination where people avoid certain people, places, or situations viewed as scary or dirty.</p>
+        <p><strong>Impact:</strong> Physical damage to skin, time consumption affecting jobs and relationships, financial cost of cleaning products.</p>
+      </div>
+      
+      <div class="ocd-type">
+        <h4>Checking OCD</h4>
+        <p>Stems from fear of harm or danger to yourself or others. Involves repeatedly checking doors, appliances, car brakes, or seeking constant reassurance about not causing harm. Checking can be done hundreds of times, lasting hours, causing lateness and relationship strain.</p>
+        <p><strong>Impact:</strong> Damage to objects from constant checking, interference with daily responsibilities.</p>
+      </div>
+
+      <div class="ocd-type">
+        <h4>Symmetry and Order OCD</h4>
+        <p>Focus on things being "perfectly arranged," "even," or "in their right place." The compulsion involves arranging everything symmetrically "just right" to prevent discomfort or harm. Sufferers spend excessive time arranging and may avoid social contact to prevent disruption of order.</p>
+        <p><strong>Impact:</strong> Mental and physical exhaustion, social isolation, interference with appointments.</p>
+      </div>
+
+      <div class="ocd-type">
+        <h4>Intrusive Thoughts OCD</h4>
+        <p>Involving aggressive thoughts or images, unwanted religious thoughts, or persistent thoughts about identity. Intrusive thoughts are repetitive, involuntary, and cause extreme distress. People with OCD are the least likely to act on these thoughts because they find them repugnant.</p>
+        <p><strong>Key:</strong> These are just thoughts, not fantasies or impulses that will be acted upon.</p>
+      </div>
+
+      <div class="ocd-type">
+        <h4>Hoarding OCD</h4>
+        <p>Compulsive collection of large quantities of objects and difficulty discarding them. While hoarding disorder is now classified separately, some people with OCD hoard for specific obsessive worries/fears. Characterized by inability to discard useless or worn-out possessions.</p>
+        <p><strong>Note:</strong> Some hoarding behaviors remain part of OCD when driven by specific obsessive fears.</p>
+      </div>
+    </div>
+
+    <h2>Causes and Risk Factors</h2>
+
+    <div class="article-section">
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="OCD Risk Factors">
+        </div>
+        <div class="caption">Figure 4: Multiple factors contributing to OCD development</div>
+      </div>
+      <div class="text">
+        <h3>Primary Causes</h3>
+        <p>The exact cause of OCD is not fully understood, but research suggests a combination of several factors likely play a role:</p>
+        
+        <h4>Genetics</h4>
+        <p>OCD often runs in families, and having a parent, sibling, or child with OCD raises your risk of experiencing symptoms. Research suggests genes play a more significant role when OCD symptoms begin in childhood.</p>
+        
+        <h4>Brain Structure</h4>
+        <p>Researchers have discovered that people with OCD have differences in their brain structure and function, particularly in the areas of the brain that regulate emotions, impulse control, and decision making.</p>
+        
+        <h4>Life Events</h4>
+        <p>Stressful events and traumatic experiences such as a car accident or experiencing abuse may trigger OCD symptoms in some people. Research shows this may be more common in women.</p>
+        
+        <h4>Comorbid Conditions</h4>
+        <p>People with pre-existing anxiety or mood disorders, and those with a history of certain infections (e.g., streptococcal infection), are at an increased risk of OCD.</p>
+      </div>
+    </div>
+
+    <h2>Diagnosis and Assessment</h2>
+
+    <div class="article-section">
+      <div class="text">
+        <h3>Diagnostic Process</h3>
+        <p>The first step in getting an OCD diagnosis is visiting a healthcare provider who has the knowledge and skills to make an OCD diagnosis, such as a psychiatrist, psychologist, or licensed mental health professional.</p>
+        <p>No single test or procedure can definitively diagnose OCD, so healthcare providers usually use their professional judgment after learning about your symptoms and medical history. Some healthcare providers may perform a physical examination and order blood tests or other lab tests to rule out other conditions that may cause symptoms like OCD.</p>
+        
+        <h4>Diagnostic Criteria (DSM-5)</h4>
+        <ul>
+          <li>Presence of obsessions, compulsions, or both</li>
+          <li>Obsessions and compulsions that last for more than one hour per day</li>
+          <li>Symptoms cause significant distress and/or interfere with daily activities</li>
+          <li>Symptoms not due to substance use, prescription medications, or underlying health conditions</li>
+        </ul>
+        
+        <p>Healthcare providers often use standardized rating scales, such as the Yale-Brown Obsessive Compulsive Scale (Y-BOCS), to measure the severity of OCD symptoms and their impact on daily life.</p>
+      </div>
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="OCD Diagnosis Process">
+        </div>
+        <div class="caption">Figure 5: Comprehensive diagnostic approach for OCD</div>
+      </div>
+    </div>
+
+    <h2>Treatment Approaches</h2>
+
+    <div class="treatment-section">
+      <h3>Psychotherapy</h3>
+      <p><strong>Cognitive-Behavioral Therapy (CBT)</strong> is a first-line treatment for OCD. <strong>Exposure and Response Prevention (ERP)</strong> is a specific type of CBT that involves:</p>
+      <ul>
+        <li>Gradual exposure to fears or obsessions</li>
+        <li>Learning to replace compulsive behaviors with healthy coping strategies</li>
+        <li>Systematic reduction of anxiety responses</li>
+      </ul>
+      <p>Research shows that over 50% of people with OCD who follow their treatment plan achieve remission (period with little to no symptoms).</p>
+    </div>
+
+    <div class="article-section">
+      <div class="text">
+        <h3>Medication</h3>
+        <p>Medications can be used alone or in combination with psychotherapy. People with OCD who take prescription medications experience a 40-60% reduction in symptoms.</p>
+        
+        <h4>Selective Serotonin Reuptake Inhibitors (SSRIs)</h4>
+        <p>SSRIs are the most effective medication for OCD. While they are antidepressants, they also help reduce OCD symptoms by boosting serotonin levels in the brain, which helps regulate mood, sleep, and other body functions.</p>
+        
+        <h3>Prevention and Management</h3>
+        <p>There is no known way to prevent OCD from developing, but early diagnosis and treatment can help improve symptoms and prevent them from worsening over time.</p>
+        <p>Stressful life events can trigger OCD symptoms, so finding healthy ways to manage stress through exercise, meditation, or OCD support groups may be helpful. Mindfulness techniques can help individuals see obsessive thoughts more objectively and let go of harmful thinking patterns.</p>
+      </div>
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="OCD Treatment Methods">
+        </div>
+        <div class="caption">Figure 6: Various therapeutic and medication approaches for OCD</div>
+      </div>
+    </div>
+
+    <h2>Comorbid Conditions</h2>
+    
+    <div class="article-section">
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="OCD Comorbidities">
+        </div>
+        <div class="caption">Figure 7: Common conditions that co-occur with OCD</div>
+      </div>
+      <div class="text">
+        <p>About 90% of people with OCD also have at least one other mental health condition. Common OCD comorbidities include:</p>
+        
+        <h4>Anxiety Disorders</h4>
+        <p>Ongoing and excessive worry and fears about various things (e.g., social anxiety or generalized anxiety disorder).</p>
+        
+        <h4>Major Depressive Disorder</h4>
+        <p>Persistent sadness, hopelessness, and loss of interest in activities.</p>
+        
+        <h4>Eating Disorders</h4>
+        <p>Unhealthy patterns of eating and preoccupation with body image (e.g., anorexia nervosa or bulimia).</p>
+        
+        <h4>Bipolar Disorders</h4>
+        <p>Extreme changes in mood, behavior, and energy levels.</p>
+        
+        <h4>Substance Use Disorder</h4>
+        <p>Excessive use of substances (e.g., drugs or alcohol) often as a coping mechanism.</p>
+      </div>
+    </div>
+
+    <h2>Living With OCD</h2>
+
+    <div class="research-highlights">
+      <h3>Coping Strategies and Support</h3>
+      <p>Living with OCD can be challenging between the overwhelming, obsessive thoughts and time-consuming compulsions. The disorder's effect on your life can be devastating. Fortunately, with effective treatments and healthy coping strategies, many people with OCD live fulfilling and productive lives.</p>
+      <p>If you're newly diagnosed with OCD or know someone with the condition, learning as much as possible about the condition can help you understand why obsessions and compulsions occur and extend grace and patience during times of struggle.</p>
+      <p>Many people with OCD find community and camaraderie by joining OCD support groups. Connecting with others who understand what you're going through can be helpful, and many groups offer practical advice and coping strategies.</p>
+    </div>
+
+    <div class="statistics-box">
+      <h3>OCD Key Statistics</h3>
+      <div class="stat-item">OCD affects approximately 2-3% of the population worldwide</div>
+      <div class="stat-item">Symptoms typically begin between ages 8-12 or late teen/early adulthood</div>
+      <div class="stat-item">Over 50% of people achieve significant improvement with proper treatment</div>
+      <div class="stat-item">About 90% of people with OCD have at least one comorbid condition</div>
+      <div class="stat-item">ERP therapy shows 60-80% effectiveness in reducing symptoms</div>
+    </div>
+
+    <div class="author">Research compiled by: Clinical Psychology Research Team</div>
+  </div>
+
+  <script>
+    const images = document.querySelectorAll('.image-container');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    });
+
+    images.forEach(img => observer.observe(img));
+    // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+  </script>
+</body>
+</html>

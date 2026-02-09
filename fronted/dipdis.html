@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bipolar Disorders: Comprehensive Research Overview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      line-height: 1.8;
+      background: #f5f5f5;
+      color: #333;
+      overflow-x: hidden;
+      font-size: 18px;
+      background-image: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      background-color: white;
+      box-shadow: 0 0 30px rgba(0,0,0,0.1);
+      border-radius: 5px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: #2c3e50;
+      text-align: center;
+      margin: 40px 0;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #e74c3c;
+      position: relative;
+    }
+
+    h1:after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: #3498db;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: #2c3e50;
+      margin: 40px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: #2c3e50;
+      margin: 30px 0 15px;
+    }
+
+    h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: #2c3e50;
+      margin: 25px 0 15px;
+    }
+
+    .article-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-bottom: 60px;
+      align-items: flex-start;
+    }
+
+    .article-section:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .text {
+      flex: 2;
+      min-width: 300px;
+      padding: 20px;
+    }
+
+    p {
+      margin-bottom: 25px;
+      color: #555;
+      font-size: 1.1rem;
+      text-align: justify;
+    }
+
+    ul, ol {
+      margin-left: 40px;
+      margin-bottom: 25px;
+    }
+
+    li {
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    .abstract {
+      background-color: #f8f9fa;
+      padding: 25px;
+      border-radius: 8px;
+      margin-bottom: 40px;
+      border-left: 5px solid #3498db;
+    }
+
+    .abstract h2 {
+      margin-top: 0;
+      color: #3498db;
+    }
+
+    .author {
+      margin-top: 60px;
+      font-weight: 600;
+      text-align: right;
+      color: #2c3e50;
+      font-size: 1.2rem;
+      font-style: italic;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+
+    .caption {
+      text-align: center;
+      margin-top: 10px;
+      color: #7f8c8d;
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    /* نظام الصور المحدث - نفس نظام كود الاكتئاب */
+    .image-container {
+      flex: 1;
+      min-width: 300px;
+      max-width: 500px;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.5s ease;
+      opacity: 0;
+      transform: translateY(30px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .image-container.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .image-container:hover {
+      transform: scale(1.02) translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+
+    .image-container img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .research-highlights {
+      background-color: #e8f4f8;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 30px 0;
+      border-left: 5px solid #2c3e50;
+    }
+
+    .treatment-section {
+      background-color: #f0f8f0;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 30px 0;
+      border-left: 5px solid #27ae60;
+    }
+
+    .treatment-section h3 {
+      color: #27ae60;
+      margin-top: 0;
+    }
+
+    .symptoms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .symptom-category {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #e74c3c;
+    }
+
+    .symptom-category h4 {
+      margin-top: 0;
+      color: #e74c3c;
+    }
+
+    .bipolar-types-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .bipolar-type {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #9b59b6;
+    }
+
+    .bipolar-type h4 {
+      margin-top: 0;
+      color: #9b59b6;
+    }
+
+    .statistics-box {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 25px 0;
+      text-align: center;
+    }
+
+    .statistics-box h3 {
+      color: white;
+      margin-top: 0;
+    }
+
+    .stat-item {
+      margin: 15px 0;
+      font-size: 1.1rem;
+    }
+
+    .episode-section {
+      background-color: #fff8e1;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 25px 0;
+      border-left: 5px solid #ffa000;
+    }
+
+    .episode-section h3 {
+      color: #ffa000;
+      margin-top: 0;
+    }
+
+    @media(max-width: 768px) {
+      .article-section, 
+      .article-section:nth-child(even) {
+        flex-direction: column;
+      }
+      
+      .image-container {
+        max-width: 100%;
+      }
+      
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      h2 {
+        font-size: 1.8rem;
+      }
+      
+      .symptoms-grid,
+      .bipolar-types-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Floating image effect */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .floating-img {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .specifier-list {
+      columns: 2;
+      column-gap: 40px;
+    }
+
+    .specifier-list li {
+      break-inside: avoid;
+    }
+
+    @media(max-width: 768px) {
+      .specifier-list {
+        columns: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Bipolar Disorders: Comprehensive Research Overview</h1>
+
+    <div class="abstract">
+      <h2>Overview</h2>
+      <p>Bipolar disorders are mental health conditions characterized by periodic, intense emotional states affecting a person's mood, energy, and ability to function. These periods, lasting from days to weeks, are called mood episodes. Mood episodes are categorized as manic/hypomanic episodes when the predominant mood is intensely happy or irritable, or depressive episodes when there is an intensely sad mood or the ability to experience joy or pleasure disappears.</p>
+      <p>While people without bipolar disorder may also experience mood fluctuations, mood changes that are part of commonly lived experience typically last hours rather than days and are not accompanied by extreme changes in behavior or changes in functioning. Bipolar disorder can disrupt a person's relationships with loved ones and cause difficulty in working or going to school.</p>
+    </div>
+
+    <h2>Introduction to Bipolar Disorders</h2>
+
+    <div class="article-section">
+      <div class="text">
+        <h3>The Bipolar Spectrum</h3>
+        <p>We all have our ups and downs, but with bipolar disorder (once known as manic depression or manic-depressive disorder) these peaks and valleys are more severe. Bipolar disorder causes serious shifts in mood, energy, thinking, and behavior from the highs of mania on one extreme, to the lows of depression on the other.</p>
+        <p>More than just a fleeting good or bad mood, the cycles of bipolar disorder last for days, weeks, or months. And unlike ordinary mood swings, the mood changes of bipolar disorder are so intense that they can interfere with your job or school performance, damage your relationships, and disrupt your ability to function in daily life.</p>
+        <p>During a manic episode, you might impulsively quit your job, charge huge amounts on credit cards, or feel rested after sleeping two hours. During a depressive episode, you might be too tired to get out of bed, and full of self-loathing and hopelessness over being unemployed and in debt.</p>
+      </div>
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Bipolar Mood Cycles">
+        </div>
+        <div class="caption">Figure 1: Mood fluctuations in bipolar disorder compared to normal mood variations</div>
+      </div>
+    </div>
+
+    <div class="statistics-box">
+      <h3>Bipolar Disorder Epidemiology</h3>
+      <div class="stat-item">80-90% of individuals with bipolar disorder have a relative with bipolar disorder or depression</div>
+      <div class="stat-item">Average age of onset: mid-20s</div>
+      <div class="stat-item">Significantly higher suicide risk than general population</div>
+      <div class="stat-item">Frequently co-occurs with anxiety disorders, substance use disorders, and ADHD</div>
+      <div class="stat-item">When treated, people can lead full and productive lives</div>
+    </div>
+
+    <h2>Types of Bipolar Disorders</h2>
+
+    <div class="bipolar-types-grid">
+      <div class="bipolar-type">
+        <h4>Bipolar I Disorder</h4>
+        <p><strong>Diagnostic Criteria:</strong> At least one manic episode lasting at least one week, with or without depressive episodes. Manic episodes commonly require hospital care for safety.</p>
+        <p><strong>Features:</strong> Extreme increases in energy, mood changes including extreme happiness or irritability, possible psychotic features during severe episodes.</p>
+        <p><strong>Course:</strong> Most severe form, often with significant functional impairment during episodes.</p>
+      </div>
+      
+      <div class="bipolar-type">
+        <h4>Bipolar II Disorder</h4>
+        <p><strong>Diagnostic Criteria:</strong> At least one major depressive episode and one hypomanic episode. No full manic episodes.</p>
+        <p><strong>Features:</strong> Less severe manic symptoms (hypomania), often first seek treatment for depression. May involve mixed mood episodes and psychosis only during depression.</p>
+        <p><strong>Course:</strong> Often return to usual functioning between episodes.</p>
+      </div>
+
+      <div class="bipolar-type">
+        <h4>Cyclothymic Disorder</h4>
+        <p><strong>Diagnostic Criteria:</strong> Many mood swings with hypomanic and depressive symptoms occurring frequently for at least 2 years (1 year in children).</p>
+        <p><strong>Features:</strong> Milder symptoms than bipolar I/II but longer duration, less time without symptoms.</p>
+        <p><strong>Course:</strong> Chronic fluctuating mood symptoms that don't meet full episode criteria.</p>
+      </div>
+    </div>
+
+    <h2>Mood Episodes in Bipolar Disorder</h2>
+
+    <div class="episode-section">
+      <h3>Manic Episodes</h3>
+      <p>A period of at least one week when a person is extremely high-spirited or irritable most of the day for most days, possesses more energy than usual, and experiences significant behavioral changes that represent a clear change from usual functioning.</p>
+    </div>
+
+    <div class="symptoms-grid">
+      <div class="symptom-category">
+        <h4>Manic Episode Symptoms</h4>
+        <ul>
+          <li>Decreased need for sleep (energetic despite significantly less sleep)</li>
+          <li>Increased or faster speech</li>
+          <li>Uncontrollable racing thoughts</li>
+          <li>Distractibility</li>
+          <li>Increased activity and restlessness</li>
+          <li>Increased risky or impulsive behavior</li>
+          <li>Grandiose thinking</li>
+          <li>Poor judgment and decision-making</li>
+        </ul>
+      </div>
+      
+      <div class="symptom-category">
+        <h4>Hypomanic Episode</h4>
+        <ul>
+          <li>Less severe manic symptoms</li>
+          <li>Lasts only 4 days instead of week</li>
+          <li>Doesn't cause major functional problems</li>
+          <li>No psychosis</li>
+          <li>Often feels productive and energetic</li>
+          <li>Noticeable to close friends/family</li>
+          <li>Doesn't require hospitalization</li>
+        </ul>
+      </div>
+
+      <div class="symptom-category">
+        <h4>Major Depressive Episode</h4>
+        <ul>
+          <li>Intense sadness or loss of interest (2+ weeks)</li>
+          <li>Feelings of worthlessness or guilt</li>
+          <li>Fatigue and loss of energy</li>
+          <li>Sleep and appetite changes</li>
+          <li>Restlessness or slowed movements</li>
+          <li>Difficulty concentrating</li>
+          <li>Thoughts of death or suicide</li>
+          <li>Loss of pleasure in activities</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Understanding Manic and Hypomanic Behavior</h3>
+    
+    <div class="article-section">
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Mood Episode Spectrum">
+        </div>
+        <div class="caption">Figure 2: Comparison of manic, hypomanic, and depressive episodes</div>
+      </div>
+      <div class="text">
+        <p>An episode of mania often involves an emotional height where individuals feel excited, impulsive, euphoric, and full of energy. They might also feel jumpy or notice racing thoughts. Some people experience hallucinations and other symptoms of psychosis.</p>
+        
+        <h4>Common Impulsive Behaviors</h4>
+        <p>Manic episodes can involve behavior that's more impulsive than usual, often because the person feels invincible. Examples include:</p>
+        <ul>
+          <li>Unprotected sexual activity</li>
+          <li>Substance misuse</li>
+          <li>Spending sprees and financial irresponsibility</li>
+          <li>Abrupt job changes</li>
+          <li>Reckless driving</li>
+          <li>Extreme risk-taking behaviors</li>
+        </ul>
+        
+        <p>The key distinction is that these are not behaviors the person would typically engage in during periods of stable mood. With hypomania, the symptoms are less severe and don't typically lead to significant consequences in work, relationships, or require inpatient care.</p>
+      </div>
+    </div>
+
+    <h2>Causes and Risk Factors</h2>
+
+    <div class="article-section">
+      <div class="text">
+        <h3>Genetic and Biological Factors</h3>
+        
+        <h4>Genetic Predisposition</h4>
+        <p>In 4 out of 5 people with bipolar disorder, genetics plays a strong role. If one parent has bipolar disorder, there is a 1 in 10 chance their child will also develop the condition. If both parents have bipolar disorder, the likelihood rises to 4 in 10.</p>
+        
+        <h4>Neurobiological Factors</h4>
+        <p>Brain imaging studies show physical changes in the brains of people with bipolar disorder. Research points to neurotransmitter imbalances, abnormal thyroid function, circadian rhythm disturbances, and high levels of the stress hormone cortisol.</p>
+        
+        <h3>Environmental Triggers</h3>
+        <p>In people vulnerable to bipolar disorder, stressful circumstances can trigger episodes. Key triggers include:</p>
+        
+        <h4>Common Triggers</h4>
+        <ul>
+          <li><strong>Stress:</strong> Stressful life events involving drastic changes</li>
+          <li><strong>Substance Abuse:</strong> Drugs like cocaine and amphetamines can trigger mania</li>
+          <li><strong>Medication:</strong> Antidepressants and other medications can trigger episodes</li>
+          <li><strong>Seasonal Changes:</strong> Mania more common in summer, depression in winter</li>
+          <li><strong>Sleep Deprivation:</strong> Even minor sleep loss can trigger episodes</li>
+          <li><strong>Childhood Trauma:</strong> Abuse and other adverse experiences</li>
+        </ul>
+      </div>
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Bipolar Risk Factors">
+        </div>
+        <div class="caption">Figure 3: Genetic and environmental factors in bipolar disorder</div>
+      </div>
+    </div>
+
+    <h2>Diagnosis and Assessment</h2>
+
+    <div class="article-section">
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Diagnostic Process">
+        </div>
+        <div class="caption">Figure 4: Comprehensive diagnostic approach for bipolar disorders</div>
+      </div>
+      <div class="text">
+        <h3>Diagnostic Challenges</h3>
+        <p>Getting an accurate diagnosis for bipolar disorder isn't always easy. The mood swings can be difficult to distinguish from other problems such as major depression, ADHD, and borderline personality disorder. For many people, it takes time and numerous doctor visits before the problem is correctly identified.</p>
+        
+        <h4>Diagnostic Process</h4>
+        <p>A comprehensive diagnostic exam generally includes:</p>
+        
+        <h4>Psychological Evaluation</h4>
+        <p>Complete psychiatric history including symptoms, treatment history, and family history of mood disorders. Assessment of functional impairment and episode patterns.</p>
+        
+        <h4>Medical Assessment</h4>
+        <p>Medical history and physical exam to rule out other conditions, particularly thyroid disorders which can mimic bipolar mood swings. Laboratory tests as needed.</p>
+        
+        <h4>Collateral Information</h4>
+        <p>Input from family members and friends is crucial, especially given "anosognosia" - where individuals may lack insight into their own illness and symptoms.</p>
+        
+        <h3>Special Considerations</h3>
+        <p><strong>Children and Adolescents:</strong> Diagnosis in children is controversial due to overlapping symptoms with ADHD and typical developmental changes. Bipolar disorder in children involves more extreme mood changes than typical developmental mood variations.</p>
+        <p><strong>Teenagers:</strong> While hormonal changes and puberty cause emotional fluctuations, drastic or rapidly changing moods may indicate bipolar disorder rather than typical development.</p>
+      </div>
+    </div>
+
+    <h2>Treatment and Management</h2>
+
+    <div class="treatment-section">
+      <h3>Comprehensive Treatment Approach</h3>
+      <p>Bipolar disorder symptoms commonly improve with treatment. A comprehensive approach includes medication management, psychotherapy, lifestyle modifications, and in some cases, advanced treatments. People with bipolar disorder need treatment across acute episodes and longer-term preventive care.</p>
+    </div>
+
+    <div class="symptoms-grid">
+      <div class="symptom-category">
+        <h4>Medication Management</h4>
+        <p><strong>Mood Stabilizers:</strong> Lithium, valproate - require monitoring</p>
+        <p><strong>Atypical Antipsychotics:</strong> Olanzapine, others</p>
+        <p><strong>Combination Treatments:</strong> Antidepressant-antipsychotics like fluoxetine-olanzapine</p>
+        <p><strong>Adjunctive Medications:</strong> Benzodiazepines for short-term anxiety</p>
+        <p><strong>Special Considerations:</strong> Pregnancy, metabolic monitoring, adherence support</p>
+      </div>
+      
+      <div class="symptom-category">
+        <h4>Psychotherapy Approaches</h4>
+        <p><strong>Cognitive Behavioral Therapy:</strong> Identify and change unhelpful thoughts and behaviors</p>
+        <p><strong>Interpersonal Therapy:</strong> Address relationship and social functioning</p>
+        <p><strong>Psychoeducation:</strong> Learn about illness and management strategies</p>
+        <p><strong>Family Therapy:</strong> Support for family members and improved communication</p>
+        <p><strong>Support Groups:</strong> Peer support and shared experiences</p>
+      </div>
+
+      <div class="symptom-category">
+        <h4>Advanced Treatments</h4>
+        <p><strong>Electroconvulsive Therapy (ECT):</strong> For severe cases unresponsive to medication</p>
+        <p><strong>Repetitive Transcranial Magnetic Stimulation (rTMS):</strong> For depression with fewer side effects</p>
+        <p><strong>Light Therapy:</strong> For seasonal pattern depression</p>
+        <p><strong>Psychosocial Interventions:</strong> Supported employment, housing, life skills</p>
+      </div>
+    </div>
+
+    <h3>Long-Term Management Strategies</h3>
+    
+    <div class="article-section">
+      <div class="text">
+        <h4>Medication Adherence</h4>
+        <p>Adults in complete remission typically need to continue mood stabilizers or antipsychotics for at least six months. Those with multiple episodes require longer-term treatment to minimize relapses. Medication adherence is crucial as bipolar disorder tends to worsen without treatment.</p>
+        
+        <h4>Lifestyle Management</h4>
+        <p>Critical lifestyle factors for bipolar disorder management include:</p>
+        <ul>
+          <li><strong>Regular Sleep Patterns:</strong> Consistent sleep-wake cycles</li>
+          <li><strong>Stress Reduction:</strong> Identifying and managing stressors</li>
+          <li><strong>Substance Avoidance:</strong> No alcohol or recreational drugs</li>
+          <li><strong>Regular Routine:</strong> Consistent daily schedule</li>
+          <li><strong>Mood Monitoring:</strong> Tracking symptoms and triggers</li>
+          <li><strong>Healthy Habits:</strong> Exercise, nutrition, social connection</li>
+        </ul>
+        
+        <h4>Support Systems</h4>
+        <p>Support from family and friends is vital. Family psychoeducation helps families understand and support their loved one better. Support groups provide encouragement, coping skills, and shared experiences for both individuals with bipolar disorder and their families.</p>
+      </div>
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Treatment Modalities">
+        </div>
+        <div class="caption">Figure 5: Integrated treatment approach for bipolar disorders</div>
+      </div>
+    </div>
+
+    <div class="research-highlights">
+      <h3>Key Treatment Principles</h3>
+      <p><strong>Early Intervention:</strong> Early diagnosis and treatment significantly improve long-term outcomes and prevent episode recurrence</p>
+      <p><strong>Individualized Approach:</strong> Treatment must be tailored to the specific bipolar type, episode pattern, and individual needs</p>
+      <p><strong>Combined Modalities:</strong> Medication combined with psychotherapy provides most comprehensive care</p>
+      <p><strong>Long-term Perspective:</strong> Bipolar disorder requires ongoing management rather than episodic treatment</p>
+      <p><strong>Holistic Care:</strong> Addressing physical health, lifestyle factors, and social support enhances treatment effectiveness</p>
+      <p><strong>Recovery Orientation:</strong> Focus on hope, autonomy, personal empowerment, and social inclusion</p>
+    </div>
+
+    <div class="author">Research compiled by: Psychiatry and Clinical Psychology Research Team</div>
+  </div>
+
+  <script>
+    const images = document.querySelectorAll('.image-container');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    });
+
+    images.forEach(img => observer.observe(img));
+    // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+  </script>
+</body>
+</html>

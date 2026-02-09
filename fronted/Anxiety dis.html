@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Anxiety Disorders - A Comprehensive Guide</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6b8c7a;
+            --secondary: #8aac9b;
+            --accent: #c97a7a;
+            --light: #f7faf9;
+            --dark: #4a6b5b;
+            --text: #333333;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            animation: pulse 2s infinite;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(107, 140, 122, 0.8), rgba(138, 172, 155, 0.8)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%236b8c7a"/><path d="M0 50 L100 50 M50 0 L50 100" stroke="%238aac9b" stroke-width="2"/></svg>');
+            background-size: cover;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInDown 1s ease;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            animation: fadeIn 1s ease 0.6s both;
+        }
+        
+        .btn:hover {
+            background-color: #b46a6a;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Sections */
+        section {
+            padding: 5rem 0;
+        }
+        
+        section:nth-child(even) {
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+        
+        /* Cards */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .card.animate {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .card-body {
+            padding: 1.5rem;
+        }
+        
+        .card-body ul {
+            list-style-type: none;
+            padding-left: 1rem;
+        }
+        
+        .card-body ul li {
+            margin-bottom: 0.8rem;
+            position: relative;
+        }
+        
+        .card-body ul li::before {
+            content: '•';
+            color: var(--accent);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        
+        /* Comparison Table - UPDATED FOR MOBILE */
+        .comparison-table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px; /* الحد الأدنى للعرض لضمان عدم انضغاط المحتوى */
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .comparison-table th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .comparison-table tr:hover {
+            background-color: #f0f5ff;
+        }
+        
+        /* Treatment Options */
+        .treatment-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .treatment-card {
+            background: linear-gradient(135deg, #f5f7fa, #e4e8f0);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .treatment-card.animate {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .treatment-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+        
+        .treatment-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        /* Emergency Section */
+        .emergency {
+            background: linear-gradient(135deg, var(--accent), #f09c9c);
+            color: white;
+            text-align: center;
+            padding: 4rem 0;
+        }
+        
+        .emergency h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .emergency p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hotline {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 1.5rem 0;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-section ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        /* Responsive Design - UPDATED FOR TABLES */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            /* تحسينات الجداول للهواتف */
+            .comparison-table-container {
+                font-size: 0.85rem;
+                border-radius: 8px;
+            }
+            
+            .comparison-table th, .comparison-table td {
+                padding: 0.8rem;
+            }
+            
+            .comparison-table {
+                min-width: 700px; /* تقليل العرض الأدنى للجداول على الهواتف */
+            }
+        }
+        
+        /* تحسينات إضافية للهواتف الصغيرة جداً */
+        @media (max-width: 480px) {
+            .comparison-table {
+                min-width: 650px; /* تقليل أكثر للهواتف الصغيرة */
+            }
+            
+            .comparison-table th, .comparison-table td {
+                padding: 0.6rem;
+                font-size: 0.8rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .hotline {
+                font-size: 1.6rem;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                Understanding Anxiety Disorders
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#what-is">What is Anxiety?</a></li>
+                    <li><a href="#symptoms">Symptoms</a></li>
+                    <li><a href="#causes">Causes</a></li>
+                    <li><a href="#treatment">Treatment</a></li>
+                    <li><a href="#help">Help</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Understanding Anxiety Disorders: A Path to Calm and Control</h1>
+            <p>Discover comprehensive information about Anxiety Disorders, their symptoms, causes, and effective treatment options. You can regain control of your life with proper support.</p>
+            <a href="#what-is" class="btn">Start the Journey</a>
+        </div>
+    </section>
+
+    <!-- What is Anxiety Section -->
+    <section id="what-is">
+        <div class="container">
+            <div class="section-title">
+                <h2>What are Anxiety Disorders?</h2>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h3>Anxiety Disorders</h3>
+                </div>
+                <div class="card-body">
+                    <p>Anxiety disorders are a group of mental health conditions characterized by excessive fear, worry, or nervousness. Unlike normal stress or nervousness, symptoms are persistent, intense, and interfere with daily functioning. Common types include generalized anxiety disorder (GAD), panic disorder, social anxiety disorder, and phobias.</p>
+                    
+                    <h4 style="margin-top: 1.5rem; color: var(--primary);">Difference Between Normal Worry and Anxiety Disorder</h4>
+                    <div class="comparison-table-container">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Criterion</th>
+                                    <th>Normal Worry</th>
+                                    <th>Anxiety Disorder</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Trigger</td>
+                                    <td>Happens in specific stressful situations</td>
+                                    <td>Occurs without clear reason or is exaggerated</td>
+                                </tr>
+                                <tr>
+                                    <td>Duration</td>
+                                    <td>Temporary, resolves naturally</td>
+                                    <td>Lasts ≥6 months, persistent</td>
+                                </tr>
+                                <tr>
+                                    <td>Severity & Impact</td>
+                                    <td>Mild impact on daily life</td>
+                                    <td>Strongly interferes with daily functioning</td>
+                                </tr>
+                                <tr>
+                                    <td>Thoughts</td>
+                                    <td>Realistic concerns about actual problems</td>
+                                    <td>Racing thoughts, catastrophizing, excessive fear</td>
+                                </tr>
+                                <tr>
+                                    <td>Response to Support</td>
+                                    <td>Improves with reassurance and time</td>
+                                    <td>Requires therapy or medication for improvement</td>
+                                </tr>
+                                <tr>
+                                    <td>Physical Symptoms</td>
+                                    <td>Mild tension or restlessness</td>
+                                    <td>Muscle tension, fatigue, sleep problems, panic attacks</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Symptoms Section -->
+    <section id="symptoms" style="background-color: #f8f9fa;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Symptoms of Anxiety Disorders</h2>
+            </div>
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Psychological Symptoms</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Excessive and uncontrollable worry</li>
+                            <li>Restlessness, feeling "on edge"</li>
+                            <li>Irritability and mood swings</li>
+                            <li>Difficulty concentrating or mind going blank</li>
+                            <li>Racing thoughts and catastrophizing</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Physical Symptoms</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Muscle tension and aches</li>
+                            <li>Fatigue and low energy</li>
+                            <li>Sleep problems (difficulty falling or staying asleep)</li>
+                            <li>Rapid heartbeat, shortness of breath</li>
+                            <li>Sweating, trembling, dizziness</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Behavioral Symptoms</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Avoidance of anxiety-provoking situations</li>
+                            <li>Procrastination due to anxiety</li>
+                            <li>Seeking excessive reassurance</li>
+                            <li>Nervous habits (nail biting, pacing)</li>
+                            <li>Difficulty with decision making</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Causes & Risk Factors Section -->
+    <section id="causes">
+        <div class="container">
+            <div class="section-title">
+                <h2>Causes & Risk Factors</h2>
+            </div>
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Biological Factors</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Genetics and family history</li>
+                            <li>Imbalance in neurotransmitters (serotonin, GABA)</li>
+                            <li>Brain chemistry and structure differences</li>
+                            <li>Medical conditions (thyroid problems, heart issues)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Psychological Factors</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Negative thinking patterns</li>
+                            <li>History of trauma or abuse</li>
+                            <li>Personality traits (perfectionism, neuroticism)</li>
+                            <li>Poor coping skills</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Environmental Factors</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Stressful life events</li>
+                            <li>Family conflicts or relationship problems</li>
+                            <li>Chronic illness or pain</li>
+                            <li>Work or academic pressure</li>
+                            <li>Financial stress</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Treatment Options Section -->
+    <section id="treatment" style="background-color: #f8f9fa;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Treatment Options</h2>
+            </div>
+            <div class="treatment-options">
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Psychotherapy</h3>
+                    <p>Cognitive Behavioral Therapy (CBT), Exposure therapy, Relaxation training, Mindfulness-based therapies</p>
+                </div>
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <h3>Medications</h3>
+                    <p>SSRIs (sertraline, escitalopram), SNRIs, Benzodiazepines (short-term), Buspirone</p>
+                </div>
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Lifestyle Changes</h3>
+                    <p>Regular exercise, Healthy diet, Good sleep hygiene, Stress management, Limiting caffeine/alcohol</p>
+                </div>
+                <div class="treatment-card">
+                    <div class="treatment-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Complementary Approaches</h3>
+                    <p>Yoga, Meditation, Breathing exercises, Acupuncture, Support groups</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Self-Help & When to Seek Help Section -->
+    <section id="help">
+        <div class="container">
+            <div class="section-title">
+                <h2>Self-Help & When to Seek Help</h2>
+            </div>
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Self-Help Strategies</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Practice relaxation and mindfulness daily</li>
+                            <li>Limit caffeine and alcohol intake</li>
+                            <li>Maintain a consistent daily routine</li>
+                            <li>Use journaling to manage anxious thoughts</li>
+                            <li>Seek social support from friends and family</li>
+                            <li>Gradual exposure to anxiety-provoking situations</li>
+                            <li>Regular physical activity and exercise</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3>When to Seek Help</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul>
+                            <li>If symptoms last ≥6 months</li>
+                            <li>If anxiety interferes with work, school, or relationships</li>
+                            <li>If panic attacks or physical symptoms are frequent</li>
+                            <li>If suicidal thoughts occur</li>
+                            <li>If self-help strategies aren't providing relief</li>
+                            <li>If using substances to cope with anxiety</li>
+                            <li>If experiencing significant distress or impairment</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Section -->
+    <section class="emergency">
+        <div class="container">
+            <h2>If you're experiencing a mental health crisis or having panic attacks, please seek help now</h2>
+            <p>Don't hesitate to contact mental health support services or go to the nearest hospital</p>
+            <div class="hotline">
+                <i class="fas fa-phone-alt"></i> 988 - Suicide & Crisis Lifeline
+            </div>
+            <p>Available 24 hours a day, 7 days a week</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Understanding Anxiety Disorders</h3>
+                    <p>A website aimed at providing accurate and comprehensive information about Anxiety Disorders to increase awareness, reduce stigma, and encourage seeking help.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#what-is">What is Anxiety?</a></li>
+                        <li><a href="#symptoms">Symptoms</a></li>
+                        <li><a href="#causes">Causes</a></li>
+                        <li><a href="#treatment">Treatment</a></li>
+                        <li><a href="#help">Self-Help</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#">Anxiety Support Organizations</a></li>
+                        <li><a href="#">Therapist Directory</a></li>
+                        <li><a href="#">Support Groups</a></li>
+                        <li><a href="#">Crisis Hotlines</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Understanding Anxiety Disorders. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card, .treatment-card');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            cards.forEach(card => {
+                observer.observe(card);
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+        // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+    </script>
+</body>
+</html>

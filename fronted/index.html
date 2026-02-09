@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - NeuroSense</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #6a11cb;
+      --secondary-color: #2575fc;
+      --accent-color: #4a00e0;
+      --text-color: #333;
+      --light-text: #fff;
+      --input-bg: #f5f5f5;
+      --error-color: #e74c3c;
+      --success-color: #2ecc71;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: var(--text-color);
+    }
+    
+    .auth-container {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 400px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .auth-header {
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      color: var(--light-text);
+      padding: 25px;
+      text-align: center;
+      position: relative;
+    }
+    
+    .auth-header h2 {
+      font-size: 1.8rem;
+      margin-bottom: 5px;
+    }
+    
+    .auth-header p {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+    
+    .auth-body {
+      padding: 25px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all 0.3s;
+      background-color: var(--input-bg);
+    }
+    
+    .form-control:focus {
+      border-color: var(--primary-color);
+      outline: none;
+      background-color: white;
+      box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
+    }
+    
+    .input-icon {
+      position: absolute;
+      right: 15px;
+      top: 40px;
+      color: #999;
+    }
+    
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 10px;
+      position: relative;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      color: white;
+    }
+    
+    .btn-primary:hover:not(:disabled) {
+      background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    .auth-footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
+    
+    .auth-footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    .auth-footer a:hover {
+      text-decoration: underline;
+    }
+    
+    .error-message {
+      color: var(--error-color);
+      font-size: 0.8rem;
+      margin-top: 5px;
+      display: none;
+    }
+    
+    .success-message {
+      color: var(--success-color);
+      font-size: 0.9rem;
+      text-align: center;
+      margin-bottom: 15px;
+      display: none;
+      padding: 10px;
+      background: rgba(46, 204, 113, 0.1);
+      border-radius: 5px;
+    }
+    
+    .loading {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      border-top-color: transparent;
+      animation: spin 0.8s linear infinite;
+      margin-left: 10px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .auth-form {
+      animation: fadeIn 0.5s ease-out;
+    }
+    
+    @media (max-width: 480px) {
+      .auth-container {
+        width: 95%;
+      }
+      
+      .auth-header h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-container">
+    <div class="auth-header">
+      <h2>Welcome to NeuroSense</h2>
+      <p>Your smart mental health companion</p>
+    </div>
+    
+    <div class="auth-body">
+      <!-- Login Form -->
+      <form id="loginForm" class="auth-form">
+        <div class="success-message" id="loginSuccess"></div>
+        
+        <div class="form-group">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required>
+          <i class="fas fa-envelope input-icon"></i>
+          <div class="error-message" id="loginEmailError"></div>
+        </div>
+        
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+          <i class="fas fa-lock input-icon"></i>
+          <div class="error-message" id="loginPasswordError"></div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" id="loginBtn">
+          Login
+          <span class="loading" id="loginLoading" style="display: none;"></span>
+        </button>
+        
+        <div class="auth-footer">
+          Don't have an account? <a href="#" id="showSignup">Sign up</a>
+        </div>
+      </form>
+      
+      <!-- Signup Form -->
+      <form id="signupForm" class="auth-form" style="display: none;">
+        <div class="success-message" id="signupSuccess"></div>
+        
+        <div class="form-group">
+          <label for="signupName">Full Name</label>
+          <input type="text" id="signupName" class="form-control" placeholder="Enter your full name" required>
+          <i class="fas fa-user input-icon"></i>
+          <div class="error-message" id="signupNameError"></div>
+        </div>
+        
+        <div class="form-group">
+          <label for="signupEmail">Email</label>
+          <input type="email" id="signupEmail" class="form-control" placeholder="Enter your email" required>
+          <i class="fas fa-envelope input-icon"></i>
+          <div class="error-message" id="signupEmailError"></div>
+        </div>
+        
+        <div class="form-group">
+          <label for="signupPassword">Password</label>
+          <input type="password" id="signupPassword" class="form-control" placeholder="Create a password (min 6 characters)" required>
+          <i class="fas fa-lock input-icon"></i>
+          <div class="error-message" id="signupPasswordError"></div>
+        </div>
+        
+        <div class="form-group">
+          <label for="signupConfirmPassword">Confirm Password</label>
+          <input type="password" id="signupConfirmPassword" class="form-control" placeholder="Confirm your password" required>
+          <i class="fas fa-lock input-icon"></i>
+          <div class="error-message" id="signupConfirmPasswordError"></div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" id="signupBtn">
+          Create Account
+          <span class="loading" id="signupLoading" style="display: none;"></span>
+        </button>
+        
+        <div class="auth-footer">
+          Already have an account? <a href="#" id="showLogin">Login</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // API Base URL - اختر أحد الخيارين أدناه:
+    // الخيار 1: بدون API (للاختبار فقط)
+    const USE_MOCK_API = true; // ضع true للاختبار بدون API
+    
+    // DOM Elements
+    const loginForm = document.getElementById('loginForm');
+    const signupForm = document.getElementById('signupForm');
+    const showSignup = document.getElementById('showSignup');
+    const showLogin = document.getElementById('showLogin');
+    const loginBtn = document.getElementById('loginBtn');
+    const signupBtn = document.getElementById('signupBtn');
+    const loginLoading = document.getElementById('loginLoading');
+    const signupLoading = document.getElementById('signupLoading');
+    
+    // Toggle between login and signup forms
+    showSignup.addEventListener('click', (e) => {
+      e.preventDefault();
+      loginForm.style.display = 'none';
+      signupForm.style.display = 'block';
+      clearErrors();
+    });
+    
+    showLogin.addEventListener('click', (e) => {
+      e.preventDefault();
+      signupForm.style.display = 'none';
+      loginForm.style.display = 'block';
+      clearErrors();
+    });
+    
+    // Clear all error messages
+    function clearErrors() {
+      document.querySelectorAll('.error-message').forEach(el => {
+        el.style.display = 'none';
+      });
+      document.querySelectorAll('.success-message').forEach(el => {
+        el.style.display = 'none';
+      });
+    }
+    
+    // Show error message
+    function showError(elementId, message) {
+      const errorEl = document.getElementById(elementId);
+      errorEl.textContent = message;
+      errorEl.style.display = 'block';
+    }
+    
+    // Show success message
+    function showSuccess(elementId, message) {
+      const successEl = document.getElementById(elementId);
+      successEl.textContent = message;
+      successEl.style.display = 'block';
+    }
+    
+    // Login Form Submission
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearErrors();
+      
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      
+      // Validation
+      let isValid = true;
+      
+      if (!email) {
+        showError('loginEmailError', 'Email is required');
+        isValid = false;
+      } else if (!/\S+@\S+\.\S+/.test(email)) {
+        showError('loginEmailError', 'Email is invalid');
+        isValid = false;
+      }
+      
+      if (!password) {
+        showError('loginPasswordError', 'Password is required');
+        isValid = false;
+      }
+      
+      if (!isValid) return;
+      
+      // Show loading
+      loginBtn.disabled = true;
+      loginLoading.style.display = 'inline-block';
+      
+      // ========== الخيار 1: بدون API (للاختبار فقط) ==========
+      if (USE_MOCK_API) {
+        // محاكاة تأخير الشبكة
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // محاكاة تسجيل الدخول الناجح
+        const user = {
+          id: Date.now(),
+          name: email.split('@')[0],
+          email: email
+        };
+        
+        // حفظ بيانات المستخدم
+        localStorage.setItem('token', 'mock-token-' + Date.now());
+        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('isLoggedIn', 'true'); // هذا مهم للتحقق في home.html
+        
+        showSuccess('loginSuccess', 'Login successful! Redirecting...');
+        
+        // Redirect to home page - تم التصحيح هنا
+        setTimeout(() => {
+          window.location.href = 'home.html'; // تم التغيير من '/home' إلى 'home.html'
+        }, 1500);
+        
+        loginBtn.disabled = false;
+        loginLoading.style.display = 'none';
+        return;
+      }
+      
+      // ========== الخيار 2: مع API حقيقي ==========
+      try {
+        const response = await fetch(`http://localhost:3000/api/auth/login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          // Save token and user data
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('user', JSON.stringify(data.user));
+          localStorage.setItem('isLoggedIn', 'true'); // هذا مهم للتحقق في home.html
+          
+          showSuccess('loginSuccess', 'Login successful! Redirecting...');
+          
+          // Redirect to home page - تم التصحيح هنا
+          setTimeout(() => {
+            window.location.href = 'home.html'; // تم التغيير من '/home' إلى 'home.html'
+          }, 1500);
+        } else {
+          showError('loginPasswordError', data.message || 'Login failed');
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        showError('loginPasswordError', 'Connection error. Please try again. Using mock login for testing.');
+        
+        // Fallback to mock login if API fails
+        const user = {
+          id: Date.now(),
+          name: email.split('@')[0],
+          email: email
+        };
+        
+        localStorage.setItem('token', 'fallback-token-' + Date.now());
+        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('isLoggedIn', 'true');
+        
+        showSuccess('loginSuccess', 'Using offline mode. Redirecting...');
+        
+        setTimeout(() => {
+          window.location.href = 'home.html';
+        }, 1500);
+      } finally {
+        loginBtn.disabled = false;
+        loginLoading.style.display = 'none';
+      }
+    });
+    
+    // Signup Form Submission
+    signupForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      clearErrors();
+      
+      const name = document.getElementById('signupName').value.trim();
+      const email = document.getElementById('signupEmail').value.trim();
+      const password = document.getElementById('signupPassword').value;
+      const confirmPassword = document.getElementById('signupConfirmPassword').value;
+      
+      // Validation
+      let isValid = true;
+      
+      if (!name) {
+        showError('signupNameError', 'Name is required');
+        isValid = false;
+      }
+      
+      if (!email) {
+        showError('signupEmailError', 'Email is required');
+        isValid = false;
+      } else if (!/\S+@\S+\.\S+/.test(email)) {
+        showError('signupEmailError', 'Email is invalid');
+        isValid = false;
+      }
+      
+      if (!password) {
+        showError('signupPasswordError', 'Password is required');
+        isValid = false;
+      } else if (password.length < 6) {
+        showError('signupPasswordError', 'Password must be at least 6 characters');
+        isValid = false;
+      }
+      
+      if (!confirmPassword) {
+        showError('signupConfirmPasswordError', 'Please confirm your password');
+        isValid = false;
+      } else if (password !== confirmPassword) {
+        showError('signupConfirmPasswordError', 'Passwords do not match');
+        isValid = false;
+      }
+      
+      if (!isValid) return;
+      
+      // Show loading
+      signupBtn.disabled = true;
+      signupLoading.style.display = 'inline-block';
+      
+      // ========== الخيار 1: بدون API (للاختبار فقط) ==========
+      if (USE_MOCK_API) {
+        // محاكاة تأخير الشبكة
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        showSuccess('signupSuccess', 'Account created successfully! Redirecting to login...');
+        
+        // Clear form
+        signupForm.reset();
+        
+        // Switch to login form after 2 seconds
+        setTimeout(() => {
+          signupForm.style.display = 'none';
+          loginForm.style.display = 'block';
+          document.getElementById('loginEmail').value = email;
+        }, 2000);
+        
+        signupBtn.disabled = false;
+        signupLoading.style.display = 'none';
+        return;
+      }
+      
+      // ========== الخيار 2: مع API حقيقي ==========
+      try {
+        const response = await fetch(`http://localhost:3000/api/auth/register`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ name, email, password })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          showSuccess('signupSuccess', 'Account created successfully! Redirecting to login...');
+          
+          // Clear form
+          signupForm.reset();
+          
+          // Switch to login form after 2 seconds
+          setTimeout(() => {
+            signupForm.style.display = 'none';
+            loginForm.style.display = 'block';
+            document.getElementById('loginEmail').value = email;
+          }, 2000);
+        } else {
+          showError('signupEmailError', data.message || 'Registration failed');
+        }
+      } catch (error) {
+        console.error('Signup error:', error);
+        showError('signupEmailError', 'Connection error. Please try again.');
+      } finally {
+        signupBtn.disabled = false;
+        signupLoading.style.display = 'none';
+      }
+    });
+    
+    // Check if user is already logged in
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+      // إذا كان المستخدم مسجل الدخول بالفعل، توجيهه مباشرة إلى home
+      setTimeout(() => {
+        window.location.href = 'home.html';
+      }, 500);
+    }
+  </script>
+</body>
+</html>

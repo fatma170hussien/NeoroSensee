@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Anxiety Disorder: Comprehensive Research Overview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      line-height: 1.8;
+      background: #f5f5f5;
+      color: #333;
+      overflow-x: hidden;
+      font-size: 18px;
+      background-image: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      background-color: white;
+      box-shadow: 0 0 30px rgba(0,0,0,0.1);
+      border-radius: 5px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: #2c3e50;
+      text-align: center;
+      margin: 40px 0;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #e74c3c;
+      position: relative;
+    }
+
+    h1:after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: #3498db;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: #2c3e50;
+      margin: 40px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: #2c3e50;
+      margin: 30px 0 15px;
+    }
+
+    h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: #2c3e50;
+      margin: 25px 0 15px;
+    }
+
+    .article-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-bottom: 60px;
+      align-items: flex-start;
+    }
+
+    .article-section:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .text {
+      flex: 2;
+      min-width: 300px;
+      padding: 20px;
+    }
+
+    p {
+      margin-bottom: 25px;
+      color: #555;
+      font-size: 1.1rem;
+      text-align: justify;
+    }
+
+    ul, ol {
+      margin-left: 40px;
+      margin-bottom: 25px;
+    }
+
+    li {
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    .abstract {
+      background-color: #f8f9fa;
+      padding: 25px;
+      border-radius: 8px;
+      margin-bottom: 40px;
+      border-left: 5px solid #3498db;
+    }
+
+    .abstract h2 {
+      margin-top: 0;
+      color: #3498db;
+    }
+
+    .author {
+      margin-top: 60px;
+      font-weight: 600;
+      text-align: right;
+      color: #2c3e50;
+      font-size: 1.2rem;
+      font-style: italic;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+
+    .caption {
+      text-align: center;
+      margin-top: 10px;
+      color: #7f8c8d;
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    .image-placeholder {
+      flex: 1;
+      min-width: 300px;
+      max-width: 500px;
+      height: 300px;
+      background: linear-gradient(135deg, #e0e0e0, #f5f5f5);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #7f8c8d;
+      border: 2px dashed #ccc;
+      transition: all 0.5s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .image-placeholder.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .image-placeholder:hover {
+      transform: scale(1.02) translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+      border-color: #3498db;
+    }
+
+    .research-highlights {
+      background-color: #e8f4f8;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 30px 0;
+      border-left: 5px solid #2c3e50;
+    }
+
+    .treatment-section {
+      background-color: #f0f8f0;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 30px 0;
+      border-left: 5px solid #27ae60;
+    }
+
+    .treatment-section h3 {
+      color: #27ae60;
+      margin-top: 0;
+    }
+
+    .symptoms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .symptom-category {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #e74c3c;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .symptom-category:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .symptom-category h4 {
+      margin-top: 0;
+      color: #e74c3c;
+    }
+
+    .anxiety-types-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .anxiety-type {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #9b59b6;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .anxiety-type:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    .anxiety-type h4 {
+      margin-top: 0;
+      color: #9b59b6;
+    }
+
+    .statistics-box {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 25px 0;
+      text-align: center;
+    }
+
+    .statistics-box h3 {
+      color: white;
+      margin-top: 0;
+    }
+
+    .stat-item {
+      margin: 15px 0;
+      font-size: 1.1rem;
+    }
+
+    .diagnosis-section {
+      background-color: #fff8e1;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 25px 0;
+      border-left: 5px solid #ffa000;
+    }
+
+    .diagnosis-section h3 {
+      color: #ffa000;
+      margin-top: 0;
+    }
+
+    .comorbid-section {
+      background-color: #f9f0ff;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 25px 0;
+      border-left: 5px solid #8e44ad;
+    }
+
+    .comorbid-section h3 {
+      color: #8e44ad;
+      margin-top: 0;
+    }
+
+    .support-section {
+      background-color: #e8f8f5;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 25px 0;
+      border-left: 5px solid #16a085;
+    }
+
+    .support-section h3 {
+      color: #16a085;
+      margin-top: 0;
+    }
+
+    /* New styles for enhanced elements */
+    .progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: transparent;
+      z-index: 1001;
+    }
+
+    .progress-bar {
+      height: 4px;
+      background: #3498db;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #3498db;
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 999;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .back-to-top.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background-color: #2980b9;
+      transform: translateY(-5px);
+    }
+
+    .nav-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .nav-tab {
+      padding: 10px 20px;
+      background: #f8f9fa;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 1px solid #ddd;
+    }
+
+    .nav-tab.active {
+      background: #3498db;
+      color: white;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .info-card {
+      background: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      border-left: 4px solid #3498db;
+    }
+
+    .info-card h4 {
+      margin-top: 0;
+      color: #3498db;
+    }
+
+    .treatment-timeline {
+      position: relative;
+      margin: 40px 0;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 20px;
+      margin-bottom: 30px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border-left: 4px solid #3498db;
+    }
+
+    .timeline-item:before {
+      content: "";
+      position: absolute;
+      left: -10px;
+      top: 25px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #3498db;
+    }
+
+    .timeline-item h4 {
+      margin-top: 0;
+    }
+
+    .floating-img {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .specifier-list {
+      columns: 2;
+      column-gap: 40px;
+    }
+
+    .specifier-list li {
+      break-inside: avoid;
+    }
+
+    .interactive-quiz {
+      background: #f8f9fa;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 30px 0;
+    }
+
+    .quiz-question {
+      margin-bottom: 20px;
+    }
+
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .quiz-option {
+      padding: 10px;
+      background: white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .quiz-option:hover {
+      background: #e8f4f8;
+    }
+
+    .quiz-result {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      background: #e8f4f8;
+      border-radius: 5px;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @media(max-width: 768px) {
+      .article-section, 
+      .article-section:nth-child(even) {
+        flex-direction: column;
+      }
+      
+      .image-placeholder {
+        max-width: 100%;
+      }
+      
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      h2 {
+        font-size: 1.8rem;
+      }
+      
+      .symptoms-grid,
+      .anxiety-types-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .specifier-list {
+        columns: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Progress Bar -->
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <!-- Back to Top Button -->
+  <div class="back-to-top" id="backToTop">
+    <i class="fas fa-chevron-up"></i>
+  </div>
+
+  <div class="container">
+    <h1>Social Anxiety Disorder: Comprehensive Research Overview</h1>
+
+    <div class="abstract">
+      <h2>Overview</h2>
+      <p>Social anxiety disorder (SAD), also called social phobia, is a common mental health disorder characterized by an extreme fear of social situations where individuals may be scrutinized, evaluated, or judged by others. People with social anxiety disorder experience symptoms of anxiety or fear in situations such as speaking in public, meeting new people, dating, job interviews, or even everyday activities like eating in front of others.</p>
+      <p>This fear often feels uncontrollable and can significantly interfere with daily life. Individuals may worry about social situations for weeks before they happen and often avoid places or events that cause distress. Social anxiety disorder usually begins during childhood or adolescence and affects approximately 7% of adults in the US annually, making it the second most diagnosed anxiety disorder after specific phobia.</p>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+      <div class="nav-tab active" data-tab="introduction">Introduction</div>
+      <div class="nav-tab" data-tab="symptoms">Symptoms</div>
+      <div class="nav-tab" data-tab="causes">Causes</div>
+      <div class="nav-tab" data-tab="diagnosis">Diagnosis</div>
+      <div class="nav-tab" data-tab="treatment">Treatment</div>
+    </div>
+
+    <!-- Introduction Tab -->
+    <div class="tab-content active" id="introduction">
+      <h2>Introduction to Social Anxiety Disorder</h2>
+
+      <div class="article-section">
+        <div class="text">
+          <h3>Understanding Social Anxiety</h3>
+          <p>Social anxiety disorder is more than just shyness. It's a persistent fear that affects everyday activities, self-confidence, relationships, and work or school life. While many people occasionally worry about social situations, someone with social anxiety feels overly worried before, during, and after them.</p>
+          <p>The defining feature of social anxiety disorder is intense anxiety or fear of being judged, negatively evaluated, or rejected in social or performance situations. People with this disorder may worry about acting or appearing visibly anxious (blushing, stumbling over words) or being viewed as stupid, awkward, or boring.</p>
+          <p>As a result, they often avoid social situations, and when avoidance isn't possible, they experience significant anxiety and distress. Many also experience strong physical symptoms like rapid heart rate, nausea, and sweating, sometimes leading to full-blown panic attacks.</p>
+        </div>
+        <div>
+          <div class="image-placeholder floating-img">
+            <i class="fas fa-users fa-3x" style="margin-bottom: 15px; color: #3498db;"></i>
+            <div>Social Anxiety in Different Settings</div>
+          </div>
+          <div class="caption">Figure 1: Common situations that trigger social anxiety</div>
+        </div>
+      </div>
+
+      <div class="statistics-box">
+        <h3>Social Anxiety Disorder Epidemiology</h3>
+        <div class="stat-item">Affects approximately 15 million American adults</div>
+        <div class="stat-item">Second most diagnosed anxiety disorder after specific phobia</div>
+        <div class="stat-item">Average age of onset: during teenage years</div>
+        <div class="stat-item">More common in women than men, especially in adolescents and young adults</div>
+        <div class="stat-item">Fewer than 5% seek treatment in the year following onset</div>
+      </div>
+
+      <h2>Types and Levels of Social Anxiety</h2>
+
+      <div class="anxiety-types-grid">
+        <div class="anxiety-type">
+          <h4>Mild Social Anxiety</h4>
+          <p><strong>Characteristics:</strong> Experiences physical and psychological symptoms but still participates in or endures social situations. May only experience symptoms in certain specific situations.</p>
+          <p><strong>Impact:</strong> Can manage most social interactions but with significant discomfort. May avoid particularly challenging situations.</p>
+        </div>
+        
+        <div class="anxiety-type">
+          <h4>Moderate Social Anxiety</h4>
+          <p><strong>Characteristics:</strong> Experiences symptoms in multiple social situations. Participates in some social interactions while avoiding others.</p>
+          <p><strong>Impact:</strong> Noticeable interference with daily activities and social functioning. May decline opportunities due to anxiety.</p>
+        </div>
+
+        <div class="anxiety-type">
+          <h4>Severe Social Anxiety</h4>
+          <p><strong>Characteristics:</strong> Experiences intense symptoms, potentially including panic attacks, in most social situations. Avoids social interactions whenever possible.</p>
+          <p><strong>Impact:</strong> Significant impairment in work, education, and relationships. May experience symptoms in all or most social contexts.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Symptoms Tab -->
+    <div class="tab-content" id="symptoms">
+      <h2>Symptoms of Social Anxiety Disorder</h2>
+
+      <div class="symptoms-grid">
+        <div class="symptom-category">
+          <h4>Psychological Symptoms</h4>
+          <ul>
+            <li>Intense fear of social situations where one might be judged</li>
+            <li>Worry about embarrassing or humiliating oneself</li>
+            <li>Fear that others will notice anxiety</li>
+            <li>Expecting the worst possible consequences from social interactions</li>
+            <li>Anticipatory anxiety for days or weeks before events</li>
+            <li>Analyzing one's performance after social situations</li>
+          </ul>
+        </div>
+        
+        <div class="symptom-category">
+          <h4>Physical Symptoms</h4>
+          <ul>
+            <li>Blushing, sweating, or trembling</li>
+            <li>Rapid heart rate or palpitations</li>
+            <li>Nausea or upset stomach</li>
+            <li>Difficulty speaking, shaky voice</li>
+            <li>Muscle tension or dizziness</li>
+            <li>Shortness of breath or feeling of choking</li>
+            <li>Full-blown panic attacks in severe cases</li>
+          </ul>
+        </div>
+
+        <div class="symptom-category">
+          <h4>Behavioral Symptoms</h4>
+          <ul>
+            <li>Avoiding social situations or enduring them with intense fear</li>
+            <li>Staying quiet or hiding in the background to avoid notice</li>
+            <li>Needing to bring a companion everywhere</li>
+            <li>Drinking before social situations to calm nerves</li>
+            <li>Leaving events early or finding excuses to avoid them</li>
+            <li>Avoiding eye contact during conversations</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3>Social Anxiety Across Different Populations</h3>
+      
+      <div class="article-section">
+        <div>
+          <div class="image-placeholder floating-img">
+            <i class="fas fa-child fa-3x" style="margin-bottom: 15px; color: #3498db;"></i>
+            <div>Social Anxiety Across Lifespan</div>
+          </div>
+          <div class="caption">Figure 2: How social anxiety manifests differently across age groups</div>
+        </div>
+        <div class="text">
+          <h4>Symptoms in Children</h4>
+          <p>Social anxiety disorder in children and adolescents may differ from adults. Young children with this disorder may:</p>
+          <ul>
+            <li>Cling to parents or caregivers</li>
+            <li>Throw temper tantrums when forced into social situations</li>
+            <li>Refuse to play with other children</li>
+            <li>Cry or complain of physical symptoms like stomach aches</li>
+            <li>Show behavioral inhibition</li>
+          </ul>
+          
+          <h4>Symptoms in Adolescents</h4>
+          <p>In late adolescence, those with social anxiety may:</p>
+          <ul>
+            <li>Avoid group gatherings altogether</li>
+            <li>Show little interest in making friends</li>
+            <li>Struggle with classroom participation</li>
+            <li>Avoid dating or social events</li>
+          </ul>
+          
+          <h4>Gender Differences</h4>
+          <p>Research shows social anxiety tends to affect women more than men. Experts recommend screening girls and women aged 13 and older for anxiety disorders. Early intervention can lead to better outcomes as anxiety disorders may worsen over time.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Causes Tab -->
+    <div class="tab-content" id="causes">
+      <h2>Causes and Risk Factors</h2>
+
+      <div class="article-section">
+        <div class="text">
+          <h3>Biological Factors</h3>
+          
+          <h4>Genetic Predisposition</h4>
+          <p>Social anxiety disorder appears to run in families, suggesting a genetic component. Those with first-degree relatives who have the condition are two to six times more likely to develop it themselves.</p>
+          
+          <h4>Brain Structure and Function</h4>
+          <p>Research suggests that the amygdala, a part of the brain involved in fear response, may be overactive in people with social anxiety disorder. Neurotransmitter imbalances, particularly involving serotonin, may also play a role.</p>
+          
+          <h3>Environmental and Psychological Factors</h3>
+          
+          <h4>Childhood Experiences</h4>
+          <ul>
+            <li><strong>Overprotective Parenting:</strong> May limit opportunities to develop social skills</li>
+            <li><strong>Family Conflict or Trauma:</strong> Can contribute to anxiety development</li>
+            <li><strong>Bullying or Teasing:</strong> Negative social experiences can trigger social anxiety</li>
+            <li><strong>Limited Social Opportunities:</strong> Lack of practice in social situations</li>
+          </ul>
+
+          <h4>Learned Behavior</h4>
+          <p>Children may develop social anxiety by observing anxious behavior in parents or through negative social experiences that condition them to fear similar situations.</p>
+        </div>
+        <div>
+          <div class="image-placeholder floating-img">
+            <i class="fas fa-brain fa-3x" style="margin-bottom: 15px; color: #3498db;"></i>
+            <div>Risk Factors for Social Anxiety</div>
+          </div>
+          <div class="caption">Figure 3: Biological, psychological, and environmental factors in social anxiety</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Diagnosis Tab -->
+    <div class="tab-content" id="diagnosis">
+      <h2>Diagnosis and Assessment</h2>
+
+      <div class="diagnosis-section">
+        <h3>Diagnostic Criteria</h3>
+        <p>To be diagnosed with social anxiety disorder, a person must have:</p>
+        <ul>
+          <li>Marked fear or anxiety about social situations where they might be scrutinized by others</li>
+          <li>Fear of acting in a way that will be negatively evaluated</li>
+          <li>Social situations almost always provoke fear or anxiety</li>
+          <li>Avoidance of social situations or endurance with intense fear</li>
+          <li>Fear or anxiety is out of proportion to the actual threat</li>
+          <li>Persistent symptoms, typically lasting 6 months or more</li>
+          <li>Significant distress or impairment in social, occupational, or other areas</li>
+          <li>Not attributable to substance use, medical condition, or other mental disorder</li>
+        </ul>
+      </div>
+
+      <div class="article-section">
+        <div>
+          <div class="image-placeholder floating-img">
+            <i class="fas fa-stethoscope fa-3x" style="margin-bottom: 15px; color: #3498db;"></i>
+            <div>Diagnostic Process</div>
+          </div>
+          <div class="caption">Figure 4: Comprehensive assessment for social anxiety disorder</div>
+        </div>
+        <div class="text">
+          <h3>Diagnostic Process</h3>
+          <p>If you think you're experiencing symptoms of social anxiety disorder, talk to a healthcare provider such as a primary care doctor, psychiatrist, psychologist, or clinical social worker. During the visit, the provider may ask about:</p>
+          
+          <h4>Assessment Components</h4>
+          <ul>
+            <li>When symptoms began and how long they've lasted</li>
+            <li>Frequency and intensity of symptoms</li>
+            <li>Impact on daily life, work, school, and relationships</li>
+            <li>Specific situations that trigger anxiety</li>
+            <li>Coping mechanisms and avoidance behaviors</li>
+            <li>Family history of anxiety or mental health conditions</li>
+          </ul>
+          
+          <h4>Physical Examination</h4>
+          <p>After discussing symptoms, the provider may conduct a physical exam to ensure that an unrelated physical problem isn't causing the symptoms. They may also order tests to rule out thyroid problems or other medical conditions that can mimic anxiety symptoms.</p>
+        </div>
+      </div>
+
+      <div class="comorbid-section">
+        <h3>Common Co-occurring Conditions</h3>
+        <p>Social anxiety disorder often occurs alongside other mental health conditions, including:</p>
+        <div class="symptoms-grid">
+          <div class="symptom-category">
+            <h4>Mood Disorders</h4>
+            <ul>
+              <li><strong>Major Depressive Disorder:</strong> Up to 65% of people with social anxiety experience depression</li>
+              <li><strong>Bipolar Disorder:</strong> Can co-occur with social anxiety</li>
+            </ul>
+          </div>
+          
+          <div class="symptom-category">
+            <h4>Other Anxiety Disorders</h4>
+            <ul>
+              <li><strong>Generalized Anxiety Disorder:</strong> Excessive worry about multiple areas</li>
+              <li><strong>Panic Disorder:</strong> Unexpected panic attacks</li>
+              <li><strong>Agoraphobia:</strong> Fear of situations where escape might be difficult</li>
+            </ul>
+          </div>
+
+          <div class="symptom-category">
+            <h4>Other Conditions</h4>
+            <ul>
+              <li><strong>Substance Use Disorders:</strong> Alcohol or drugs may be used to self-medicate</li>
+              <li><strong>Body Dysmorphic Disorder:</strong> Preoccupation with perceived flaws</li>
+              <li><strong>Attention-Deficit/Hyperactivity Disorder (ADHD):</strong> Can co-occur with social anxiety</li>
+              <li><strong>Obsessive-Compulsive Disorder (OCD):</strong> Intrusive thoughts and compulsive behaviors</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Treatment Tab -->
+    <div class="tab-content" id="treatment">
+      <h2>Treatment and Management</h2>
+
+      <div class="treatment-section">
+        <h3>Comprehensive Treatment Approach</h3>
+        <p>Treatment for social anxiety disorder typically involves psychotherapy, medication, or both. Choosing the right treatment plan is based on a person's needs, preferences, and medical situation. Finding the best treatment may take trial and error, and both psychotherapy and medication can take time to work effectively.</p>
+      </div>
+
+      <div class="symptoms-grid">
+        <div class="symptom-category">
+          <h4>Psychotherapy Approaches</h4>
+          <p><strong>Cognitive Behavioral Therapy (CBT):</strong> Gold standard treatment that teaches different ways of thinking, behaving, and reacting to social situations</p>
+          <p><strong>Exposure Therapy:</strong> CBT method that progressively confronts feared social situations</p>
+          <p><strong>Acceptance and Commitment Therapy (ACT):</strong> Encourages nonjudgmental acceptance of thoughts and promotes meaningful activities</p>
+          <p><strong>Social Skills Training:</strong> Helps develop and practice interpersonal skills</p>
+          <p><strong>Group Therapy:</strong> Provides safe environment to practice social interactions</p>
+        </div>
+        
+        <div class="symptom-category">
+          <h4>Medication Options</h4>
+          <p><strong>SSRIs (Selective Serotonin Reuptake Inhibitors):</strong> First-line medication treatment including fluoxetine, sertraline, paroxetine</p>
+          <p><strong>SNRIs (Serotonin-Norepinephrine Reuptake Inhibitors):</strong> Venlafaxine, duloxetine</p>
+          <p><strong>Benzodiazepines:</strong> Short-term use for acute anxiety (lorazepam, alprazolam)</p>
+          <p><strong>Beta-Blockers:</strong> Control physical symptoms like rapid heartbeat (propranolol)</p>
+          <p><strong>Other Options:</strong> Buspirone, MAOIs in treatment-resistant cases</p>
+        </div>
+
+        <div class="symptom-category">
+          <h4>Complementary Strategies</h4>
+          <p><strong>Mindfulness and Meditation:</strong> Practice being present without judgment</p>
+          <p><strong>Sleep Hygiene:</strong> Addressing sleep problems that worsen anxiety</p>
+          <p><strong>Regular Exercise:</strong> Particularly aerobic exercise combined with CBT</p>
+          <p><strong>Substance Management:</strong> Limiting alcohol and caffeine intake</p>
+          <p><strong>Support Groups:</strong> Sharing experiences and coping strategies</p>
+          <p><strong>Healthy Lifestyle:</strong> Balanced diet, stress management techniques</p>
+        </div>
+      </div>
+
+      <h3>Treatment Considerations and Timeline</h3>
+      
+      <div class="article-section">
+        <div class="text">
+          <h4>Medication Considerations</h4>
+          <p>Antidepressants (SSRIs and SNRIs) are typically first-line medications for social anxiety disorder. They may take several weeks to start working and can cause initial side effects like headaches, nausea, or sleep disturbances. These usually improve over time as the body adjusts.</p>
+          
+          <h4>Psychotherapy Duration and Effectiveness</h4>
+          <p>CBT for social anxiety typically involves 12-16 weekly sessions, though some people benefit from longer treatment. Exposure therapy progresses gradually, starting with less challenging situations and building to more difficult ones. Group therapy provides unique benefits by allowing practice in a supportive environment.</p>
+          
+          <h4>Combined Treatment Approach</h4>
+          <p>Research suggests that combining medication and psychotherapy may be more effective than either treatment alone for some individuals. Medication can provide initial symptom relief while psychotherapy helps develop long-term coping skills.</p>
+        </div>
+        <div>
+          <div class="image-placeholder floating-img">
+            <i class="fas fa-hand-holding-heart fa-3x" style="margin-bottom: 15px; color: #3498db;"></i>
+            <div>Treatment Modalities</div>
+          </div>
+          <div class="caption">Figure 5: Integrated treatment approach for social anxiety disorder</div>
+        </div>
+      </div>
+
+      <div class="support-section">
+        <h3>Supporting Someone with Social Anxiety</h3>
+        <div class="symptoms-grid">
+          <div class="symptom-category">
+            <h4>Educate Yourself</h4>
+            <ul>
+              <li>Learn about social anxiety disorder to better understand their experience</li>
+              <li>Recognize that it's a medical condition, not a personality flaw</li>
+              <li>Don't assume you know what they're experiencing</li>
+            </ul>
+          </div>
+          
+          <div class="symptom-category">
+            <h4>Be Supportive</h4>
+            <ul>
+              <li>Don't downplay or dismiss their feelings and experiences</li>
+              <li>Let them know you're there to listen and support them</li>
+              <li>Try to understand their perspective</li>
+              <li>Be patient with their progress</li>
+            </ul>
+          </div>
+
+          <div class="symptom-category">
+            <h4>Encourage Treatment</h4>
+            <ul>
+              <li>Gently encourage them to seek professional help</li>
+              <li>Offer to help them find a therapist or accompany them to appointments</li>
+              <li>Recognize that while support is helpful, professional treatment is necessary</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="research-highlights">
+        <h3>Key Treatment Principles</h3>
+        <p><strong>Early Intervention:</strong> Early diagnosis and treatment can prevent the disorder from worsening and reduce long-term impact</p>
+        <p><strong>Individualized Approach:</strong> Treatment should be tailored to the specific type and severity of social anxiety</p>
+        <p><strong>Gradual Exposure:</strong> Systematic, progressive exposure to feared situations is essential for overcoming avoidance</p>
+        <p><strong>Skill Building:</strong> Developing social skills and cognitive restructuring techniques enhances long-term management</p>
+        <p><strong>Consistency and Patience:</strong> Treatment takes time, and progress may be gradual with occasional setbacks</p>
+        <p><strong>Holistic Care:</strong> Addressing co-occurring conditions and lifestyle factors improves overall outcomes</p>
+      </div>
+    </div>
+
+    <!-- Interactive Quiz -->
+    <div class="interactive-quiz">
+      <h3>Social Anxiety Self-Assessment Quiz</h3>
+      <p>This brief quiz can help you understand if you might be experiencing symptoms of social anxiety disorder. Please note this is not a diagnostic tool.</p>
+      
+      <div class="quiz-question">
+        <p>1. How often do you feel nervous or anxious in social situations?</p>
+        <div class="quiz-options">
+          <div class="quiz-option" data-value="0">Rarely or never</div>
+          <div class="quiz-option" data-value="1">Occasionally</div>
+          <div class="quiz-option" data-value="2">Frequently</div>
+          <div class="quiz-option" data-value="3">Almost always</div>
+        </div>
+      </div>
+      
+      <div class="quiz-question">
+        <p>2. Do you avoid social situations because of fear of being judged or embarrassed?</p>
+        <div class="quiz-options">
+          <div class="quiz-option" data-value="0">Never</div>
+          <div class="quiz-option" data-value="1">Sometimes</div>
+          <div class="quiz-option" data-value="2">Often</div>
+          <div class="quiz-option" data-value="3">Always</div>
+        </div>
+      </div>
+      
+      <div class="quiz-question">
+        <p>3. How much does anxiety in social situations interfere with your daily life?</p>
+        <div class="quiz-options">
+          <div class="quiz-option" data-value="0">Not at all</div>
+          <div class="quiz-option" data-value="1">A little</div>
+          <div class="quiz-option" data-value="2">Moderately</div>
+          <div class="quiz-option" data-value="3">Severely</div>
+        </div>
+      </div>
+      
+      <button id="quiz-submit" style="padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 15px;">Get Results</button>
+      
+      <div class="quiz-result" id="quiz-result">
+        <!-- Results will be displayed here -->
+      </div>
+    </div>
+
+    <div class="author">Research compiled by: Psychiatry and Clinical Psychology Research Team</div>
+  </div>
+
+  <script>
+    // Image animation
+    const images = document.querySelectorAll('.image-placeholder');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    });
+
+    images.forEach(img => observer.observe(img));
+
+    // Progress bar
+    window.onscroll = function() {
+      updateProgressBar();
+      toggleBackToTop();
+    };
+    
+    function updateProgressBar() {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById("progressBar").style.width = scrolled + "%";
+    }
+    
+    function toggleBackToTop() {
+      const backToTop = document.getElementById('backToTop');
+      if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+        backToTop.classList.add('active');
+      } else {
+        backToTop.classList.remove('active');
+      }
+    }
+    
+    // Back to top functionality
+    document.getElementById('backToTop').addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Tab navigation
+    const tabs = document.querySelectorAll('.nav-tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active class from all tabs and contents
+        tabs.forEach(t => t.classList.remove('active'));
+        tabContents.forEach(c => c.classList.remove('active'));
+        
+        // Add active class to clicked tab and corresponding content
+        tab.classList.add('active');
+        const tabId = tab.getAttribute('data-tab');
+        document.getElementById(tabId).classList.add('active');
+      });
+    });
+
+    // Interactive quiz
+    document.getElementById('quiz-submit').addEventListener('click', function() {
+      let score = 0;
+      const options = document.querySelectorAll('.quiz-option.selected');
+      
+      options.forEach(option => {
+        score += parseInt(option.getAttribute('data-value'));
+      });
+      
+      let resultText = '';
+      if (score <= 3) {
+        resultText = '<h4>Low Social Anxiety</h4><p>Your responses suggest minimal social anxiety. While everyone experiences some nervousness in social situations, it doesn\'t appear to significantly impact your life.</p>';
+      } else if (score <= 6) {
+        resultText = '<h4>Mild Social Anxiety</h4><p>Your responses suggest some social anxiety that may occasionally interfere with your activities. Consider practicing relaxation techniques or gradual exposure to challenging situations.</p>';
+      } else if (score <= 9) {
+        resultText = '<h4>Moderate Social Anxiety</h4><p>Your responses indicate significant social anxiety that likely impacts your daily life. Consider speaking with a mental health professional who can provide appropriate support and treatment options.</p>';
+      } else {
+        resultText = '<h4>High Social Anxiety</h4><p>Your responses suggest severe social anxiety that significantly impacts your life. We strongly recommend consulting with a mental health professional for proper assessment and treatment.</p>';
+      }
+      
+      document.getElementById('quiz-result').innerHTML = resultText;
+      document.getElementById('quiz-result').style.display = 'block';
+    });
+
+    // Quiz option selection
+    document.querySelectorAll('.quiz-option').forEach(option => {
+      option.addEventListener('click', function() {
+        // Remove selected class from all options in the same question
+        const parent = this.parentElement;
+        parent.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+        
+        // Add selected class to clicked option
+        this.classList.add('selected');
+      });
+    });
+    // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+  </script>
+</body>
+</html>

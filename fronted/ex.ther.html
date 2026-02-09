@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindful Moments - Therapeutic Exercises</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1e5397; /* Softer Sika blue, gentler and eye-friendly */
+            --primary-light: #1771a1;
+            --primary-dark: #1E3A8A; /* Navy blue */
+            --secondary: #FFFFFF; /* White */
+            --accent: #34D399; /* Green for progress bar */
+            --light: #F9FAFB; /* Off-white */
+            --text: #1F2A44;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --radius: 12px;
+            --transition: all 0.3s ease-in-out;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background: var(--secondary);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        /* Header */
+        header {
+            background: var(--primary);
+            color: var(--secondary);
+            padding: 1rem;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            font-size: 1.8rem;
+            color: var(--secondary);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        nav {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.05);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+            color: var(--text);
+        }
+
+        .time-selector {
+            background: var(--light);
+            padding: 1.2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .time-selector-title {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        .time-options {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .time-option {
+            padding: 0.7rem 1.2rem;
+            border: 1px solid var(--primary);
+            border-radius: 25px;
+            background: var(--secondary);
+            color: var(--primary-dark);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .time-option:hover {
+            background: var(--primary-light);
+            color: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        .time-option.active {
+            background: var(--primary);
+            color: var(--secondary);
+            border-color: var(--primary-dark);
+        }
+
+        .time-indicator {
+            background: var(--primary-dark);
+            color: var(--secondary);
+            padding: 0.7rem 1.2rem;
+            border-radius: 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            box-shadow: var(--shadow);
+            margin-top: 1.2rem;
+            font-size: 0.9rem;
+        }
+
+        /* Tips Section */
+        .tips-section {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .tip-card {
+            text-align: center;
+            padding: 1.2rem;
+            background: var(--secondary);
+            border-radius: 8px;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .tip-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .tip-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+        }
+
+        .tip-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .tip-text {
+            color: var(--text);
+            font-size: 0.85rem;
+        }
+
+        /* Exercises Section */
+        .exercises-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            margin-bottom: 1.2rem;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+
+        .section-icon {
+            color: var(--primary);
+            font-size: 1.6rem;
+        }
+
+        .exercises-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .exercise-card {
+            background: var(--secondary);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .exercise-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .exercise-header {
+            padding: 1.2rem;
+            background: var(--primary);
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .exercise-icon {
+            font-size: 1.8rem;
+        }
+
+        .exercise-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .exercise-content {
+            padding: 1.2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .exercise-description {
+            margin-bottom: 1.2rem;
+            line-height: 1.6;
+            font-size: 0.9rem;
+            flex-grow: 1;
+        }
+
+        .exercise-duration {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+
+        .exercise-visual {
+            height: 180px;
+            background: var(--light);
+            border-radius: 8px;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Enhanced Cartoon Characters */
+        .character {
+            position: relative;
+            width: 120px;
+            height: 160px;
+            transform: scale(1.1);
+        }
+
+        .head {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: #FFE5B4;
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--primary-dark);
+        }
+
+        .face {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 20px;
+        }
+
+        .eye {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--primary-dark);
+            border-radius: 50%;
+            border: 2px solid var(--secondary);
+        }
+
+        .left-eye {
+            left: 5px;
+        }
+
+        .right-eye {
+            right: 5px;
+        }
+
+        .mouth {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 6px;
+            background: #EF4444;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .body {
+            position: absolute;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--primary-dark);
+        }
+
+        .arm {
+            position: absolute;
+            top: 75px;
+            width: 14px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 7px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--primary-dark);
+        }
+
+        .left-arm {
+            left: 15px;
+            transform-origin: top center;
+        }
+
+        .right-arm {
+            right: 15px;
+            transform-origin: top center;
+        }
+
+        .leg {
+            position: absolute;
+            top: 120px;
+            width: 14px;
+            height: 35px;
+            background: var(--primary-dark);
+            border-radius: 7px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--text);
+        }
+
+        .left-leg {
+            left: 18px;
+        }
+
+        .right-leg {
+            right: 18px;
+        }
+
+        /* Detailed Exercise Animations */
+        .breathing .body {
+            animation: breathing-body 4s ease-in-out infinite;
+        }
+
+        .breathing .mouth {
+            animation: breathing-mouth 4s ease-in-out infinite;
+        }
+
+        .breathing .arm {
+            animation: breathing-arms 4s ease-in-out infinite;
+        }
+
+        @keyframes breathing-body {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.08, 1.1); }
+        }
+
+        @keyframes breathing-mouth {
+            0%, 100% { height: 6px; border-radius: 0 0 10px 10px; }
+            50% { height: 12px; border-radius: 12px; }
+        }
+
+        @keyframes breathing-arms {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(10deg); }
+        }
+
+        .grounding .head {
+            animation: grounding-head 6s ease-in-out infinite;
+        }
+
+        .grounding .eye {
+            animation: grounding-eyes 3s infinite;
+        }
+
+        .grounding .arm {
+            animation: grounding-arms 6s ease-in-out infinite;
+        }
+
+        .grounding .leg {
+            animation: grounding-legs 6s ease-in-out infinite;
+        }
+
+        @keyframes grounding-head {
+            0%, 100% { transform: translateX(-50%) rotate(0deg); }
+            30% { transform: translateX(-50%) rotate(15deg); }
+            70% { transform: translateX(-50%) rotate(-15deg); }
+        }
+
+        @keyframes grounding-eyes {
+            0%, 40%, 60%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(0.2); }
+        }
+
+        @keyframes grounding-arms {
+            0%, 100% { transform: rotate(0deg); }
+            30% { transform: rotate(20deg); }
+            70% { transform: rotate(-20deg); }
+        }
+
+        @keyframes grounding-legs {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(5px); }
+        }
+
+        .muscle .arm {
+            animation: muscle-arms 4s ease-in-out infinite;
+        }
+
+        .muscle .leg {
+            animation: muscle-legs 4s ease-in-out infinite;
+        }
+
+        .muscle .body {
+            animation: muscle-body 4s ease-in-out infinite;
+        }
+
+        @keyframes muscle-arms {
+            0%, 50%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-25deg) scale(1.1); }
+        }
+
+        @keyframes muscle-legs {
+            0%, 50%, 100% { transform: translateY(0); }
+            25% { transform: translateY(-5px) scale(1.1); }
+        }
+
+        @keyframes muscle-body {
+            0%, 50%, 100% { transform: translateX(-50%) scale(1); }
+            25% { transform: translateX(-50%) scale(1.1, 1.05); }
+        }
+
+        .mindfulness .head {
+            animation: mindfulness-head 6s ease-in-out infinite;
+        }
+
+        .mindfulness .body {
+            animation: mindfulness-body 6s ease-in-out infinite;
+        }
+
+        .mindfulness .arm {
+            animation: mindfulness-arms 6s ease-in-out infinite;
+        }
+
+        @keyframes mindfulness-head {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.05); }
+        }
+
+        @keyframes mindfulness-body {
+            0%, 100% { transform: translateX(-50%) rotate(0deg); }
+            30% { transform: translateX(-50%) rotate(4deg); }
+            70% { transform: translateX(-50%) rotate(-4deg); }
+        }
+
+        @keyframes mindfulness-arms {
+            0%, 100% { transform: rotate(0deg); }
+            30% { transform: rotate(15deg) translateY(-5px); }
+            70% { transform: rotate(-15deg) translateY(-5px); }
+        }
+
+        .gratitude .body {
+            animation: gratitude-body 5s ease-in-out infinite;
+        }
+
+        .gratitude .arm {
+            animation: gratitude-arms 5s ease-in-out infinite;
+        }
+
+        @keyframes gratitude-body {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.05); }
+        }
+
+        @keyframes gratitude-arms {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(20deg) translateY(-10px); }
+        }
+
+        .visualization .head {
+            animation: visualization-head 6s ease-in-out infinite;
+        }
+
+        .visualization .body {
+            animation: visualization-body 6s ease-in-out infinite;
+        }
+
+        @keyframes visualization-head {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        @keyframes visualization-body {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.05, 1.1); }
+        }
+
+        .exercise-actions {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex: 1;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--secondary);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--primary-dark);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary-light);
+            color: var(--secondary);
+        }
+
+        /* Timer Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: var(--secondary);
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 500px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .modal-header {
+            padding: 1.2rem;
+            background: var(--primary);
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .timer-display {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin: 1.2rem 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .exercise-instructions {
+            margin-bottom: 1.2rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            background: var(--light);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: left;
+            white-space: pre-line;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #E5E7EB;
+            border-radius: 4px;
+            margin: 1.2rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 1s linear;
+        }
+
+        .modal-character {
+            height: 180px;
+            margin: 1.2rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            color: var(--text);
+            margin-top: 1.5rem;
+            border-top: 1px solid #E5E7EB;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 0.8rem;
+                padding: 0.5rem 0.8rem;
+            }
+
+            .logo-text {
+                font-size: 1.3rem;
+            }
+
+            nav {
+                justify-content: center;
+                gap: 0.4rem;
+            }
+
+            .nav-link {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+
+            .hero h1 {
+                font-size: 1.7rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+                padding: 0 0.8rem;
+            }
+
+            .time-selector {
+                padding: 1rem;
+            }
+
+            .time-options {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.4rem;
+            }
+
+            .time-option {
+                width: 100%;
+                max-width: 220px;
+                text-align: center;
+                padding: 0.6rem;
+                font-size: 0.85rem;
+            }
+
+            .exercises-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .exercise-card {
+                margin: 0 0.5rem;
+            }
+
+            .exercise-visual {
+                height: 160px;
+            }
+
+            .character {
+                transform: scale(1);
+            }
+
+            .modal-actions {
+                flex-direction: column;
+                gap: 0.6rem;
+            }
+
+            .modal-content {
+                margin: 0 0.8rem;
+            }
+
+            .modal-title {
+                font-size: 1.1rem;
+            }
+
+            .timer-display {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .time-selector-title {
+                font-size: 1rem;
+            }
+
+            .time-indicator {
+                font-size: 0.8rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .exercise-title {
+                font-size: 1.2rem;
+            }
+
+            .exercise-icon {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-brain logo-icon"></i>
+                <span class="logo-text">Mindful Moments</span>
+            </div>
+            <nav>
+                <a href="J.html" class="nav-link">Journal</a>
+                <a href="4th.ex.html" class="nav-link">MindSpace</a>
+                <a href="mindful.html" class="nav-link">Meditation</a>
+                <a href="ex.ther.html" class="nav-link active">Exercises</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Mental Wellness Exercises</h1>
+            <p>Simple, effective techniques to reduce stress and improve mental health in just a few minutes a day</p>
+            
+            <div class="time-selector">
+                <h3 class="time-selector-title">Select Time of Day</h3>
+                <div class="time-options">
+                    <div class="time-option active" data-time="earlyMorning">Early Morning (5-7 AM)</div>
+                    <div class="time-option" data-time="morning">Morning (8-10 AM)</div>
+                    <div class="time-option" data-time="lateMorning">Late Morning (11 AM-12 PM)</div>
+                    <div class="time-option" data-time="afternoon">Afternoon (1-4 PM)</div>
+                    <div class="time-option" data-time="evening">Evening (6-9 PM)</div>
+                    <div class="time-option" data-time="lateNight">Late Night (10-11 PM)</div>
+                </div>
+            </div>
+            
+            <div class="time-indicator">
+                <i class="fas fa-clock"></i>
+                <span id="time-notice">Early Morning Exercises (5-7 AM) - Energize your mind and body for the day ahead</span>
+            </div>
+        </section>
+
+        <!-- Tips Section -->
+        <section class="tips-section">
+            <h2 class="section-title">
+                <i class="fas fa-lightbulb section-icon"></i>
+                <span>Daily Wellness Tips</span>
+            </h2>
+            <div class="tips-grid" id="tips-container">
+                <!-- Tips will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <!-- Exercises Section -->
+        <section class="exercises-section">
+            <h2 class="section-title">
+                <i class="fas fa-heartbeat section-icon"></i>
+                <span>Recommended Exercises</span>
+            </h2>
+            <div class="exercises-grid" id="exercises-container">
+                <!-- Exercises will be dynamically inserted here -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Timer Modal -->
+    <div class="modal" id="exercise-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">
+                    <i class="fas fa-running"></i>
+                    <span id="modal-exercise-name">Exercise</span>
+                </h3>
+                <button class="close-modal" id="close-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-character" id="modal-character">
+                    <!-- Cartoon character will be inserted here -->
+                </div>
+                <div class="timer-display" id="timer-display">02:00</div>
+                <p class="exercise-instructions" id="exercise-instructions">Follow the instructions shown here during the exercise</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-secondary" id="pause-exercise">
+                        <i class="fas fa-pause"></i>
+                        <span>Pause</span>
+                    </button>
+                    <button class="btn btn-primary" id="complete-exercise">
+                        <i class="fas fa-check"></i>
+                        <span>Complete</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Mindful Moments. Taking care of your mental health, one exercise at a time</p>
+    </footer>
+
+    <script>
+        // All available exercises with specific time slots
+        const allExercises = [
+            {
+                id: 1,
+                name: "4-7-8 Breathing",
+                description: "A calming breathing pattern that activates the parasympathetic nervous system. Inhale for 4 seconds, hold for 7, exhale for 8.",
+                duration: 120,
+                type: "breathing",
+                icon: "fas fa-lungs",
+                instructions: "1. Sit comfortably and place one hand on your belly.\n2. Inhale quietly through your nose for 4 seconds.\n3. Hold your breath for 7 seconds.\n4. Exhale completely through your mouth for 8 seconds.\n5. Repeat this cycle 4-5 times.",
+                timeSlots: ["earlyMorning", "morning", "afternoon", "evening"]
+            },
+            {
+                id: 2,
+                name: "5-4-3-2-1 Grounding",
+                description: "A technique to manage anxiety by focusing on your senses. Identify 5 things you see, 4 you feel, 3 you hear, 2 you smell, and 1 you taste.",
+                duration: 90,
+                type: "grounding",
+                icon: "fas fa-mountain",
+                instructions: "1. Look around and name 5 things you can see.\n2. Notice 4 things you can feel (your feet on the floor, clothes on your skin).\n3. Listen for 3 things you can hear.\n4. Identify 2 things you can smell.\n5. Name 1 thing you can taste or appreciate about this moment.",
+                timeSlots: ["morning", "afternoon"]
+            },
+            {
+                id: 3,
+                name: "Progressive Relaxation",
+                description: "Release physical tension by systematically tensing and relaxing muscle groups from your feet to your head.",
+                duration: 180,
+                type: "muscle",
+                icon: "fas fa-hands",
+                instructions: "1. Start with your feet - tense for 5 seconds, then relax.\n2. Move to your calves - tense and relax.\n3. Continue with thighs, glutes, abdomen, hands, arms, shoulders, and face.\n4. Tense each muscle group for 5 seconds before releasing completely.",
+                timeSlots: ["evening", "lateNight"]
+            },
+            {
+                id: 4,
+                name: "Mindful Observation",
+                description: "Practice focused attention by observing an object in detail, noticing its colors, textures, and qualities without judgment.",
+                duration: 120,
+                type: "mindfulness",
+                icon: "fas fa-eye",
+                instructions: "1. Choose an object to observe (a plant, a cup, your hands).\n2. Notice its colors, textures, and shapes.\n3. Observe it without labeling or judging.\n4. If your mind wanders, gently bring it back to the object.",
+                timeSlots: ["earlyMorning", "morning", "afternoon"]
+            },
+            {
+                id: 5,
+                name: "Gratitude Practice",
+                description: "Shift your focus to positive aspects of your life by consciously acknowledging things you're grateful for.",
+                duration: 90,
+                type: "gratitude",
+                icon: "fas fa-heart",
+                instructions: "1. Close your eyes and take a deep breath.\n2. Think of 3 things you're grateful for today.\n3. For each one, pause and feel the appreciation.\n4. Visualize these things in detail and sit with the positive feelings.",
+                timeSlots: ["morning", "evening"]
+            },
+            {
+                id: 6,
+                name: "Visualization",
+                description: "Create a mental image of a peaceful place or positive outcome to promote relaxation and positive thinking.",
+                duration: 150,
+                type: "visualization",
+                icon: "fas fa-cloud",
+                instructions: "1. Close your eyes and take a few deep breaths.\n2. Imagine a place where you feel completely safe and peaceful.\n3. Engage all your senses - what do you see, hear, smell, and feel?\n4. Stay in this mental space for a few minutes, soaking in the calm.",
+                timeSlots: ["afternoon", "evening"]
+            },
+            {
+                id: 7,
+                name: "Body Scan",
+                description: "Bring awareness to each part of your body sequentially, noticing sensations without trying to change them.",
+                duration: 180,
+                type: "mindfulness",
+                icon: "fas fa-spa",
+                instructions: "1. Start at the top of your head and slowly move down.\n2. Notice any sensations in each body part without judgment.\n3. If you notice tension, simply observe it without trying to change it.\n4. Continue all the way down to your toes.",
+                timeSlots: ["evening", "lateNight"]
+            },
+            {
+                id: 8,
+                name: "Loving-Kindness Meditation",
+                description: "Cultivate feelings of kindness and compassion toward yourself and others through guided phrases.",
+                duration: 120,
+                type: "gratitude",
+                icon: "fas fa-hands-helping",
+                instructions: "1. Repeat these phrases silently: 'May I be happy. May I be healthy. May I be safe. May I live with ease.'\n2. Then extend these wishes to others: 'May you be happy. May you be healthy...'\n3. Continue with people you feel neutral about, then difficult people.\n4. Finally, extend these wishes to all beings everywhere.",
+                timeSlots: ["morning", "evening"]
+            },
+            {
+                id: 9,
+                name: "Box Breathing",
+                description: "A simple breathing technique used by Navy SEALs to calm the nervous system and improve focus.",
+                duration: 120,
+                type: "breathing",
+                icon: "fas fa-square",
+                instructions: "1. Inhale slowly through your nose for 4 seconds.\n2. Hold your breath for 4 seconds.\n3. Exhale slowly through your mouth for 4 seconds.\n4. Hold at the bottom for 4 seconds.\n5. Repeat this cycle 5-6 times.",
+                timeSlots: ["earlyMorning", "morning", "afternoon", "evening"]
+            },
+            {
+                id: 10,
+                name: "Sensory Awareness",
+                description: "Heighten your awareness of the present moment by focusing on each of your five senses in turn.",
+                duration: 120,
+                type: "grounding",
+                icon: "fas fa-hand-sparkles",
+                instructions: "1. Focus on what you can see - colors, shapes, movements.\n2. Shift to what you can hear - near sounds, far sounds.\n3. Notice what you can feel - temperature, textures.\n4. Become aware of any smells in the air.\n5. Finally, notice any tastes in your mouth.",
+                timeSlots: ["afternoon", "evening"]
+            },
+            {
+                id: 11,
+                name: "Positive Affirmations",
+                description: "Use positive statements to challenge and overcome self-sabotaging and negative thoughts.",
+                duration: 90,
+                type: "visualization",
+                icon: "fas fa-comment-dots",
+                instructions: "1. Choose 3-5 positive affirmations that resonate with you.\n2. Repeat each one slowly, either aloud or in your mind.\n3. As you say each one, visualize it as already true.\n4. Feel the positive emotions associated with each affirmation.",
+                timeSlots: ["earlyMorning", "morning", "lateNight"]
+            },
+            {
+                id: 12,
+                name: "Mindful Walking",
+                description: "Bring awareness to the simple act of walking, noticing the sensations in your body with each step.",
+                duration: 150,
+                type: "mindfulness",
+                icon: "fas fa-walking",
+                instructions: "1. Walk at a natural pace, either indoors or outside.\n2. Notice the sensation of your feet touching the ground.\n3. Feel the movement in your legs and the swing of your arms.\n4. If your mind wanders, gently bring it back to the physical sensations of walking.",
+                timeSlots: ["earlyMorning", "morning", "afternoon"]
+            },
+            {
+                id: 13,
+                name: "Breath Counting",
+                description: "A simple concentration practice that helps calm the mind and improve focus.",
+                duration: 120,
+                type: "breathing",
+                icon: "fas fa-sort-numeric-up",
+                instructions: "1. Sit comfortably and close your eyes.\n2. Inhale naturally, then exhale and mentally count 'one'.\n3. On the next exhale, count 'two'.\n4. Continue up to 'five', then start again at 'one'.\n5. If you lose count, gently start over at 'one'.",
+                timeSlots: ["earlyMorning", "morning", "afternoon"]
+            },
+            {
+                id: 14,
+                name: "Self-Compassion Break",
+                description: "A practice to respond to difficult moments with kindness and understanding toward yourself.",
+                duration: 120,
+                type: "gratitude",
+                icon: "fas fa-hands-heart",
+                instructions: "1. Acknowledge your struggle: 'This is a moment of suffering.'\n2. Recognize common humanity: 'Suffering is a part of life.'\n3. Offer yourself kindness: 'May I be kind to myself in this moment.'\n4. Place a hand on your heart and feel the warmth and care.",
+                timeSlots: ["afternoon", "evening"]
+            },
+            {
+                id: 15,
+                name: "Sound Meditation",
+                description: "Use sounds as the object of meditation, listening without judgment or analysis.",
+                duration: 150,
+                type: "mindfulness",
+                icon: "fas fa-music",
+                instructions: "1. Close your eyes and bring attention to the sounds around you.\n2. Notice sounds near and far, loud and soft.\n3. Listen without labeling or analyzing the sounds.\n4. When your mind wanders, gently return to simply hearing.",
+                timeSlots: ["earlyMorning", "morning", "evening"]
+            },
+            {
+                id: 16,
+                name: "Gentle Stretching",
+                description: "Release morning stiffness and increase blood flow with gentle stretching exercises.",
+                duration: 120,
+                type: "muscle",
+                icon: "fas fa-child",
+                instructions: "1. Start with neck rolls - gently tilt your head side to side.\n2. Move to shoulder rolls - forward and backward.\n3. Stretch your arms overhead and hold for 15 seconds.\n4. Finish with gentle hamstring and calf stretches.",
+                timeSlots: ["earlyMorning"]
+            },
+            {
+                id: 17,
+                name: "Intention Setting",
+                description: "Set a positive intention for your day to guide your actions and mindset.",
+                duration: 90,
+                type: "visualization",
+                icon: "fas fa-bullseye",
+                instructions: "1. Take a few deep breaths to center yourself.\n2. Ask yourself: 'What quality do I want to cultivate today?'\n3. Choose a simple intention like 'patience' or 'kindness'.\n4. Visualize yourself embodying this intention throughout your day.",
+                timeSlots: ["earlyMorning", "morning"]
+            },
+            {
+                id: 18,
+                name: "Digital Detox",
+                description: "Take a break from screens and technology to reduce mental clutter.",
+                duration: 180,
+                type: "mindfulness",
+                icon: "fas fa-mobile-alt",
+                instructions: "1. Turn off all electronic devices for the duration.\n2. Notice how it feels to be disconnected.\n3. Engage in an analog activity like reading or journaling.\n4. Pay attention to any urges to check your devices and let them pass.",
+                timeSlots: ["lateNight"]
+            }
+        ];
+
+        // Time slots configuration
+        const timeSlots = {
+            earlyMorning: { 
+                start: 5, 
+                end: 7, 
+                name: "Early Morning", 
+                notice: "Energize your mind and body for the day ahead" 
+            },
+            morning: { 
+                start: 8, 
+                end: 10, 
+                name: "Morning", 
+                notice: "Start your day with focus and calm" 
+            },
+            lateMorning: { 
+                start: 11, 
+                end: 12, 
+                name: "Late Morning", 
+                notice: "Maintain your focus and energy" 
+            },
+            afternoon: { 
+                start: 13, 
+                end: 16, 
+                name: "Afternoon", 
+                notice: "Recharge and refocus your energy" 
+            },
+            evening: { 
+                start: 18, 
+                end: 21, 
+                name: "Evening", 
+                notice: "Wind down and release the day's stress" 
+            },
+            lateNight: { 
+                start: 22, 
+                end: 23, 
+                name: "Late Night", 
+                notice: "Prepare for restful sleep" 
+            }
+        };
+
+        // Daily tips for each time slot
+        const dailyTips = {
+            earlyMorning: [
+                {
+                    icon: "fas fa-sun",
+                    title: "Hydrate First",
+                    text: "Drink a glass of water as soon as you wake up to rehydrate your body after sleep."
+                },
+                {
+                    icon: "fas fa-seedling",
+                    title: "Morning Light",
+                    text: "Expose yourself to natural morning light to help regulate your circadian rhythm."
+                },
+                {
+                    icon: "fas fa-brain",
+                    title: "Set Intentions",
+                    text: "Take a moment to set a positive intention for your day ahead."
+                }
+            ],
+            morning: [
+                {
+                    icon: "fas fa-apple-alt",
+                    title: "Nourishing Breakfast",
+                    text: "Eat a balanced breakfast with protein, healthy fats, and complex carbohydrates."
+                },
+                {
+                    icon: "fas fa-tasks",
+                    title: "Prioritize Tasks",
+                    text: "Identify your most important tasks for the day and tackle them first."
+                },
+                {
+                    icon: "fas fa-walking",
+                    title: "Morning Movement",
+                    text: "Incorporate gentle movement or stretching into your morning routine."
+                }
+            ],
+            lateMorning: [
+                {
+                    icon: "fas fa-coffee",
+                    title: "Mindful Break",
+                    text: "Take a short break from work to stretch and breathe deeply."
+                },
+                {
+                    icon: "fas fa-water",
+                    title: "Stay Hydrated",
+                    text: "Keep a water bottle nearby and sip regularly throughout the morning."
+                },
+                {
+                    icon: "fas fa-eye",
+                    title: "Eye Rest",
+                    text: "If you work on screens, practice the 20-20-20 rule: every 20 minutes, look at something 20 feet away for 20 seconds."
+                }
+            ],
+            afternoon: [
+                {
+                    icon: "fas fa-utensils",
+                    title: "Mindful Lunch",
+                    text: "Eat your lunch away from your desk, focusing on the flavors and textures of your food."
+                },
+                {
+                    icon: "fas fa-walking",
+                    title: "Afternoon Walk",
+                    text: "Take a short walk after lunch to aid digestion and refresh your mind."
+                },
+                {
+                    icon: "fas fa-mug-hot",
+                    title: "Herbal Tea",
+                    text: "Swap afternoon coffee for herbal tea to avoid disrupting your sleep later."
+                }
+            ],
+            evening: [
+                {
+                    icon: "fas fa-utensils",
+                    title: "Light Dinner",
+                    text: "Have a lighter dinner to allow your body to rest and repair overnight."
+                },
+                {
+                    icon: "fas fa-moon",
+                    title: "Digital Sunset",
+                    text: "Reduce screen time at least an hour before bed to improve sleep quality."
+                },
+                {
+                    icon: "fas fa-book",
+                    title: "Evening Reading",
+                    text: "Read a physical book instead of scrolling on your phone before bed."
+                }
+            ],
+            lateNight: [
+                {
+                    icon: "fas fa-bed",
+                    title: "Consistent Bedtime",
+                    text: "Try to go to bed at the same time each night to regulate your sleep cycle."
+                },
+                {
+                    icon: "fas fa-temperature-low",
+                    title: "Cool Environment",
+                    text: "Keep your bedroom slightly cool (around 65°F/18°C) for optimal sleep."
+                },
+                {
+                    icon: "fas fa-wind",
+                    title: "Deep Breathing",
+                    text: "Practice deep breathing if you have trouble falling asleep to calm your nervous system."
+                }
+            ]
+        };
+
+        // DOM Elements
+        const exercisesContainer = document.getElementById('exercises-container');
+        const tipsContainer = document.getElementById('tips-container');
+        const timeNotice = document.getElementById('time-notice');
+        const timeOptions = document.querySelectorAll('.time-option');
+        const exerciseModal = document.getElementById('exercise-modal');
+        const modalExerciseName = document.getElementById('modal-exercise-name');
+        const timerDisplay = document.getElementById('timer-display');
+        const exerciseInstructionsEl = document.getElementById('exercise-instructions');
+        const progressFill = document.getElementById('progress-fill');
+        const closeModalBtn = document.getElementById('close-modal');
+        const pauseExerciseBtn = document.getElementById('pause-exercise');
+        const completeExerciseBtn = document.getElementById('complete-exercise');
+        const modalCharacter = document.getElementById('modal-character');
+
+        // Timer variables
+        let timerInterval;
+        let remainingTime = 0;
+        let totalTime = 0;
+        let isPaused = false;
+        let currentExercise = null;
+        let currentTimeSlot = "earlyMorning";
+
+        // Initialize the app
+        function init() {
+            timeOptions.forEach(option => {
+                option.addEventListener('click', () => {
+                    const timeSlot = option.getAttribute('data-time');
+                    selectTimeSlot(timeSlot);
+                });
+            });
+            
+            updateExercisesByTime();
+            updateTipsByTime();
+            
+            closeModalBtn.addEventListener('click', closeModal);
+            pauseExerciseBtn.addEventListener('click', togglePause);
+            completeExerciseBtn.addEventListener('click', completeExercise);
+        }
+
+        // Select a time slot
+        function selectTimeSlot(timeSlot) {
+            currentTimeSlot = timeSlot;
+            timeOptions.forEach(option => {
+                option.classList.toggle('active', option.getAttribute('data-time') === timeSlot);
+            });
+            updateExercisesByTime();
+            updateTipsByTime();
+        }
+
+        // Update exercises based on current time slot
+        function updateExercisesByTime() {
+            const slotConfig = timeSlots[currentTimeSlot];
+            timeNotice.textContent = `${slotConfig.name} Exercises (${slotConfig.start}:00 - ${slotConfig.end}:00) - ${slotConfig.notice}`;
+            const slotExercises = allExercises.filter(exercise => exercise.timeSlots.includes(currentTimeSlot));
+            const selectedExercises = getRandomExercises(slotExercises, 3);
+            displayExercises(selectedExercises);
+        }
+
+        // Update tips based on current time slot
+        function updateTipsByTime() {
+            const tips = dailyTips[currentTimeSlot];
+            displayTips(tips);
+        }
+
+        // Display tips in the grid
+        function displayTips(tips) {
+            tipsContainer.innerHTML = '';
+            tips.forEach(tip => {
+                const tipCard = document.createElement('div');
+                tipCard.className = 'tip-card';
+                tipCard.innerHTML = `
+                    <div class="tip-icon"><i class="${tip.icon}"></i></div>
+                    <div class="tip-title">${tip.title}</div>
+                    <div class="tip-text">${tip.text}</div>
+                `;
+                tipsContainer.appendChild(tipCard);
+            });
+        }
+
+        // Get random exercises
+        function getRandomExercises(exercises, count) {
+            const shuffled = [...exercises].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count);
+        }
+
+        // Display exercises in the grid
+        function displayExercises(exercises) {
+            exercisesContainer.innerHTML = '';
+            exercises.forEach(exercise => {
+                const exerciseCard = document.createElement('div');
+                exerciseCard.className = 'exercise-card';
+                exerciseCard.innerHTML = `
+                    <div class="exercise-header">
+                        <div class="exercise-icon"><i class="${exercise.icon}"></i></div>
+                        <div class="exercise-title">${exercise.name}</div>
+                    </div>
+                    <div class="exercise-content">
+                        <p class="exercise-description">${exercise.description}</p>
+                        <div class="exercise-visual">
+                            <div class="character ${exercise.type}">
+                                <div class="head">
+                                    <div class="face">
+                                        <div class="eye left-eye"></div>
+                                        <div class="eye right-eye"></div>
+                                        <div class="mouth"></div>
+                                    </div>
+                                </div>
+                                <div class="body"></div>
+                                <div class="arm left-arm"></div>
+                                <div class="arm right-arm"></div>
+                                <div class="leg left-leg"></div>
+                                <div class="leg right-leg"></div>
+                            </div>
+                        </div>
+                        <div class="exercise-duration">
+                            <i class="far fa-clock"></i>
+                            <span>Duration: ${formatTime(exercise.duration)}</span>
+                        </div>
+                        <div class="exercise-actions">
+                            <button class="btn btn-secondary">
+                                <i class="fas fa-info-circle"></i>
+                                <span>Learn More</span>
+                            </button>
+                            <button class="btn btn-primary start-exercise" data-id="${exercise.id}">
+                                <i class="fas fa-play"></i>
+                                <span>Start</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                exercisesContainer.appendChild(exerciseCard);
+            });
+            document.querySelectorAll('.start-exercise').forEach(btn => {
+                btn.addEventListener('click', startExercise);
+            });
+        }
+
+        // Format time
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = seconds % 60;
+            return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+        }
+
+        // Start an exercise
+        function startExercise(event) {
+            const exerciseId = parseInt(event.currentTarget.getAttribute('data-id'));
+            currentExercise = allExercises.find(ex => ex.id === exerciseId);
+            if (!currentExercise) return;
+            modalExerciseName.textContent = currentExercise.name;
+            exerciseInstructionsEl.textContent = currentExercise.instructions;
+            totalTime = currentExercise.duration;
+            remainingTime = totalTime;
+            isPaused = false;
+            createModalCharacter(currentExercise.type);
+            updateTimerDisplay();
+            progressFill.style.width = '0%';
+            exerciseModal.style.display = 'flex';
+            clearInterval(timerInterval);
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        // Create modal character
+        function createModalCharacter(type) {
+            modalCharacter.innerHTML = `
+                <div class="character ${type}">
+                    <div class="head">
+                        <div class="face">
+                            <div class="eye left-eye"></div>
+                            <div class="eye right-eye"></div>
+                            <div class="mouth"></div>
+                        </div>
+                    </div>
+                    <div class="body"></div>
+                    <div class="arm left-arm"></div>
+                    <div class="arm right-arm"></div>
+                    <div class="leg left-leg"></div>
+                    <div class="leg right-leg"></div>
+                </div>
+            `;
+        }
+
+        // Update timer
+        function updateTimer() {
+            if (!isPaused && remainingTime > 0) {
+                remainingTime--;
+                updateTimerDisplay();
+                const progress = ((totalTime - remainingTime) / totalTime) * 100;
+                progressFill.style.width = `${progress}%`;
+                if (remainingTime === 0) {
+                    completeExercise();
+                }
+            }
+        }
+
+        // Update timer display
+        function updateTimerDisplay() {
+            const minutes = Math.floor(remainingTime / 60);
+            const seconds = remainingTime % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Close modal
+        function closeModal() {
+            exerciseModal.style.display = 'none';
+            clearInterval(timerInterval);
+            resetModal();
+        }
+
+        // Reset modal
+        function resetModal() {
+            timerDisplay.textContent = "02:00";
+            timerDisplay.style.color = "var(--primary-dark)";
+            progressFill.style.width = "0%";
+            pauseExerciseBtn.innerHTML = '<i class="fas fa-pause"></i><span>Pause</span>';
+            pauseExerciseBtn.style.display = 'block';
+            completeExerciseBtn.innerHTML = '<i class="fas fa-check"></i><span>Complete</span>';
+            completeExerciseBtn.onclick = completeExercise;
+            isPaused = false;
+        }
+
+        // Toggle pause/resume
+        function togglePause() {
+            isPaused = !isPaused;
+            pauseExerciseBtn.innerHTML = isPaused
+                ? '<i class="fas fa-play"></i><span>Resume</span>'
+                : '<i class="fas fa-pause"></i><span>Pause</span>';
+        }
+
+        // Complete exercise
+        function completeExercise() {
+            clearInterval(timerInterval);
+            timerDisplay.textContent = "Done!";
+            timerDisplay.style.color = "var(--accent)";
+            progressFill.style.width = "100%";
+            completeExerciseBtn.innerHTML = '<i class="fas fa-home"></i><span>Back to Exercises</span>';
+            completeExerciseBtn.onclick = closeModal;
+            pauseExerciseBtn.style.display = 'none';
+            setTimeout(() => {
+                exerciseInstructionsEl.innerHTML = `<strong>Great job!</strong> You've completed ${currentExercise.name}. Regular practice will help strengthen your mental wellness.`;
+            }, 500);
+        }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', init);
+        // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+    </script>
+</body>
+</html>

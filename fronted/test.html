@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeuroSense - Psychological Assessments</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #6a11cb;
+      --secondary-color: #2575fc;
+      --accent-color: #4a00e0;
+      --text-color: #333;
+      --light-text: #fff;
+      --card-bg: #fff;
+      --header-bg: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      --footer-bg: #e3e6ea;
+      --section-bg: #f4f6f9;
+      --button-bg: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      --button-hover: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+      
+      /* Category Colors */
+      --anxiety-color: #FF6B6B;
+      --depression-color: #4ECDC4;
+      --ptsd-color: #45B7D1;
+      --adhd-color: #96CEB4;
+      --ocd-color: #FFEAA7;
+      --autism-color: #DDA0DD;
+      --bipolar-color: #FFB347;
+      --phobia-color: #A8E6CF;
+      --general-color: #B19CD9;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: var(--section-bg);
+      color: var(--text-color);
+      overflow-x: hidden;
+    }
+    
+    body[dir="rtl"] {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, 'Arial', sans-serif;
+    }
+    
+    header {
+      background: var(--header-bg);
+      color: var(--light-text);
+      padding: 15px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    
+    .logo i {
+      margin-right: 10px;
+      font-size: 1.8rem;
+    }
+    
+    body[dir="rtl"] .logo i {
+      margin-right: 0;
+      margin-left: 10px;
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    
+    body[dir="rtl"] nav ul {
+      flex-direction: row-reverse;
+    }
+    
+    nav ul li {
+      margin-left: 20px;
+    }
+    
+    body[dir="rtl"] nav ul li {
+      margin-left: 0;
+      margin-right: 20px;
+    }
+    
+    nav ul li a {
+      color: var(--light-text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+    }
+    
+    nav ul li a:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+    
+    nav ul li a i {
+      margin-right: 5px;
+    }
+    
+    body[dir="rtl"] nav ul li a i {
+      margin-right: 0;
+      margin-left: 5px;
+    }
+    
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .language-switcher {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 5px;
+      cursor: pointer;
+    }
+    
+    .language-option {
+      padding: 5px 10px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      transition: all 0.3s;
+    }
+    
+    .language-option.active {
+      background: white;
+      color: var(--primary-color);
+    }
+    
+    .user-profile {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .user-profile img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    body[dir="rtl"] .user-profile img {
+      margin-right: 0;
+      margin-left: 10px;
+    }
+    
+    .dropdown-menu {
+      position: absolute;
+      top: 50px;
+      right: 0;
+      background: var(--card-bg);
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      width: 200px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      z-index: 100;
+    }
+    
+    body[dir="rtl"] .dropdown-menu {
+      right: auto;
+      left: 0;
+    }
+    
+    .dropdown-menu.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(5px);
+    }
+    
+    .dropdown-menu a {
+      display: block;
+      padding: 10px 15px;
+      color: var(--text-color);
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    
+    .dropdown-menu a:hover {
+      background: #f5f5f5;
+      color: var(--primary-color);
+    }
+    
+    .dropdown-menu a i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+    
+    body[dir="rtl"] .dropdown-menu a i {
+      margin-right: 0;
+      margin-left: 10px;
+    }
+    
+    /* Main Content */
+    .tests-hero {
+      text-align: center;
+      padding: 60px 5%;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      margin-bottom: 40px;
+    }
+    
+    .tests-hero h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+    
+    .tests-hero p {
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin: 0 auto 30px;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+    
+    .category-filter {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 40px;
+      padding: 0 5%;
+    }
+    
+    .category-btn {
+      padding: 10px 20px;
+      background: white;
+      border: 2px solid var(--primary-color);
+      border-radius: 25px;
+      color: var(--primary-color);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .category-btn:hover,
+    .category-btn.active {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-2px);
+    }
+    
+    .tests-container {
+      padding: 0 5% 60px;
+    }
+    
+    .category-section {
+      margin-bottom: 50px;
+    }
+    
+    .category-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 25px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid;
+    }
+    
+    .category-header h2 {
+      font-size: 1.8rem;
+      margin-left: 15px;
+    }
+    
+    .category-header i {
+      font-size: 1.5rem;
+    }
+    
+    body[dir="rtl"] .category-header h2 {
+      margin-left: 0;
+      margin-right: 15px;
+    }
+    
+    .tests-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 25px;
+    }
+    
+    .test-card {
+      background: var(--card-bg);
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+      border-top: 5px solid;
+    }
+    
+    .test-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+    }
+    
+    .test-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+    
+    .test-card h3 {
+      font-size: 1.3rem;
+      color: var(--text-color);
+      margin-right: 15px;
+      flex: 1;
+    }
+    
+    .test-card-badge {
+      background: var(--section-bg);
+      padding: 5px 12px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    
+    .test-card-description {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+    }
+    
+    .test-card-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+    
+    .test-card-info {
+      display: flex;
+      align-items: center;
+      color: #777;
+      font-size: 0.9rem;
+    }
+    
+    .test-card-info i {
+      margin-right: 5px;
+    }
+    
+    body[dir="rtl"] .test-card-info i {
+      margin-right: 0;
+      margin-left: 5px;
+    }
+    
+    .test-button {
+      padding: 10px 25px;
+      background: var(--button-bg);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+    
+    .test-button:hover {
+      background: var(--button-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: var(--footer-bg);
+      margin-top: 50px;
+    }
+    
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+    
+    .footer-links a {
+      color: var(--text-color);
+      margin: 0 15px;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    
+    .footer-links a:hover {
+      color: var(--primary-color);
+    }
+    
+    .copyright {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    /* Category-specific colors */
+    .anxiety { border-color: var(--anxiety-color); }
+    .anxiety .test-card-badge { background: var(--anxiety-color); color: white; }
+    .anxiety .category-header { border-color: var(--anxiety-color); color: var(--anxiety-color); }
+    
+    .depression { border-color: var(--depression-color); }
+    .depression .test-card-badge { background: var(--depression-color); color: white; }
+    .depression .category-header { border-color: var(--depression-color); color: var(--depression-color); }
+    
+    .ptsd { border-color: var(--ptsd-color); }
+    .ptsd .test-card-badge { background: var(--ptsd-color); color: white; }
+    .ptsd .category-header { border-color: var(--ptsd-color); color: var(--ptsd-color); }
+    
+    .adhd { border-color: var(--adhd-color); }
+    .adhd .test-card-badge { background: var(--adhd-color); color: white; }
+    .adhd .category-header { border-color: var(--adhd-color); color: var(--adhd-color); }
+    
+    .ocd { border-color: var(--ocd-color); }
+    .ocd .test-card-badge { background: var(--ocd-color); color: #333; }
+    .ocd .category-header { border-color: var(--ocd-color); color: var(--ocd-color); }
+    
+    .autism { border-color: var(--autism-color); }
+    .autism .test-card-badge { background: var(--autism-color); color: white; }
+    .autism .category-header { border-color: var(--autism-color); color: var(--autism-color); }
+    
+    .bipolar { border-color: var(--bipolar-color); }
+    .bipolar .test-card-badge { background: var(--bipolar-color); color: #333; }
+    .bipolar .category-header { border-color: var(--bipolar-color); color: var(--bipolar-color); }
+    
+    .phobia { border-color: var(--phobia-color); }
+    .phobia .test-card-badge { background: var(--phobia-color); color: #333; }
+    .phobia .category-header { border-color: var(--phobia-color); color: var(--phobia-color); }
+    
+    .general { border-color: var(--general-color); }
+    .general .test-card-badge { background: var(--general-color); color: white; }
+    .general .category-header { border-color: var(--general-color); color: var(--general-color); }
+    
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .tests-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      }
+    }
+    
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        padding: 15px;
+      }
+      
+      .logo {
+        margin-bottom: 15px;
+      }
+      
+      nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      nav ul li {
+        margin: 5px 10px;
+      }
+      
+      .header-controls {
+        margin-top: 15px;
+      }
+      
+      .tests-hero h1 {
+        font-size: 2.2rem;
+      }
+      
+      .tests-hero p {
+        font-size: 1rem;
+      }
+      
+      .tests-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .category-filter {
+        padding: 0 20px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .tests-hero {
+        padding: 40px 20px;
+      }
+      
+      .tests-hero h1 {
+        font-size: 1.8rem;
+      }
+      
+      .test-card {
+        padding: 20px;
+      }
+      
+      .test-card h3 {
+        font-size: 1.1rem;
+      }
+      
+      .category-header h2 {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body dir="ltr">
+  <header>
+    <div class="logo">
+      <i class="fas fa-brain"></i>
+      <span id="logo-text">NeuroSense</span>
+    </div>
+    
+    <nav>
+      <ul>
+        <li><a href="home.html"><i class="fas fa-home"></i> <span id="nav-home">Home</span></a></li>
+        <li><a href="dashboard.html"><i class="fas fa-chart-line"></i> <span id="nav-dashboard">Dashboard</span></a></li>
+        <li><a href="citation.html"><i class="fas fa-book"></i> <span id="nav-resources">Resources</span></a></li>
+        <li><a href="appiont.html"><i class="fas fa-calendar-alt"></i> <span id="nav-appointments">Appointments</span></a></li>
+      </ul>
+    </nav>
+    
+    <div class="header-controls">
+      <div class="language-switcher" id="languageSwitcher">
+        <div class="language-option active" data-lang="en">EN</div>
+        <div class="language-option" data-lang="ar">AR</div>
+      </div>
+      
+      <div class="user-profile" id="userProfile">
+        <img src="https://ui-avatars.com/api/?name=Fatma+Hussien&background=random" alt="Fatma Hussien Abdelhafez" id="profileImage">
+        <span id="profileName">Fatma Hussien</span>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a href="#" id="profileBtn"><i class="fas fa-user"></i> <span id="menu-profile">Profile</span></a>
+          <a href="#" id="settingsBtn"><i class="fas fa-cog"></i> <span id="menu-settings">Settings</span></a>
+          <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> <span id="menu-logout">Logout</span></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="tests-hero">
+      <h1 id="hero-title">Internationally Validated Psychological Assessments</h1>
+      <p id="hero-subtitle">Comprehensive collection of standardized tests for accurate mental health evaluation. These scientifically validated tools help identify symptoms with precision and provide reliable insights.</p>
+      <div class="category-filter" id="categoryFilter">
+        <button class="category-btn active" data-category="all">All Tests</button>
+        <button class="category-btn" data-category="anxiety">Anxiety</button>
+        <button class="category-btn" data-category="depression">Depression</button>
+        <button class="category-btn" data-category="ptsd">PTSD</button>
+        <button class="category-btn" data-category="adhd">ADHD</button>
+        <button class="category-btn" data-category="ocd">OCD</button>
+        <button class="category-btn" data-category="autism">Autism</button>
+        <button class="category-btn" data-category="phobia">Social Phobia</button>
+        <button class="category-btn" data-category="bipolar">Bipolar</button>
+      </div>
+    </section>
+
+    <section class="tests-container">
+      <!-- Anxiety Disorders Section -->
+      <div class="category-section anxiety">
+        <div class="category-header">
+          <i class="fas fa-heartbeat"></i>
+          <h2 id="anxiety-title">Anxiety Disorders Assessments</h2>
+        </div>
+        <div class="tests-grid">
+          <!-- Taylor Manifest Anxiety Scale -->
+          <div class="test-card anxiety">
+            <div class="test-card-header">
+              <h3>Taylor Manifest Anxiety Scale</h3>
+              <span class="test-card-badge">Anxiety</span>
+            </div>
+            <p class="test-card-description">A classic self-report questionnaire measuring manifest anxiety levels. Assesses emotional, cognitive, and physiological symptoms of anxiety experienced in daily life.</p>
+            <div class="test-card-meta">
+              <div class="test-card-info">
+                <i class="fas fa-clock"></i>
+                <span>10-15 min</span>
+              </div>
+              <a href="toyler.html" class="test-button" id="taylor-button">Take Test</a>
+            </div>
+          </div>
+
+          <!-- Beck Anxiety Inventory -->
+          <div class="test-card anxiety">
+            <div class="test-card-header">
+              <h3>Beck Anxiety Inventory (BAI)</h3>
+              <span class="test-card-badge">Anxiety</span>
+            </div>
+            <p class="test-card-description">21-item self-report inventory measuring severity of anxiety symptoms. Differentiates anxiety from depression with specific focus on somatic symptoms.</p>
+            <div class="test-card-meta">
+              <div class="test-card-info">
+                <i class="fas fa-clock"></i>
+                <span>5-10 min</span>
+              </div>
+              <a href="betest.html" class="test-button">Take Test</a>
+            </div>
+          </div>
+
+          <!-- GAD-7 -->
+          <div class="test-card anxiety">
+            <div class="test-card-header">
+              <h3>GAD-7 Anxiety Scale</h3>
+              <span class="test-card-badge">Anxiety</span>
+            </div>
+            <p class="test-card-description">7-item screening tool for Generalized Anxiety Disorder. Validated in clinical settings with excellent sensitivity and specificity for anxiety detection.</p>
+            <div class="test-card-meta">
+              <div class="test-card-info">
+                <i class="fas fa-clock"></i>
+                <span>3-5 min</span>
+              </div>
+              <a href="gad7.html" class="test-button">Take Test</a>
+            </div>
+          </div>
+
+          <!-- State-Trait Anxiety Inventory -->
+          <div class="test-card anxiety">
+            <div class="test-card-header">
+              <h3>State-Trait Anxiety Inventory</h3>
+              <span class="test-card-badge">Anxiety</span>
+            </div>
+            <p class="test-card-description">Differentiates between temporary "state" anxiety and long-term "trait" anxiety. Widely used in both clinical and research settings globally.</p>
+            <div class="test-card-meta">
+              <div class="test-card-info">
+                <i class="fas fa-clock"></i>
+                <span>15-20 min</span>
+              </div>
+              <a href="stai.html" class="test-button">Take Test</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Depression Assessments -->
+      <div class="category-section depression">
+        <div class="category-header">
+          <i class="fas fa-cloud"></i>
+          <h2 id="depression-title">Depression Assessments</h2>
+        </div>
+        <div class="tests-grid">
+          <!-- PHQ-9 -->
+          <div class="test-card depression">
+            <div class="test-card-header">
+              <h3>Patient Health Questionnaire-9 (PHQ-9)</h3>
+              <span class="test-card-badge">Depression</span>
+            </div>
+            <p class="test-card-description">Gold standard 9-item depression screening tool based on DSM-5 criteria. Measures severity and monitors treatment response in clinical practice.</p>
+            <div class="test-card-meta">
+              <div class="test-card-info">
+                <i class="fas fa-clock"></i>
+                <span>3-5 min</span>
+              </div>
+              <a href="phq9.html" class="test-button">Take Test</a>
+            </div>
+          </div>
+
+          <!-- Beck's Depression Inventory -->
+          <div class="test-card depression">
+            <div class="test-card-header">
+              <h3>Beck's Depression Inventory</h3>
+              <span class="test-card-badge">Depression</span>
+            </div>
+            <p class="test-card-description">21-item self-report measure assessing depressive symptoms. One of the most widely used instruments for measuring depression severity worldwide.</p>
+            <div class="test-card-meta">
+              <div class="test-card-info">
+                <i class="fas fa-clock"></i>
+                <span>10-15 min</span>
+              </div>
+              <a href="bdi.html" class="test-button">Take Test</a>
+            </div>
+          </div>
+
+          <!-- Hamilton Depression Rating Scale -->
+          <div class="test-card depression">
+            <div class="test-card-header">
+              <h3>Hamilton Depression Rating Scale (HDRS)</h3>
+              <span class="test-card-badge">Depression</span>
+            </div>
+            <p class="test-card-description">Clinician-administered assessment measuring depression severity. Includes 17-21 items evaluating mood, guilt, suicide, insomnia, and somatic symptoms.</p>
+            <div class="test-card-meta">
+              <div class="test-card-info">
+                <i class="fas fa-user-md"></i>
+                <span>Clinician</span>
+              </div>
+              <a href="hamilton.html" class="test-button">View Scale</a>
+            </div>
+          </div>
+
+          <!-- Montgomery-Åsberg Depression Rating Scale -->
+          <div class="test-card depression">
+            <div class="test-card-header">
+              <h3>Montgomery-Åsberg Depression Scale (MADRS)</h3>
+              <span class="test-card-badge">Depression</span>
+            </div>
+            <p class="test-card-description">10-item clinician-rated scale sensitive to treatment changes. Focuses on psychological symptoms of depression with proven reliability.</p>
+            <div class="test-card-meta">
+              <div class="test-card-info">
+                <i class="fas fa-user-md"></i>
+                <span>Clinician</span>
+              </div>
+              <a href="madrs.html" class="test-button">View Scale</a>
+            </div>
+          </div>
+
+          <!-- Child Depression Inventory -->
+          <div class="test-card depression">
+            <div class="test-card-header">
+              <h3>Child Depression Inventory (CDI)</h3>
+              <span class="test-card-badge">Depression</span>
+            </div>
+            <p class="test-card-description">27-item self-report measure for children aged 7-17. Assesses cognitive, affective, and behavioral signs of depression in youth.</p>
+            <div class="test-card-meta">
+              <div class="test-card-info">
+                <i class="fas fa-child"></i>
+                <span>Children</span>
+              </div>
+              <a href="cdi.html" class="test-button">Take Test</a>
+            </div>
+          </div>
+
+          <!-- PHQ-A -->
+          <div class="test-card depression">
+            <div class="test-card-header">
+              <h3>PHQ-9 Modified for Adolescents (PHQ-A)</h3>
+              <span class="test-card-badge">Depression</span>
+            </div>
+            <p class="test-card-description">Adapted version of PHQ-9 specifically for adolescents aged 11-17. Includes age-appropriate language and additional suicide risk assessment.</p>
+            <div class="test-card-meta">
+              <div class="test-card-info">
+                <i class="fas fa-teenager"></i>
+                <span>Adolescents</span>
+              </div>
+              <a href="phqa.html" class="test-button">Take Test</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PTSD Assessments -->
+      <div class="category-section ptsd">
+        <div class="category-header">
+          <i class="fas fa-trauma"></i>
+          <h2 id="ptsd-title">Post-Traumatic Stress Disorder</h2>
+        </div>
+        <div class="tests-grid">
+          <!-- CAPS-5 -->
+          <div class="test-card ptsd">
+            <div class="test-card-header">
+              <h3>Clinician-Administered PTSD Scale (CAPS-5)</h3>
+              <span class="test-card-badge">PTSD</span>
+            </div>
+            <p class="test-card-description">Gold standard structured interview for PTSD diagnosis based on DSM-5 criteria. Assesses symptom frequency, intensity, and duration.</p>
+            <div class="test-card-meta">
+              <div class="test-card-info">
+                <i class="fas fa-user-md"></i>
+                <span>Clinician</span>
+              </div>
+              <a href="caps5.html" class="test-button">View Scale</a>
+            </div>
+          </div>
+
+          <!-- PCL-5 -->
+          <div class="test-card ptsd">
+            <div class="test-card-header">
+              <h3>PTSD Checklist for DSM-5 (PCL-5)</h3>
+              <span class="test-card-badge">PTSD</span>
+            </div>
+            <p class="test-card-description">20-item self-report measure assessing PTSD symptoms according to DSM-5 criteria. Useful for screening and monitoring treatment progress.</p>
+            <div class="test-card-meta">
+              <div class="test-card-info">
+                <i class="fas fa-clock"></i>
+                <span>5-10 min</span>
+              </div>
+              <a href="pcl5.html" class="test-button">Take Test</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADHD Assessments -->
+      <div class="category-section adhd">
+        <div class="category-header">
+          <i class="fas fa-bolt"></i>
+          <h2 id="adhd-title">ADHD Assessments</h2>
+        </div>
+        <div class="tests-grid">
+          <!-- ASRS -->
+          <div class="test-card adhd">
+            <div class="test-card-header">
+              <h3>Adult ADHD Self-Report Scale (ASRS-v1.1)</h3>
+              <span class="test-card-badge">ADHD</span>
+            </div>
+            <p class="test-card-description">18-item screening tool for adult ADHD based on DSM-IV criteria. Developed in collaboration with WHO, validated in multiple countries.</p>
+            <div class="test-card-meta">
+              <div class="test-card-info">
+                <i class="fas fa-clock"></i>
+                <span>10-15 min</span>
+              </div>
+              <a href="asrs.html" class="test-button">Take Test</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OCD Assessments -->
+      <div class="category-section ocd">
+        <div class="category-header">
+          <i class="fas fa-redo"></i>
+          <h2 id="ocd-title">Obsessive-Compulsive Disorder</h2>
+        </div>
+        <div class="tests-grid">
+          <!-- Y-BOCS -->
+          <div class="test-card ocd">
+            <div class="test-card-header">
+              <h3>Yale-Brown Obsessive Compulsive Scale (Y-BOCS)</h3>
+              <span class="test-card-badge">OCD</span>
+            </div>
+            <p class="test-card-description">Gold standard clinician-rated scale for OCD severity. Assesses time, interference, distress, resistance, and control of obsessions/compulsions.</p>
+            <div class="test-card-meta">
+              <div class="test-card-info">
+                <i class="fas fa-user-md"></i>
+                <span>Clinician</span>
+              </div>
+              <a href="ybocs.html" class="test-button">View Scale</a>
+            </div>
+          </div>
+
+          <!-- Children's Y-BOCS -->
+          <div class="test-card ocd">
+            <div class="test-card-header">
+              <h3>Children's Yale-Brown Obsessive Compulsive Scale</h3>
+              <span class="test-card-badge">OCD</span>
+            </div>
+            <p class="test-card-description">Adapted version of Y-BOCS for children and adolescents. Includes developmentally appropriate language and examples.</p>
+            <div class="test-card-meta">
+              <div class="test-card-info">
+                <i class="fas fa-child"></i>
+                <span>Children</span>
+              </div>
+              <a href="cybocs.html" class="test-button">View Scale</a>
+            </div>
+          </div>
+
+          <!-- OCI-R -->
+          <div class="test-card ocd">
+            <div class="test-card-header">
+              <h3>Obsessive-Compulsive Inventory - Revised (OCI-R)</h3>
+              <span class="test-card-badge">OCD</span>
+            </div>
+            <p class="test-card-description">18-item self-report measure assessing OCD symptoms across 6 dimensions. Validated in clinical and non-clinical populations.</p>
+            <div class="test-card-meta">
+              <div class="test-card-info">
+                <i class="fas fa-clock"></i>
+                <span>5-10 min</span>
+              </div>
+              <a href="ocir.html" class="test-button">Take Test</a>
+            </div>
+          </div>
+
+          <!-- Florida OCD Inventory -->
+          <div class="test-card ocd">
+            <div class="test-card-header">
+              <h3>Florida Obsessive-Compulsive Inventory</h3>
+              <span class="test-card-badge">OCD</span>
+            </div>
+            <p class="test-card-description">Comprehensive self-report measure assessing OCD symptoms and related disorders. Includes 20 items with clinical cut-off scores.</p>
+            <div class="test-card-meta">
+              <div class="test-card-info">
+                <i class="fas fa-clock"></i>
+                <span>10-15 min</span>
+              </div>
+              <a href="florida.html" class="test-button">Take Test</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Autism Spectrum Assessments -->
+      <div class="category-section autism">
+        <div class="category-header">
+          <i class="fas fa-puzzle-piece"></i>
+          <h2 id="autism-title">Autism Spectrum Assessments</h2>
+        </div>
+        <div class="tests-grid">
+          <!-- ADI-R -->
+          <div class="test-card autism">
+            <div class="test-card-header">
+              <h3>Autism Diagnostic Interview-Revised (ADI-R)</h3>
+              <span class="test-card-badge">Autism</span>
+            </div>
+            <p class="test-card-description">Comprehensive structured interview for caregivers. Assesses language/communication, reciprocal social interactions, and repetitive behaviors.</p>
+            <div class="test-card-meta">
+              <div class="test-card-info">
+                <i class="fas fa-user-md"></i>
+                <span>Clinician</span>
+              </div>
+              <a href="adir.html" class="test-button">View Interview</a>
+            </div>
+          </div>
+
+          <!-- ADOS-2 -->
+          <div class="test-card autism">
+            <div class="test-card-header">
+              <h3>Autism Diagnostic Observation Schedule (ADOS-2)</h3>
+              <span class="test-card-badge">Autism</span>
+            </div>
+            <p class="test-card-description">Standardized observational assessment of communication, social interaction, and play. Considered gold standard for autism diagnosis.</p>
+            <div class="test-card-meta">
+              <div class="test-card-info">
+                <i class="fas fa-user-md"></i>
+                <span>Clinician</span>
+              </div>
+              <a href="ados2.html" class="test-button">View Schedule</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social Phobia Assessments -->
+      <div class="category-section phobia">
+        <div class="category-header">
+          <i class="fas fa-users"></i>
+          <h2 id="phobia-title">Social Anxiety & Phobia</h2>
+        </div>
+        <div class="tests-grid">
+          <!-- Liebowitz Social Anxiety Scale -->
+          <div class="test-card phobia">
+            <div class="test-card-header">
+              <h3>Liebowitz Social Anxiety Scale (LSAS-SR)</h3>
+              <span class="test-card-badge">Social Phobia</span>
+            </div>
+            <p class="test-card-description">24-item self-report measure assessing fear and avoidance in social and performance situations. Widely used in clinical trials.</p>
+            <div class="test-card-meta">
+              <div class="test-card-info">
+                <i class="fas fa-clock"></i>
+                <span>10-15 min</span>
+              </div>
+              <a href="lsas.html" class="test-button">Take Test</a>
+            </div>
+          </div>
+
+          <!-- SPIN -->
+          <div class="test-card phobia">
+            <div class="test-card-header">
+              <h3>Social Phobia Inventory (SPIN)</h3>
+              <span class="test-card-badge">Social Phobia</span>
+            </div>
+            <p class="test-card-description">17-item self-report scale measuring fear, avoidance, and physiological symptoms of social anxiety disorder.</p>
+            <div class="test-card-meta">
+              <div class="test-card-info">
+                <i class="fas fa-clock"></i>
+                <span>5-10 min</span>
+              </div>
+              <a href="spin.html" class="test-button">Take Test</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-links">
+      <a href="home.html#about-us" id="footer-about">About Us</a>
+      <a href="#" id="footer-contact">Contact</a>
+    </div>
+    
+    <p class="copyright" id="copyright">© 2025 NeuroSense. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Language content
+    const languageContent = {
+      en: {
+        // Navigation
+        "nav-home": "Home",
+        "nav-dashboard": "Dashboard",
+        "nav-resources": "Resources",
+        "nav-appointments": "Appointments",
+        
+        // User menu
+        "menu-profile": "Profile",
+        "menu-settings": "Settings",
+        "menu-logout": "Logout",
+        
+        // Hero section
+        "hero-title": "Internationally Validated Psychological Assessments",
+        "hero-subtitle": "Comprehensive collection of standardized tests for accurate mental health evaluation. These scientifically validated tools help identify symptoms with precision and provide reliable insights.",
+        
+        // Category titles
+        "anxiety-title": "Anxiety Disorders Assessments",
+        "depression-title": "Depression Assessments",
+        "ptsd-title": "Post-Traumatic Stress Disorder",
+        "adhd-title": "ADHD Assessments",
+        "ocd-title": "Obsessive-Compulsive Disorder",
+        "autism-title": "Autism Spectrum Assessments",
+        "phobia-title": "Social Anxiety & Phobia",
+        "bipolar-title": "Bipolar Disorder Assessments",
+        
+        // Test buttons
+        "taylor-button": "Take Test",
+        
+        // Footer
+        "footer-about": "About Us",
+        "footer-contact": "Contact",
+        "copyright": "© 2025 NeuroSense. All rights reserved."
+      },
+      ar: {
+        // Navigation
+        "nav-home": "الرئيسية",
+        "nav-dashboard": "لوحة التحكم",
+        "nav-resources": "المصادر",
+        "nav-appointments": "المواعيد",
+        
+        // User menu
+        "menu-profile": "الملف الشخصي",
+        "menu-settings": "الإعدادات",
+        "menu-logout": "تسجيل الخروج",
+        
+        // Hero section
+        "hero-title": "الاختبارات النفسية المعتمدة دولياً",
+        "hero-subtitle": "مجموعة شاملة من الاختبارات المعيارية لتقييم دقيق للصحة النفسية. تساعد هذه الأدوات المثبتة علمياً في تحديد الأعراض بدقة وتقديم رؤى موثوقة.",
+        
+        // Category titles
+        "anxiety-title": "تقييمات اضطرابات القلق",
+        "depression-title": "تقييمات الاكتئاب",
+        "ptsd-title": "اضطراب ما بعد الصدمة",
+        "adhd-title": "تقييمات اضطراب فرط الحركة ونقص الانتباه",
+        "ocd-title": "اضطراب الوسواس القهري",
+        "autism-title": "تقييمات طيف التوحد",
+        "phobia-title": "القلق الاجتماعي والرهاب",
+        "bipolar-title": "تقييمات الاضطراب ثنائي القطب",
+        
+        // Test buttons
+        "taylor-button": "ابدأ الاختبار",
+        
+        // Footer
+        "footer-about": "من نحن",
+        "footer-contact": "اتصل بنا",
+        "copyright": "© 2025 NeuroSense. جميع الحقوق محفوظة."
+      }
+    };
+
+    // Function to update language
+    function updateLanguage(lang) {
+      document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      document.documentElement.lang = lang;
+      
+      Object.keys(languageContent[lang]).forEach(key => {
+        const element = document.getElementById(key);
+        if (element) {
+          element.textContent = languageContent[lang][key];
+        }
+      });
+      
+      document.querySelectorAll('.language-option').forEach(option => {
+        option.classList.remove('active');
+        if (option.dataset.lang === lang) {
+          option.classList.add('active');
+        }
+      });
+      
+      localStorage.setItem('language', lang);
+      currentLanguage = lang;
+    }
+
+    // Check if user is logged in
+    if (!localStorage.getItem('isLoggedIn')) {
+      window.location.href = 'index.html';
+    }
+    
+    // Load user data
+    const userData = JSON.parse(localStorage.getItem('userData')) || {
+      name: "Fatma Hussien Abdelhafez"
+    };
+    
+    // Language management
+    let currentLanguage = localStorage.getItem('language') || 'en';
+    
+    // Initialize language
+    updateLanguage(currentLanguage);
+    
+    // Language switcher
+    document.querySelectorAll('.language-option').forEach(option => {
+      option.addEventListener('click', () => {
+        const selectedLang = option.dataset.lang;
+        updateLanguage(selectedLang);
+      });
+    });
+    
+    // Set profile information
+    document.getElementById('profileName').textContent = "Fatma Hussien";
+    document.getElementById('profileImage').src = `https://ui-avatars.com/api/?name=Fatma+Hussien&background=random`;
+    
+    // User profile dropdown
+    const userProfile = document.getElementById('userProfile');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    
+    userProfile.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('active');
+    });
+    
+    document.addEventListener('click', (e) => {
+      if (!userProfile.contains(e.target)) {
+        dropdownMenu.classList.remove('active');
+      }
+    });
+    
+    // Category filtering
+    const categoryBtns = document.querySelectorAll('.category-btn');
+    const categorySections = document.querySelectorAll('.category-section');
+    
+    categoryBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const category = btn.dataset.category;
+        
+        // Update active button
+        categoryBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Filter sections
+        categorySections.forEach(section => {
+          if (category === 'all' || section.classList.contains(category)) {
+            section.style.display = 'block';
+          } else {
+            section.style.display = 'none';
+          }
+        });
+      });
+    });
+    
+    // Logout functionality
+    document.getElementById('logoutBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('isLoggedIn');
+      window.location.href = 'index.html';
+    });
+  </script>
+</body>
+</html>

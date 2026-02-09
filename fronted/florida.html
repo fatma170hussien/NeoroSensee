@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Florida Obsessive Compulsive Inventory (FOCI)</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary-blue: #1565C0;
+      --secondary-blue: #0D47A1;
+      --light-blue: #E3F2FD;
+      --accent-orange: #FF9800;
+      --accent-green: #4CAF50;
+      --accent-red: #F44336;
+      --text-dark: #333333;
+      --text-light: #666666;
+      --border-color: #E0E0E0;
+      --card-bg: #FFFFFF;
+      --section-bg: #F5F7FA;
+      --part-a-color: #2196F3;
+      --part-b-color: #009688;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: var(--section-bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+    
+    /* Header Styles */
+    .header {
+      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      color: white;
+      padding: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--accent-orange);
+    }
+    
+    .header-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .header h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    
+    .header .subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-bottom: 15px;
+    }
+    
+    .disclaimer {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      font-size: 0.9rem;
+      border-left: 4px solid var(--accent-orange);
+    }
+    
+    /* Patient Information */
+    .patient-info {
+      padding: 25px;
+      border-bottom: 1px solid var(--border-color);
+      background: var(--light-blue);
+    }
+    
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    
+    .info-card {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .info-card label {
+      font-weight: 600;
+      color: var(--secondary-blue);
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .info-card input,
+    .info-card select {
+      padding: 12px;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    
+    .info-card input:focus,
+    .info-card select:focus {
+      outline: none;
+      border-color: var(--primary-blue);
+    }
+    
+    /* Instructions */
+    .instructions {
+      padding: 25px;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .instructions h3 {
+      color: var(--secondary-blue);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .time-frame {
+      background: #FFF8E1;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      border-left: 4px solid var(--accent-orange);
+    }
+    
+    /* Part Navigation */
+    .part-navigation {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+      background: var(--section-bg);
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .part-btn {
+      padding: 15px 30px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+      background: var(--light-blue);
+      color: var(--primary-blue);
+    }
+    
+    .part-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .part-btn.active {
+      background: var(--primary-blue);
+      color: white;
+    }
+    
+    /* Part Containers */
+    .part-container {
+      display: none;
+      padding: 30px;
+    }
+    
+    .part-container.active {
+      display: block;
+    }
+    
+    .part-header {
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+      border-left: 4px solid;
+    }
+    
+    .part-a-header {
+      background: #E3F2FD;
+      border-left-color: var(--part-a-color);
+    }
+    
+    .part-b-header {
+      background: #E0F2F1;
+      border-left-color: var(--part-b-color);
+    }
+    
+    .part-header h3 {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    /* Part A - Yes/No Questions */
+    .questions-grid {
+      display: grid;
+      gap: 15px;
+    }
+    
+    .category-group {
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--section-bg);
+    }
+    
+    .category-group:last-child {
+      border-bottom: none;
+    }
+    
+    .category-title {
+      color: var(--primary-blue);
+      margin-bottom: 15px;
+      padding-left: 10px;
+      border-left: 4px solid var(--primary-blue);
+      font-weight: 600;
+    }
+    
+    .question-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      padding: 15px;
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    
+    .question-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+    
+    .question-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      background: var(--light-blue);
+      color: var(--primary-blue);
+      border-radius: 50%;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+    
+    .question-text {
+      flex: 1;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+    
+    .yesno-buttons {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .yesno-btn {
+      padding: 10px 20px;
+      border: 2px solid var(--border-color);
+      border-radius: 6px;
+      background: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      min-width: 80px;
+    }
+    
+    .yesno-btn:hover {
+      transform: translateY(-2px);
+    }
+    
+    .yes-btn.selected {
+      background: #E8F5E9;
+      border-color: #4CAF50;
+      color: #388E3C;
+    }
+    
+    .no-btn.selected {
+      background: #FFEBEE;
+      border-color: #F44336;
+      color: #C62828;
+    }
+    
+    /* Part B - Severity Questions */
+    .severity-grid {
+      display: grid;
+      gap: 25px;
+    }
+    
+    .severity-item {
+      padding: 25px;
+      background: white;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .severity-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .severity-question {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 20px;
+      color: var(--text-dark);
+      line-height: 1.5;
+    }
+    
+    .severity-options {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+    
+    @media (max-width: 992px) {
+      .severity-options {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .severity-options {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .severity-option {
+      position: relative;
+    }
+    
+    .option-btn {
+      width: 100%;
+      padding: 15px 10px;
+      text-align: center;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      background: white;
+      color: var(--text-dark);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .option-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .option-btn.selected {
+      border-color: var(--part-b-color);
+      background: #E0F2F1;
+      color: var(--part-b-color);
+    }
+    
+    .option-score {
+      font-size: 1.2rem;
+      font-weight: bold;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--section-bg);
+    }
+    
+    .option-btn.selected .option-score {
+      background: var(--part-b-color);
+      color: white;
+    }
+    
+    .option-label {
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+    
+    .option-desc {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      margin-top: 5px;
+      text-align: center;
+    }
+    
+    /* Score Display */
+    .score-display {
+      position: sticky;
+      top: 10px;
+      background: white;
+      padding: 20px;
+      margin: 0 30px 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border: 2px solid var(--primary-blue);
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    
+    .score-section {
+      text-align: center;
+      flex: 1;
+      min-width: 150px;
+    }
+    
+    .score-label {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 5px;
+    }
+    
+    .score-value {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: var(--primary-blue);
+      line-height: 1;
+    }
+    
+    .score-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.8rem;
+      margin-top: 5px;
+      padding: 3px 10px;
+      border-radius: 12px;
+    }
+    
+    /* Results Section */
+    .results-container {
+      padding: 30px;
+      display: none;
+      background: var(--card-bg);
+    }
+    
+    .results-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .results-header h2 {
+      color: var(--primary-blue);
+      margin-bottom: 10px;
+    }
+    
+    .final-scores {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    
+    .final-score-card {
+      padding: 25px;
+      border-radius: 10px;
+      text-align: center;
+      background: linear-gradient(135deg, var(--light-blue), white);
+      border: 2px solid var(--primary-blue);
+    }
+    
+    .final-score-value {
+      font-size: 3rem;
+      font-weight: bold;
+      color: var(--primary-blue);
+      margin: 10px 0;
+    }
+    
+    .score-interpretation {
+      background: var(--light-blue);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 30px 0;
+      border-left: 4px solid var(--primary-blue);
+    }
+    
+    .symptom-summary {
+      background: #FFF8E1;
+      padding: 25px;
+      border-radius: 10px;
+      margin: 30px 0;
+      border-left: 4px solid var(--accent-orange);
+    }
+    
+    /* Controls */
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      padding: 25px 30px;
+      border-top: 1px solid var(--border-color);
+      background: var(--section-bg);
+    }
+    
+    .control-btn {
+      padding: 14px 28px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1rem;
+    }
+    
+    .reset-btn {
+      background: var(--light-blue);
+      color: var(--primary-blue);
+    }
+    
+    .reset-btn:hover {
+      background: #BBDEFB;
+    }
+    
+    .next-btn {
+      background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+      color: white;
+    }
+    
+    .next-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(21, 101, 192, 0.3);
+    }
+    
+    .submit-btn {
+      background: linear-gradient(135deg, var(--accent-green), #45a049);
+      color: white;
+    }
+    
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(76, 175, 80, 0.3);
+    }
+    
+    .print-btn {
+      background: linear-gradient(135deg, #FF9800, #F57C00);
+      color: white;
+    }
+    
+    .print-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(255, 152, 0, 0.3);
+    }
+    
+    /* Footer */
+    .footer {
+      background: var(--light-blue);
+      padding: 25px 30px;
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--border-color);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .score-display {
+        flex-direction: column;
+        text-align: center;
+        margin: 0 15px 20px;
+      }
+      
+      .controls {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .control-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .part-navigation {
+        flex-direction: column;
+      }
+      
+      .part-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .yesno-buttons {
+        flex-direction: column;
+      }
+      
+      .yesno-btn {
+        width: 100%;
+      }
+    }
+    
+    @media print {
+      .controls,
+      .footer,
+      .part-navigation {
+        display: none;
+      }
+      
+      .question-item,
+      .severity-item {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-content">
+        <h1>Florida Obsessive Compulsive Inventory (FOCI)</h1>
+        <div class="subtitle">Comprehensive Assessment for Obsessive-Compulsive Symptoms</div>
+        
+        <div class="disclaimer">
+          <i class="fas fa-exclamation-triangle"></i>
+          <strong>Important:</strong> A high score on this questionnaire does not necessarily mean you have an anxiety disorder — only an evaluation by a health professional can make this determination.
+        </div>
+      </div>
+    </div>
+    
+    <!-- Patient Information -->
+    <div class="patient-info">
+      <div class="info-grid">
+        <div class="info-card">
+          <label for="participantName"><i class="fas fa-user"></i> Your Name</label>
+          <input type="text" id="participantName" placeholder="Enter your full name">
+        </div>
+        
+        <div class="info-card">
+          <label for="assessmentDate"><i class="fas fa-calendar-alt"></i> Assessment Date</label>
+          <input type="date" id="assessmentDate" value="<?php echo date('Y-m-d'); ?>">
+        </div>
+        
+        <div class="info-card">
+          <label for="clinicianName"><i class="fas fa-user-md"></i> Clinician (Optional)</label>
+          <input type="text" id="clinicianName" placeholder="Clinician name">
+        </div>
+        
+        <div class="info-card">
+          <label for="referenceNumber"><i class="fas fa-hashtag"></i> Reference Number</label>
+          <input type="text" id="referenceNumber" placeholder="Optional reference number">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Instructions -->
+    <div class="instructions">
+      <h3><i class="fas fa-info-circle"></i> General Instructions</h3>
+      <p>The questions below are designed to help health professionals evaluate anxiety symptoms. Answer these questions as accurately as you can.</p>
+      
+      <div class="time-frame">
+        <h4><i class="fas fa-calendar-check"></i> Time Frame: Past Month</h4>
+        <p>Please consider your experiences during the <strong>past 30 days</strong> when answering these questions. Today is <strong><?php echo date('F j, Y'); ?></strong>, so think back to <strong><?php echo date('F j, Y', strtotime('-1 month')); ?></strong>.</p>
+      </div>
+    </div>
+    
+    <!-- Score Display -->
+    <div class="score-display" id="scoreDisplay">
+      <div class="score-section">
+        <div class="score-label">Part A: Yes Responses</div>
+        <div class="score-value" id="partAScore">0</div>
+        <div class="score-label">/20</div>
+      </div>
+      
+      <div class="score-section">
+        <div class="score-label">Part B: Severity Score</div>
+        <div class="score-value" id="partBScore">0</div>
+        <div class="score-label">/20</div>
+      </div>
+      
+      <div class="score-section">
+        <div class="score-label">Total FOCI Score</div>
+        <div class="score-value" id="totalScore">0</div>
+        <div class="score-label">-</div>
+        <div class="score-indicator" id="screeningIndicator" style="background: #E8F5E9; color: #388E3C;">
+          <i class="fas fa-circle" style="font-size: 0.6rem;"></i>
+          <span>Continue assessment</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Part Navigation -->
+    <div class="part-navigation">
+      <button class="part-btn active" onclick="showPart('A')">
+        <i class="fas fa-clipboard-check"></i> Part A: Symptom Checklist
+      </button>
+      <button class="part-btn" onclick="showPart('B')" id="partBButton" disabled>
+        <i class="fas fa-chart-bar"></i> Part B: Severity Assessment
+      </button>
+    </div>
+    
+    <!-- Part A: Symptom Checklist -->
+    <div class="part-container active" id="partAContainer">
+      <div class="part-header part-a-header">
+        <h3 style="color: var(--part-a-color);"><i class="fas fa-clipboard-check"></i> PART A: Symptom Checklist</h3>
+        <p>Please answer YES or NO for the following questions, based on your experience in the past MONTH.</p>
+      </div>
+      
+      <div class="questions-grid" id="partAQuestions">
+        <!-- Questions will be inserted here dynamically -->
+      </div>
+      
+      <div class="time-frame" style="margin-top: 30px;">
+        <h4><i class="fas fa-arrow-right"></i> Next Step</h4>
+        <p>If you answered <strong>YES to one or more</strong> of these questions, please continue with Part B for severity assessment.</p>
+      </div>
+    </div>
+    
+    <!-- Part B: Severity Assessment -->
+    <div class="part-container" id="partBContainer">
+      <div class="part-header part-b-header">
+        <h3 style="color: var(--part-b-color);"><i class="fas fa-chart-bar"></i> PART B: Severity Assessment</h3>
+        <p>The following questions refer to the repeated thoughts, images, urges or behaviors identified in Part A. Consider your experience during the past 30 days when selecting an answer.</p>
+      </div>
+      
+      <div class="severity-grid" id="partBQuestions">
+        <!-- Severity questions will be inserted here dynamically -->
+      </div>
+    </div>
+    
+    <!-- Results Section -->
+    <div class="results-container" id="resultsContainer">
+      <div class="results-header">
+        <h2><i class="fas fa-file-medical-alt"></i> FOCI Assessment Results</h2>
+        <p>Florida Obsessive Compulsive Inventory - Comprehensive Assessment</p>
+      </div>
+      
+      <div class="final-scores">
+        <div class="final-score-card" style="border-color: var(--part-a-color);">
+          <div style="font-size: 1.2rem; color: var(--part-a-color); font-weight: 600;">Part A: Symptom Checklist</div>
+          <div class="final-score-value" id="finalPartAScore">0</div>
+          <div style="color: var(--text-light);">YES responses / 20 items</div>
+          <div id="partAIndicator" style="margin-top: 10px; padding: 5px 10px; border-radius: 15px; font-size: 0.9rem; background: #E8F5E9; color: #388E3C;">
+            Symptom screening completed
+          </div>
+        </div>
+        
+        <div class="final-score-card" style="border-color: var(--part-b-color);">
+          <div style="font-size: 1.2rem; color: var(--part-b-color); font-weight: 600;">Part B: Severity Score</div>
+          <div class="final-score-value" id="finalPartBScore">0</div>
+          <div style="color: var(--text-light);">/20 total severity points</div>
+          <div id="partBIndicator" style="margin-top: 10px; padding: 5px 10px; border-radius: 15px; font-size: 0.9rem; background: #E0F2F1; color: #00796B;">
+            Severity assessment completed
+          </div>
+        </div>
+        
+        <div class="final-score-card">
+          <div style="font-size: 1.2rem; color: var(--primary-blue); font-weight: 600;">Clinical Interpretation</div>
+          <div id="clinicalInterpretation" style="font-size: 1.8rem; font-weight: bold; color: var(--primary-blue); margin: 20px 0;">
+            Review Results
+          </div>
+          <div style="color: var(--text-light);">Based on FOCI assessment</div>
+        </div>
+      </div>
+      
+      <div class="score-interpretation" id="scoreInterpretation">
+        <!-- Interpretation will be inserted here dynamically -->
+      </div>
+      
+      <div class="symptom-summary" id="symptomSummary">
+        <h4 style="color: #F57C00; margin-bottom: 15px;"><i class="fas fa-chart-pie"></i> Symptom Profile Summary</h4>
+        <div id="symptomDetails">
+          <!-- Symptom details will be inserted here dynamically -->
+        </div>
+      </div>
+      
+      <div class="disclaimer" style="background: #E3F2FD; margin: 30px 0;">
+        <h4><i class="fas fa-stethoscope"></i> Important Clinical Note</h4>
+        <p>A high score on this questionnaire does not necessarily mean you have an anxiety disorder — only an evaluation by a health professional can make this determination. The FOCI is a screening tool that helps identify potential OCD symptoms that may warrant further clinical evaluation.</p>
+      </div>
+    </div>
+    
+    <!-- Controls -->
+    <div class="controls">
+      <button class="control-btn reset-btn" onclick="resetAssessment()">
+        <i class="fas fa-redo"></i> Reset Assessment
+      </button>
+      
+      <button class="control-btn next-btn" onclick="nextPart()" id="nextButton">
+        <i class="fas fa-arrow-right"></i> Continue to Part B
+      </button>
+      
+      <button class="control-btn submit-btn" onclick="submitAssessment()" style="display: none;" id="submitButton">
+        <i class="fas fa-paper-plane"></i> Complete Assessment
+      </button>
+      
+      <button class="control-btn print-btn" onclick="printReport()" style="display: none;" id="printButton">
+        <i class="fas fa-print"></i> Print Report
+      </button>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+      <p><strong>Florida Obsessive Compulsive Inventory (FOCI)</strong></p>
+      <p>Clinical assessment tool for obsessive-compulsive symptoms</p>
+    </div>
+  </div>
+
+  <script>
+    // FOCI Part A Questions Data
+    const fociPartA = [
+      {
+        category: "Unpleasant thoughts or images that repeatedly enter your mind",
+        questions: [
+          {
+            id: 1,
+            text: "Concerns with contamination (dirt, germs, chemicals, radiation) or acquiring a serious illness such as AIDS?"
+          },
+          {
+            id: 2,
+            text: "Overconcern with keeping objects (clothing, tools, etc) in perfect order or arranged exactly?"
+          },
+          {
+            id: 3,
+            text: "Images of death or other horrible events?"
+          },
+          {
+            id: 4,
+            text: "Personally unacceptable religious or sexual thoughts?"
+          }
+        ]
+      },
+      {
+        category: "Worried a lot about terrible things happening",
+        questions: [
+          {
+            id: 5,
+            text: "Fire, burglary or flooding of the house?"
+          },
+          {
+            id: 6,
+            text: "Accidentally hitting a pedestrian with your car or letting it roll down a hill?"
+          },
+          {
+            id: 7,
+            text: "Spreading an illness (giving someone AIDS)?"
+          },
+          {
+            id: 8,
+            text: "Losing something valuable?"
+          },
+          {
+            id: 9,
+            text: "Harm coming to a loved one because you weren't careful enough?"
+          }
+        ]
+      },
+      {
+        category: "Worried about acting on an unwanted and senseless urge or impulse",
+        questions: [
+          {
+            id: 10,
+            text: "Physically harming a loved one, pushing a stranger in front of a bus, steering your car into oncoming traffic; inappropriate sexual contact; or poisoning dinner guests?"
+          }
+        ]
+      },
+      {
+        category: "Felt driven to perform certain acts over and over again",
+        questions: [
+          {
+            id: 11,
+            text: "Excessive or ritualized washing, cleaning or grooming?"
+          },
+          {
+            id: 12,
+            text: "Checking light switches, water faucets, the stove, door locks or the emergency brake?"
+          },
+          {
+            id: 13,
+            text: "Counting, arranging; evening-up behaviors (making sure socks are at same height)?"
+          },
+          {
+            id: 14,
+            text: "Collecting useless objects or inspecting the garbage before it is thrown out?"
+          },
+          {
+            id: 15,
+            text: "Repeating routine actions (in/out of chair, going through doorway, relighting cigarette) a certain number of times or until it feels just right?"
+          },
+          {
+            id: 16,
+            text: "Needing to touch objects or people?"
+          },
+          {
+            id: 17,
+            text: "Unnecessary rereading or rewriting; reopening envelopes before they are mailed?"
+          },
+          {
+            id: 18,
+            text: "Examining your body for signs of illness?"
+          },
+          {
+            id: 19,
+            text: "Avoiding colors ('red' means blood), numbers ('13' is unlucky) or names (those that start with 'D' signify death) that are associated with dreaded events or unpleasant thoughts?"
+          },
+          {
+            id: 20,
+            text: "Needing to 'confess' or repeatedly asking for reassurance that you said or did something correctly?"
+          }
+        ]
+      }
+    ];
+
+    // FOCI Part B Questions Data
+    const fociPartB = [
+      {
+        id: 1,
+        question: "On average, how much time is occupied by these thoughts or behaviors each day?",
+        options: [
+          { score: 0, label: "None", desc: "" },
+          { score: 1, label: "Mild", desc: "less than 1 hour" },
+          { score: 2, label: "Moderate", desc: "1 to 3 hours" },
+          { score: 3, label: "Severe", desc: "3 to 8 hours" },
+          { score: 4, label: "Extreme", desc: "more than 8 hours" }
+        ]
+      },
+      {
+        id: 2,
+        question: "How much distress do they cause you?",
+        options: [
+          { score: 0, label: "None", desc: "" },
+          { score: 1, label: "Mild", desc: "" },
+          { score: 2, label: "Moderate", desc: "" },
+          { score: 3, label: "Severe", desc: "" },
+          { score: 4, label: "Extreme", desc: "disabling" }
+        ]
+      },
+      {
+        id: 3,
+        question: "How hard is it for you to control them?",
+        options: [
+          { score: 0, label: "Complete", desc: "control" },
+          { score: 1, label: "Much", desc: "control" },
+          { score: 2, label: "Moderate", desc: "control" },
+          { score: 3, label: "Little", desc: "control" },
+          { score: 4, label: "No", desc: "control" }
+        ]
+      },
+      {
+        id: 4,
+        question: "How much do they cause you to avoid doing anything, going anyplace or being with anyone?",
+        options: [
+          { score: 0, label: "No", desc: "avoidance" },
+          { score: 1, label: "Occasional", desc: "avoidance" },
+          { score: 2, label: "Moderate", desc: "avoidance" },
+          { score: 3, label: "Frequent", desc: "avoidance" },
+          { score: 4, label: "Extreme", desc: "and extensive avoidance (house-bound)" }
+        ]
+      },
+      {
+        id: 5,
+        question: "How much do they interfere with school, work or your social or family life?",
+        options: [
+          { score: 0, label: "None", desc: "" },
+          { score: 1, label: "Slight", desc: "interference" },
+          { score: 2, label: "Definitely", desc: "interferes with functioning" },
+          { score: 3, label: "Much", desc: "interference" },
+          { score: 4, label: "Extreme", desc: "interference (disabling)" }
+        ]
+      }
+    ];
+
+    // User responses
+    let userResponses = {
+      partA: new Array(20).fill(null), // 20 yes/no questions
+      partB: new Array(5).fill(null)   // 5 severity questions
+    };
+
+    // Current part
+    let currentPart = 'A';
+
+    // Initialize the assessment
+    document.addEventListener('DOMContentLoaded', function() {
+      renderPartAQuestions();
+      renderPartBQuestions();
+      updateScoreDisplay();
+      
+      // Set today's date
+      document.getElementById('assessmentDate').valueAsDate = new Date();
+      
+      // Auto-save data
+      document.getElementById('participantName').addEventListener('input', saveFormData);
+      
+      // Load saved data
+      loadFormData();
+    });
+
+    // Show part
+    function showPart(part) {
+      // Hide all parts
+      document.querySelectorAll('.part-container').forEach(el => {
+        el.classList.remove('active');
+      });
+      
+      // Update navigation buttons
+      document.querySelectorAll('.part-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      // Show selected part
+      document.getElementById(`part${part}Container`).classList.add('active');
+      
+      // Activate corresponding nav button
+      document.querySelectorAll('.part-btn').forEach(btn => {
+        if (btn.textContent.includes(`Part ${part}`)) {
+          btn.classList.add('active');
+        }
+      });
+      
+      currentPart = part;
+    }
+
+    // Render Part A questions
+    function renderPartAQuestions() {
+      const container = document.getElementById('partAQuestions');
+      let html = '';
+      
+      fociPartA.forEach(category => {
+        html += `
+          <div class="category-group">
+            <div class="category-title">${category.category}</div>
+            <div class="questions-list">
+        `;
+        
+        category.questions.forEach(question => {
+          const index = question.id - 1;
+          html += `
+            <div class="question-item" id="partA-question-${index}">
+              <div class="question-number">${question.id}</div>
+              <div class="question-text">${question.text}</div>
+              <div class="yesno-buttons">
+                <button class="yesno-btn yes-btn ${userResponses.partA[index] === true ? 'selected' : ''}"
+                        onclick="selectPartAResponse(${index}, true)">
+                  YES
+                </button>
+                <button class="yesno-btn no-btn ${userResponses.partA[index] === false ? 'selected' : ''}"
+                        onclick="selectPartAResponse(${index}, false)">
+                  NO
+                </button>
+              </div>
+            </div>
+          `;
+        });
+        
+        html += `
+            </div>
+          </div>
+        `;
+      });
+      
+      container.innerHTML = html;
+    }
+
+    // Render Part B questions
+    function renderPartBQuestions() {
+      const container = document.getElementById('partBQuestions');
+      let html = '';
+      
+      fociPartB.forEach((question, index) => {
+        html += `
+          <div class="severity-item" id="partB-question-${index}">
+            <div class="severity-question">${question.id}. ${question.question}</div>
+            
+            <div class="severity-options">
+              ${question.options.map((option, optIndex) => `
+                <div class="severity-option">
+                  <button class="option-btn ${userResponses.partB[index] === option.score ? 'selected' : ''}"
+                          onclick="selectPartBResponse(${index}, ${option.score})"
+                          data-score="${option.score}">
+                    <div class="option-score">${option.score}</div>
+                    <div class="option-label">${option.label}</div>
+                    ${option.desc ? `<div class="option-desc">${option.desc}</div>` : ''}
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      });
+      
+      container.innerHTML = html;
+    }
+
+    // Select Part A response (Yes/No)
+    function selectPartAResponse(questionIndex, response) {
+      userResponses.partA[questionIndex] = response;
+      
+      // Update UI
+      const questionItem = document.getElementById(`partA-question-${questionIndex}`);
+      const yesBtn = questionItem.querySelector('.yes-btn');
+      const noBtn = questionItem.querySelector('.no-btn');
+      
+      yesBtn.classList.toggle('selected', response === true);
+      noBtn.classList.toggle('selected', response === false);
+      
+      updateScoreDisplay();
+      saveFormData();
+      
+      // Enable Part B button if at least one YES response
+      const yesResponses = userResponses.partA.filter(r => r === true).length;
+      document.getElementById('partBButton').disabled = yesResponses === 0;
+      
+      if (yesResponses === 0) {
+        document.getElementById('screeningIndicator').innerHTML = `
+          <i class="fas fa-circle" style="font-size: 0.6rem;"></i>
+          <span>No symptoms detected - Part B not needed</span>
+        `;
+        document.getElementById('screeningIndicator').style.background = '#E8F5E9';
+        document.getElementById('screeningIndicator').style.color = '#388E3C';
+      } else {
+        document.getElementById('screeningIndicator').innerHTML = `
+          <i class="fas fa-arrow-right" style="font-size: 0.6rem;"></i>
+          <span>Continue to Part B for severity assessment</span>
+        `;
+        document.getElementById('screeningIndicator').style.background = '#FFF8E1';
+        document.getElementById('screeningIndicator').style.color = '#F57C00';
+      }
+    }
+
+    // Select Part B response (0-4)
+    function selectPartBResponse(questionIndex, score) {
+      userResponses.partB[questionIndex] = score;
+      
+      // Update UI
+      const questionItem = document.getElementById(`partB-question-${questionIndex}`);
+      const buttons = questionItem.querySelectorAll('.option-btn');
+      buttons.forEach(btn => {
+        const btnScore = parseInt(btn.getAttribute('data-score'));
+        btn.classList.toggle('selected', btnScore === score);
+      });
+      
+      updateScoreDisplay();
+      saveFormData();
+      
+      // Auto-scroll to next question if not last question
+      if (questionIndex < fociPartB.length - 1) {
+        setTimeout(() => {
+          const nextQuestion = document.getElementById(`partB-question-${questionIndex + 1}`);
+          nextQuestion.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 300);
+      }
+    }
+
+    // Calculate scores
+    function calculateScores() {
+      // Part A: Count YES responses
+      const yesResponses = userResponses.partA.filter(r => r === true).length;
+      
+      // Part B: Sum of scores (0-20)
+      let partBTotal = 0;
+      userResponses.partB.forEach(score => {
+        if (score !== null) {
+          partBTotal += score;
+        }
+      });
+      
+      // Calculate which Part A symptoms were endorsed
+      const endorsedSymptoms = [];
+      userResponses.partA.forEach((response, index) => {
+        if (response === true) {
+          endorsedSymptoms.push({
+            id: index + 1,
+            text: getAllQuestions()[index]
+          });
+        }
+      });
+      
+      // Calculate Part B completion status
+      const partBCompleted = userResponses.partB.filter(r => r !== null).length === fociPartB.length;
+      
+      return {
+        partAScore: yesResponses,
+        partBScore: partBTotal,
+        endorsedSymptoms,
+        partBCompleted,
+        totalYesResponses: yesResponses,
+        hasSymptoms: yesResponses > 0
+      };
+    }
+
+    // Get all questions text
+    function getAllQuestions() {
+      const allQuestions = [];
+      fociPartA.forEach(category => {
+        category.questions.forEach(question => {
+          allQuestions.push(question.text);
+        });
+      });
+      return allQuestions;
+    }
+
+    // Update score display
+    function updateScoreDisplay() {
+      const scores = calculateScores();
+      
+      document.getElementById('partAScore').textContent = scores.partAScore;
+      document.getElementById('partBScore').textContent = scores.partBScore;
+      
+      // Update total score display
+      if (scores.hasSymptoms && scores.partBCompleted) {
+        document.getElementById('totalScore').textContent = `${scores.partAScore} + ${scores.partBScore}`;
+      } else if (scores.hasSymptoms) {
+        document.getElementById('totalScore').textContent = `${scores.partAScore} + ...`;
+      } else {
+        document.getElementById('totalScore').textContent = "0";
+      }
+    }
+
+    // Next part
+    function nextPart() {
+      const scores = calculateScores();
+      
+      if (!scores.hasSymptoms) {
+        alert("Part B is only needed if you answered YES to one or more questions in Part A. Please review your Part A responses.");
+        showPart('A');
+        return;
+      }
+      
+      // Show Part B
+      showPart('B');
+      
+      // Update control buttons
+      document.getElementById('nextButton').style.display = 'none';
+      document.getElementById('submitButton').style.display = 'flex';
+    }
+
+    // Submit assessment
+    function submitAssessment() {
+      const participantName = document.getElementById('participantName').value.trim();
+      
+      if (!participantName) {
+        alert("Please enter your name before submitting the assessment.");
+        document.getElementById('participantName').focus();
+        return;
+      }
+      
+      const scores = calculateScores();
+      
+      if (scores.hasSymptoms && !scores.partBCompleted) {
+        const unanswered = fociPartB.length - scores.partBCompleted;
+        if (!confirm(`You have ${unanswered} unanswered severity questions in Part B. Would you like to submit anyway?`)) {
+          showPart('B');
+          return;
+        }
+      }
+      
+      // Update final results display
+      document.getElementById('finalPartAScore').textContent = scores.partAScore;
+      document.getElementById('finalPartBScore').textContent = scores.partBScore;
+      
+      // Update indicators
+      const partAIndicator = document.getElementById('partAIndicator');
+      const partBIndicator = document.getElementById('partBIndicator');
+      
+      if (scores.hasSymptoms) {
+        partAIndicator.innerHTML = `${scores.partAScore} symptoms identified`;
+        partAIndicator.style.background = '#FFF8E1';
+        partAIndicator.style.color = '#F57C00';
+      } else {
+        partAIndicator.innerHTML = 'No symptoms identified';
+        partAIndicator.style.background = '#E8F5E9';
+        partAIndicator.style.color = '#388E3C';
+      }
+      
+      if (scores.partBCompleted) {
+        partBIndicator.innerHTML = `Severity score: ${scores.partBScore}/20`;
+        partBIndicator.style.background = '#E0F2F1';
+        partBIndicator.style.color = '#00796B';
+      } else if (scores.hasSymptoms) {
+        partBIndicator.innerHTML = 'Severity assessment incomplete';
+        partBIndicator.style.background = '#FFF3E0';
+        partBIndicator.style.color = '#F57C00';
+      } else {
+        partBIndicator.innerHTML = 'Not applicable (no symptoms)';
+        partBIndicator.style.background = '#F5F5F5';
+        partBIndicator.style.color = '#666';
+      }
+      
+      // Update interpretation
+      updateInterpretation(scores);
+      
+      // Update symptom summary
+      updateSymptomSummary(scores);
+      
+      // Show results and hide assessment
+      document.getElementById('partAContainer').style.display = 'none';
+      document.getElementById('partBContainer').style.display = 'none';
+      document.getElementById('scoreDisplay').style.display = 'none';
+      document.querySelector('.part-navigation').style.display = 'none';
+      document.getElementById('resultsContainer').style.display = 'block';
+      document.getElementById('printButton').style.display = 'flex';
+      document.getElementById('submitButton').style.display = 'none';
+      document.getElementById('nextButton').style.display = 'none';
+      
+      // Scroll to top
+      window.scrollTo(0, 0);
+      
+      // Save results
+      saveAssessmentResults(participantName, scores);
+    }
+
+    // Update interpretation
+    function updateInterpretation(scores) {
+      const container = document.getElementById('scoreInterpretation');
+      const clinicalInterpretation = document.getElementById('clinicalInterpretation');
+      
+      let interpretation = '';
+      let recommendations = [];
+      
+      if (!scores.hasSymptoms) {
+        clinicalInterpretation.textContent = "NO OCD SYMPTOMS";
+        clinicalInterpretation.style.color = "#4CAF50";
+        
+        interpretation = `
+          <h4 style="color: #4CAF50; margin-bottom: 15px;">
+            <i class="fas fa-check-circle"></i> No OCD Symptoms Detected
+          </h4>
+          <p>Based on your responses to Part A, you did not report any obsessive-compulsive symptoms during the past month.</p>
+          <div style="margin-top: 15px; padding: 15px; background: white; border-radius: 8px;">
+            <strong>Part A (Symptom Checklist):</strong> ${scores.partAScore}/20 items endorsed<br>
+            <strong>Part B (Severity):</strong> Not applicable (no symptoms reported)<br>
+            <strong>Assessment Date:</strong> ${new Date().toLocaleDateString()}
+          </div>
+        `;
+        
+        recommendations = [
+          "No further evaluation for OCD symptoms is indicated at this time",
+          "Continue routine monitoring of mental health",
+          "Consider re-assessment if symptoms develop in the future",
+          "Maintain healthy coping strategies and stress management"
+        ];
+      } else if (scores.partBScore <= 5) {
+        clinicalInterpretation.textContent = "MILD SYMPTOMS";
+        clinicalInterpretation.style.color = "#8BC34A";
+        
+        interpretation = `
+          <h4 style="color: #8BC34A; margin-bottom: 15px;">
+            <i class="fas fa-info-circle"></i> Mild OCD Symptoms
+          </h4>
+          <p>You reported ${scores.partAScore} OCD symptoms with mild severity (total score: ${scores.partBScore}/20).</p>
+          <div style="margin-top: 15px; padding: 15px; background: white; border-radius: 8px;">
+            <strong>Part A (Symptom Checklist):</strong> ${scores.partAScore}/20 items endorsed<br>
+            <strong>Part B (Severity):</strong> ${scores.partBScore}/20 total score (mild)<br>
+            <strong>Assessment Date:</strong> ${new Date().toLocaleDateString()}
+          </div>
+        `;
+        
+        recommendations = [
+          "Symptoms appear mild but may benefit from monitoring",
+          "Consider psychoeducation about OCD and coping strategies",
+          "Discuss with healthcare provider if symptoms worsen",
+          "Practice stress management and relaxation techniques"
+        ];
+      } else if (scores.partBScore <= 10) {
+        clinicalInterpretation.textContent = "MODERATE SYMPTOMS";
+        clinicalInterpretation.style.color = "#FF9800";
+        
+        interpretation = `
+          <h4 style="color: #FF9800; margin-bottom: 15px;">
+            <i class="fas fa-exclamation-circle"></i> Moderate OCD Symptoms
+          </h4>
+          <p>You reported ${scores.partAScore} OCD symptoms with moderate severity (total score: ${scores.partBScore}/20).</p>
+          <div style="margin-top: 15px; padding: 15px; background: white; border-radius: 8px;">
+            <strong>Part A (Symptom Checklist):</strong> ${scores.partAScore}/20 items endorsed<br>
+            <strong>Part B (Severity):</strong> ${scores.partBScore}/20 total score (moderate)<br>
+            <strong>Assessment Date:</strong> ${new Date().toLocaleDateString()}
+          </div>
+        `;
+        
+        recommendations = [
+          "Clinical evaluation by mental health professional recommended",
+          "Consider Cognitive Behavioral Therapy (CBT) for OCD",
+          "Discuss treatment options with healthcare provider",
+          "Monitor impact on daily functioning and quality of life"
+        ];
+      } else {
+        clinicalInterpretation.textContent = "SEVERE SYMPTOMS";
+        clinicalInterpretation.style.color = "#F44336";
+        
+        interpretation = `
+          <h4 style="color: #F44336; margin-bottom: 15px;">
+            <i class="fas fa-exclamation-triangle"></i> Severe OCD Symptoms
+          </h4>
+          <p>You reported ${scores.partAScore} OCD symptoms with severe impairment (total score: ${scores.partBScore}/20).</p>
+          <div style="margin-top: 15px; padding: 15px; background: white; border-radius: 8px;">
+            <strong>Part A (Symptom Checklist):</strong> ${scores.partAScore}/20 items endorsed<br>
+            <strong>Part B (Severity):</strong> ${scores.partBScore}/20 total score (severe)<br>
+            <strong>Assessment Date:</strong> ${new Date().toLocaleDateString()}
+          </div>
+        `;
+        
+        recommendations = [
+          "Comprehensive clinical evaluation strongly recommended",
+          "Consider specialized OCD treatment program",
+          "Evidence-based treatments include CBT with Exposure and Response Prevention (ERP)",
+          "Medication management may be considered in conjunction with therapy",
+          "Address functional impairment and quality of life impacts"
+        ];
+      }
+      
+      // Add recommendations
+      interpretation += `
+        <div style="margin-top: 20px;">
+          <h5 style="color: var(--primary-blue); margin-bottom: 10px;"><i class="fas fa-heartbeat"></i> Recommendations</h5>
+          <ul style="margin-left: 20px;">
+            ${recommendations.map(rec => `<li>${rec}</li>`).join('')}
+          </ul>
+        </div>
+      `;
+      
+      container.innerHTML = interpretation;
+    }
+
+    // Update symptom summary
+    function updateSymptomSummary(scores) {
+      const container = document.getElementById('symptomDetails');
+      
+      if (scores.endorsedSymptoms.length === 0) {
+        container.innerHTML = `
+          <p>No specific OCD symptoms were reported in Part A.</p>
+        `;
+        return;
+      }
+      
+      let html = `
+        <p>You reported the following ${scores.endorsedSymptoms.length} symptom(s) in Part A:</p>
+        <div style="margin-top: 15px; max-height: 300px; overflow-y: auto; padding: 10px; background: white; border-radius: 8px;">
+      `;
+      
+      scores.endorsedSymptoms.forEach(symptom => {
+        html += `
+          <div style="padding: 10px; border-bottom: 1px solid #F5F5F5;">
+            <strong>Item ${symptom.id}:</strong> ${symptom.text}
+          </div>
+        `;
+      });
+      
+      html += `</div>`;
+      
+      if (scores.partBCompleted) {
+        html += `
+          <div style="margin-top: 20px;">
+            <p><strong>Severity Assessment (Part B):</strong> Total score: ${scores.partBScore}/20</p>
+            <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+              <div style="flex: 1; height: 10px; background: #E0E0E0; border-radius: 5px; overflow: hidden;">
+                <div style="width: ${(scores.partBScore / 20) * 100}%; height: 100%; background: linear-gradient(90deg, #4CAF50, #FF9800, #F44336); border-radius: 5px;"></div>
+              </div>
+              <div style="font-size: 0.9rem; color: var(--text-light);">
+                ${scores.partBScore}/20
+              </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 5px; font-size: 0.8rem; color: var(--text-light);">
+              <span>Mild (0-5)</span>
+              <span>Moderate (6-10)</span>
+              <span>Severe (11-20)</span>
+            </div>
+          </div>
+        `;
+      }
+      
+      container.innerHTML = html;
+    }
+
+    // Save assessment results
+    function saveAssessmentResults(participantName, scores) {
+      const assessmentData = {
+        test: "Florida Obsessive Compulsive Inventory (FOCI)",
+        date: new Date().toISOString(),
+        participantName: participantName,
+        clinicianName: document.getElementById('clinicianName').value,
+        referenceNumber: document.getElementById('referenceNumber').value,
+        scores: scores,
+        responses: {
+          partA: userResponses.partA.map((response, index) => ({
+            id: index + 1,
+            text: getAllQuestions()[index],
+            response: response === true ? "YES" : response === false ? "NO" : "Not answered"
+          })),
+          partB: userResponses.partB.map((response, index) => ({
+            id: index + 1,
+            question: fociPartB[index].question,
+            score: response,
+            response: response !== null ? `${response} - ${fociPartB[index].options[response].label}` : "Not answered"
+          }))
+        }
+      };
+      
+      // Save to localStorage
+      const assessments = JSON.parse(localStorage.getItem('fociAssessments') || '[]');
+      assessments.push(assessmentData);
+      localStorage.setItem('fociAssessments', JSON.stringify(assessments));
+    }
+
+    // Save form data
+    function saveFormData() {
+      const formData = {
+        participantName: document.getElementById('participantName').value,
+        clinicianName: document.getElementById('clinicianName').value,
+        referenceNumber: document.getElementById('referenceNumber').value,
+        assessmentDate: document.getElementById('assessmentDate').value,
+        responses: userResponses
+      };
+      
+      localStorage.setItem('fociFormData', JSON.stringify(formData));
+    }
+
+    // Load form data
+    function loadFormData() {
+      const savedData = localStorage.getItem('fociFormData');
+      if (savedData) {
+        try {
+          const formData = JSON.parse(savedData);
+          
+          document.getElementById('participantName').value = formData.participantName || '';
+          document.getElementById('clinicianName').value = formData.clinicianName || '';
+          document.getElementById('referenceNumber').value = formData.referenceNumber || '';
+          if (formData.assessmentDate) {
+            document.getElementById('assessmentDate').value = formData.assessmentDate;
+          }
+          
+          if (formData.responses) {
+            userResponses = formData.responses;
+            renderPartAQuestions();
+            renderPartBQuestions();
+            updateScoreDisplay();
+            
+            // Enable Part B button if needed
+            const yesResponses = userResponses.partA.filter(r => r === true).length;
+            document.getElementById('partBButton').disabled = yesResponses === 0;
+            
+            // Show appropriate part
+            if (yesResponses > 0 && userResponses.partB.some(r => r !== null)) {
+              showPart('B');
+              document.getElementById('nextButton').style.display = 'none';
+              document.getElementById('submitButton').style.display = 'flex';
+            }
+          }
+        } catch (e) {
+          console.log('Could not load saved data:', e);
+        }
+      }
+    }
+
+    // Reset assessment
+    function resetAssessment() {
+      if (confirm("Are you sure you want to reset all responses? This action cannot be undone.")) {
+        userResponses = {
+          partA: new Array(20).fill(null),
+          partB: new Array(5).fill(null)
+        };
+        
+        document.getElementById('participantName').value = '';
+        document.getElementById('clinicianName').value = '';
+        document.getElementById('referenceNumber').value = '';
+        
+        renderPartAQuestions();
+        renderPartBQuestions();
+        updateScoreDisplay();
+        
+        // Reset UI state
+        showPart('A');
+        document.getElementById('partBButton').disabled = true;
+        document.getElementById('nextButton').style.display = 'flex';
+        document.getElementById('submitButton').style.display = 'none';
+        document.getElementById('printButton').style.display = 'none';
+        
+        // Show all sections
+        document.getElementById('partAContainer').style.display = 'block';
+        document.getElementById('partBContainer').style.display = 'block';
+        document.getElementById('scoreDisplay').style.display = 'flex';
+        document.querySelector('.part-navigation').style.display = 'flex';
+        document.getElementById('resultsContainer').style.display = 'none';
+        
+        // Clear saved form data
+        localStorage.removeItem('fociFormData');
+      }
+    }
+
+    // Print report
+    function printReport() {
+      const printContent = document.getElementById('resultsContainer').innerHTML;
+      const originalContent = document.body.innerHTML;
+      const participantName = document.getElementById('participantName').value || "Participant";
+      const assessmentDate = document.getElementById('assessmentDate').value;
+      
+      document.body.innerHTML = `
+        <div style="padding: 30px; font-family: Arial, sans-serif;">
+          <h1 style="color: #1565C0; border-bottom: 2px solid #1565C0; padding-bottom: 10px;">
+            FOCI Assessment Report
+          </h1>
+          <div style="margin: 20px 0; padding: 15px; background: #E3F2FD; border-radius: 8px;">
+            <strong>Participant:</strong> ${participantName}<br>
+            <strong>Assessment Date:</strong> ${assessmentDate}<br>
+            <strong>Clinician:</strong> ${document.getElementById('clinicianName').value || 'Not specified'}<br>
+            <strong>Report Date:</strong> ${new Date().toLocaleDateString()}
+          </div>
+          ${printContent}
+          <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccc; font-size: 0.8rem; color: #666;">
+            <p><strong>Disclaimer:</strong> The Florida Obsessive Compulsive Inventory (FOCI) is a screening tool. A high score does not necessarily mean you have an anxiety disorder — only an evaluation by a health professional can make this determination.</p>
+            <p style="margin-top: 10px;">This assessment should be interpreted by a qualified mental health professional.</p>
+          </div>
+        </div>
+      `;
+      
+      window.print();
+      document.body.innerHTML = originalContent;
+      location.reload();
+    }
+  </script>
+</body>
+</html>

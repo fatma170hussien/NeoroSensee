@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAD-7 Anxiety Scale - NeuroSense</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: #6a11cb;
+      --secondary-color: #2575fc;
+      --accent-color: #4a00e0;
+      --text-color: #333;
+      --light-text: #fff;
+      --card-bg: #fff;
+      --section-bg: #f4f6f9;
+      --minimal-anxiety: #4CAF50;
+      --mild-anxiety: #8BC34A;
+      --moderate-anxiety: #FFC107;
+      --severe-anxiety: #F44336;
+      --progress-color: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background: var(--section-bg);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+    
+    .test-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .test-header {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 30px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+    
+    .test-header h1 {
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+    }
+    
+    .test-header p {
+      opacity: 0.9;
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .test-info {
+      display: flex;
+      justify-content: space-between;
+      background: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      margin-bottom: 25px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .info-item i {
+      color: var(--primary-color);
+      font-size: 1.2rem;
+    }
+    
+    .progress-bar {
+      height: 8px;
+      background: #e0e0e0;
+      border-radius: 4px;
+      margin-bottom: 30px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: var(--progress-color);
+      width: 0%;
+      transition: width 0.3s ease;
+      border-radius: 4px;
+    }
+    
+    .instructions-box {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 25px;
+      border-left: 4px solid var(--primary-color);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .instructions-box h3 {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .time-frame {
+      background: #FFF3E0;
+      border-left: 4px solid #FF9800;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+    
+    .time-frame strong {
+      color: #E65100;
+    }
+    
+    .questions-container {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+    
+    .question-item {
+      margin-bottom: 30px;
+      padding-bottom: 25px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .question-item:last-child {
+      border-bottom: none;
+    }
+    
+    .question-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 35px;
+      height: 35px;
+      background: var(--section-bg);
+      color: var(--primary-color);
+      border-radius: 50%;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    
+    .question-text {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      color: #444;
+      line-height: 1.5;
+      font-weight: 500;
+    }
+    
+    .response-options {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 15px;
+    }
+    
+    @media (max-width: 768px) {
+      .response-options {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+    }
+    
+    .response-option {
+      text-align: center;
+    }
+    
+    .option-btn {
+      width: 100%;
+      padding: 12px 5px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      background: white;
+      color: #555;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 0.95rem;
+      line-height: 1.3;
+    }
+    
+    .option-btn:hover {
+      border-color: var(--primary-color);
+      color: var(--primary-color);
+      transform: translateY(-2px);
+    }
+    
+    .option-btn.selected {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+      box-shadow: 0 5px 15px rgba(106, 17, 203, 0.2);
+    }
+    
+    .option-label {
+      display: block;
+      margin-top: 5px;
+      font-size: 0.85rem;
+      color: #777;
+      font-weight: normal;
+    }
+    
+    /* Functional Impairment Question */
+    .functional-impairment {
+      margin-top: 40px;
+      padding: 25px;
+      background: #F5F9FF;
+      border-radius: 10px;
+      border: 2px solid #E3F2FD;
+    }
+    
+    .functional-impairment h3 {
+      color: #1565C0;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .impairment-options {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    
+    @media (max-width: 768px) {
+      .impairment-options {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .impairment-btn {
+      width: 100%;
+      padding: 15px 5px;
+      border: 2px solid #BBDEFB;
+      border-radius: 8px;
+      background: white;
+      color: #1976D2;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1rem;
+    }
+    
+    .impairment-btn:hover {
+      border-color: #2196F3;
+      background: #E3F2FD;
+      transform: translateY(-2px);
+    }
+    
+    .impairment-btn.selected {
+      background: #2196F3;
+      color: white;
+      border-color: #1976D2;
+      box-shadow: 0 5px 15px rgba(33, 150, 243, 0.2);
+    }
+    
+    .test-controls {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+    
+    .control-btn {
+      padding: 12px 30px;
+      border: none;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .prev-btn {
+      background: #f5f5f5;
+      color: #666;
+    }
+    
+    .prev-btn:hover {
+      background: #e0e0e0;
+    }
+    
+    .next-btn {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .next-btn:hover {
+      background: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .submit-btn {
+      background: linear-gradient(135deg, #00b09b, #96c93d);
+      color: white;
+      padding: 15px 40px;
+      font-size: 1.1rem;
+    }
+    
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(0, 176, 155, 0.3);
+    }
+    
+    /* Results Section */
+    .results-container {
+      display: none;
+      background: white;
+      border-radius: 15px;
+      padding: 40px;
+      margin-top: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      text-align: center;
+    }
+    
+    .score-display {
+      font-size: 4rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      margin: 20px 0;
+    }
+    
+    .score-circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 30px;
+      font-size: 3.5rem;
+      font-weight: bold;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .interpretation-box {
+      background: var(--section-bg);
+      padding: 25px;
+      border-radius: 10px;
+      margin: 30px 0;
+      text-align: left;
+    }
+    
+    .interpretation-box h3 {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .severity-scale {
+      display: flex;
+      justify-content: space-between;
+      margin: 30px 0;
+      position: relative;
+    }
+    
+    .scale-item {
+      text-align: center;
+      flex: 1;
+      padding: 15px;
+      position: relative;
+      border-radius: 8px;
+      margin: 0 5px;
+    }
+    
+    .scale-item:nth-child(1) { background: rgba(76, 175, 80, 0.1); border: 2px solid var(--minimal-anxiety); }
+    .scale-item:nth-child(2) { background: rgba(139, 195, 74, 0.1); border: 2px solid var(--mild-anxiety); }
+    .scale-item:nth-child(3) { background: rgba(255, 193, 7, 0.1); border: 2px solid var(--moderate-anxiety); }
+    .scale-item:nth-child(4) { background: rgba(244, 67, 54, 0.1); border: 2px solid var(--severe-anxiety); }
+    
+    .scale-level {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .scale-range {
+      font-size: 0.9rem;
+      color: #666;
+      font-weight: 600;
+    }
+    
+    .scale-indicator {
+      position: absolute;
+      top: -15px;
+      transform: translateX(-50%);
+      font-size: 1.8rem;
+    }
+    
+    .score-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+    
+    .detail-card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      border-left: 4px solid var(--primary-color);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      text-align: left;
+    }
+    
+    .detail-card h4 {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .impairment-result {
+      background: #E8F5E9;
+      border-left: 4px solid #4CAF50;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 25px 0;
+      text-align: left;
+    }
+    
+    .impairment-result h4 {
+      color: #2E7D32;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .recommendations {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    
+    .recommendation-card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      border-left: 4px solid var(--primary-color);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      text-align: left;
+    }
+    
+    .recommendation-card h4 {
+      color: var(--primary-color);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .actions {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 40px;
+    }
+    
+    .action-btn {
+      padding: 12px 25px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    
+    .retake-btn {
+      background: #f5f5f5;
+      color: #666;
+    }
+    
+    .retake-btn:hover {
+      background: #e0e0e0;
+    }
+    
+    .dashboard-btn {
+      background: var(--primary-color);
+      color: white;
+    }
+    
+    .dashboard-btn:hover {
+      background: var(--secondary-color);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Name Input Modal */
+    .name-modal {
+      display: flex;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 15px;
+      padding: 40px;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-content h2 {
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+
+    .modal-content p {
+      color: #666;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .name-input {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      margin-bottom: 25px;
+      transition: all 0.3s;
+    }
+
+    .name-input:focus {
+      border-color: var(--primary-color);
+      outline: none;
+    }
+
+    .modal-btn {
+      padding: 12px 30px;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1rem;
+    }
+
+    .modal-btn:hover {
+      background: var(--secondary-color);
+      transform: translateY(-2px);
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .test-container {
+        padding: 15px;
+      }
+      
+      .test-header {
+        padding: 20px;
+      }
+      
+      .test-header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .test-info {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .severity-scale {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .scale-item {
+        margin: 0;
+      }
+      
+      .test-controls {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .control-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .actions {
+        flex-direction: column;
+      }
+      
+      .action-btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      .modal-content {
+        padding: 25px;
+        margin: 20px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .questions-container {
+        padding: 20px;
+      }
+      
+      .question-text {
+        font-size: 1rem;
+      }
+      
+      .score-circle {
+        width: 120px;
+        height: 120px;
+        font-size: 2.5rem;
+      }
+      
+      .recommendations, .score-details {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Name Input Modal -->
+  <div class="name-modal" id="nameModal">
+    <div class="modal-content">
+      <h2><i class="fas fa-clipboard-check"></i> GAD-7 Anxiety Scale</h2>
+      <p>A 7-item self-report screening tool for Generalized Anxiety Disorder. This brief assessment evaluates anxiety symptoms over the past two weeks and their impact on daily functioning.</p>
+      <input type="text" class="name-input" id="userNameInput" placeholder="Enter your name or nickname" maxlength="30">
+      <button class="modal-btn" onclick="startTest()">
+        <i class="fas fa-play-circle"></i> Start Assessment
+      </button>
+    </div>
+  </div>
+
+  <div class="test-container" id="mainContent" style="display: none;">
+    <!-- Test Header -->
+    <div class="test-header">
+      <h1>GAD-7 Anxiety Scale</h1>
+      <p>7-item screening tool for Generalized Anxiety Disorder. Assess anxiety symptoms over the past two weeks.</p>
+    </div>
+    
+    <!-- Test Information -->
+    <div class="test-info">
+      <div class="info-item">
+        <i class="fas fa-user"></i>
+        <div>
+          <div class="info-label">Name</div>
+          <div id="userNameDisplay">Guest</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <i class="fas fa-calendar-alt"></i>
+        <div>
+          <div class="info-label">Date</div>
+          <div id="currentDateDisplay">Loading...</div>
+        </div>
+      </div>
+      <div class="info-item">
+        <i class="fas fa-chart-line"></i>
+        <div>
+          <div class="info-label">Progress</div>
+          <div><span id="currentQuestionDisplay">1</span>/7</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    
+    <!-- Instructions -->
+    <div class="instructions-box">
+      <h3><i class="fas fa-info-circle"></i> Instructions</h3>
+      <div class="time-frame">
+        <strong>Time Frame:</strong> Over the last two weeks, how often have you been bothered by the following problems?
+      </div>
+      <p>Select the response that best describes how frequently you experienced each symptom during the past 14 days.</p>
+    </div>
+    
+    <!-- Questions Container -->
+    <div class="questions-container" id="questionsContainer">
+      <!-- Questions will be dynamically inserted here -->
+    </div>
+    
+    <!-- Functional Impairment Question -->
+    <div class="functional-impairment" id="functionalImpairment">
+      <h3><i class="fas fa-exclamation-circle"></i> Functional Impairment</h3>
+      <p>If you checked any problems above, how difficult have they made it for you to do your work, take care of things at home, or get along with other people?</p>
+      <div class="impairment-options">
+        <button class="impairment-btn" onclick="selectImpairment('not')">
+          Not difficult at all
+        </button>
+        <button class="impairment-btn" onclick="selectImpairment('somewhat')">
+          Somewhat difficult
+        </button>
+        <button class="impairment-btn" onclick="selectImpairment('very')">
+          Very difficult
+        </button>
+        <button class="impairment-btn" onclick="selectImpairment('extremely')">
+          Extremely difficult
+        </button>
+      </div>
+    </div>
+    
+    <!-- Test Controls -->
+    <div class="test-controls" id="testControls">
+      <button class="control-btn prev-btn" id="prevBtn" onclick="prevQuestion()">
+        <i class="fas fa-arrow-left"></i> Previous
+      </button>
+      <button class="control-btn next-btn" id="nextBtn" onclick="nextQuestion()">
+        Next <i class="fas fa-arrow-right"></i>
+      </button>
+      <button class="control-btn submit-btn" id="submitBtn" onclick="submitTest()" style="display: none;">
+        <i class="fas fa-paper-plane"></i> Get Results
+      </button>
+    </div>
+    
+    <!-- Results Section -->
+    <div class="results-container" id="resultsContainer">
+      <i class="fas fa-chart-bar" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 20px;"></i>
+      <h2>GAD-7 Anxiety Scale Results</h2>
+      <p>Assessment of anxiety symptoms over the past two weeks</p>
+      
+      <div class="score-circle" id="scoreCircle">0</div>
+      
+      <div class="score-display">
+        Score: <span id="finalScore">0</span>/21
+      </div>
+      
+      <div class="interpretation-box">
+        <h3><i class="fas fa-clipboard-check"></i> Interpretation</h3>
+        <p id="interpretationText">Based on your responses over the past two weeks, your anxiety level has been assessed. The GAD-7 is a validated screening tool for Generalized Anxiety Disorder.</p>
+      </div>
+      
+      <!-- Severity Scale -->
+      <div class="severity-scale">
+        <div class="scale-item">
+          <div class="scale-level" style="color: var(--minimal-anxiety);">Minimal Anxiety</div>
+          <div class="scale-range">0-4</div>
+        </div>
+        <div class="scale-item">
+          <div class="scale-level" style="color: var(--mild-anxiety);">Mild Anxiety</div>
+          <div class="scale-range">5-9</div>
+        </div>
+        <div class="scale-item">
+          <div class="scale-level" style="color: var(--moderate-anxiety);">Moderate Anxiety</div>
+          <div class="scale-range">10-14</div>
+        </div>
+        <div class="scale-item">
+          <div class="scale-level" style="color: var(--severe-anxiety);">Severe Anxiety</div>
+          <div class="scale-range">15-21</div>
+        </div>
+      </div>
+      
+      <div id="severityIndicator" class="scale-indicator">↓</div>
+      
+      <!-- Score Details -->
+      <div class="score-details">
+        <div class="detail-card">
+          <h4><i class="fas fa-history"></i> Time Frame</h4>
+          <p>This assessment evaluates anxiety symptoms experienced <strong>over the past two weeks</strong>, providing a snapshot of recent anxiety levels.</p>
+        </div>
+        
+        <div class="detail-card">
+          <h4><i class="fas fa-bullseye"></i> Clinical Cut-off</h4>
+          <p>A score of <strong>10 or higher</strong> suggests clinically significant anxiety symptoms that may warrant further evaluation.</p>
+        </div>
+        
+        <div class="detail-card">
+          <h4><i class="fas fa-shield-alt"></i> Reliability & Validity</h4>
+          <p>The GAD-7 has excellent psychometric properties with high sensitivity and specificity for detecting GAD in primary care settings.</p>
+        </div>
+      </div>
+      
+      <!-- Functional Impairment Result -->
+      <div class="impairment-result" id="impairmentResult">
+        <!-- Will be dynamically filled -->
+      </div>
+      
+      <!-- Recommendations -->
+      <div class="interpretation-box">
+        <h3><i class="fas fa-lightbulb"></i> Recommendations</h3>
+        <div class="recommendations" id="recommendations">
+          <!-- Recommendations will be dynamically inserted -->
+        </div>
+      </div>
+      
+      <!-- Reference -->
+      <div class="interpretation-box">
+        <h3><i class="fas fa-book"></i> Reference & Copyright</h3>
+        <p><strong>Source:</strong> Primary Care Evaluation of Mental Disorders Patient Health Questionnaire (PRIME-MD-PHQ).</p>
+        <p><strong>Developers:</strong> Drs. Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke, and colleagues.</p>
+        <p><strong>Copyright:</strong> © 1999 Pfizer Inc. All rights reserved. Reproduced with permission.</p>
+        <p><strong>Contact:</strong> For research information, contact Dr. Spitzer at ris8@columbia.edu</p>
+      </div>
+      
+      <!-- Actions -->
+      <div class="actions">
+        <button class="action-btn retake-btn" onclick="retakeTest()">
+          <i class="fas fa-redo"></i> Retake Test
+        </button>
+        <a href="dashboard.html" class="action-btn dashboard-btn">
+          <i class="fas fa-chart-line"></i> View Dashboard
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // GAD-7 Questions Data (7 items)
+    const questions = [
+      { id: 1, text: "Feeling nervous, anxious, or on edge" },
+      { id: 2, text: "Not being able to stop or control worrying" },
+      { id: 3, text: "Worrying too much about different things" },
+      { id: 4, text: "Trouble relaxing" },
+      { id: 5, text: "Being so restless that it is hard to sit still" },
+      { id: 6, text: "Becoming easily annoyed or irritable" },
+      { id: 7, text: "Feeling afraid, as if something awful might happen" }
+    ];
+
+    // Response options (0-3 scale)
+    const responseOptions = [
+      { value: 0, label: "Not at all" },
+      { value: 1, label: "Several days" },
+      { value: 2, label: "More than half the days" },
+      { value: 3, label: "Nearly every day" }
+    ];
+
+    // Impairment options
+    const impairmentOptions = [
+      { value: "not", label: "Not difficult at all" },
+      { value: "somewhat", label: "Somewhat difficult" },
+      { value: "very", label: "Very difficult" },
+      { value: "extremely", label: "Extremely difficult" }
+    ];
+
+    // User data and responses
+    let userName = "";
+    let userResponses = new Array(questions.length).fill(null);
+    let functionalImpairment = null;
+    let currentQuestionIndex = 0;
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      // Focus on input field
+      document.getElementById('userNameInput').focus();
+      
+      // Enter key to start test
+      document.getElementById('userNameInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          startTest();
+        }
+      });
+    });
+
+    // Start test
+    function startTest() {
+      const nameInput = document.getElementById('userNameInput').value.trim();
+      
+      if (nameInput === "") {
+        alert("Please enter your name to continue.");
+        document.getElementById('userNameInput').focus();
+        return;
+      }
+      
+      // Set user name (use first 20 characters)
+      userName = nameInput.substring(0, 20);
+      document.getElementById('userNameDisplay').textContent = userName;
+      
+      // Set current date dynamically
+      updateCurrentDate();
+      
+      // Hide modal and show test
+      document.getElementById('nameModal').style.display = 'none';
+      document.getElementById('mainContent').style.display = 'block';
+      
+      // Render first question
+      renderQuestion();
+      updateProgress();
+    }
+
+    // Update current date dynamically
+    function updateCurrentDate() {
+      const now = new Date();
+      const formattedDate = now.toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      document.getElementById('currentDateDisplay').textContent = formattedDate;
+    }
+
+    // Render current question
+    function renderQuestion() {
+      const container = document.getElementById('questionsContainer');
+      const question = questions[currentQuestionIndex];
+      
+      // Create options HTML
+      const optionsHTML = responseOptions.map(option => `
+        <div class="response-option">
+          <button class="option-btn ${userResponses[currentQuestionIndex] === option.value ? 'selected' : ''}" 
+                  onclick="selectResponse(${option.value})">
+            ${option.value}
+          </button>
+          <span class="option-label">
+            <strong>${option.label}</strong>
+          </span>
+        </div>
+      `).join('');
+      
+      container.innerHTML = `
+        <div class="question-item">
+          <div class="question-number">${question.id}</div>
+          <div class="question-text">${question.text}</div>
+          <div class="response-options">
+            ${optionsHTML}
+          </div>
+        </div>
+      `;
+
+      // Update displays
+      document.getElementById('currentQuestionDisplay').textContent = question.id;
+      document.getElementById('prevBtn').style.display = currentQuestionIndex === 0 ? 'none' : 'flex';
+      document.getElementById('nextBtn').style.display = currentQuestionIndex === questions.length - 1 ? 'none' : 'flex';
+      document.getElementById('submitBtn').style.display = currentQuestionIndex === questions.length - 1 ? 'flex' : 'none';
+    }
+
+    // Select response
+    function selectResponse(value) {
+      userResponses[currentQuestionIndex] = value;
+      renderQuestion();
+      
+      // Auto-advance if not last question
+      if (currentQuestionIndex < questions.length - 1) {
+        setTimeout(() => {
+          nextQuestion();
+        }, 300);
+      }
+    }
+
+    // Select functional impairment
+    function selectImpairment(value) {
+      functionalImpairment = value;
+      
+      // Update button styles
+      document.querySelectorAll('.impairment-btn').forEach(btn => {
+        btn.classList.remove('selected');
+      });
+      event.target.classList.add('selected');
+    }
+
+    // Next question
+    function nextQuestion() {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        renderQuestion();
+        updateProgress();
+      }
+    }
+
+    // Previous question
+    function prevQuestion() {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderQuestion();
+        updateProgress();
+      }
+    }
+
+    // Update progress
+    function updateProgress() {
+      const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+      document.getElementById('progressFill').style.width = `${progress}%`;
+      
+      // Check if all questions are answered
+      const answered = userResponses.filter(r => r !== null).length;
+      if (answered === questions.length) {
+        document.getElementById('submitBtn').style.backgroundColor = 'linear-gradient(135deg, #00b09b, #96c93d)';
+      }
+    }
+
+    // Calculate total score
+    function calculateScore() {
+      let score = 0;
+      userResponses.forEach(response => {
+        if (response !== null) {
+          score += response;
+        }
+      });
+      return score;
+    }
+
+    // Get interpretation based on GAD-7 scoring guidelines
+    function getInterpretation(score) {
+      if (score <= 4) {
+        return {
+          level: "Minimal Anxiety",
+          description: "Your anxiety symptoms are minimal and likely not interfering significantly with your daily life. This is within the normal range for most individuals.",
+          color: "#4CAF50",
+          position: "10%"
+        };
+      } else if (score <= 9) {
+        return {
+          level: "Mild Anxiety",
+          description: "You experience mild anxiety symptoms. These may cause some distress but are generally manageable with self-care strategies.",
+          color: "#8BC34A",
+          position: "33%"
+        };
+      } else if (score <= 14) {
+        return {
+          level: "Moderate Anxiety",
+          description: "You experience moderate anxiety symptoms that likely affect your daily functioning. These symptoms may benefit from additional support or intervention.",
+          color: "#FFC107",
+          position: "57%"
+        };
+      } else {
+        return {
+          level: "Severe Anxiety",
+          description: "You experience severe anxiety symptoms that significantly impact your daily life. Professional evaluation and support are recommended.",
+          color: "#F44336",
+          position: "83%"
+        };
+      }
+    }
+
+    // Get functional impairment description
+    function getImpairmentDescription(impairment) {
+      switch(impairment) {
+        case 'not':
+          return { level: "No Impairment", description: "Your anxiety symptoms do not significantly interfere with daily functioning." };
+        case 'somewhat':
+          return { level: "Mild Impairment", description: "Your anxiety symptoms cause some difficulty in daily activities but are manageable." };
+        case 'very':
+          return { level: "Moderate Impairment", description: "Your anxiety symptoms cause considerable difficulty in work, home, or social functioning." };
+        case 'extremely':
+          return { level: "Severe Impairment", description: "Your anxiety symptoms cause extreme difficulty and significant interference with daily life." };
+        default:
+          return { level: "Not Assessed", description: "Functional impairment was not assessed." };
+      }
+    }
+
+    // Get recommendations based on score
+    function getRecommendations(score, impairment) {
+      const recommendations = [];
+      
+      if (score <= 4) {
+        recommendations.push(
+          {
+            title: "Maintain Wellness",
+            text: "Continue with healthy lifestyle habits including regular exercise, balanced diet, and adequate sleep to maintain low anxiety levels.",
+            icon: "fas fa-heartbeat"
+          },
+          {
+            title: "Stress Prevention",
+            text: "Practice stress management techniques like mindfulness or meditation to prevent anxiety from developing.",
+            icon: "fas fa-spa"
+          }
+        );
+      } else if (score <= 9) {
+        recommendations.push(
+          {
+            title: "Anxiety Management",
+            text: "Learn and practice relaxation techniques such as deep breathing, progressive muscle relaxation, or guided imagery.",
+            icon: "fas fa-wind"
+          },
+          {
+            title: "Lifestyle Adjustments",
+            text: "Consider reducing caffeine intake, improving sleep hygiene, and increasing physical activity.",
+            icon: "fas fa-running"
+          }
+        );
+      } else if (score <= 14) {
+        recommendations.push(
+          {
+            title: "Professional Consultation",
+            text: "Consider consulting with a healthcare professional for evaluation and evidence-based treatment options.",
+            icon: "fas fa-user-md"
+          },
+          {
+            title: "Therapeutic Strategies",
+            text: "Explore Cognitive Behavioral Therapy (CBT) techniques for anxiety management.",
+            icon: "fas fa-brain"
+          }
+        );
+      } else {
+        recommendations.push(
+          {
+            title: "Professional Evaluation",
+            text: "Seek evaluation by a mental health professional for comprehensive assessment and treatment planning.",
+            icon: "fas fa-stethoscope"
+          },
+          {
+            title: "Immediate Support",
+            text: "Consider reaching out to support services or crisis lines if anxiety feels overwhelming.",
+            icon: "fas fa-phone-alt"
+          }
+        );
+      }
+      
+      // Add impairment-specific recommendations
+      if (impairment === 'very' || impairment === 'extremely') {
+        recommendations.push({
+          title: "Functional Support",
+          text: "Consider workplace or academic accommodations and practical support for daily tasks.",
+          icon: "fas fa-hands-helping"
+        });
+      }
+      
+      // General recommendation
+      recommendations.push({
+        title: "Regular Monitoring",
+        text: "Retake this assessment every 2-4 weeks to track changes in your anxiety symptoms.",
+        icon: "fas fa-chart-line"
+      });
+      
+      return recommendations;
+    }
+
+    // Submit test
+    function submitTest() {
+      const unanswered = userResponses.filter(r => r === null).length;
+      if (unanswered > 0) {
+        alert(`Please answer all questions before submitting. You have ${unanswered} unanswered questions.`);
+        return;
+      }
+
+      if (!functionalImpairment) {
+        alert("Please select how difficult your symptoms have made daily activities.");
+        return;
+      }
+
+      // Calculate score
+      const score = calculateScore();
+      const interpretation = getInterpretation(score);
+      const impairmentInfo = getImpairmentDescription(functionalImpairment);
+      const recommendations = getRecommendations(score, functionalImpairment);
+
+      // Display results
+      document.getElementById('finalScore').textContent = score;
+      document.getElementById('scoreCircle').textContent = score;
+      document.getElementById('scoreCircle').style.background = `linear-gradient(135deg, ${interpretation.color}, ${interpretation.color}99)`;
+      document.getElementById('interpretationText').innerHTML = `
+        <strong>${interpretation.level}:</strong> ${interpretation.description}
+      `;
+
+      // Position severity indicator
+      document.getElementById('severityIndicator').style.left = interpretation.position;
+      document.getElementById('severityIndicator').style.color = interpretation.color;
+
+      // Display impairment result
+      document.getElementById('impairmentResult').innerHTML = `
+        <h4><i class="fas fa-exclamation-triangle"></i> Functional Impairment</h4>
+        <p><strong>${impairmentInfo.level}:</strong> ${impairmentInfo.description}</p>
+      `;
+
+      // Display recommendations
+      const recContainer = document.getElementById('recommendations');
+      recContainer.innerHTML = recommendations.map(rec => `
+        <div class="recommendation-card">
+          <h4><i class="${rec.icon}"></i> ${rec.title}</h4>
+          <p>${rec.text}</p>
+        </div>
+      `).join('');
+
+      // Show results
+      document.getElementById('questionsContainer').style.display = 'none';
+      document.getElementById('functionalImpairment').style.display = 'none';
+      document.getElementById('testControls').style.display = 'none';
+      document.getElementById('resultsContainer').style.display = 'block';
+
+      // Save to localStorage for dashboard
+      const testResult = {
+        test: "GAD-7 Anxiety Scale",
+        name: userName,
+        score: score,
+        maxScore: 21,
+        date: new Date().toISOString(),
+        interpretation: interpretation.level,
+        impairment: impairmentInfo.level,
+        clinicalNote: score >= 10 ? "Consider further evaluation" : "Within normal limits"
+      };
+      
+      const testHistory = JSON.parse(localStorage.getItem('testHistory')) || [];
+      testHistory.push(testResult);
+      localStorage.setItem('testHistory', JSON.stringify(testHistory));
+    }
+
+    // Retake test
+    function retakeTest() {
+      // Reset responses but keep name
+      userResponses = new Array(questions.length).fill(null);
+      functionalImpairment = null;
+      currentQuestionIndex = 0;
+      
+      // Reset impairment buttons
+      document.querySelectorAll('.impairment-btn').forEach(btn => {
+        btn.classList.remove('selected');
+      });
+      
+      document.getElementById('questionsContainer').style.display = 'block';
+      document.getElementById('functionalImpairment').style.display = 'block';
+      document.getElementById('testControls').style.display = 'flex';
+      document.getElementById('resultsContainer').style.display = 'none';
+      
+      // Update date again in case day changed
+      updateCurrentDate();
+      
+      renderQuestion();
+      updateProgress();
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(event) {
+      // Only handle keyboard navigation if test is visible
+      if (document.getElementById('mainContent').style.display !== 'none') {
+        if (event.key === 'ArrowRight' || event.key === ' ') {
+          event.preventDefault();
+          if (currentQuestionIndex < questions.length - 1) {
+            nextQuestion();
+          }
+        } else if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          if (currentQuestionIndex > 0) {
+            prevQuestion();
+          }
+        } else if (event.key >= '0' && event.key <= '3') {
+          event.preventDefault();
+          selectResponse(parseInt(event.key));
+        } else if (event.key === 'Enter' && currentQuestionIndex === questions.length - 1) {
+          event.preventDefault();
+          submitTest();
+        }
+      }
+    });
+  </script>
+</body>
+</html>

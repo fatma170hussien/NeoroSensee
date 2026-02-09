@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASD Research: Understanding Autism Spectrum Disorder</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      line-height: 1.8;
+      background: #f5f5f5;
+      color: #333;
+      overflow-x: hidden;
+      font-size: 18px;
+      background-image: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      background-color: white;
+      box-shadow: 0 0 30px rgba(0,0,0,0.1);
+      border-radius: 5px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: #2c3e50;
+      text-align: center;
+      margin: 40px 0;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #e74c3c;
+      position: relative;
+    }
+
+    h1:after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: #3498db;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: #2c3e50;
+      margin: 40px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: #2c3e50;
+      margin: 30px 0 15px;
+    }
+
+    h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: #2c3e50;
+      margin: 25px 0 15px;
+    }
+
+    .article-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-bottom: 60px;
+      align-items: flex-start;
+    }
+
+    .article-section:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .text {
+      flex: 2;
+      min-width: 300px;
+      padding: 20px;
+    }
+
+    p {
+      margin-bottom: 25px;
+      color: #555;
+      font-size: 1.1rem;
+      text-align: justify;
+    }
+
+    ul, ol {
+      margin-left: 40px;
+      margin-bottom: 25px;
+    }
+
+    li {
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    .abstract {
+      background-color: #f8f9fa;
+      padding: 25px;
+      border-radius: 8px;
+      margin-bottom: 40px;
+      border-left: 5px solid #3498db;
+    }
+
+    .abstract h2 {
+      margin-top: 0;
+      color: #3498db;
+    }
+
+    .author {
+      margin-top: 60px;
+      font-weight: 600;
+      text-align: right;
+      color: #2c3e50;
+      font-size: 1.2rem;
+      font-style: italic;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+
+    .caption {
+      text-align: center;
+      margin-top: 10px;
+      color: #7f8c8d;
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    /* نظام الصور المحدث - نفس نظام كود الاكتئاب */
+    .image-container {
+      flex: 1;
+      min-width: 300px;
+      max-width: 500px;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.5s ease;
+      opacity: 0;
+      transform: translateY(30px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .image-container.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .image-container:hover {
+      transform: scale(1.02) translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+
+    .image-container img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .research-highlights {
+      background-color: #e8f4f8;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 30px 0;
+      border-left: 5px solid #2c3e50;
+    }
+
+    .research-highlights h3 {
+      color: #2c3e50;
+      margin-top: 0;
+    }
+
+    .treatment-section {
+      background-color: #f0f8f0;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 30px 0;
+      border-left: 5px solid #27ae60;
+    }
+
+    .treatment-section h3 {
+      color: #27ae60;
+      margin-top: 0;
+    }
+
+    .symptoms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .symptom-category {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #e74c3c;
+    }
+
+    .symptom-category h4 {
+      margin-top: 0;
+      color: #e74c3c;
+    }
+
+    .asd-types-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .asd-type {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #9b59b6;
+    }
+
+    .asd-type h4 {
+      margin-top: 0;
+      color: #9b59b6;
+    }
+
+    .statistics-box {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 25px 0;
+      text-align: center;
+    }
+
+    .statistics-box h3 {
+      color: white;
+      margin-top: 0;
+    }
+
+    .stat-item {
+      margin: 15px 0;
+      font-size: 1.1rem;
+    }
+
+    .ai-methods {
+      background-color: #fff8e1;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 25px 0;
+      border-left: 5px solid #ffa000;
+    }
+
+    .ai-methods h3 {
+      color: #ffa000;
+      margin-top: 0;
+    }
+
+    @media(max-width: 768px) {
+      .article-section, 
+      .article-section:nth-child(even) {
+        flex-direction: column;
+      }
+      
+      .image-container {
+        max-width: 100%;
+      }
+      
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      h2 {
+        font-size: 1.8rem;
+      }
+      
+      .symptoms-grid,
+      .asd-types-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Floating image effect */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .floating-img {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .specifier-list {
+      columns: 2;
+      column-gap: 40px;
+    }
+
+    .specifier-list li {
+      break-inside: avoid;
+    }
+
+    @media(max-width: 768px) {
+      .specifier-list {
+        columns: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>ASD: Understanding Autism Spectrum Disorder</h1>
+
+    <div class="abstract">
+      <h2>Overview</h2>
+      <p>Autism spectrum disorder (ASD) is a spectrum of neuropsychiatric disorders that typically come paired with challenges in social interaction. It is a brain condition characterized by diverse signs and symptoms that appear in early childhood. ASD is also associated with communication deficits and repetitive behavior in affected individuals.</p>
+      <p>Children with ASD tend to show repetitive behavior in activities and interests and deficits in communication and reciprocal ability. Though most visible during childhood, the effects of ASD persist for a lifetime. The prevalence of ASD is estimated to be one in a hundred people worldwide.</p>
+    </div>
+
+    <h2>Introduction to ASD</h2>
+
+    <div class="article-section">
+      <div class="text">
+        <h3>Global Impact and Burden</h3>
+        <p>As individuals with ASD lag their healthy peers in development, they are at a higher risk of comorbidities such as depression, stress, and anxiety. This burden not only affects the individual with ASD but is known to spill over to the caregiver. Carrying this burden comes with healthcare costs estimated to range from $2.4 million to $3.2 million (US$) over the lifetime of an individual.</p>
+        <p>Various ASD detection methods have been developed, including neuroimaging modalities and psychological tests. Among these methods, magnetic resonance imaging (MRI) imaging modalities are of paramount importance to physicians. Clinicians rely on MRI modalities to diagnose ASD accurately.</p>
+      </div>
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="ASD Brain Connectivity">
+        </div>
+        <div class="caption">Figure 1: Neural connectivity patterns in ASD showing altered brain networks</div>
+      </div>
+    </div>
+
+    <div class="statistics-box">
+      <h3>ASD Key Statistics</h3>
+      <div class="stat-item">Prevalence: 1 in 100 people worldwide</div>
+      <div class="stat-item">Lifetime healthcare costs: $2.4M - $3.2M per individual</div>
+      <div class="stat-item">Higher risk of comorbidities: depression, stress, anxiety</div>
+      <div class="stat-item">Symptoms typically appear in early childhood</div>
+      <div class="stat-item">Effects persist throughout lifetime</div>
+    </div>
+
+    <h2>Symptoms and Characteristics of ASD</h2>
+
+    <div class="symptoms-grid">
+      <div class="symptom-category">
+        <h4>Communication Symptoms</h4>
+        <ul>
+          <li>Delayed or absent speech development</li>
+          <li>Echolalia (repeating words/phrases)</li>
+          <li>Robotic or monotone voice</li>
+          <li>Difficulty initiating/maintaining conversation</li>
+          <li>Limited facial expressions and gestures</li>
+          <li>Poor eye contact</li>
+          <li>Difficulty sharing interests</li>
+          <li>Challenges in forming friendships</li>
+        </ul>
+      </div>
+      
+      <div class="symptom-category">
+        <h4>Social Symptoms</h4>
+        <ul>
+          <li>Poor social interaction skills</li>
+          <li>Appearing uninterested in others</li>
+          <li>Difficulty understanding emotional cues</li>
+          <li>Misinterpreting social cues</li>
+          <li>Preference for isolation</li>
+          <li>Difficulty with group activities</li>
+          <li>Challenges with reciprocal communication</li>
+        </ul>
+      </div>
+
+      <div class="symptom-category">
+        <h4>Behavioral Symptoms</h4>
+        <ul>
+          <li>Repetitive behaviors and gestures</li>
+          <li>Rigid adherence to routines</li>
+          <li>Stress with environmental changes</li>
+          <li>Intense focus on specific object parts</li>
+          <li>Repetitive activities without boredom</li>
+          <li>Abnormal responses to sensations</li>
+          <li>Inappropriate emotional responses</li>
+        </ul>
+      </div>
+
+      <div class="symptom-category">
+        <h4>Sensory Symptoms</h4>
+        <ul>
+          <li>Hypersensitivity to sounds</li>
+          <li>Reduced sensitivity to pain/heat</li>
+          <li>Fascination with specific stimuli</li>
+          <li>Avoidance of certain textures/foods</li>
+          <li>Unusual sensory seeking behaviors</li>
+          <li>Overwhelmed by sensory input</li>
+          <li>Specific sensory preferences</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Cognitive and Emotional Characteristics</h3>
+    
+    <div class="article-section">
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="ASD Cognitive Patterns">
+        </div>
+        <div class="caption">Figure 2: Cognitive processing differences in individuals with ASD</div>
+      </div>
+      <div class="text">
+        <p>People with autism understand things very literally and do not understand metaphors or jokes. They may have high mental abilities in specific areas such as arithmetic, drawing, and music, while showing significant deficits in other areas.</p>
+        <p>They often struggle with planning and organization and may respond to situations in unexpected ways, laughing in inappropriate situations or becoming emotionally agitated for no apparent reason. This reflects their unique perception of the world and situations around them.</p>
+        <p>Despite these challenges, many individuals with ASD possess remarkable strengths including strong memory for precise details, intense concentration on interests they love, extreme honesty, love of order and precision, analytical thinking abilities, and deep loyalty to trusted individuals.</p>
+      </div>
+    </div>
+
+    <h2>Types of Autism Spectrum Disorder</h2>
+
+    <div class="asd-types-grid">
+      <div class="asd-type">
+        <h4>Classic Autism Disorder</h4>
+        <p><strong>Characteristics:</strong> Most severe type, diagnosed in first three years, marked language development delays, significant social communication difficulties, repetitive behaviors, hypersensitivity to environmental changes.</p>
+        <p><strong>Features:</strong> Limited social interaction, indifference to others, extreme repetitive behaviors (rocking, object arranging), delayed or nonsensical language use, potential strong skills in specific areas like memorization.</p>
+      </div>
+      
+      <div class="asd-type">
+        <h4>Asperger's Syndrome</h4>
+        <p><strong>Characteristics:</strong> Mildest type, normal or high intelligence, no significant speech delays, primary difficulties with social interaction and understanding nonverbal cues.</p>
+        <p><strong>Features:</strong> Intense focus on specific topics, overly formal speech patterns, difficulty with friendships, exceptional skills in areas like programming, mathematics, exact sciences, and art.</p>
+      </div>
+
+      <div class="asd-type">
+        <h4>PDD-NOS</h4>
+        <p><strong>Characteristics:</strong> Intermediate between classic autism and Asperger's, milder symptoms that don't meet full criteria for specific types, problems with social communication and interaction.</p>
+        <p><strong>Features:</strong> Some repetitive behaviors, language acquisition but difficulty in normal conversation use, often improves significantly with early treatment and support.</p>
+      </div>
+
+      <div class="asd-type">
+        <h4>Childhood Disintegrative Disorder</h4>
+        <p><strong>Characteristics:</strong> Very rare type, normal development for first 2-4 years followed by sudden skill loss, regression in speech, social communication, and motor skills.</p>
+        <p><strong>Features:</strong> Sudden withdrawal, loss of expressive ability, emergence of repetitive behaviors, considered most difficult to treat due to rapid deterioration.</p>
+      </div>
+    </div>
+
+    <h2>AI and Machine Learning in ASD Diagnosis</h2>
+
+    <div class="ai-methods">
+      <h3>Automated Detection Systems</h3>
+      <p>The MRI modalities (fMRI and sMRI) are non-invasive methods but diagnosing ASD with them is often laborious and time-consuming for specialists. Therefore, several computer-aided design systems (CADS) based on artificial intelligence (AI) have been developed to assist physicians.</p>
+      <p>Conventional machine learning (ML) and deep learning (DL) are the most popular AI schemes used for diagnosing ASD. While there has been significant work using ML techniques, there has been very limited work on the use of DL techniques for developing automated diagnostic models for ASD.</p>
+    </div>
+
+    <div class="article-section">
+      <div class="text">
+        <h3>AI Diagnostic Workflow</h3>
+        
+        <h4>1. SMRI Preprocessing</h4>
+        <p>First and essential step in preparing data by cleaning, reducing noise, and standardizing image format for accurate comparison and analysis.</p>
+        
+        <h4>2. Statistical Nonlinear Analysis</h4>
+        <p>Uses advanced statistical methods capable of identifying complex, nonlinear relationships in brain data. Employs graph theory to analyze complex brain structure through morphological connectivity - examining how different brain regions are connected structurally beyond geographical proximity.</p>
+        
+        <h4>3. Feature Processing</h4>
+        <p><strong>Feature Reduction:</strong> Combining thousands of features (texture, shape, connectivity) into smaller number while preserving information.</p>
+        <p><strong>Feature Selection:</strong> Selecting most important features and removing unimportant/redundant ones to improve accuracy and prevent overfitting.</p>
+        
+        <h4>4. Classifier Algorithms</h4>
+        <ul>
+          <li><strong>SVM:</strong> Finds best hyperplane to separate data between classes in high-dimensional space</li>
+          <li><strong>KNN:</strong> Classifies based on similarity to training data points</li>
+          <li><strong>RF:</strong> Ensemble algorithm using multiple decision trees</li>
+          <li><strong>LDA:</strong> Projects data to maximize variance between classes</li>
+        </ul>
+        
+        <h4>5. Dataset Preparation</h4>
+        <p>Final organized dataset with individuals as rows, features as columns, and labeling for training ML algorithms to distinguish between patients and healthy individuals.</p>
+      </div>
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="AI Diagnostic Pipeline">
+        </div>
+        <div class="caption">Figure 3: Machine learning workflow for ASD diagnosis using neuroimaging</div>
+      </div>
+    </div>
+
+    <h2>Treatment and Intervention Methods</h2>
+
+    <div class="treatment-section">
+      <h3>Comprehensive Treatment Approaches</h3>
+      <p>Although there is no definitive cure for autism, early intervention and specialized treatment programs significantly improve communication, interaction skills, and reduce challenging behaviors. Treatment varies based on severity and individual needs, often combining multiple methods for best outcomes.</p>
+    </div>
+
+    <div class="symptoms-grid">
+      <div class="symptom-category">
+        <h4>Behavioral Therapy (ABA)</h4>
+        <p>Most effective treatment using positive reinforcement to improve behaviors and teach new skills including communication, sharing, daily living skills, and focus. Requires regular sessions under behavioral specialists.</p>
+      </div>
+      
+      <div class="symptom-category">
+        <h4>Speech and Language Therapy</h4>
+        <p>Develops pronunciation, language use, eye contact, and conversation skills. Uses gestures, pictures, or electronic devices for non-verbal communication to enable expression of needs and reduce isolation.</p>
+      </div>
+
+      <div class="symptom-category">
+        <h4>Occupational Therapy</h4>
+        <p>Focuses on fine motor skills and independence in daily activities (dressing, eating, hygiene). Uses specialized tools to stimulate sensory and motor development, enabling social integration and confidence building.</p>
+      </div>
+
+      <div class="symptom-category">
+        <h4>Sensory Integration Therapy</h4>
+        <p>Improves nervous system response to sensory stimuli through structured exposure to touch, balance, and movement activities. Reduces hypersensitivity/hyposensitivity and improves concentration and behavior.</p>
+      </div>
+    </div>
+
+    <div class="article-section">
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="ASD Interventions">
+        </div>
+        <div class="caption">Figure 4: Various therapeutic interventions for ASD management</div>
+      </div>
+      <div class="text">
+        <h3>Additional Treatment Components</h3>
+        
+        <h4>Medication Management</h4>
+        <p>While not treating autism itself, medications alleviate accompanying symptoms like anxiety, hyperactivity, depression, or tantrums. Used under psychiatric supervision to achieve behavioral stability for better response to other therapies.</p>
+        
+        <h4>Family Support and Training</h4>
+        <p>Most important success factor where families learn to handle difficult situations, apply therapy techniques at home, and receive psychological support. Creates safe environment encouraging development and growth.</p>
+        
+        <h4>Early Intervention Importance</h4>
+        <p>Early diagnosis and comprehensive intervention significantly improve long-term outcomes. Combination of therapies tailored to individual needs provides best results for skill development and social integration.</p>
+      </div>
+    </div>
+
+    <div class="research-highlights">
+      <h3>Future Directions in ASD Research</h3>
+      <p><strong>AI and Machine Learning:</strong> Continued development of automated diagnostic systems using ML and DL with neuroimaging data will improve early detection accuracy and accessibility.</p>
+      <p><strong>Personalized Medicine:</strong> Advancements in understanding ASD subtypes will lead to more targeted and effective interventions based on individual neurological profiles.</p>
+      <p><strong>Neuroimaging Advances:</strong> Improved MRI techniques and analysis methods will enhance our understanding of brain connectivity patterns in ASD.</p>
+      <p><strong>Early Detection:</strong> Development of more sensitive screening tools and biomarkers for earlier identification and intervention.</p>
+    </div>
+
+    <div class="author">Research compiled by: Neuroscience and AI Research Team</div>
+  </div>
+
+  <script>
+    const images = document.querySelectorAll('.image-container');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    });
+
+    images.forEach(img => observer.observe(img));
+    // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+  </script>
+</body>
+</html>

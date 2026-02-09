@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ADHD: Comprehensive Research Overview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Raleway:wght@300;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Raleway', sans-serif;
+      line-height: 1.8;
+      background: #f5f5f5;
+      color: #333;
+      overflow-x: hidden;
+      font-size: 18px;
+      background-image: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      background-color: white;
+      box-shadow: 0 0 30px rgba(0,0,0,0.1);
+      border-radius: 5px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      color: #2c3e50;
+      text-align: center;
+      margin: 40px 0;
+      padding-bottom: 20px;
+      border-bottom: 2px solid #e74c3c;
+      position: relative;
+    }
+
+    h1:after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: #3498db;
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: #2c3e50;
+      margin: 40px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: #2c3e50;
+      margin: 30px 0 15px;
+    }
+
+    h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: #2c3e50;
+      margin: 25px 0 15px;
+    }
+
+    .article-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      margin-bottom: 60px;
+      align-items: flex-start;
+    }
+
+    .article-section:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .text {
+      flex: 2;
+      min-width: 300px;
+      padding: 20px;
+    }
+
+    p {
+      margin-bottom: 25px;
+      color: #555;
+      font-size: 1.1rem;
+      text-align: justify;
+    }
+
+    ul, ol {
+      margin-left: 40px;
+      margin-bottom: 25px;
+    }
+
+    li {
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    .abstract {
+      background-color: #f8f9fa;
+      padding: 25px;
+      border-radius: 8px;
+      margin-bottom: 40px;
+      border-left: 5px solid #3498db;
+    }
+
+    .abstract h2 {
+      margin-top: 0;
+      color: #3498db;
+    }
+
+    .author {
+      margin-top: 60px;
+      font-weight: 600;
+      text-align: right;
+      color: #2c3e50;
+      font-size: 1.2rem;
+      font-style: italic;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+
+    .caption {
+      text-align: center;
+      margin-top: 10px;
+      color: #7f8c8d;
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    /* نظام الصور المحدث - نفس نظام كود الاكتئاب */
+    .image-container {
+      flex: 1;
+      min-width: 300px;
+      max-width: 500px;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: all 0.5s ease;
+      opacity: 0;
+      transform: translateY(30px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .image-container.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .image-container:hover {
+      transform: scale(1.02) translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    }
+
+    .image-container img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .research-highlights {
+      background-color: #e8f4f8;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 30px 0;
+      border-left: 5px solid #2c3e50;
+    }
+
+    .treatment-section {
+      background-color: #f0f8f0;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 30px 0;
+      border-left: 5px solid #27ae60;
+    }
+
+    .treatment-section h3 {
+      color: #27ae60;
+      margin-top: 0;
+    }
+
+    .symptoms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .symptom-category {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #e74c3c;
+    }
+
+    .symptom-category h4 {
+      margin-top: 0;
+      color: #e74c3c;
+    }
+
+    .adhd-types-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 25px 0;
+    }
+
+    .adhd-type {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #9b59b6;
+    }
+
+    .adhd-type h4 {
+      margin-top: 0;
+      color: #9b59b6;
+    }
+
+    .statistics-box {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 25px 0;
+      text-align: center;
+    }
+
+    .statistics-box h3 {
+      color: white;
+      margin-top: 0;
+    }
+
+    .stat-item {
+      margin: 15px 0;
+      font-size: 1.1rem;
+    }
+
+    .episode-section {
+      background-color: #fff8e1;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 25px 0;
+      border-left: 5px solid #ffa000;
+    }
+
+    .episode-section h3 {
+      color: #ffa000;
+      margin-top: 0;
+    }
+
+    .comorbid-section {
+      background-color: #f9f0ff;
+      padding: 25px;
+      border-radius: 8px;
+      margin: 25px 0;
+      border-left: 5px solid #8e44ad;
+    }
+
+    .comorbid-section h3 {
+      color: #8e44ad;
+      margin-top: 0;
+    }
+
+    @media(max-width: 768px) {
+      .article-section, 
+      .article-section:nth-child(even) {
+        flex-direction: column;
+      }
+      
+      .image-container {
+        max-width: 100%;
+      }
+      
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      h2 {
+        font-size: 1.8rem;
+      }
+      
+      .symptoms-grid,
+      .adhd-types-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Floating image effect */
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .floating-img {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .specifier-list {
+      columns: 2;
+      column-gap: 40px;
+    }
+
+    .specifier-list li {
+      break-inside: avoid;
+    }
+
+    @media(max-width: 768px) {
+      .specifier-list {
+        columns: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>ADHD: Comprehensive Research Overview</h1>
+
+    <div class="abstract">
+      <h2>Overview</h2>
+      <p>ADHD (attention-deficit/hyperactivity disorder) is a neurodevelopmental condition that affects how your brain works. Despite its name, ADHD doesn't mean that you lack attention. It means that it's harder for you to control your attention or direct it to certain tasks. ADHD causes symptoms like difficulty focusing, trouble sitting still and impulsive behaviors. But it also allows you to "get in the zone" and hyperfocus on things you really enjoy.</p>
+      <p>It is a psychiatric condition that has long been recognized as affecting children's ability to function. Individuals suffering from this disorder show patterns of developmentally inappropriate levels of inattentiveness, hyperactivity, or impulsivity. Although there used to be two different diagnoses of attention deficit disorder vs. attention deficit hyperactivity disorder, the DSM-5 combined this into one disorder with three presentations: predominantly inattentive, predominantly hyperactive-impulsive, or combined presentation.</p>
+    </div>
+
+    <h2>Introduction to ADHD</h2>
+
+    <div class="article-section">
+      <div class="text">
+        <h3>Understanding ADHD</h3>
+        <p>ADHD stands for attention deficit hyperactivity disorder. People with ADHD have differences in how their brain develops and works. This may cause problems with their attention, ability to sit still, and practice self-control. ADHD can affect children and teens at school, at home, and in friendships.</p>
+        <p>The signs of ADHD start early in childhood, but some people don't find out they have it until they're older. It depends on when ADHD keeps them from doing well and when they see a doctor about it. No matter what age people find out they have ADHD, the right treatment can help them do better in all areas of life. Having support from parents, teachers, and friends goes a long way.</p>
+        <p>Everybody can have difficulty sitting still, paying attention or controlling impulsive behavior occasionally. For some people, however, the problems are so pervasive and persistent that they interfere with every aspect of their life: home, academic, social and work.</p>
+      </div>
+      <div>
+        <div class="image-container floating-img">
+          <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="ADHD Brain Function">
+        </div>
+        <div class="caption">Figure 1: Brain differences in ADHD affecting executive functions</div>
+      </div>
+    </div>
+
+    <div class="statistics-box">
+      <h3>ADHD Epidemiology</h3>
+      <div class="stat-item">Affects approximately 11% of school-age children in the U.S.</div>
+      <div class="stat-item">Symptoms continue into adulthood in more than three-quarters of cases</div>
+      <div class="stat-item">Around 1 in 10 kids age 3 to 17 have an ADHD diagnosis</div>
+      <div class="stat-item">Significantly higher risk for academic, social, and occupational challenges</div>
+      <div class="stat-item">With proper treatment, individuals can be very successful in life</div>
+    </div>
+
+    <h2>Types of ADHD Presentations</h2>
+
+    <div class="adhd-types-grid">
+      <div class="adhd-type">
+        <h4>Predominantly Inattentive Presentation</h4>
+        <p><strong>Key Characteristics:</strong> Difficulty sustaining attention, following detailed instructions, and organizing tasks. Often appears forgetful, easily distracted, and loses things.</p>
+        <p><strong>Common Challenges:</strong> May struggle with academic performance, completing tasks, and following conversations. Often described as "daydreamers."</p>
+        <p><strong>Diagnostic Note:</strong> Must display at least six symptoms of inattention (five for adults) for at least six months.</p>
+      </div>
+      
+      <div class="adhd-type">
+        <h4>Predominantly Hyperactive-Impulsive Presentation</h4>
+        <p><strong>Key Characteristics:</strong> Fidgeting, excessive talking, difficulty remaining seated, acting as if "driven by a motor," interrupting others, difficulty waiting turns.</p>
+        <p><strong>Common Challenges:</strong> May struggle with impulse control, social interactions, and following rules. Often described as "always on the go."</p>
+        <p><strong>Diagnostic Note:</strong> Must display at least six symptoms of hyperactivity-impulsivity (five for adults) for at least six months.</p>
+      </div>
+
+      <div class="adhd-type">
+        <h4>Combined Presentation</h4>
+        <p><strong>Key Characteristics:</strong> Displays both inattentive and hyperactive-impulsive symptoms. This is the most common presentation.</p>
+        <p><strong>Common Challenges:</strong> Experiences difficulties with both attention regulation and impulse control, affecting multiple areas of functioning.</p>
+        <p><strong>Diagnostic Note:</strong> Meets criteria for both inattentive and hyperactive-impulsive presentations.</p>
+      </div>
+    </div>
+
+    <h2>Symptoms of ADHD</h2>
+
+    <div class="symptoms-grid">
+      <div class="symptom-category">
+        <h4>Inattention Symptoms</h4>
+        <ul>
+          <li>Fails to give close attention to details or makes careless mistakes</li>
+          <li>Difficulty sustaining attention in tasks or play activities</li>
+          <li>Does not seem to listen when spoken to directly</li>
+          <li>Does not follow through on instructions and fails to finish tasks</li>
+          <li>Difficulty organizing tasks and activities</li>
+          <li>Avoids or is reluctant to engage in tasks requiring sustained mental effort</li>
+          <li>Loses things necessary for tasks or activities</li>
+          <li>Easily distracted by extraneous stimuli</li>
+          <li>Forgetful in daily activities</li>
+        </ul>
+      </div>
+      
+      <div class="symptom-category">
+        <h4>Hyperactivity Symptoms</h4>
+        <ul>
+          <li>Fidgets with or taps hands or feet, or squirms in seat</li>
+          <li>Leaves seat in situations when remaining seated is expected</li>
+          <li>Runs about or climbs in situations where it is inappropriate</li>
+          <li>Unable to play or engage in leisure activities quietly</li>
+          <li>Often "on the go," acting as if "driven by a motor"</li>
+          <li>Talks excessively</li>
+        </ul>
+      </div>
+
+      <div class="symptom-category">
+        <h4>Impulsivity Symptoms</h4>
+        <ul>
+          <li>Blurts out answers before questions have been completed</li>
+          <li>Difficulty waiting their turn</li>
+          <li>Interrupts or intrudes on others</li>
+          <li>Makes important decisions without considering long-term consequences</li>
+          <li>Difficulty resisting temptations or immediate rewards</li>
+          <li>Frequently shifts between different activities or tasks</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Understanding ADHD Across the Lifespan</h3>
+    
+    <div class="article-section">
+      <div>
+        <div class="image-container floating-img">
+          <img src="adhd2.jpg" alt="ADHD Across Lifespan">
+        </div>
+        <div class="caption">Figure 2: How ADHD symptoms manifest differently across development</div>
+      </div>
+      <div class="text">
+        <p>ADHD symptoms begin in childhood (commonly between ages 3 and 6) and may continue into adulthood. But some people don't get a diagnosis until they're adults. There's no cure for ADHD, but treatments like medications and behavioral therapies can help manage symptoms.</p>
+        
+        <h4>ADHD in Children</h4>
+        <p>Typically, ADHD symptoms arise in early childhood. According to the DSM-5, several symptoms are required to be present before the age of 12. Many parents report excessive motor activity during the toddler years, but ADHD symptoms can be hard to distinguish from the impulsivity, inattentiveness and active behavior that is typical for kids under the age of four.</p>
+        
+        <h4>ADHD in Adolescents and Adults</h4>
+        <p>As individuals with ADHD mature, hyperactivity often decreases but difficulties with attention, organization, and impulse control frequently persist. Adults with ADHD may struggle with time management, organization, goal setting, and employment. They may also have problems with relationships, self-esteem, and addiction.</p>
+      </div>
+    </div>
+
+    <h2>Causes and Risk Factors</h2>
+
+    <div class="article-section">
+      <div class="text">
+        <h3>Genetic and Biological Factors</h3>
+        
+        <h4>Genetic Predisposition</h4>
+        <p>ADHD is highly genetic. This means your child is born with certain gene changes that cause differences in their brain development (neurodivergence). Often, the gene changes that cause ADHD are passed down within biological families. Kids with ADHD commonly have biological parents or siblings with the condition.</p>
+        
+        <h4>Neurobiological Factors</h4>
+        <p>With ADHD, the frontal lobe of your child's brain is wired in a way that makes it harder for them to use directed attention. Directed attention is the ability to focus on something you don't find very interesting. We use directed attention to plan, multitask and solve problems (executive functions).</p>
+        
+        <h3>Environmental Factors</h3>
+        <p>While genetics play a primary role, certain environmental factors may influence ADHD expression:</p>
+        
+        <h4>Potential Risk Factors</h4>
+        <ul>
+          <li><strong>Premature Birth:</strong> Kids born early may be more likely to have ADHD</li>
+          <li><strong>Prenatal Exposure:</strong> Exposure to toxins like lead or drugs during pregnancy</li>
+          <li><strong>Brain Injury:</strong> Traumatic brain injuries can sometimes lead to ADHD symptoms</li>
+          <li><strong>Low Birth Weight:</strong> Associated with increased risk of developing ADHD</li>
+        </ul>
+      </div>
+      <div>
+        <div class="image-container floating-img">
+          <img src="adhd3.jpg" alt="ADHD Risk Factors">
+        </div>
+        <div class="caption">Figure 3: Genetic and environmental factors in ADHD</div>
+      </div>
+    </div>
+
+    <h2>Diagnosis and Assessment</h2>
+
+    <div class="article-section">
+      <div>
+      <div class="text">
+        <h3>Diagnostic Challenges</h3>
+        <p>There is no single test to diagnose ADHD. Therefore, a comprehensive evaluation is necessary to establish a diagnosis, rule out other causes, and determine the presence or absence of co-existing conditions. Such an evaluation requires time and effort and should include a careful history and a clinical assessment of the individual's academic, social, and emotional functioning and developmental level.</p>
+        
+        <h4>Diagnostic Process</h4>
+        <p>A comprehensive diagnostic exam generally includes:</p>
+        
+        <h4>Clinical Assessment</h4>
+        <p>Complete history including symptoms, developmental milestones, academic performance, and family history. Assessment of functional impairment across different settings.</p>
+        
+        <h4>Multi-Source Information</h4>
+        <p>Input from multiple sources is crucial, including parents, teachers, and when appropriate, the child themselves. Standardized rating scales are often used.</p>
+        
+        <h4>Rule Out Other Conditions</h4>
+        <p>Medical examination to rule out other conditions that might mimic ADHD symptoms, such as hearing or vision problems, sleep disorders, or learning disabilities.</p>
+        
+        <h3>Special Considerations</h3>
+        <p><strong>Adults:</strong> Diagnosis in adults requires evaluation of childhood history as symptoms must have been present before age 12. Adults may have developed coping mechanisms that mask symptoms.</p>
+        <p><strong>Girls and Women:</strong> ADHD in females is often underdiagnosed as they may present with more internalizing symptoms rather than hyperactivity.</p>
+      </div>
+    </div>
+
+    <h2>Treatment and Management</h2>
+
+    <div class="treatment-section">
+      <h3>Comprehensive Treatment Approach</h3>
+      <p>Treating ADHD often requires medical, educational, behavioral and psychological intervention. This comprehensive approach to treatment is sometimes called "multimodal" and, depending on the age of the individual with ADHD, may include parent training, medication, skills training, counseling, behavioral therapy, educational supports, and education regarding ADHD.</p>
+    </div>
+
+    <div class="symptoms-grid">
+      <div class="symptom-category">
+        <h4>Medication Management</h4>
+        <p><strong>Stimulants:</strong> Methylphenidate and amphetamine-based medications - most commonly prescribed</p>
+        <p><strong>Non-Stimulants:</strong> Atomoxetine (Strattera), guanfacine, clonidine - alternatives when stimulants aren't suitable</p>
+        <p><strong>Considerations:</strong> Individual response varies, side effect monitoring, potential for abuse with stimulants</p>
+        <p><strong>Treatment Monitoring:</strong> Regular follow-ups to assess effectiveness and adjust dosage as needed</p>
+      </div>
+      
+      <div class="symptom-category">
+        <h4>Behavioral and Psychosocial Interventions</h4>
+        <p><strong>Behavioral Therapy:</strong> Focuses on modifying environment and implementing reward systems</p>
+        <p><strong>Cognitive Behavioral Therapy (CBT):</strong> Addresses thinking patterns and develops coping strategies</p>
+        <p><strong>Parent Training:</strong> Teaches effective behavior management techniques</p>
+        <p><strong>Social Skills Training:</strong> Helps improve interpersonal relationships</p>
+        <p><strong>Academic Support:</strong> Classroom accommodations and organizational strategies</p>
+      </div>
+
+      <div class="symptom-category">
+        <h4>Complementary Approaches</h4>
+        <p><strong>Exercise:</strong> Regular physical activity may help manage symptoms</p>
+        <p><strong>Mindfulness and Meditation:</strong> Can improve attention and emotional regulation</p>
+        <p><strong>Dietary Considerations:</strong> Balanced nutrition supports overall brain health</p>
+        <p><strong>Sleep Hygiene:</strong> Consistent sleep routines are particularly important</p>
+        <p><strong>Organization Strategies:</strong> Use of planners, reminders, and structured routines</p>
+      </div>
+    </div>
+
+    <h3>Long-Term Management Strategies</h3>
+    
+    <div class="article-section">
+      <div class="text">
+        <h4>Home Support Strategies</h4>
+        <p>Critical home management strategies for ADHD include:</p>
+        <ul>
+          <li><strong>Organize Items:</strong> Have a place for everything and keep everything in its place</li>
+          <li><strong>Stick to a Schedule:</strong> Follow the same routine every day from wake-up to bedtime</li>
+          <li><strong>Use Visual Tools:</strong> Calendars, planners, and checklists that are easily visible</li>
+          <li><strong>Positive Reinforcement:</strong> "Catch" your child being good and praise effort and completion</li>
+          <li><strong>Effective Discipline:</strong> Create consistent systems with appropriate consequences</li>
+          <li><strong>Homework Structure:</strong> Designated quiet area, use of timers, and breaking tasks into steps</li>
+        </ul>
+        
+        <h4>School Support</h4>
+        <p>Educational accommodations can significantly help students with ADHD:</p>
+        <ul>
+          <li><strong>Individualized Education Program (IEP):</strong> Legal document outlining specialized instruction</li>
+          <li><strong>504 Plan:</strong> Accommodations to ensure equal access to education</li>
+          <li><strong>Classroom Modifications:</strong> Preferential seating, reduced distractions, extended time</li>
+          <li><strong>Teacher Collaboration:</strong> Regular communication between parents and teachers</li>
+          <li><strong>Organizational Support:</strong> Assistance with planning, time management, and study skills</li>
+        </ul>
+      </div>
+      <div>
+        <div class="image-container floating-img">
+          <img src="adhd4.jpg" alt="ADHD Management">
+        </div>
+        <div class="caption">Figure 4: Integrated treatment approach for ADHD</div>
+      </div>
+    </div>
+
+    <div class="comorbid-section">
+      <h3>Conditions Often Linked with ADHD</h3>
+      <p>ADHD does not cause other mental health or developmental problems. But children with ADHD are more likely than others to also have conditions such as:</p>
+      <div class="symptoms-grid">
+        <div class="symptom-category">
+          <h4>Behavioral Disorders</h4>
+          <ul>
+            <li><strong>Oppositional Defiant Disorder:</strong> Pattern of negative, defiant behavior toward authority</li>
+            <li><strong>Conduct Disorder:</strong> Antisocial behavior such as stealing, fighting, destroying property</li>
+            <li><strong>Disruptive Mood Dysregulation Disorder:</strong> Chronic irritability and anger</li>
+          </ul>
+        </div>
+        
+        <div class="symptom-category">
+          <h4>Learning and Developmental Conditions</h4>
+          <ul>
+            <li><strong>Learning Disabilities:</strong> Problems with reading, writing, understanding and communicating</li>
+            <li><strong>Autism Spectrum Disorder:</strong> Impacts social interaction and communication patterns</li>
+            <li><strong>Tic Disorders:</strong> Repetitive movements or unwanted sounds</li>
+          </ul>
+        </div>
+
+        <div class="symptom-category">
+          <h4>Mental Health Conditions</h4>
+          <ul>
+            <li><strong>Anxiety Disorders:</strong> Constant worry and nervousness affecting daily life</li>
+            <li><strong>Depression and Bipolar Disorder:</strong> Mood disorders that commonly co-occur</li>
+            <li><strong>Substance Use Disorders:</strong> Misuse of drugs, alcohol, or nicotine</li>
+            <li><strong>Obsessive-Compulsive Disorder (OCD):</strong> Unwanted thoughts leading to repetitive behaviors</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="research-highlights">
+      <h3>Key Treatment Principles</h3>
+      <p><strong>Early Intervention:</strong> Early diagnosis and treatment significantly improve long-term outcomes across multiple domains</p>
+      <p><strong>Individualized Approach:</strong> Treatment must be tailored to the specific ADHD presentation, co-existing conditions, and individual needs</p>
+      <p><strong>Combined Modalities:</strong> Medication combined with behavioral interventions provides most comprehensive care</p>
+      <p><strong>Lifespan Perspective:</strong> ADHD requires ongoing management strategies that evolve with developmental changes</p>
+      <p><strong>Multi-System Support:</strong> Involving family, school, and workplace supports enhances treatment effectiveness</p>
+      <p><strong>Strength-Based Approach:</strong> Recognizing and building on the unique strengths and talents of individuals with ADHD</p>
+    </div>
+
+    <div class="author">Research compiled by: Research compiled by: NeuroScence Team</div>
+  </div>
+
+  <script>
+    const images = document.querySelectorAll('.image-container');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    });
+
+    images.forEach(img => observer.observe(img));
+    // تتبع النشاط عند فتح الصفحة
+if (window.trackActivity) {
+    window.trackActivity('page_visit', {
+        page: window.location.pathname,
+        timestamp: new Date().toISOString(),
+        user: userData.id
+    });
+}
+
+// تتبع النقر على الأزرار
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('card-button') || e.target.classList.contains('cta-button')) {
+        if (window.trackActivity) {
+            window.trackActivity('button_click', {
+                button: e.target.textContent,
+                page: window.location.pathname,
+                timestamp: new Date().toISOString()
+            });
+        }
+    }
+});
+  </script>
+</body>
+</html>
